@@ -183,9 +183,11 @@ touchupsys ()
 rmfiles ()
 {
 	rm ./archsystemconfigs.sh
-	rm ./termuxarchchecksum.md5
 	rm ./knownconfigurations.sh
 	rm ./necessaryfunctions.sh
 	rm ./printoutstatements.sh
+	rm ./termuxarchchecksum.md5
+	rm ./setupTermuxArch.md5
+	rm ./setupTermuxArch.tar.gz
 }
 

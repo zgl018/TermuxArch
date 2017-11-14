@@ -1,6 +1,3 @@
 [submodule "docs"]
 	path = docs
 	url = https://github.com/sdrausty/docsRepository
-[submodule "imgs"]
-	path = imgs
-	url = https://github.com/sdrausty/imgsRepository
