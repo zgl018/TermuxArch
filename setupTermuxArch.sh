@@ -28,7 +28,7 @@ depend ()
 integratycheck1 ()
 {
 	if md5sum -c setupTermuxArch.md5 ; then
-		printmd5sys1chksuccess 
+		printmd5syschk1success 
 		bsdtar -xf setupTermuxArch.tar.gz
 		. archsystemconfigs.sh
 		. knownconfigurations.sh
