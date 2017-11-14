@@ -4,6 +4,8 @@
 # Update submodules to latest version. 
 #####################################################################
 cp setupTermuxArch.sh scripts/files/
-md5sum scripts/files/*sh > scripts/files/termuxarchchecksum.md5 
+cd scripts/files/
+md5sum *sh > termuxarchchecksum.md5 
+cd ../..
 bsdtar -czv -f setupTermuxArch.tar.gz --strip-components 2 scripts/files/*
 md5sum setupTermuxArch.tar.gz > setupTermuxArch.md5
