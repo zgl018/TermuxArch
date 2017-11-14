@@ -29,7 +29,7 @@ depend ()
 	. ./knownconfigurations.sh
 	. ./necessaryfunctions.sh
 	. ./printoutstatements.sh
-	printf "	3)	Activating termux-wake-lock.  \n\n"
+	printf "\n\n	3)	Activating termux-wake-lock.  \n\n"
 	termux-wake-lock # Before activating termux-wake-lock, setupTermuxArch.sh should check whether activation is necessary.
 }
 
