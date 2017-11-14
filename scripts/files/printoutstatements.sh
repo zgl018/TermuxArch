@@ -37,12 +37,6 @@ printmd5success ()
 	printf "\033[0m\n\033[36;1m 🕡 < 🕛 Downloaded files integrity: OK  \n\n 🕖 < 🕛 Now uncompressing $file.  \033[37;1mThis will take much longer!  Be patient.  \033[0m\n"
 }
 
-printmd5syschkerror ()
-{
-	printf "\033[07;1m\033[31;1m\n 🔆 ERROR md5sum mismatch!  Setup initialization mismatch!\033[36;1m  Update your copy of setupTermuxArch.sh.  If you have updated it, this kind of error can go away, sort of like magic.  Waiting a few minutes before executing again is recommended, especially if you are using a new copy from https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.sh on your system.  There are many reasons that generate checksum errors.  Proxies are one reason.  Mirroring and mirrors are another explaination for md5sum errors.  Either way this means,  \"Try again, initialization was not successful.\"  See https://sdrausty.github.io/TermuxArchPlus/md5sums for more information.  \n\n	Run setupTermuxArch.sh again. \033[31;1mExiting...  \033[0m\n"
-	exit 
-}
-
 printmd5syschksuccess ()
 {
 	printf "\033[0m\n 🕐 \033[36;1m< 🕛 Installation script integrity: OK  \033[0m\n"

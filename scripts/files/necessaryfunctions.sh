@@ -35,7 +35,7 @@ askuser ()
 
 callsystem ()
 {
-	integratycheck 
+	integratycheck2
 	mkdir -p $HOME/arch
 	cd $HOME/arch
 	detectsystem
@@ -101,13 +101,13 @@ getimage ()
 	wget -q -c --show-progress http://$mirror$path$file
 }
 
-integratycheck ()
+integratycheck2 ()
 {
 	if md5sum -c termuxarchchecksum.md5; then
-		rmfiles 
+		rmfiles2  
 		printmd5syschksuccess 
 	else
-		rmfiles 
+		rmfiles2  
 		printmd5syschkerror
 	fi
 }
@@ -180,14 +180,12 @@ touchupsys ()
 	finishsetup
 }
 
-rmfiles ()
+rmfiles2 ()
 {
-	rm ./archsystemconfigs.sh
-	rm ./knownconfigurations.sh
-	rm ./necessaryfunctions.sh
-	rm ./printoutstatements.sh
-	rm ./termuxarchchecksum.md5
-	rm ./setupTermuxArch.md5
-	rm ./setupTermuxArch.tar.gz
+	rm archsystemconfigs.sh
+	rm knownconfigurations.sh
+	rm necessaryfunctions.sh
+	rm printoutstatements.sh
+	rm termuxarchchecksum.md5
 }
 

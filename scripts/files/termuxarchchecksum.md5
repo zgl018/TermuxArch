@@ -1,5 +1,5 @@
-243b5b237150af4b9eb5581f82ff0b90  archsystemconfigs.sh
-c4373b669220b056e764724d90544d5e  knownconfigurations.sh
-ac30fd1ba4f9e418a7d619a99269e5f3  necessaryfunctions.sh
-da3234146687dc225e7bc05a4dd98b56  printoutstatements.sh
-30b22242c023cf961a0c4d569025011f  setupTermuxArch.sh
+243b5b237150af4b9eb5581f82ff0b90  scripts/files/archsystemconfigs.sh
+c4373b669220b056e764724d90544d5e  scripts/files/knownconfigurations.sh
+23dd161568d2c4e30ca5a568645022d1  scripts/files/necessaryfunctions.sh
+419963ee7f771b92de306c599f1c8c15  scripts/files/printoutstatements.sh
+75d304da38ce622276eebad45a10ac7b  scripts/files/setupTermuxArch.sh
