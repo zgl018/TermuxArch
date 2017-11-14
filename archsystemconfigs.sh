@@ -7,7 +7,7 @@
 startbin ()
 {
 	cat > $bin <<- EOM
-	#!/bin/sh -e
+	#!/data/data/com.termux/files/usr/bin/bash -e
 	unset LD_PRELOAD
 	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin /bin/bash --login
 	EOM
@@ -17,8 +17,7 @@ startbin ()
 startbininit ()
 {
 	cat > $bin <<- EOM
-	export LD_PRELOAD=$PREFIX/lib/libtermux-exec.so
-	#!/bin/sh -e
+	#!/data/data/com.termux/files/usr/bin/bash -e
 	unset LD_PRELOAD
 	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin /bin/bash --login
 	EOM
@@ -61,7 +60,7 @@ bash_profile ()
 finishsetup ()
 {
 	cat > root/bin/finishsetup.sh  <<- EOM
-	#!/bin/bash -e 
+	#!/data/data/com.termux/files/usr/bin/bash -e
 	printf "\n\033[32;1m"
 	while true; do
 	read -p "Would you like to use nano or vi? (n|v)?"  nv
