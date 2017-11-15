@@ -1,6 +1,14 @@
-# -rwxrwx--- [setupTermuxArch.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.sh)
+##### -rwxrwx--- [knownconfigurations.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/scripts/files/master/knownconfigurations.sh)
 
-## Notice to Contributors
+##### -rwxrwx--- [necessaryfunctions.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/scripts/files/master/necessaryfunctions.sh)
+
+##### -rwxrwx--- [printoutstatements.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/scripts/files/master/printoutstatements.sh)
+
+##### -rwxrwx--- [setupTermuxArch.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/scripts/files/master/setupTermuxArch.sh)
+
+##### -rwxrwx--- [systemconfigs.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/scripts/files/master/systemconfigs.sh)
+
+## Contributions have helped in the successful development of this script and project immensely.  This is a Notice to Contributors  📲 __Thank you for contributing and collaborating!__  
 
 __Source code goals for this project are:__
 1. That it work as desired and provide the ultimate user experience possible when executed, 

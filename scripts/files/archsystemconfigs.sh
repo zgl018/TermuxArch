@@ -25,13 +25,8 @@ bashrc ()
 	alias d='du -hs'
 	alias e='exit'
 	alias g='ga; gcm; gp'
-	alias ga='git add . '
 	alias gca='git commit -a'
 	alias gcam='git commit -am'
-	alias gcm='git commit'
-	alias gcl='git clone'
-	alias gpl='git pull'
-	alias gp='git push'
 	#alias gp='git push https://username:password@github.com/username/repository.git master'
 	alias h='history >> ~/.historyfile'
 	alias j='jobs'
@@ -45,6 +40,51 @@ bashrc ()
 bash_profile ()
 {
 	touch root/.bash_profile 
+}
+
+addga ()
+{
+	cat > root/bin/ga  <<- EOM
+	#!/bin/bash -e
+	git add .
+	EOM
+	chmod 700 root/bin/ga 
+}
+
+addgcl ()
+{
+	cat > root/bin/gcl  <<- EOM
+	#!/bin/bash -e
+	git clone
+	EOM
+	chmod 700 root/bin/gcl 
+}
+
+addgcm ()
+{
+	cat > root/bin/gcm  <<- EOM
+	#!/bin/bash -e
+	git commit
+	EOM
+	chmod 700 root/bin/gcm 
+}
+
+addgpl ()
+{
+	cat > root/bin/gpl  <<- EOM
+	#!/bin/bash -e
+	git pull
+	EOM
+	chmod 700 root/bin/gpl 
+}
+
+addgp ()
+{
+	cat > root/bin/gp  <<- EOM
+	#!/bin/bash -e
+	git push
+	EOM
+	chmod 700 root/bin/gp 
 }
 
 finishsetup ()

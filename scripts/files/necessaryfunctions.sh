@@ -177,6 +177,11 @@ touchupsys ()
 	else
 		mkdir -p root/bin
 	fi
+	addga
+	addgcm
+	addgcl
+	addgp
+	addgpl
 	finishsetup
 }
 
