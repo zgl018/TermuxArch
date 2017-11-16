@@ -18,11 +18,11 @@
 
 [@developer787](https://github.com/developer787) submitted an issue.  Result: setupTermuxArch.sh improved! 
 
-[@imdaveho](https://github.com/imdaveho) helped debug Chromebook.  Result: setupTermuxArch.sh improved!
-
 [@iantothecore](https://github.com/iantothecore) submitted an issue.  Result: setupTermuxArch.sh improved! 
 
-jlam: contributed `getprop ro.product.device`, `getprop ro.product.cpu.abi`, polite KISS, program flow suggestions.  Result: setupTermuxArch.sh improved! 
+[@imdaveho](https://github.com/imdaveho) helped debug Chromebook.  Result: setupTermuxArch.sh improved!
+
+jlam: contributed `getprop ro.product.device` Chromebook detection, `getprop ro.product.cpu.abi`, polite KISS, program flow suggestions.  Result: setupTermuxArch.sh improved! 
 
 [@mjskoneg](https://github.com/mjskoneg) submitted issues.  Result: setupTermuxArch.sh improved! 
 
@@ -32,4 +32,4 @@ jlam: contributed `getprop ro.product.device`, `getprop ro.product.cpu.abi`, pol
 
 [@vishalbiswas](https://github.com/vishalbiswas) contributed: `export LD_PRELOAD=$PREFIX/lib/libtermux-exec.so`.  Result: setupTermuxArch.sh improved!
 
-Thank you for making this project work better and please contribute 🔆  See [Notice to Contributors](CONTRIBUTING) for more information.  Please see [PRoot](https://sdrausty.github.io/TermuxArch/docs/docs/PRoot) for more information about Linux on device with Termux and visit the [Termux wiki website](https://wiki.termux.com/) for more information.
+Thank you for making this project work better and please contribute 🔆  See [Notice to Contributors](CONTRIBUTING) for more information.  Please see [PRoot](docs/PRoot) for more information about Linux on device with Termux and visit the [Termux wiki website](https://wiki.termux.com/) for more information.
