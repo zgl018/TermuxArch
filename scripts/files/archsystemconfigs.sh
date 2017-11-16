@@ -55,7 +55,7 @@ addgcl ()
 {
 	cat > root/bin/gcl  <<- EOM
 	#!/bin/bash -e
-	git clone
+	git clone \$1
 	EOM
 	chmod 700 root/bin/gcl 
 }
