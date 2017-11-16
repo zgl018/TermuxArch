@@ -66,15 +66,15 @@ copybin2path ()
 detectsystem ()
 {
 	printdetectedsystem
-	if [ "$(uname -m)" = "aarch64" ];then
+	if [ "$(getprop ro.product.cpu.abi)" = "arm64-v8a" ];then
 		aarch64
-	elif [ "$(uname -m)" = "armv7l" ];then
-		detectsystem2 
-	elif [ "$(uname -m)" = "armv8l" ];then
+	elif [ "$(getprop ro.product.cpu.abi)" = "armeabi" ];then
 		armv8l
-	elif [ "$(uname -m)" = "i686" ];then
+	elif [ "$(getprop ro.product.cpu.abi)" = "armeabi-v7a" ];then
+		detectsystem2 
+	elif [ "$(getprop ro.product.cpu.abi)" = "x86" ];then
 		i686 
-	elif [ "$(uname -m)" = "x86_64" ];then
+	elif [ "$(getprop ro.product.cpu.abi)" = "x86_64" ];then
 		x86_64
 	else
 		printmismatch 
@@ -83,12 +83,10 @@ detectsystem ()
 
 detectsystem2 ()
 {
-	if [ "$(uname -o)" = "Android" ];then
-		armv7lAndroid 
-	elif [ "$(uname -o)" = "GNU/Linux" ];then
-		askuser 
+	if [ "$(getprop ro.product.device)" = "*_cheets" ];then
+		armv7lChrome 
 	else
-		printmismatch 
+		armv7lAndroid  
 	fi
 }
 
@@ -98,7 +96,11 @@ getimage ()
 	# https://stackoverflow.com/questions/15040132/how-to-wget-the-more-recent-file-of-a-directory
 	# wget -A tar.gz -m -nd -np http://mirrors.evowise.com/archlinux/iso/latest/
 	# wget -A tar.gz -m -nd -np http://$mirror$path
-	wget -q -c --show-progress http://$mirror$path$file
+	#if [ "$(getprop ro.product.cpu.abi)" = "x86" ];then
+	#	wget -A tar.gz -m -nd -np http://$mirror$path
+	#else
+		wget -q -c --show-progress http://$mirror$path$file
+	#fi
 }
 
 integratycheck2 ()
