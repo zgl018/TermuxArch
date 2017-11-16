@@ -1,12 +1,14 @@
-##### -rwxrwx--- [knownconfigurations.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/scripts/files/master/knownconfigurations.sh)
+##### -rwxrwx--- [knownconfigurations.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/scripts/files/knownconfigurations.sh)
 
-##### -rwxrwx--- [necessaryfunctions.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/scripts/files/master/necessaryfunctions.sh)
+##### -rwxrwx--- [necessaryfunctions.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/scripts/files/necessaryfunctions.sh)
 
-##### -rwxrwx--- [printoutstatements.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/scripts/files/master/printoutstatements.sh)
+##### -rwxrwx--- [printoutstatements.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/scripts/files/printoutstatements.sh)
 
-##### -rwxrwx--- [setupTermuxArch.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/scripts/files/master/setupTermuxArch.sh)
+##### -rwxrwx--- [setupTermuxArch.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/scripts/files/setupTermuxArch.sh)
 
-##### -rwxrwx--- [systemconfigs.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/scripts/files/master/systemconfigs.sh)
+##### -rwxrwx--- [setupTermuxArch.tar.gz](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.tar.gz)
+
+##### -rwxrwx--- [systemconfigs.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/scripts/files/systemconfigs.sh)
 
 ## Contributions have helped in the successful development of this script and project immensely.  The following contributors have helped to refine [setupTermuxArch.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.sh) 📲 __Thank you for contributing and collaborating!__  
 
