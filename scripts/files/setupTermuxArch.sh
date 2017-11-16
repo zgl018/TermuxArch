@@ -21,8 +21,6 @@ depend ()
 	wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.tar.gz
 	wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.md5 
 	integratycheck1 
-	printf "\n\n	3)	Activating termux-wake-lock.  \n\n"
-	termux-wake-lock 
 }
 
 integratycheck1 ()

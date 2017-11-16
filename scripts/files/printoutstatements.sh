@@ -13,7 +13,7 @@ printdetectedsystem ()
 
 printdownloading ()
 {
-	printf "\033[36;1m\n 🕑 < 🕛 Now downloading $file and the corresponding checksum.  \033[37;1mThis may take a long time depending on your Internet speed.  \033[0m\n\n"
+	printf "\033[36;1m\n 🕑 < 🕛 Now downloading $file and the corresponding checksum.  Activating termux-wake-lock.  \033[37;1mThis may take a long time depending on your Internet speed.  \033[0m\n\n"
 }
 
 printfooter()

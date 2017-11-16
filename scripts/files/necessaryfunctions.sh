@@ -121,6 +121,7 @@ makebin ()
 
 makesystem ()
 {
+	termux-wake-lock 
 	printdownloading 
 	adjustmd5file 
 	getimage
