@@ -14,11 +14,15 @@
 
 [@BearChavez](https://github.com/BearChavez) submitted an issue.  Result: setupTermuxArch.sh improved!
 
+[@brysgo](https://github.com/brysgo) helped debug Chromebook.  Result: setupTermuxArch.sh improved!
+
 [@developer787](https://github.com/developer787) submitted an issue.  Result: setupTermuxArch.sh improved! 
+
+[@imdaveho](https://github.com/imdaveho) helped debug Chromebook.  Result: setupTermuxArch.sh improved!
 
 [@iantothecore](https://github.com/iantothecore) submitted an issue.  Result: setupTermuxArch.sh improved! 
 
-jlam: contributed polite KISS and sequence suggestions.  Result: setupTermuxArch.sh improved! 
+jlam: contributed `getprop ro.product.device`, `getprop ro.product.cpu.abi`, polite KISS, program flow suggestions.  Result: setupTermuxArch.sh improved! 
 
 [@mjskoneg](https://github.com/mjskoneg) submitted issues.  Result: setupTermuxArch.sh improved! 
 

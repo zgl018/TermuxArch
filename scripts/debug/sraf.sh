@@ -7,7 +7,7 @@
 # apt-get -qq install findutils --yes 
 # See README.md for instructions and warning! 
 #####################################################################
-
+if [ -d $HOME/arch ] ;then
 cd $HOME/arch||:
 rm -rf * 2>/dev/null||:
 find -type d -exec chmod 700 {} \; 2>/dev/null||:
@@ -18,5 +18,9 @@ cd $HOME
 rm setupTermuxArch.sh 2>/dev/null||:
 #dpkg --purge termux-exec
 printf "raf.sh done\n"
+else 
+printf "raf.sh exiting\n"
+exit
+fi
 exit
 

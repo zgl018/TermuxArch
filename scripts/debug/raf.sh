@@ -7,7 +7,7 @@
 # apt-get -qq install findutils --yes 
 # See README.md for instructions and warning! 
 #####################################################################
-
+if [ ! -d $HOME/arch ] ;then
 rm setupTermuxArch.sh 2>/dev/null||:
 wget https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.sh
 bash setupTermuxArch.sh 
@@ -22,5 +22,9 @@ cd $HOME
 rm setupTermuxArch.sh 2>/dev/null||:
 #dpkg --purge termux-exec
 printf "raf.sh done\n"
+else 
+printf "raf.sh exiting\n"
+exit
+fi
 exit
 
