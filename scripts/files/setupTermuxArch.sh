@@ -7,24 +7,10 @@
 
 depend ()
 {
-	printf '\033]2;  Thank you for using `setupTermuxArch.sh` 📲 \007'"\n 🕛 \033[36;1m< 🕛 This setup script will attempt to set Arch Linux up in your Termux environment.  When successfully completed, you will be enjoying the bash prompt in Arch Linux in Termux on your smartphone or tablet.  If you do not see 🕐 one o'clock below, run this script again. You might want to check your Internet connection too.  \033[37;1m\n\n	1)	Checking Termux for necessary components.  \n\n"
-	if [ -f $PREFIX/bin/bsdtar ]; then
-		echo
-	elif [ -f $PREFIX/bin/proot ]; then
-		echo
-	elif [ -f $PREFIX/bin/wget ]; then
-		printf "		Requirements satisfied.  \n\n" 
-	else
-		required 
-	fi
-	printf "	2)	Installing the script components for Arch Linux in Termux installation.  \n\n"
+	printf '\033]2;  Thank you for using `setupTermuxArch.sh` 📲 \007'"\n 🕛 \033[36;1m< 🕛 This setup script will attempt to set Arch Linux up in your Termux environment.  When successfully completed, you will be enjoying the bash prompt in Arch Linux in Termux on your smartphone or tablet.  If you do not see 🕐 one o'clock below, run this script again. You might want to check your Internet connection too.  \n\n"
+	apt-get -qq install bsdtar proot wget --yes 
 	wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.tar.gz
 	wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.md5 
-	integratycheck1 
-}
-
-integratycheck1 ()
-{
 	if md5sum -c setupTermuxArch.md5 ; then
 		printmd5syschk1success 
 		bsdtar -xf setupTermuxArch.tar.gz
@@ -54,12 +40,6 @@ rmfiles1 ()
 {
 	rm setupTermuxArch.md5
 	rm setupTermuxArch.tar.gz
-}
-
-required ()
-{
-	apt-get -qq install bsdtar proot wget --yes 
-	printf "		Requirements satisfied.  \n\n" 
 }
 
 # Main Block
