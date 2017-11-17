@@ -45,16 +45,16 @@ copybin2path ()
 {
 	printf " 🕦 \033[36;1m<\033[0m 🕛 "
 	while true; do
-	read -p "Copy $bin to your \$PATH? [y|n]" answer
+	read -p "Copy \033[32;1m$bin \033[0mto your \033[1;34m\$PATH\033[0m? [y|n]" answer
 	if [[ $answer = [Yy]* ]];then
 		cp $HOME/arch/$bin $PREFIX/bin
-		printf "\n 🕛 \033[36;1m=\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[32;1m$PREFIX/bin\033[0m.  "
+		printf "\n 🕛 \033[36;1m=\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[1;34m$PREFIX/bin\033[0m.  "
 		break
 	elif [[ $answer = [Nn]* ]];then
-		printf "\n 🕛 \033[36;1m=\033[0m 🕛 "
+		printf "\n 🕛 \033[32;1m=\033[0m 🕛 "
 		break
 	elif [[ $answer = [Qq]* ]];then
-		printf "\n 🕛 \033[36;1m=\033[0m 🕛 "
+		printf "\n 🕛 \033[32;1m=\033[0m 🕛 "
 		break
 	else
 		printf "\n 🕦 \033[36;1m<\033[0m 🕛 You answered \033[33;1m$answer\033[0m.\n"
@@ -151,41 +151,17 @@ preproot ()
 
 touchupsys ()
 {
-	rm etc/resolv* 2>/dev/null||:
-	cat > etc/resolv.conf <<- EOM
-	nameserver 8.8.8.8
-	nameserver 8.8.4.4
-	EOM
-	if [ -f "etc/locale.gen" ]; then
-		sed -i '/\#en_US.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}' etc/locale.gen 
-	else
-		cat >  etc/locale.gen <<- EOM
-		en_US.UTF-8 UTF-8 
-		EOM
-	fi
-	if [ -f "$HOME/.bashrc" ]; then
-		cp $HOME/.bashrc root/ 
-	else
-		bashrc 
-	fi
-	if [ -f "$HOME/.bash_profile" ]; then
-		cp $HOME/.bash_profile root/ 
-	else
-		bash_profile 
-	fi
-	echo "PATH=\$PATH:/root/bin" >> root/.bash_profile
-	echo ". /root/.bashrc" >> root/.bash_profile
-	if [ -d "$HOME/bin" ]; then
-		cp -r $HOME/bin root 2>/dev/null||:
-	else
-		mkdir -p root/bin
-	fi
+	mkdir -p root/bin
+	addbashrc 
+	addbash_profile 
 	addga
-	addgcm
 	addgcl
+	addgcm
 	addgp
 	addgpl
+	addresolv.conf 
 	finishsetup
+	locale.gen
 }
 
 rmfiles2 ()

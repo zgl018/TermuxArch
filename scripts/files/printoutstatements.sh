@@ -18,7 +18,7 @@ printdownloading ()
 
 printfooter()
 {
-	printf "\n\033[36;1m 🕙 < 🕛 Run \033[32;1mfinishsetup.sh\033[0m to continue the installation. Alternatively, go on with the installation by doing the following:\n\n	1) Run \033[32;1mlocale-gen\033[0m to generate the en_US.UTF-8 locale.  Edit \033[34;1m/etc/locale.gen \033[0mwith \033[34;1mnano\033[0m or \033[34;1mvi\033[0m specifing your preferred locale and run \033[32;1mlocale-gen\033[0m if you want other locales. See https://wiki.archlinux.org/index.php/Locale for more information.  \n\n	2) Adjust your \033[36;1m/etc/pacman.d/mirrorlist\033[0m file in accordance with your geographic location. Use \033[32;1mpacman -Syu\033[0m to update your Arch Linux in Termux distribution.  See https://wiki.archlinux.org/index.php/Pacman for more information.  \n\n\033[0m"
+	printf "\n\033[36;1m 🕙 < 🕛 \033[0mRun \033[32;1mfinishsetup.sh\033[0m to continue the installation. Alternatively, go on with the installation by doing the following:\n\n	1) Run \033[32;1mlocale-gen\033[0m to generate the en_US.UTF-8 locale.  Edit \033[34;1m/etc/locale.gen \033[0mwith \033[34;1mnano\033[0m or \033[34;1mvi\033[0m specifing your preferred locale and run \033[32;1mlocale-gen\033[0m if you want other locales. See https://wiki.archlinux.org/index.php/Locale for more information.  \n\n	2) Adjust your \033[1;34m/etc/pacman.d/mirrorlist\033[0m file in accordance with your geographic location. Use \033[32;1mpacman -Syu\033[0m to update your Arch Linux in Termux distribution.  See https://wiki.archlinux.org/index.php/Pacman for more information.  \n\n\033[0m"
 }
 
 printmd5check ()

@@ -14,7 +14,15 @@ startbin ()
 	chmod 700 $bin
 }
 
-bashrc ()
+addbash_profile ()
+{
+	cat > root/.bash_profile <<- EOM
+	PATH=\$HOME/bin:\$PATH
+	. /root/.bashrc
+	EOM
+}
+
+addbashrc ()
 {
 	cat > root/.bashrc <<- EOM
 	alias c='cd .. && pwd'
@@ -36,11 +44,6 @@ bashrc ()
 	alias rf='rm -rf'
 	alias v='vim'
 	EOM
-}
-
-bash_profile ()
-{
-	touch root/.bash_profile 
 }
 
 addga ()
@@ -88,6 +91,32 @@ addgp ()
 	chmod 700 root/bin/gp 
 }
 
+addresolv.conf ()
+{
+	rm etc/resolv* 2>/dev/null||:
+	cat > etc/resolv.conf <<- EOM
+	nameserver 8.8.8.8
+	nameserver 8.8.4.4
+	EOM
+}
+
+addmotd ()
+{
+	cat > etc/motd  <<- EOM
+	Welcome to Arch Linux in Termux!
+
+	Chat:      https://gitter.im/termux/termux/
+	Community: https://wiki.termux.com/wiki/Community
+	Help:      \`man <package>\` and \`info <package>\`
+
+	Install a package: pacman -S <package>
+	More information:  pacman -D|F|Q|R|S|T|U --help
+	Search packages:   pacman -Ss <query>
+	Upgrade packages:  pacman -Syu
+	EOM
+	chmod 700 root/bin/gp 
+}
+
 finishsetup ()
 {
 	cat > root/bin/finishsetup.sh  <<- EOM
@@ -114,5 +143,16 @@ finishsetup ()
 	rm \$HOME/bin/finishsetup.sh 2>/dev/null ||:
 	EOM
 	chmod 700 root/bin/finishsetup.sh 
+}
+
+locale.gen ()
+{
+	if [ -f "etc/locale.gen" ]; then
+		sed -i '/\#en_US.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}' etc/locale.gen 
+	else
+		cat >  etc/locale.gen <<- EOM
+		en_US.UTF-8 UTF-8 
+		EOM
+	fi
 }
 
