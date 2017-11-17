@@ -8,7 +8,7 @@
 
 ##### -rwxrwx--- [setupTermuxArch.tar.gz](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.tar.gz)
 
-##### -rwxrwx--- [systemconfigs.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/scripts/files/systemconfigs.sh)
+##### -rwxrwx--- [archsystemconfigs.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/scripts/files/archsystemconfigs.sh)
 
 ## Contributions have helped in the successful development of this script and project immensely.  The following contributors have helped to refine [setupTermuxArch.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.sh) 📲 __Thank you for contributing and collaborating!__  
 
