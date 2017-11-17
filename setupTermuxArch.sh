@@ -20,8 +20,8 @@ depend ()
 		. printoutstatements.sh
 		rmfiles1  
 	else
-		printmd5syschkerror
 		rmfiles1  
+		printmd5syschkerror
 	fi
 }
 
