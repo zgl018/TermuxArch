@@ -105,7 +105,7 @@ getimage ()
 
 integratycheck2 ()
 {
-	if md5sum -c termuxarchchecksum.md5; then
+	if md5sum -c termuxarchchecksum.md5 -s ; then
 		rmfiles2  
 		printmd5syschksuccess 
 	else
@@ -128,7 +128,7 @@ makesystem ()
 	adjustmd5file 
 	getimage
 	printmd5check
-	if md5sum -c $file.md5; then
+	if md5sum -c $file.md5 -s ; then
 		printmd5success
 		preproot 
 	else
