@@ -1,7 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash -e
+# Copyright 2017 by SDRausty. All rights reserved.
 # Website for this project at https://sdrausty.github.io/TermuxArch
 # See https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank You 
-# Copyright 2017 by SDRausty. All rights reserved.
 ################################################################################
 
 startbin ()
@@ -28,12 +28,13 @@ bashrc ()
 	alias gca='git commit -a'
 	alias gcam='git commit -am'
 	#alias gp='git push https://username:password@github.com/username/repository.git master'
-	alias h='history >> ~/.historyfile'
+	alias h='history >> \$HOME/.historyfile'
 	alias j='jobs'
 	alias l='ls -al'
 	alias p='pwd'
 	alias q='exit'
 	alias rf='rm -rf'
+	alias v='vim'
 	EOM
 }
 
