@@ -1,4 +1,0 @@
-blue=$(tput setaf 4)
-normal=$(tput sgr0)
-
-printf "%40s\n" "${blue}This text is blue${normal}"
