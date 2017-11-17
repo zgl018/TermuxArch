@@ -23,7 +23,7 @@ printfooter()
 
 printmd5check ()
 {
-	printf "\n\033[36;1m 🕠 < 🕛 \033[1;34mChecking download integrity with md5sum.  \033[37;1mThis may take a little while.  \n\n\033[36;1m 🕕 < 🕛 \033[1;34m"
+	printf "\n\033[36;1m 🕠 < 🕛 \033[1;34mChecking download integrity with md5sum.  \033[37;1mThis may take a little while.  \n\n"
 }
 
 printmd5error ()
@@ -34,7 +34,7 @@ printmd5error ()
 
 printmd5success ()
 {
-	printf "\n\033[36;1m 🕡 < 🕛 \033[1;34mDownloaded files integrity: OK  \n\n\033[36;1m 🕖 < 🕛 \033[1;34mNow uncompressing $file.  \033[37;1mThis will take much longer!  Be patient.  \n\033[0m"
+	printf "\n\033[36;1m 🕕 < 🕛 \033[1;34mDownloaded files integrity: OK  \n\n\033[36;1m 🕡 < 🕛 \033[1;34mNow uncompressing $file.  \033[37;1mThis will take much longer!  Be patient.  \n\033[0m"
 }
 
 printmd5syschksuccess ()
