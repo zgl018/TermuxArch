@@ -8,12 +8,12 @@
 
 printdetectedsystem ()
 {
-	printf "\033[0m\n 🕜 \033[36;1m< 🕛 Detected $(uname -mo) Operating System.  \033[0m\n"
+	printf "\033[0m\n 🕑 \033[36;1m< 🕛 \033[1;34mDetected $(uname -mo) Operating System.  \033[0m\n"
 }
 
 printdownloading ()
 {
-	printf "\033[36;1m\n 🕑 < 🕛 Now downloading $file and the corresponding checksum.  Activating termux-wake-lock.  \033[37;1mThis may take a long time depending on your Internet speed.  \033[0m\n\n"
+	printf "\033[36;1m\n 🕝 < 🕛 \033[1;34mNow downloading $file and the corresponding checksum.  Activating termux-wake-lock.  \033[37;1mThis may take a long time depending on your Internet speed.  \033[0m\n\n"
 }
 
 printfooter()
@@ -23,7 +23,7 @@ printfooter()
 
 printmd5check ()
 {
-	printf "\033[36;1m\n 🕠 < 🕛 Checking download integrity with md5sum.  \033[37;1mThis may take a little while.  \033[0m\n\n 🕕 \033[36;1m< 🕛 "
+	printf "\033[36;1m\n 🕠 < 🕛 \033[1;34mChecking download integrity with md5sum.  \033[37;1mThis may take a little while.  \033[0m\n\n 🕕 \033[36;1m< 🕛 \033[1;34m"
 }
 
 printmd5error ()
@@ -34,12 +34,12 @@ printmd5error ()
 
 printmd5success ()
 {
-	printf "\033[0m\n\033[36;1m 🕡 < 🕛 Downloaded files integrity: OK  \n\n 🕖 < 🕛 Now uncompressing $file.  \033[37;1mThis will take much longer!  Be patient.  \033[0m\n"
+	printf "\033[0m\n\033[36;1m 🕡 < 🕛 \033[1;34mDownloaded files integrity: OK  \n\n 🕖 < 🕛 Now uncompressing $file.  \033[37;1mThis will take much longer!  Be patient.  \033[0m\n"
 }
 
 printmd5syschksuccess ()
 {
-	printf "\033[0m\n 🕐 \033[36;1m< 🕛 Installation script integrity: OK  \033[0m\n"
+	printf "\033[0m\n 🕜 \033[36;1m< 🕛 \033[1;34mInstallation script integrity: OK  \033[0m\n"
 }
 
 printmismatch ()
