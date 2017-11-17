@@ -1,0 +1,8 @@
+RED = 31
+GREEN = 32
+ESCAPE = '%s[' % chr(27)
+RESET = '%s0m' % ESCAPE
+FORMAT = '1;%dm'
+
+def colorize(text, color):
+    return ESCAPE + (FORMAT % (color, )) + text + RESET

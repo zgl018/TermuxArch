@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/sh -e 
+#!/bin/sh -e 
 # Copyright 2017 (c) all rights reserved by
 # SDRausty https://sdrausty.github.io 
 # Used for creating the commit message in conjunction with `resetTermuxArch.sh`.
