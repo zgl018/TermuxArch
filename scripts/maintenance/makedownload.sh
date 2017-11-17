@@ -5,6 +5,6 @@
 ################################################################################
 cp setupTermuxArch.sh ../..
 md5sum *sh > termuxarchchecksum.md5 
-#bsdtar -czv -f setupTermuxArch.tar.gz --strip-components 2 scripts/files/*
-bsdtar -czv -f ../../setupTermuxArch.tar.gz *
-md5sum ../../setupTermuxArch.tar.gz > ../../setupTermuxArch.md5
+cd ../..
+bsdtar -czv -f setupTermuxArch.tar.gz --strip-components 2 scripts/files/*
+md5sum setupTermuxArch.tar.gz > setupTermuxArch.md5
