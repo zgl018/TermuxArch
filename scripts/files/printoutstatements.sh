@@ -13,7 +13,7 @@ printdetectedsystem ()
 
 printdownloading ()
 {
-	printf "\n\033[36;1m 🕝 < 🕛 \033[1;34mNow downloading $file and the corresponding checksum.  Activating termux-wake-lock.  \033[37;1mThis may take a long time depending on your Internet speed.  \n\n\033[1;34m"
+	printf "\n\033[36;1m 🕝 < 🕛 \033[1;34mNow downloading \033[36;1m$file \033[1;34mand the corresponding checksum.  Activating termux-wake-lock.  \033[37;1mThis may take a long time depending on your Internet speed.  \n\n\033[36;1m"
 }
 
 printfooter()
@@ -34,7 +34,7 @@ printmd5error ()
 
 printmd5success ()
 {
-	printf "\n\033[36;1m 🕕 < 🕛 \033[1;34mDownloaded files integrity: OK  \n\n\033[36;1m 🕡 < 🕛 \033[1;34mNow uncompressing $file.  \033[37;1mThis will take much longer!  Be patient.  \n\033[0m"
+	printf "\n\033[36;1m 🕕 < 🕛 \033[1;34mDownloaded files integrity: OK  \n\n\033[36;1m 🕡 < 🕛 \033[1;34mNow uncompressing \033[36;1m$file\033[36;1m.  \033[37;1mThis will take much longer!  Be patient.  \n\033[0m"
 }
 
 printmd5syschksuccess ()
