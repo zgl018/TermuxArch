@@ -34,12 +34,12 @@ printmd5error ()
 
 printmd5success ()
 {
-	printf "\n\033[36;1m 🕕 < 🕛 \033[1;34mDownloaded files integrity: OK  \n\n\033[36;1m 🕡 < 🕛 \033[1;34mNow uncompressing \033[36;1m$file\033[36;1m.  \033[37;1mThis will take much longer!  Be patient.  \n\033[0m"
+	printf "\n\033[36;1m 🕕 < 🕛 \033[1;34mDownloaded files integrity: \033[36;1mOK  \n\n\033[36;1m 🕡 < 🕛 \033[1;34mNow uncompressing \033[36;1m$file\033[36;1m.  \033[37;1mThis will take much longer!  Be patient.  \n\033[0m"
 }
 
 printmd5syschksuccess ()
 {
-	printf "\n\033[36;1m 🕜 < 🕛 \033[1;34mInstallation script integrity: OK  \n\033[0m"
+	printf "\n\033[36;1m 🕜 < 🕛 \033[1;34mInstallation script integrity: \033[36;1mOK  \n\033[0m"
 }
 
 printmismatch ()
