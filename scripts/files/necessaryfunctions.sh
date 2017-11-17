@@ -15,24 +15,6 @@ adjustmd5file ()
 	fi
 }
 
-askuser ()
-{
-	printf "\n\033[36;1m"
-	while true; do
-	read -p "Are you installing on Android or on a Chromebook? (A|C)?"  ac
-	if [[ $ac = [Aa]* ]];then
-		armv7lAndroid 
-		break
-	elif [[ $ac = [Cc]* ]];then
-		armv7lChrome 
-		break
-	else
-		printf "\nYou answered \033[36;1m$ac\033[36;1m.\n"
-		printf "\nAnswer Android or Chrome (A|C).\n\n"
-	fi
-	done
-}
-
 callsystem ()
 {
 	integratycheck2
@@ -45,7 +27,7 @@ copybin2path ()
 {
 	printf " 🕦 \033[36;1m<\033[0m 🕛 "
 	while true; do
-	read -p "Copy \033[32;1m$bin \033[0mto your \033[1;34m\$PATH\033[0m? [y|n]" answer
+	read -p "Copy \`$bin\` to your \`\$PATH\`? [y|n]" answer
 	if [[ $answer = [Yy]* ]];then
 		cp $HOME/arch/$bin $PREFIX/bin
 		printf "\n 🕛 \033[36;1m=\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[1;34m$PREFIX/bin\033[0m.  "
