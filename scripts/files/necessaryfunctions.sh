@@ -30,7 +30,7 @@ copybin2path ()
 	read -p "Copy \`$bin\` to your \`\$PATH\`? [y|n]" answer
 	if [[ $answer = [Yy]* ]];then
 		cp $HOME/arch/$bin $PREFIX/bin
-		printf "\n 🕛 \033[36;1m=\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[1;34m$PREFIX/bin\033[0m.  "
+		printf "\n 🕛 \033[32;1m=\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[1;34m$PREFIX/bin\033[0m.  "
 		break
 	elif [[ $answer = [Nn]* ]];then
 		printf "\n 🕛 \033[32;1m=\033[0m 🕛 "
