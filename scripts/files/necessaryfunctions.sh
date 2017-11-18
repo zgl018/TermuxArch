@@ -51,7 +51,7 @@ detectsystem ()
 	if [ "$(getprop ro.product.cpu.abi)" = "arm64-v8a" ];then
 		aarch64
 	elif [ "$(getprop ro.product.cpu.abi)" = "armeabi" ];then
-		armv8l
+		armv5l
 	elif [ "$(getprop ro.product.cpu.abi)" = "armeabi-v7a" ];then
 		detectsystem2 
 	elif [ "$(getprop ro.product.cpu.abi)" = "x86" ];then
@@ -83,15 +83,12 @@ detectsystem2p ()
 
 getimage ()
 {
-	# Get latest image for x86_64. This wants refinement. Continue does not work. 
-	# https://stackoverflow.com/questions/15040132/how-to-wget-the-more-recent-file-of-a-directory
-	# wget -A tar.gz -m -nd -np http://mirrors.evowise.com/archlinux/iso/latest/
-	# wget -A tar.gz -m -nd -np http://$mirror$path
-	#if [ "$(getprop ro.product.cpu.abi)" = "x86" ];then
-	#	wget -A tar.gz -m -nd -np http://$mirror$path
-	#else
+	# Get latest image for x86_64 wants refinement.  __Continue does not work.__  https://stackoverflow.com/questions/15040132/how-to-wget-the-more-recent-file-of-a-directory
+	if [ "$(getprop ro.product.cpu.abi)" = "x86_64" ];then
+		wget -A tar.gz -m -nd -np http://$mirror$path
+	else
 		wget -q -c --show-progress http://$mirror$path$file
-	#fi
+	fi
 }
 
 integratycheck2 ()
@@ -150,6 +147,7 @@ touchupsys ()
 	addgcm
 	addgp
 	addgpl
+	addmotd
 	addresolv.conf 
 	finishsetup
 	locale.gen

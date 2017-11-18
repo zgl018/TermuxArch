@@ -49,7 +49,7 @@ i686 ()
 
 x86_64 ()
 {
-	# Wants to download latest file automatically.
+	# Download latest file automatically.  $file is not needed.
 	file=archlinux-bootstrap-2017.11.01-x86_64.tar.gz
 	mirror=mirrors.evowise.com
 	path=/archlinux/iso/latest/
