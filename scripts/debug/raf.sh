@@ -8,23 +8,17 @@
 # See README.md for instructions and warning! 
 #####################################################################
 if [ ! -d $HOME/arch ] ;then
-rm setupTermuxArch.sh 2>/dev/null||:
-wget https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.sh
+wget -N https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.sh
 bash setupTermuxArch.sh 
 printf "Exited setupTermuxArch.sh\nContinuing raf.sh \n"
-cd $HOME/arch||:
+cd $HOME/arch
 rm -rf * 2>/dev/null||:
 find -type d -exec chmod 700 {} \; 2>/dev/null||:
 rm -rf *
 cd ..
-rm -rf arch
-cd $HOME
-rm setupTermuxArch.sh 2>/dev/null||:
-#dpkg --purge termux-exec
+rmdir arch
 printf "raf.sh done\n"
 else 
-printf "raf.sh exiting\n"
-exit
+printf "raf.sh exiting\nnothing to do\n"
 fi
-exit
 

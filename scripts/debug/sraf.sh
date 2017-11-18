@@ -8,7 +8,7 @@
 # See README.md for instructions and warning! 
 #####################################################################
 if [ -d $HOME/arch ] ;then
-cd $HOME/arch||:
+cd $HOME/arch
 rm -rf * 2>/dev/null||:
 find -type d -exec chmod 700 {} \; 2>/dev/null||:
 rm -rf *
@@ -16,7 +16,6 @@ cd ..
 rmdir arch
 printf "sraf.sh done\n"
 else 
-printf "sraf.sh exiting\n"
-exit
+printf "sraf.sh exiting\nnothing to do\n"
 fi
 
