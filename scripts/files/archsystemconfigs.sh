@@ -44,6 +44,7 @@ addbashrc ()
 	alias q='exit'
 	alias rf='rm -rf'
 	alias v='vim'
+	cat /etc/motd
 	EOM
 }
 
@@ -106,14 +107,14 @@ addmotd ()
 	cat > etc/motd  <<- EOM
 	Welcome to Arch Linux in Termux!
 
-	Chat:      https://gitter.im/termux/termux/
-	Community: https://wiki.termux.com/wiki/Community
-	Help:      \`man <package>\` and \`info <package>\`
+	Chat:    https://gitter.im/termux/termux/
+	Help:   \`man <package>\` and \`info <package>\`
+	Portal:  https://wiki.termux.com/wiki/Community
 
 	Install a package: pacman -S <package>
-	More information:  pacman -D|F|Q|R|S|T|U --help
-	Search packages:   pacman -Ss <query>
-	Upgrade packages:  pacman -Syu
+	More  information: pacman -D|F|Q|R|S|T|U --help
+	Search   packages: pacman -Ss <query>
+	Upgrade  packages: pacman -Syu
 	EOM
 	chmod 700 root/bin/gp 
 }
