@@ -25,22 +25,22 @@ callsystem ()
 
 copybin2path ()
 {
-	printf " 🕦 \033[36;1m<\033[0m 🕛 "
+	printf " 🕚 \033[36;1m<\033[0m 🕛 "
 	while true; do
 	read -p "Copy \`$bin\` to your \`\$PATH\`? [y|n]" answer
 	if [[ $answer = [Yy]* ]];then
 		cp $HOME/arch/$bin $PREFIX/bin
-		printf "\n 🕛 \033[32;1m=\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[1;34m$PREFIX/bin\033[0m.  "
+		printf "\n 🕦 \033[36;1m<\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[1;34m$PREFIX/bin\033[0m.  "
 		break
 	elif [[ $answer = [Nn]* ]];then
-		printf "\n 🕛 \033[32;1m=\033[0m 🕛 "
+		printf "\n 🕦 \033[36;1m<\033[0m 🕛 "
 		break
 	elif [[ $answer = [Qq]* ]];then
-		printf "\n 🕛 \033[32;1m=\033[0m 🕛 "
+		printf "\n 🕦 \033[36;1m<\033[0m 🕛 "
 		break
 	else
-		printf "\n 🕦 \033[36;1m<\033[0m 🕛 You answered \033[33;1m$answer\033[0m.\n"
-		printf "\n 🕦 \033[36;1m<\033[0m 🕛 Answer Yes or No (y|n).\n\n"
+		printf "\n 🕚 \033[36;1m<\033[0m 🕛 You answered \033[33;1m$answer\033[0m.\n"
+		printf "\n 🕚 \033[36;1m<\033[0m 🕛 Answer Yes or No (y|n).\n\n"
 	fi
 	done
 }
@@ -135,6 +135,28 @@ preproot ()
 	else
 		proot --link2symlink bsdtar -xpf $file 2>/dev/null||:
 	fi
+}
+
+releasewakelock ()
+{
+	printf " 🕦 \033[36;1m<\033[0m 🕛 "
+	while true; do
+	read -p "Release termux-wake-lock? [y|n]" answer
+	if [[ $answer = [Yy]* ]];then
+		termux-wake-unlock
+		printf "\n 🕛 \033[32;1m=\033[0m 🕛 Termux-wake-lock released.  \033[0m.  "
+		break
+	elif [[ $answer = [Nn]* ]];then
+		printf "\n 🕛 \033[32;1m=\033[0m 🕛 "
+		break
+	elif [[ $answer = [Qq]* ]];then
+		printf "\n 🕛 \033[32;1m=\033[0m 🕛 "
+		break
+	else
+		printf "\n 🕦 \033[36;1m<\033[0m 🕛 You answered \033[33;1m$answer\033[0m.\n"
+		printf "\n 🕦 \033[36;1m<\033[0m 🕛 Answer Yes or No (y|n).\n\n"
+	fi
+	done
 }
 
 touchupsys ()

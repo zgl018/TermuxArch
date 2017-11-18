@@ -108,7 +108,7 @@ addmotd ()
 	Welcome to Arch Linux in Termux!
 
 	Chat:    https://gitter.im/termux/termux/
-	Help:   \`man <package>\` and \`info <package>\`
+	Help:    man <package> and info <package>
 	Portal:  https://wiki.termux.com/wiki/Community
 
 	Install a package: pacman -S <package>
