@@ -17,9 +17,9 @@ rm -rf arch
 cd $HOME
 rm setupTermuxArch.sh 2>/dev/null||:
 #dpkg --purge termux-exec
-printf "raf.sh done\n"
+printf "sraf.sh done\n"
 else 
-printf "raf.sh exiting\n"
+printf "sraf.sh exiting\n"
 exit
 fi
 exit
