@@ -14,7 +14,7 @@ printdetectedsystem ()
 
 printdownloading ()
 {
-	printf "\n\033[36;1m 🕝 < 🕛 \033[1;34mNow downloading \033[36;1m$file \033[1;34mand the corresponding checksum.  \033[1;36mActivating termux-wake-lock.  \033[37;1mThis may take a long time depending on your Internet speed.  \n\n\033[36;1m"
+	printf "\n\033[36;1m 🕝 < 🕛 \033[1;34mNow downloading \033[36;1m$file \033[1;34mand the corresponding checksum.  \033[1;36mActivating termux-wake-lock.  \033[37;1mThis may take a long time depending on your Internet connection.  \n\n\033[36;1m"
 }
 
 printfooter()
