@@ -12,15 +12,11 @@ cd $HOME/arch||:
 rm -rf * 2>/dev/null||:
 find -type d -exec chmod 700 {} \; 2>/dev/null||:
 rm -rf *
-cd ..
-rm -rf arch
 cd $HOME
-rm setupTermuxArch.sh 2>/dev/null||:
-#dpkg --purge termux-exec
+rm -rf arch
 printf "sraf.sh done\n"
 else 
 printf "sraf.sh exiting\n"
 exit
 fi
-exit
 
