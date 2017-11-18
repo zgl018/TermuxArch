@@ -14,9 +14,8 @@ printf "Exited setupTermuxArch.sh\nContinuing raf.sh \n"
 cd $HOME/arch
 rm -rf * 2>/dev/null||:
 find -type d -exec chmod 700 {} \; 2>/dev/null||:
-rm -rf *
 cd ..
-rmdir arch
+rm -rf arch
 printf "raf.sh done\n"
 else 
 printf "raf.sh exiting\nnothing to do\n"
