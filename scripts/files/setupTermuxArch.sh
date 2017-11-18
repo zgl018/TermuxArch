@@ -14,7 +14,7 @@ depend ()
 		printf "\n\n\033[36;1m"
 		apt-get -qq update && apt-get -qq upgrade -y
 		apt-get -qq install bsdtar proot wget --yes 
-		printf "\n"
+		printf "\n 🕧 \033[36;1m< 🕛 \033[1;34mTermux package requirements satisfied: \033[36;1mOK  \n"
 	fi
 	wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.tar.gz
 	wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.md5 
