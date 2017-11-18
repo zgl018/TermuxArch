@@ -12,6 +12,7 @@ depend ()
 		printf "Termux package requirements satisfied: \033[36;1mContinuing  \n\n"
 	else
 		printf "\n\n\033[36;1m"
+		apt-get -qq update && apt-get -qq upgrade -y
 		apt-get -qq install bsdtar proot wget --yes 
 		printf "\n"
 	fi
