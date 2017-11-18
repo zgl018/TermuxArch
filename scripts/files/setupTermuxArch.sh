@@ -40,7 +40,7 @@ printmd5syschkerror ()
 
 printmd5syschk1success ()
 {
-	printf "\033[0m\n 🕐 \033[36;1m< 🕛 \033[1;34mInstallation script download: \033[36;1mOK  \n\033[0m"
+	printf "\033[0m\n 🕐 \033[36;1m< 🕛 \033[1;34mInstallation script download: \033[36;1mOK  \n\n\033[36;1m"
 }
 
 rmfiles1 ()
