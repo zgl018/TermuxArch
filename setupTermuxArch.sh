@@ -18,7 +18,7 @@ depend ()
 	fi
 	wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.tar.gz
 	wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.md5 
-	if md5sum -c setupTermuxArch.md5 -s ; then
+	if md5sum -c setupTermuxArch.md5 ; then
 		printmd5syschk1success 
 		bsdtar -xf setupTermuxArch.tar.gz
 		. archsystemconfigs.sh
