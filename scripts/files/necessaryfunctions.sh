@@ -33,10 +33,10 @@ copybin2path ()
 		printf "\n 🕦 \033[36;1m<\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[1;34m$PREFIX/bin\033[0m.  "
 		break
 	elif [[ $answer = [Nn]* ]];then
-		printf "\n 🕦 \033[36;1m<\033[0m 🕛 "
+		printf "\n"
 		break
 	elif [[ $answer = [Qq]* ]];then
-		printf "\n 🕦 \033[36;1m<\033[0m 🕛 "
+		printf "\n"
 		break
 	else
 		printf "\n 🕚 \033[36;1m<\033[0m 🕛 You answered \033[33;1m$answer\033[0m.\n"
@@ -144,7 +144,7 @@ releasewakelock ()
 	read -p "Release termux-wake-lock? [y|n]" answer
 	if [[ $answer = [Yy]* ]];then
 		termux-wake-unlock
-		printf "\n 🕛 \033[32;1m=\033[0m 🕛 Termux-wake-lock released.  \033[0m.  "
+		printf "\n 🕛 \033[32;1m=\033[0m 🕛 Termux-wake-lock released.  \033[0m"
 		break
 	elif [[ $answer = [Nn]* ]];then
 		printf "\n 🕛 \033[32;1m=\033[0m 🕛 "
