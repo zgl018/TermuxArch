@@ -14,7 +14,7 @@ printdetectedsystem ()
 
 printdownloading ()
 {
-	printf "\n\033[36;1m 🕝 < 🕛 \033[1;34mNow downloading \033[36;1m$file \033[1;34mand the corresponding checksum.  \033[1;36mActivating termux-wake-lock.  \033[37;1mThis may take a long time depending on your Internet connection.  \n\n\033[36;1m"
+	printf '\033]2;  🕝 < 🕛 Now downloading $file and the corresponding checksum.  \007'"\n\033[36;1m 🕝 < 🕛 \033[1;34mNow downloading \033[36;1m$file \033[1;34mand the corresponding checksum.  Activating termux-wake-lock.  \033[37;1mThis may take a long time depending on your Internet connection.  \n\n\033[36;1m"
 }
 
 printfooter()
@@ -35,7 +35,7 @@ printmd5error ()
 
 printmd5success ()
 {
-	printf "\n\033[36;1m 🕕 < 🕛 \033[1;34mDownloaded files integrity: \033[36;1mOK  \n\n\033[36;1m 🕡 < 🕛 \033[1;34mNow uncompressing \033[36;1m$file\033[37;1m.  This will take much longer!  Be patient.  \n\033[0m"
+	printf '\033]2;  🕡 < 🕛 Now uncompressing $file.  This will take much longer!  Be patient.  \007'"\n\033[36;1m 🕕 < 🕛 \033[1;34mDownloaded files integrity: \033[36;1mOK  \n\n\033[36;1m 🕡 < 🕛 \033[1;34mNow uncompressing \033[36;1m$file\033[37;1m.  This will take much longer!  Be patient.  \n\033[0m"
 }
 
 printmd5syschksuccess ()
@@ -51,8 +51,8 @@ printmismatch ()
 
 printtail ()
 {
-	printf "\n\033[36;1m 🕚 < 🕛 \033[0mUse \033[32;1m./arch/$bin\033[0m from your \033[1;34m\$HOME\033[0m directory to launch Arch Linux in Termux for future sessions.   Alternatively copy \033[32;1m$bin\033[0m to your \033[1;34m\$PATH\033[0m which is, \033[1;34m\"$PATH\"\033[0m.  \n\n"
+	printf '\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'"\n\033[36;1m 🕚 < 🕛 \033[0mUse \033[32;1m./arch/$bin\033[0m from your \033[1;34m\$HOME\033[0m directory to launch Arch Linux in Termux for future sessions.   Alternatively copy \033[32;1m$bin\033[0m to your \033[1;34m\$PATH\033[0m which is, \033[1;34m\"$PATH\"\033[0m.  \n\n"
 	copybin2path 
-	printf "Thank you for using \033[32;1msetupTermuxArch.sh\033[0m to install Arch Linux in Termux🏁  \033[1;34mExiting...   \n\n\033[0m"'\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'
+	printf "Thank you for using \033[32;1msetupTermuxArch.sh\033[0m to install Arch Linux in Termux🏁  \033[1;34mExiting...   \n\n\033[0m"
 }
 
