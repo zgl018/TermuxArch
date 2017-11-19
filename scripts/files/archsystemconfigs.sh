@@ -4,22 +4,13 @@
 # See https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank You 
 ################################################################################
 
-startbin ()
-{
-	cat > $bin <<- EOM
-	#!/data/data/com.termux/files/usr/bin/bash -e
-	unset LD_PRELOAD
-	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin /bin/bash --login
-	EOM
-	chmod 700 $bin
-}
-
 addbash_profile ()
 {
 	cat > root/.bash_profile <<- EOM
 	PATH=\$HOME/bin:\$PATH
 	. /root/.bashrc
 	EOM
+	grep export $HOME/.bash_profile >>  root/.bash_profile 
 }
 
 addbashrc ()
@@ -38,7 +29,7 @@ addbashrc ()
 	#alias gp='git push https://username:password@github.com/username/repository.git master'
 	alias h='history >> \$HOME/.historyfile'
 	alias j='jobs'
-	alias l='ls -al --color=always'
+	alias l='ls -al'
 	alias ls='ls --color=always'
 	alias p='pwd'
 	alias q='exit'
@@ -89,6 +80,7 @@ addgp ()
 	cat > root/bin/gp  <<- EOM
 	#!/bin/bash -e
 	git push
+	#git push https://username:password@github.com/username/repository.git master
 	EOM
 	chmod 700 root/bin/gp 
 }
@@ -105,10 +97,10 @@ addresolv.conf ()
 addmotd ()
 {
 	cat > etc/motd  <<- EOM
-	Welcome to Arch Linux in Termux!
+	Welcome to Arch Linux in Termux!  Enjoy!
 
 	Chat:    https://gitter.im/termux/termux/
-	Help:    man <package> and info <package>
+	Help:    info <package> and  man <package> 
 	Portal:  https://wiki.termux.com/wiki/Community
 
 	Install a package: pacman -S <package>
@@ -136,12 +128,23 @@ finishsetup ()
 		printf "\nYou answered \033[36;1m\$nv\033[32;1m.\n"
 		printf "\nAnswer nano or vi (n|v).\n\n"
 	fi
+	done	
+	while true; do
+	var1="Would you like to run \033[32;1mlocale-gen\033[0m to generate the en_US.UTF-8 locale?  Or would like to edit \033[34;1m/etc/locale.gen \033[0mwith \033[34;1m$nv\033[0m to specify your preferred locale before running \033[32;1mlocale-gen\033[0m. See https://wiki.archlinux.org/index.php/Locale for more information.  \n\n	1)	Answer yes to run \033[32;1mlocale-gen\033[0m to generate the en_US.UTF-8 locale (Yy).\n	2)	Answer edit (Ee) to edit \033[34;1m/etc/locale.gen \033[0mwith \033[34;1m$nv\033[0m to specify your preferred locale before running \033[32;1mlocale-gen\033[0m.\n\n"
+	read -p $var1 ye
+	if [[ \$ye = [Yy]* ]];then
+		locale-gen
+	elif [[ \$ye = [Ee]* ]];then
+		\$ed /etc/locale.gen
+		locale-gen
+	else
+		printf "\nYou answered \033[36;1m\$ye\033[32;1m.\n"
+		printf "\nAnswer yes or edit (Yy|Ee).\n\n"
+	fi
 	done
-	\$ed /etc/locale.gen
-	locale-gen
 	\$ed /etc/pacman.d/mirrorlist
 	pacman -Syu ||:
-	printf "\nUse \033[36;1mexit\033[32;1m to conclude this installation.\033[0m\n\n"
+	printf "\nUse \033[36;1mexit (e|q)\033[32;1m to conclude this installation.\033[0m\n\n"
 	rm \$HOME/bin/finishsetup.sh 2>/dev/null ||:
 	EOM
 	chmod 700 root/bin/finishsetup.sh 
@@ -156,5 +159,15 @@ locale.gen ()
 		en_US.UTF-8 UTF-8 
 		EOM
 	fi
+}
+
+startbin ()
+{
+	cat > $bin <<- EOM
+	#!/data/data/com.termux/files/usr/bin/bash -e
+	unset LD_PRELOAD
+	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin /bin/bash --login
+	EOM
+	chmod 700 $bin
 }
 
