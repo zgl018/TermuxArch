@@ -53,6 +53,7 @@ addga ()
 	#!/bin/bash -e
 	if [ ! -e /usr/bin/git ] ; then
 		pacman -Syu git --noconfirm
+		git add .
 	else
 		git add .
 	fi
@@ -80,6 +81,7 @@ addgcm ()
 	#!/bin/bash -e
 	if [ ! -e /usr/bin/git ] ; then
 		pacman -Syu git --noconfirm
+		git commit
 	else
 		git commit
 	fi
@@ -93,6 +95,7 @@ addgpl ()
 	#!/bin/bash -e
 	if [ ! -e /usr/bin/git ] ; then
 		pacman -Syu git --noconfirm
+		git pull
 	else
 		git pull
 	fi
@@ -107,6 +110,7 @@ addgp ()
 	#git push https://username:password@github.com/username/repository.git master
 	if [ ! -e /usr/bin/git ] ; then
 		pacman -Syu git --noconfirm
+		git push
 	else
 		git push
 	fi
