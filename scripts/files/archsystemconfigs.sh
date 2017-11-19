@@ -117,7 +117,7 @@ finishsetup ()
 	#!/bin/bash -e
 	printf "\n\033[32;1m"
 	while true; do
-	read -p "Would you like to use nano or vi? (n|v)?"  nv
+	read -p "Would you like to use \`nano\` or \`vi\` to edit your Arch Linux configuration files? (n|v)?"  nv
 	if [[ \$nv = [Nn]* ]];then
 		ed=nano
 		break
@@ -129,10 +129,20 @@ finishsetup ()
 		printf "\nAnswer nano or vi (n|v).\n\n"
 	fi
 	done	
-	\$ed /etc/locale.gen
-	locale-gen
+	while true; do
+	read -p "Would you like to run \`locale-gen\` to generate the en_US.UTF-8 locale or would like to edit /etc/locale.gen to specify your preferred locale before running \`locale-gen\`? See https://wiki.archlinux.org/index.php/Locale for more information.  1)	Answer yes (y) to run \`locale-gen\` to generate the en_US.UTF-8 locale (Yy).  2)	Answer edit (e) to edit /etc/locale.gen to specify your preferred locale before running \`locale-gen\`." ye
+	if [[ \$ye = [Yy]* ]];then
+		locale-gen
+	elif [[ \$ye = [Ee]* ]];then
+		\$ed /etc/locale.gen
+		locale-gen
+	else
+		printf "\nYou answered \033[36;1m\$ye\033[32;1m.\n"
+		printf "\nAnswer yes or edit (Yy|Ee).\n\n"
+	fi
+	done
 	\$ed /etc/pacman.d/mirrorlist
-	pacman -Syu ||:
+	pacman -Syu --noconfirm ||:
 	printf "\nUse \033[36;1mexit (e|q)\033[32;1m to conclude this installation.\033[0m\n\n"
 	rm \$HOME/bin/finishsetup.sh 2>/dev/null ||:
 	EOM
