@@ -223,6 +223,7 @@ addyt ()
 /usr/bin/youtube-dl
 	if [ ! -e /usr/bin/youtube-dl ] ; then
 		pacman -Syu python-pip --noconfirm
+		pip install youtube-dl
 	else
 		youtube-dl $@
 	fi
