@@ -10,7 +10,7 @@ printdetectedsystem ()
 {
 	printf "\n\033[36;1m 🕑 < 🕛 \033[1;34mDetected $(uname -m) " 
 	detectsystem2p 
-	printf "\033[32;1mActivating termux-wake-lock.  "
+	printf "\033[36;1mActivating termux-wake-lock.  "
 }
 
 printdownloading ()
