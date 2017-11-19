@@ -21,7 +21,6 @@ depend ()
 	printf "\n"
 	if md5sum -c setupTermuxArch.md5 ; then
 		printf "\n 🕐 \033[36;1m< 🕛 \033[1;34mInstallation script download: \033[36;1mOK  \n\n\033[36;1m"
-		printmd5syschk1success 
 		bsdtar -xf setupTermuxArch.tar.gz
 		. archsystemconfigs.sh
 		. knownconfigurations.sh
