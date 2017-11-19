@@ -120,7 +120,7 @@ finishsetup ()
 	grep export $HOME/.bash_profile >>  root/bin/finishsetup.sh
 	grep export $HOME/.bashrc >>  root/bin/finishsetup.sh
 	cat >> root/bin/finishsetup.sh  <<- EOM
-	printf "\n\033[32;1m"
+	printf "\033[32;1m"
 	while true; do
 	read -p "Would you like to use \\\`nano\\\` or \\\`vi\\\` to edit your Arch Linux configuration files? (n|v)?  "  nv
 	if [[ \$nv = [Nn]* ]];then
@@ -136,7 +136,7 @@ finishsetup ()
 	done	
 	printf "\n"
 	while true; do
-	read -p "Do you want to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale or would like to edit /etc/locale.gen to specify your preferred locale before running \\\`locale-gen\\\` to set your native language?  Answer run (r) or edit (e).  " ye
+	read -p "Do you want to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale or would like to edit /etc/locale.gen to specify your preferred language before running \\\`locale-gen\\\`?  Answer run (r) or edit (e).  " ye
 	if [[ \$ye = [Rr]* ]];then
 		locale-gen
 		break
