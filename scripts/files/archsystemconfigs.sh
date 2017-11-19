@@ -8,8 +8,6 @@ addbash_profile ()
 {
 	cat > root/.bash_profile <<- EOM
 	PATH=\$HOME/bin:\$PATH
-	#PS1="[\A\[\033[0;32m\] \W \[\033[0m\]]\\$ "
-	#PS1="\[\033[1;31m\]\u@\[\033[1;37m\]\h \[\033[1;34m\]\${PWD##*/} $\[\033[0m\]
 	. /root/.bashrc
 	EOM
 	if [ -f $HOME/.bash_profile ] ; then
