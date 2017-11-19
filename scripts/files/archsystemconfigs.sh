@@ -9,8 +9,14 @@ addbash_profile ()
 	cat > root/.bash_profile <<- EOM
 	PATH=\$HOME/bin:\$PATH
 	. /root/.bashrc
+	PS1="[\A\[\033[0;32m\] \W \[\033[0m\]]\\$ "
+	#PS1="\[\033[1;31m\]\u@\[\033[1;37m\]\h \[\033[1;34m\]\${PWD##*/} $\[\033[0m\]
 	EOM
-	grep export $HOME/.bash_profile >>  root/.bash_profile 
+	if [ -f $HOME/.bash_profile ] ; then
+		grep export $HOME/.bash_profile >>  root/.bash_profile 
+	else
+		:
+	fi
 }
 
 addbashrc ()
@@ -37,7 +43,11 @@ addbashrc ()
 	alias v='vim'
 	cat /etc/motd
 	EOM
-	grep export $HOME/.bashrc >>  root/.bashrc 
+	if [ -f $HOME/.bashrc ] ; then
+		grep export $HOME/.bashrc >>  root/.bashrc 
+	else
+		:
+	fi
 }
 
 addga ()
