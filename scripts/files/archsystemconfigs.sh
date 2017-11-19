@@ -151,6 +151,7 @@ finishsetup ()
 	done
 	\$ed /etc/pacman.d/mirrorlist
 	pacman -Syu --noconfirm ||:
+	printf '\033]2; 🕙 < 🕛 Your Arch Linux in Termux is installed and configured.  📲  \007'
 	rm \$HOME/bin/finishsetup.sh 2>/dev/null ||:
 	EOM
 	chmod 700 root/bin/finishsetup.sh 
