@@ -19,7 +19,7 @@ printdownloading ()
 
 printfooter()
 {
-	printf "\n\033[36;1m 🕙 < 🕛 \033[32;1mYour Arch Linux in Termux is installed. Please answer the following questions to complete Arch Linux configuration.  \n\n\033[0m"'\033]2; 🕙 < 🕛 Your Arch Linux in Termux is installed. Please complete the Arch Linux configuration.  📲  \007'
+	printf "\n\033[36;1m 🕙 < 🕛 Termux-wake-lock released.  \033[32;1mYour Arch Linux in Termux is installed! Please answer the following questions to complete Arch Linux configuration.  \n\n\033[0m"'\033]2; 🕙 < 🕛 Your Arch Linux in Termux is installed! Please complete the Arch Linux configuration.  📲  \007'
 }
 
 printmd5check ()
