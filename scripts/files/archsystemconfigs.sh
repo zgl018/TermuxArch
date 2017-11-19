@@ -37,6 +37,7 @@ addbashrc ()
 	alias v='vim'
 	cat /etc/motd
 	EOM
+	grep export $HOME/.bashrc >>  root/.bashrc 
 }
 
 addga ()
@@ -79,8 +80,8 @@ addgp ()
 {
 	cat > root/bin/gp  <<- EOM
 	#!/bin/bash -e
-	git push
 	#git push https://username:password@github.com/username/repository.git master
+	git push
 	EOM
 	chmod 700 root/bin/gp 
 }
@@ -162,6 +163,16 @@ locale.gen ()
 	fi
 }
 
+startbin ()
+{
+	cat > $bin <<- EOM
+	#!/data/data/com.termux/files/usr/bin/bash -e
+	unset LD_PRELOAD
+	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin /bin/bash --login
+	EOM
+	chmod 700 $bin
+}
+
 setupbin ()
 {
 	cat > root/bin/setupbin.sh <<- EOM
@@ -169,16 +180,6 @@ setupbin ()
 	unset LD_PRELOAD
 	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin $HOME/arch/root/bin/finishsetup.sh
 	rm setupbin.sh
-	EOM
-	chmod 700 $bin
-}
-
-startbin ()
-{
-	cat > $bin <<- EOM
-	#!/data/data/com.termux/files/usr/bin/bash -e
-	unset LD_PRELOAD
-	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin /bin/bash --login
 	EOM
 	chmod 700 $bin
 }

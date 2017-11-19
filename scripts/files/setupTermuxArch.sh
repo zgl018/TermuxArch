@@ -56,5 +56,6 @@ callsystem
 $HOME/arch/root/bin/setupbin ||: 
 printtail
 $HOME/arch/$bin ||: 
+printtail2
 exit 
 

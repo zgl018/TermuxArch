@@ -106,7 +106,6 @@ makebin ()
 {
 	bin=startarch
 	startbin 
-	setupbin 
 	touchupsys 
 }
 
@@ -174,6 +173,7 @@ touchupsys ()
 	addresolv.conf 
 	finishsetup
 	locale.gen
+	setupbin 
 }
 
 rmfiles2 ()
