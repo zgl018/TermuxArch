@@ -13,7 +13,8 @@ addbash_profile ()
 	if [ ! -e $HOME/.bash_profile ] ; then
 		:
 	else
-		grep proxy $HOME/.bash_profile >>  root/.bash_profile 
+		grep proxy $HOME/.bash_profile >>  root/.bash_profile ||:
+
 	fi
 }
 
@@ -44,7 +45,7 @@ addbashrc ()
 	if [ ! -e $HOME/.bashrc ] ; then
 		:
 	else
-		grep proxy $HOME/.bashrc >>  root/.bashrc 
+		grep proxy $HOME/.bashrc >>  root/.bashrc ||:
 	fi
 }
 
