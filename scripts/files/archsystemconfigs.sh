@@ -126,8 +126,8 @@ finishsetup ()
 	cat > root/bin/finishsetup.sh  <<- EOM
 	#!/bin/bash -e
 	EOM
-	grep export $HOME/.bash_profile >>  root/bin/finishsetup.sh
-	grep export $HOME/.bashrc >>  root/bin/finishsetup.sh
+	grep proxy $HOME/.bash_profile >>  root/bin/finishsetup.sh ||:
+	grep proxy $HOME/.bashrc >>  root/bin/finishsetup.sh ||:
 	cat >> root/bin/finishsetup.sh  <<- EOM
 	printf "\033[32;1m"
 	while true; do
