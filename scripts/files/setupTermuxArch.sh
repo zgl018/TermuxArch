@@ -56,6 +56,7 @@ callsystem
 $HOME/arch/root/bin/setupbin.sh ||: 
 rm $HOME/arch/root/bin/setupbin.sh
 printfooter
+termux-wake-unlock
 $HOME/arch/$bin ||: 
 printtail
 exit 
