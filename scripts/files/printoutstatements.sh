@@ -53,7 +53,7 @@ printtail ()
 {
 	printf '\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'"\n\033[36;1m 🕥 < 🕛 \033[0mUse \033[32;1m./arch/$bin\033[0m from your \033[1;34m\$HOME\033[0m directory to launch Arch Linux in Termux for future sessions.   Alternatively copy \033[32;1m$bin\033[0m to your \033[1;34m\$PATH\033[0m which is, \033[1;34m\"$PATH\"\033[0m.  \n\n"
 	copybin2path 
-	printf "\033[1;32mYour Arch Linux in Termux is installed, configured and updated.  🏁  \n\n\033[0m"
+	printf "\033[1;32mYour Arch Linux in Termux is installed and updated.  Use `tzselect` to assit in setting your time zone.  \n\n\033[0m"
 }
 
 printtail2 ()
