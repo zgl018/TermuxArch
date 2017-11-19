@@ -222,7 +222,7 @@ addt ()
 	if [ ! -e /usr/bin/tree ] ; then
 		pacman -Syu tree --noconfirm
 	else
-		tree $@
+		tree \$@
 	fi
 	EOM
 	chmod 700 root/bin/t 
@@ -236,7 +236,7 @@ addyt ()
 		pacman -Syu python-pip --noconfirm
 		pip install youtube-dl
 	else
-		youtube-dl $@
+		youtube-dl \$@
 	fi
 	EOM
 	chmod 700 root/bin/yt 
@@ -249,7 +249,7 @@ addv ()
 	if [ ! -e /usr/bin/vim ] ; then
 		pacman -Syu vim --noconfirm
 	else
-		vim $@
+		vim \$@
 	fi
 	EOM
 	chmod 700 root/bin/v 
