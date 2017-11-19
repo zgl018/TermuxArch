@@ -170,8 +170,8 @@ releasewakelock ()
 touchupsys ()
 {
 	mkdir -p root/bin
-	addbashrc 
 	addbash_profile 
+	addbashrc 
 	addga
 	addgcl
 	addgcm
@@ -179,6 +179,9 @@ touchupsys ()
 	addgpl
 	addmotd
 	addresolv.conf 
+	addt 
+	addyt 
+	addv 
 	finishsetup
 	locale.gen
 	setupbin 

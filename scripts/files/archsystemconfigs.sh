@@ -216,16 +216,41 @@ setupbin ()
 	chmod 700 root/bin/setupbin.sh
 }
 
+addt ()
+{
+	cat > root/bin/t  <<- EOM
+	#!/bin/bash -e
+	if [ ! -e /usr/bin/tree ] ; then
+		pacman -Syu tree --noconfirm
+	else
+		tree $@
+	fi
+	EOM
+	chmod 700 root/bin/ga 
+}
+
 addyt ()
 {
-	cat > root/bin/ga  <<- EOM
+	cat > root/bin/yt  <<- EOM
 	#!/bin/bash -e
-/usr/bin/youtube-dl
 	if [ ! -e /usr/bin/youtube-dl ] ; then
 		pacman -Syu python-pip --noconfirm
 		pip install youtube-dl
 	else
 		youtube-dl $@
+	fi
+	EOM
+	chmod 700 root/bin/ga 
+}
+
+addv ()
+{
+	cat > root/bin/v  <<- EOM
+	#!/bin/bash -e
+	if [ ! -e /usr/bin/vim ] ; then
+		pacman -Syu vim --noconfirm
+	else
+		vim $@
 	fi
 	EOM
 	chmod 700 root/bin/ga 
