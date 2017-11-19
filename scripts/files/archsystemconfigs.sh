@@ -116,6 +116,10 @@ finishsetup ()
 {
 	cat > root/bin/finishsetup.sh  <<- EOM
 	#!/bin/bash -e
+	EOM
+	grep export $HOME/.bash_profile >>  root/bin/finishsetup.sh
+	grep export $HOME/.bashrc >>  root/bin/finishsetup.sh
+	cat >> root/bin/finishsetup.sh  <<- EOM
 	printf "\n\033[32;1m"
 	while true; do
 	read -p "Would you like to use \\\`nano\\\` or \\\`vi\\\` to edit your Arch Linux configuration files? (n|v)?"  nv
@@ -146,7 +150,7 @@ finishsetup ()
 	done
 	\$ed /etc/pacman.d/mirrorlist
 	pacman -Syu --noconfirm ||:
-	printf "\nUse \033[36;1mexit (e|q)\033[32;1m to conclude this installation.\033[0m\n\n"
+	#printf "\nUse \033[36;1mexit (e|q)\033[32;1m to conclude this installation.\033[0m\n\n"
 	rm \$HOME/bin/finishsetup.sh 2>/dev/null ||:
 	EOM
 	chmod 700 root/bin/finishsetup.sh 
