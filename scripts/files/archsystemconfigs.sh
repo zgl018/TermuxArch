@@ -10,10 +10,10 @@ addbash_profile ()
 	PATH=\$HOME/bin:\$PATH
 	. /root/.bashrc
 	EOM
-	if [ -e $HOME/.bash_profile ] ; then
-		grep export $HOME/.bash_profile >>  root/.bash_profile 
-	else
+	if [ ! -e $HOME/.bash_profile ] ; then
 		:
+	else
+		grep export $HOME/.bash_profile >>  root/.bash_profile 
 	fi
 }
 
@@ -41,10 +41,10 @@ addbashrc ()
 	alias v='vim'
 	cat /etc/motd
 	EOM
-	if [ -e $HOME/.bashrc ] ; then
-		grep export $HOME/.bashrc >>  root/.bashrc 
-	else
+	if [ ! -e $HOME/.bashrc ] ; then
 		:
+	else
+		grep export $HOME/.bashrc >>  root/.bashrc 
 	fi
 }
 
