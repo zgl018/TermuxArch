@@ -10,7 +10,7 @@ addbash_profile ()
 	PATH=\$HOME/bin:\$PATH
 	. /root/.bashrc
 	EOM
-	if [ -f $HOME/.bash_profile ] ; then
+	if [ -e $HOME/.bash_profile ] ; then
 		grep export $HOME/.bash_profile >>  root/.bash_profile 
 	else
 		:
@@ -41,7 +41,7 @@ addbashrc ()
 	alias v='vim'
 	cat /etc/motd
 	EOM
-	if [ -f $HOME/.bashrc ] ; then
+	if [ -e $HOME/.bashrc ] ; then
 		grep export $HOME/.bashrc >>  root/.bashrc 
 	else
 		:
@@ -167,7 +167,7 @@ finishsetup ()
 
 locale.gen ()
 {
-	if [ -f "etc/locale.gen" ]; then
+	if [ -e "etc/locale.gen" ]; then
 		sed -i '/\#en_US.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}' etc/locale.gen 
 	else
 		cat >  etc/locale.gen <<- EOM
