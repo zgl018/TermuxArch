@@ -30,7 +30,7 @@ copybin2path ()
 	read -p "Copy \`$bin\` to your \`\$PATH\`? [y|n]" answer
 	if [[ $answer = [Yy]* ]];then
 		cp $HOME/arch/$bin $PREFIX/bin
-		printf "\n 🕦 \033[36;1m<\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[1;34m$PREFIX/bin\033[0m.\n"
+		printf "\n 🕦 \033[36;1m<\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[1;34m$PREFIX/bin\033[0m.\n\n"
 		break
 	elif [[ $answer = [Nn]* ]];then
 		printf "\n"
@@ -106,6 +106,7 @@ makebin ()
 {
 	bin=startarch
 	startbin 
+	setupbin 
 	touchupsys 
 }
 

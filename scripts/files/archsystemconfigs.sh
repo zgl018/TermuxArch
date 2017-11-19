@@ -162,6 +162,17 @@ locale.gen ()
 	fi
 }
 
+setupbin ()
+{
+	cat > root/bin/setupbin.sh <<- EOM
+	#!/data/data/com.termux/files/usr/bin/bash -e
+	unset LD_PRELOAD
+	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin $HOME/arch/root/bin/finishsetup.sh
+	rm setupbin.sh
+	EOM
+	chmod 700 $bin
+}
+
 startbin ()
 {
 	cat > $bin <<- EOM
