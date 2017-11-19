@@ -111,9 +111,9 @@ makebin ()
 
 makesystem ()
 {
-	termux-wake-lock 
 	printdownloading 
 	adjustmd5file 
+	termux-wake-lock 
 	getimage
 	printmd5check
 	if md5sum -c $file.md5 ; then
@@ -125,6 +125,7 @@ makesystem ()
 	fi
 	rm *.tar.gz *.tar.gz.md5
 	makebin 
+	termux-wake-unlock
 	printfooter
 }
 
