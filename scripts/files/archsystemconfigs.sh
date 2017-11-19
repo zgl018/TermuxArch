@@ -13,7 +13,7 @@ addbash_profile ()
 	if [ ! -e $HOME/.bash_profile ] ; then
 		:
 	else
-		grep proxy $HOME/.bash_profile >>  root/.bash_profile ||:
+		grep proxy $HOME/.bash_profile >>  root/.bash_profile 2>/dev/null||:
 
 	fi
 }
@@ -45,7 +45,7 @@ addbashrc ()
 	if [ ! -e $HOME/.bashrc ] ; then
 		:
 	else
-		grep proxy $HOME/.bashrc >>  root/.bashrc ||:
+		grep proxy $HOME/.bashrc >>  root/.bashrc 2>/dev/null||:
 	fi
 }
 
@@ -126,8 +126,8 @@ finishsetup ()
 	cat > root/bin/finishsetup.sh  <<- EOM
 	#!/bin/bash -e
 	EOM
-	grep proxy $HOME/.bash_profile >>  root/bin/finishsetup.sh ||:
-	grep proxy $HOME/.bashrc >>  root/bin/finishsetup.sh ||:
+	grep proxy $HOME/.bash_profile >>  root/bin/finishsetup.sh 2>/dev/null||:
+	grep proxy $HOME/.bashrc >>  root/bin/finishsetup.sh 2>/dev/null||:
 	cat >> root/bin/finishsetup.sh  <<- EOM
 	printf "\033[32;1m"
 	while true; do
