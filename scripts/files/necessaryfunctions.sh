@@ -30,7 +30,7 @@ copybin2path ()
 	read -p "Copy \`$bin\` to your \`\$PATH\`? [y|n]" answer
 	if [[ $answer = [Yy]* ]];then
 		cp $HOME/arch/$bin $PREFIX/bin
-		printf "\n 🕦 \033[36;1m<\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[1;34m$PREFIX/bin\033[0m.\n\n"
+		printf "\n 🕦 \033[36;1m<\033[0m 🕛 Copied \033[32;1m$bin\033[0m to \033[1;34m$PREFIX/bin\033[0m.\n"
 		break
 	elif [[ $answer = [Nn]* ]];then
 		printf "\n\n"
@@ -83,7 +83,7 @@ detectsystem2p ()
 
 getimage ()
 {
-	# Get latest image for x86_64 wants refinement.  __Continue does not work.__  https://stackoverflow.com/questions/15040132/how-to-wget-the-more-recent-file-of-a-directory
+	# Get latest image for x86_64 wants refinement.  __Continue does not work!__  https://stackoverflow.com/questions/15040132/how-to-wget-the-more-recent-file-of-a-directory
 	if [ "$(getprop ro.product.cpu.abi)" = "x86_64" ];then
 		wget -A tar.gz -m -nd -np http://$mirror$path
 	else
