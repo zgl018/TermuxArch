@@ -216,3 +216,17 @@ setupbin ()
 	chmod 700 root/bin/setupbin.sh
 }
 
+addyt ()
+{
+	cat > root/bin/ga  <<- EOM
+	#!/bin/bash -e
+/usr/bin/youtube-dl
+	if [ ! -e /usr/bin/youtube-dl ] ; then
+		pacman -Syu python-pip --noconfirm
+	else
+		youtube-dl $@
+	fi
+	EOM
+	chmod 700 root/bin/ga 
+}
+
