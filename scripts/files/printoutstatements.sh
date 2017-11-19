@@ -58,6 +58,6 @@ printfooter ()
 
 printtail ()
 {
-	printf "\n\033[0mThank you for using \033[1;32m\`setupTermuxArch.sh\`\033[0m to install Arch Linux in Termux 🏁  \033[1;32mExiting...   \n\n\033[0m"'\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'
+	printf "\n\033[0mThank you for using \033[1;32m\`setupTermuxArch.sh\`\033[0m to install Arch Linux in Termux 🏁  \n\033[1;32m	Exiting...   \n\n\033[0m"'\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'
 }
 
