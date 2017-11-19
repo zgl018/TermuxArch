@@ -226,7 +226,7 @@ addt ()
 		tree $@
 	fi
 	EOM
-	chmod 700 root/bin/ga 
+	chmod 700 root/bin/t 
 }
 
 addyt ()
@@ -240,7 +240,7 @@ addyt ()
 		youtube-dl $@
 	fi
 	EOM
-	chmod 700 root/bin/ga 
+	chmod 700 root/bin/yt 
 }
 
 addv ()
@@ -253,6 +253,6 @@ addv ()
 		vim $@
 	fi
 	EOM
-	chmod 700 root/bin/ga 
+	chmod 700 root/bin/v 
 }
 
