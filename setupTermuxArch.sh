@@ -54,9 +54,9 @@ rmfiles1 ()
 depend 
 callsystem 
 $HOME/arch/root/bin/setupbin.sh ||: 
-rm $HOME/arch/root/bin/setupbin.sh
-printfooter
 termux-wake-unlock
+printfooter
+rm $HOME/arch/root/bin/setupbin.sh
 $HOME/arch/$bin ||: 
 printtail
 exit 
