@@ -134,8 +134,9 @@ finishsetup ()
 		printf "\nAnswer nano or vi (n|v).\n\n"
 	fi
 	done	
+	printf "\n"
 	while true; do
-	read -p "Would you like to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale or would like to edit /etc/locale.gen to specify your preferred locale before running \\\`locale-gen\\\`?  Answer run (r) or edit (e) ." ye
+	read -p "Do you want to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale or would like to edit /etc/locale.gen to specify your preferred locale before running \\\`locale-gen\\\` to set your native language?  Answer run (r) or edit (e) ." ye
 	if [[ \$ye = [Rr]* ]];then
 		locale-gen
 		break
