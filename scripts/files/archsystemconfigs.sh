@@ -38,7 +38,6 @@ addbashrc ()
 	alias p='pwd'
 	alias q='exit'
 	alias rf='rm -rf'
-	alias v='vim'
 	cat /etc/motd
 	EOM
 	if [ ! -e $HOME/.bashrc ] ; then
