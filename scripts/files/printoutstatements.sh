@@ -51,11 +51,13 @@ printmismatch ()
 
 printfooter ()
 {
-	printf '\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'"\n\033[36;1m 🕥 < 🕛 \033[0mUse \033[32;1m./arch/$bin\033[0m from your \033[1;34m\$HOME\033[0m directory to launch Arch Linux in Termux for future sessions.   Alternatively copy \033[32;1m$bin\033[0m to your \033[1;34m\$PATH\033[0m which is, \033[1;34m\"$PATH\"\033[0m.  \n\n `copybin2path`\033[36;1mTermux-wake-lock released.  Your Arch Linux in Termux is installed and updated.  Use \033[32;1m\`tzselect\`\033[36;1m to assit in setting your time zone.  \n\n\033[0m"
+	printf '\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'"\n\033[36;1m 🕥 < 🕛 \033[0mUse \033[32;1m./arch/$bin\033[0m from your \033[1;34m\$HOME\033[0m directory to launch Arch Linux in Termux for future sessions.   Alternatively copy \033[32;1m$bin\033[0m to your \033[1;34m\$PATH\033[0m which is, \033[1;34m\"$PATH\"\033[0m.  \n\n"
+	copybin2path
+	printf "\033[36;1mTermux-wake-lock released.  Your Arch Linux in Termux is installed and updated.  Use \033[32;1m\`tzselect\`\033[36;1m to assit in setting your time zone.  \n\n\033[0m"
 }
 
 printtail ()
 {
-	printf "\033[0mThank you for using setupTermuxArch.sh to install Arch Linux in Termux 🏁  \033[1;32mExiting...   \n\n\033[0m"'\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'
+	printf "\n\033[0mThank you for using setupTermuxArch.sh to install Arch Linux in Termux 🏁  \033[1;32mExiting...   \n\n\033[0m"'\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'
 }
 
