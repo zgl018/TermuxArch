@@ -125,7 +125,6 @@ makesystem ()
 	fi
 	rm *.tar.gz *.tar.gz.md5
 	makebin 
-	termux-wake-unlock
 	printconfigq 
 }
 
