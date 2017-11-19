@@ -66,8 +66,9 @@ addgcl ()
 	#!/bin/bash -e
 	if [ ! -e /usr/bin/git ] ; then
 		pacman -Syu git --noconfirm
+		git clone \$@
 	else
-		git clone \$1
+		git clone \$@
 	fi
 	EOM
 	chmod 700 root/bin/gcl 
@@ -221,6 +222,7 @@ addt ()
 	#!/bin/bash -e
 	if [ ! -e /usr/bin/tree ] ; then
 		pacman -Syu tree --noconfirm
+		tree \$@
 	else
 		tree \$@
 	fi
@@ -235,6 +237,7 @@ addyt ()
 	if [ ! -e /usr/bin/youtube-dl ] ; then
 		pacman -Syu python-pip --noconfirm
 		pip install youtube-dl
+		youtube-dl \$@
 	else
 		youtube-dl \$@
 	fi
@@ -248,6 +251,7 @@ addv ()
 	#!/bin/bash -e
 	if [ ! -e /usr/bin/vim ] ; then
 		pacman -Syu vim --noconfirm
+		vim \$@
 	else
 		vim \$@
 	fi
