@@ -53,7 +53,7 @@ rmfiles1 ()
 # Main Block
 depend 
 callsystem 
-$HOME/arch/root/bin/setupbin ||: 
+$HOME/arch/root/bin/setupbin.sh ||: 
 printtail
 $HOME/arch/$bin ||: 
 printtail2
