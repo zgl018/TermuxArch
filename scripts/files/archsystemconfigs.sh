@@ -14,7 +14,6 @@ addbash_profile ()
 		:
 	else
 		grep proxy $HOME/.bash_profile >>  root/.bash_profile 2>/dev/null||:
-
 	fi
 }
 
@@ -53,7 +52,11 @@ addga ()
 {
 	cat > root/bin/ga  <<- EOM
 	#!/bin/bash -e
-	git add .
+	if [ ! -e /usr/bin/git ] ; then
+		pacman -Syu git --noconfirm
+	else
+		git add .
+	fi
 	EOM
 	chmod 700 root/bin/ga 
 }
@@ -62,7 +65,11 @@ addgcl ()
 {
 	cat > root/bin/gcl  <<- EOM
 	#!/bin/bash -e
-	git clone \$1
+	if [ ! -e /usr/bin/git ] ; then
+		pacman -Syu git --noconfirm
+	else
+		git clone \$1
+	fi
 	EOM
 	chmod 700 root/bin/gcl 
 }
@@ -71,7 +78,11 @@ addgcm ()
 {
 	cat > root/bin/gcm  <<- EOM
 	#!/bin/bash -e
-	git commit
+	if [ ! -e /usr/bin/git ] ; then
+		pacman -Syu git --noconfirm
+	else
+		git commit
+	fi
 	EOM
 	chmod 700 root/bin/gcm 
 }
@@ -80,7 +91,11 @@ addgpl ()
 {
 	cat > root/bin/gpl  <<- EOM
 	#!/bin/bash -e
-	git pull
+	if [ ! -e /usr/bin/git ] ; then
+		pacman -Syu git --noconfirm
+	else
+		git pull
+	fi
 	EOM
 	chmod 700 root/bin/gpl 
 }
@@ -90,7 +105,11 @@ addgp ()
 	cat > root/bin/gp  <<- EOM
 	#!/bin/bash -e
 	#git push https://username:password@github.com/username/repository.git master
-	git push
+	if [ ! -e /usr/bin/git ] ; then
+		pacman -Syu git --noconfirm
+	else
+		git push
+	fi
 	EOM
 	chmod 700 root/bin/gp 
 }
