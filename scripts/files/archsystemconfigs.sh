@@ -133,9 +133,11 @@ finishsetup ()
 	read -p "Would you like to run \`locale-gen\` to generate the en_US.UTF-8 locale or would like to edit /etc/locale.gen to specify your preferred locale before running \`locale-gen\`? See https://wiki.archlinux.org/index.php/Locale for more information.  1)	Answer yes (y) to run \`locale-gen\` to generate the en_US.UTF-8 locale (Yy).  2)	Answer edit (e) to edit /etc/locale.gen to specify your preferred locale before running \`locale-gen\`." ye
 	if [[ \$ye = [Yy]* ]];then
 		locale-gen
+		break
 	elif [[ \$ye = [Ee]* ]];then
 		\$ed /etc/locale.gen
 		locale-gen
+		break
 	else
 		printf "\nYou answered \033[36;1m\$ye\033[32;1m.\n"
 		printf "\nAnswer yes or edit (Yy|Ee).\n\n"
