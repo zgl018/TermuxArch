@@ -53,11 +53,11 @@ rmfiles1 ()
 # Main Block
 depend 
 callsystem 
-$HOME/arch/root/bin/setupbin.sh 2>/dev/null||: 
+$HOME/arch/root/bin/setupbin.sh ||: 
 termux-wake-unlock
 printfooter
 rm $HOME/arch/root/bin/setupbin.sh
-$HOME/arch/$bin 2>/dev/null||: 
+$HOME/arch/$bin ||: 
 printtail
 exit 
 
