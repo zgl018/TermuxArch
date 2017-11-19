@@ -117,7 +117,7 @@ finishsetup ()
 	#!/bin/bash -e
 	printf "\n\033[32;1m"
 	while true; do
-	read -p "Would you like to use \`nano\` or \`vi\` to edit your Arch Linux configuration files? (n|v)?"  nv
+	read -p "Would you like to use \\\`nano\\\` or \\\`vi\\\` to edit your Arch Linux configuration files? (n|v)?"  nv
 	if [[ \$nv = [Nn]* ]];then
 		ed=nano
 		break
@@ -130,7 +130,7 @@ finishsetup ()
 	fi
 	done	
 	while true; do
-	read -p "Would you like to run \`locale-gen\` to generate the en_US.UTF-8 locale or would like to edit /etc/locale.gen to specify your preferred locale before running \`locale-gen\`? See https://wiki.archlinux.org/index.php/Locale for more information.  1)	Answer yes (y) to run \`locale-gen\` to generate the en_US.UTF-8 locale (Yy).  2)	Answer edit (e) to edit /etc/locale.gen to specify your preferred locale before running \`locale-gen\`." ye
+	read -p "Would you like to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale or would like to edit /etc/locale.gen to specify your preferred locale before running \\\`locale-gen\\\`? See https://wiki.archlinux.org/index.php/Locale for more information.  1)	Answer yes (y) to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale (Yy).  2)	Answer edit (e) to edit /etc/locale.gen to specify your preferred locale before running \\\`locale-gen\\\`." ye
 	if [[ \$ye = [Yy]* ]];then
 		locale-gen
 		break
