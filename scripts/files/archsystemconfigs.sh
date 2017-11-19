@@ -135,8 +135,8 @@ finishsetup ()
 	fi
 	done	
 	while true; do
-	read -p "Would you like to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale or would like to edit /etc/locale.gen to specify your preferred locale before running \\\`locale-gen\\\`? See https://wiki.archlinux.org/index.php/Locale for more information.  1)	Answer yes (y) to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale (Yy).  2)	Answer edit (e) to edit /etc/locale.gen to specify your preferred locale before running \\\`locale-gen\\\`." ye
-	if [[ \$ye = [Yy]* ]];then
+	read -p "Would you like to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale or would like to edit /etc/locale.gen to specify your preferred locale before running \\\`locale-gen\\\`?  Answer run (r) or edit (e) ." ye
+	if [[ \$ye = [Rr]* ]];then
 		locale-gen
 		break
 	elif [[ \$ye = [Ee]* ]];then
@@ -150,7 +150,6 @@ finishsetup ()
 	done
 	\$ed /etc/pacman.d/mirrorlist
 	pacman -Syu --noconfirm ||:
-	#printf "\nUse \033[36;1mexit (e|q)\033[32;1m to conclude this installation.\033[0m\n\n"
 	rm \$HOME/bin/finishsetup.sh 2>/dev/null ||:
 	EOM
 	chmod 700 root/bin/finishsetup.sh 
@@ -183,7 +182,7 @@ setupbin ()
 	#!/data/data/com.termux/files/usr/bin/bash -e
 	unset LD_PRELOAD
 	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin $HOME/arch/root/bin/finishsetup.sh
-	rm setupbin.sh
+	rm \$HOME/bin/setupbin.sh 2>/dev/null ||:
 	EOM
 	chmod 700 root/bin/setupbin.sh
 }
