@@ -54,6 +54,7 @@ rmfiles1 ()
 depend 
 callsystem 
 $HOME/arch/root/bin/setupbin.sh ||: 
+rm $HOME/arch/root/bin/setupbin.sh
 printfooter
 $HOME/arch/$bin ||: 
 printtail
