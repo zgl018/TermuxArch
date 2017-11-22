@@ -57,8 +57,8 @@ printmd5syschkerror ()
 callsystem 
 $HOME/arch/root/bin/setupbin.sh ||: 
 termux-wake-unlock
-printfooter
 rm $HOME/arch/root/bin/setupbin.sh
+printfooter
 $HOME/arch/$bin ||: 
 printtail
 exit 
