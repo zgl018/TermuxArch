@@ -34,4 +34,6 @@ To understand more about "git bloat", run `du -hs .git` on older more mature pro
 
 * Pull requests are welcome [https://github.com/sdrausty/TermuxArch/pulls](https://github.com/sdrausty/TermuxArch/pulls) ✍
 
+Recommend `pacman -S rsync` when working with git repository. 
+
 Thanks for making this project work; Please contribute 🔆  See [contributors](./Contributors.md).  See [PRoot](docs/docs/PRoot) for more information about Linux on device with Termux and visit the [Termux wiki website](https://wiki.termux.com/) for more information.
