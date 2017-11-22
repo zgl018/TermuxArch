@@ -8,7 +8,8 @@ addbash_profile ()
 {
 	cat > root/.bash_profile <<- EOM
 	PATH=\$HOME/bin:\$PATH
-	. /root/.bashrc
+	. \$HOME/.bashrc
+	PS1="[\A\[\033[0;32m\] \W \[\033[0m\]]\\$ "
 	EOM
 	if [ ! -e $HOME/.bash_profile ] ; then
 		:
@@ -38,7 +39,7 @@ addbashrc ()
 	alias p='pwd'
 	alias q='exit'
 	alias rf='rm -rf'
-	cat /etc/motd
+	. /etc/motd
 	EOM
 	if [ ! -e $HOME/.bashrc ] ; then
 		:
@@ -130,16 +131,16 @@ addresolv.conf ()
 addmotd ()
 {
 	cat > etc/motd  <<- EOM
-	Welcome to Arch Linux in Termux!  Enjoy!
-
-	Chat:    https://gitter.im/termux/termux/
-	Help:    info <package> and  man <package> 
-	Portal:  https://wiki.termux.com/wiki/Community
-
-	Install a package: pacman -S <package>
-	More  information: pacman -D|F|Q|R|S|T|U --help
-	Search   packages: pacman -Ss <query>
-	Upgrade  packages: pacman -Syu
+	printf "\033[1;34mWelcome to Arch Linux in Termux!  Enjoy!\033[0m\033[1;34m
+	
+	Chat:    \033[0m\033[mhttps://gitter.im/termux/termux/\033[0m\033[1;34m
+	Help:    \033[0m\033[34minfo <query> \033[0m\033[mand \033[0m\033[34mman <query> \033[0m\033[1;34m
+	Portal:  \033[0m\033[mhttps://wiki.termux.com/wiki/Community\033[0m\033[1;34m
+	
+	Install a package: \033[0m\033[34mpacman -S <package>\033[0m\033[1;34m
+	More  information: \033[0m\033[34mpacman [-D|F|Q|R|S|T|U] --help\033[0m\033[1;34m
+	Search   packages: \033[0m\033[34mpacman -Ss <query>\033[0m\033[1;34m
+	Upgrade  packages: \033[0m\033[34mpacman -Syu \n\033[0m"
 	EOM
 	chmod 700 root/bin/gp 
 }
