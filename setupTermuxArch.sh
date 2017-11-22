@@ -5,33 +5,47 @@
 # If you are encountering issues with the system-image.tar.gz file regarding download time, repository website connection and/or md5 checksum error, edit this script and change $mirror to your desired geographic location in knownconfigurations.sh.  Before editing this file, ensure termux-wake-lock is running during script operation and that you have a stable Internet connection. 
 ################################################################################
 
-depend ()
-{
-	printf '\033]2;  Thank you for using `setupTermuxArch.sh` 📲 \007'"\n 🕛 \033[36;1m< 🕛 \033[1;34mThis setup script will attempt to set Arch Linux up in your Termux environment.  When successfully completed, you will be enjoying the bash prompt in Arch Linux in Termux on your smartphone or tablet.  If you do not see 🕐 one o'clock below, check your Internet connection and run this script again.  "
-	if [ -e $PREFIX/bin/bsdtar ] && [ -e $PREFIX/bin/proot ] && [ -e $PREFIX/bin/wget ] ; then
-		printf "Termux package requirements satisfied: \033[36;1mOK  \n\n"
-	else
-		printf "\n\n\033[36;1m"
-		apt-get -qq update && apt-get -qq upgrade -y
-		apt-get -qq install bsdtar proot wget --yes 
-		printf "\n 🕧 < 🕛 \033[1;34mTermux package requirements satisfied: \033[36;1mOK  \n\n"
-	fi
-	wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.tar.gz
-	wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.md5 
-	printf "\n"
-	if md5sum -c setupTermuxArch.md5 ; then
-		printf "\n 🕐 \033[36;1m< 🕛 \033[1;34mInstallation script download: \033[36;1mOK  \n\n\033[36;1m"
-		bsdtar -xf setupTermuxArch.tar.gz
-		. archsystemconfigs.sh
-		. knownconfigurations.sh
-		. necessaryfunctions.sh
-		. printoutstatements.sh
-		rmfiles1  
-	else
-		rmfiles1  
-		printmd5syschkerror
-	fi
-}
+printf '\033]2;  Thank you for using `setupTermuxArch.sh` 📲 \007'"\n 🕛 \033[36;1m< 🕛 \033[1;34mThis setup script will attempt to set Arch Linux up in your Termux environment.  When successfully completed, you will be enjoying the bash prompt in Arch Linux in Termux on your smartphone or tablet.  If you do not see 🕐 one o'clock below, check your Internet connection and run this script again.  "
+if [ -e $PREFIX/bin/bsdtar ] && [ -e $PREFIX/bin/proot ] && [ -e $PREFIX/bin/wget ] ; then
+	printf "Termux package requirements for Arch Linux: \033[36;1mOK  \n\n"
+else
+	printf "\n\n\033[36;1m"
+	apt-get -qq update && apt-get -qq upgrade -y
+	apt-get -qq install bsdtar proot wget --yes 
+	printf "\n 🕧 < 🕛 \033[1;34mTermux package requirements for Arch Linux: \033[36;1mOK  \n\n"
+fi
+wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.tar.gz
+wget -q -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.md5 
+printf "\n"
+if md5sum -c setupTermuxArch.md5 ; then
+	printf "\n 🕐 \033[36;1m< 🕛 \033[1;34mInstallation script download: \033[36;1mOK  \n\n\033[36;1m"
+	bsdtar -xf setupTermuxArch.tar.gz
+	rm setupTermuxArch.md5
+	rm setupTermuxArch.tar.gz
+else
+	rm setupTermuxArch.md5
+	rm setupTermuxArch.tar.gz
+	printmd5syschkerror
+fi
+if md5sum -c termuxarchchecksum.md5 ; then
+	. archsystemconfigs.sh
+	. knownconfigurations.sh
+	. necessaryfunctions.sh
+	. printoutstatements.sh
+	rm archsystemconfigs.sh
+	rm knownconfigurations.sh
+	rm necessaryfunctions.sh
+	rm printoutstatements.sh
+	rm termuxarchchecksum.md5
+	printf "\n\033[36;1m 🕜 < 🕛 \033[1;34mInstallation script integrity: \033[36;1mOK  \n\033[0m"
+else
+	rm archsystemconfigs.sh
+	rm knownconfigurations.sh
+	rm necessaryfunctions.sh
+	rm printoutstatements.sh
+	rm termuxarchchecksum.md5
+	printmd5syschkerror
+fi
 
 printmd5syschkerror ()
 {
@@ -39,14 +53,7 @@ printmd5syschkerror ()
 	exit 
 }
 
-rmfiles1 ()
-{
-	rm setupTermuxArch.md5
-	rm setupTermuxArch.tar.gz
-}
-
 # Main Block
-depend 
 callsystem 
 $HOME/arch/root/bin/setupbin.sh ||: 
 termux-wake-unlock

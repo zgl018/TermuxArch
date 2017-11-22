@@ -38,11 +38,6 @@ printmd5success ()
 	printf '\033]2;  🕡 < 🕛 Now uncompressing the system image file.  This will take much longer!  Be patient.  \007'"\n\033[36;1m 🕕 < 🕛 \033[1;34mDownloaded files integrity: \033[36;1mOK  \n\n\033[36;1m 🕡 < 🕛 \033[1;34mNow uncompressing \033[36;1m$file\033[37;1m.  This will take much longer!  Be patient.  \n\033[0m"
 }
 
-printmd5syschksuccess ()
-{
-	printf "\n\033[36;1m 🕜 < 🕛 \033[1;34mInstallation script integrity: \033[36;1mOK  \n\033[0m"
-}
-
 printmismatch ()
 {
 	printf "\n\033[07;1m\033[31;1m 🔆 ERROR Unknown configuration!  Did not find an architecture and operating system match in\033[37;1m knownconfigurations.sh\033[31;1m!  \033[36;1mDetected $(uname -mo).  There still is hope.  Check at http://mirror.archlinuxarm.org/os/ and https://www.archlinux.org/mirrors/ for other available images and see if any match your device.  If you find a match, then please \033[37;1msubmit a pull request\033[36;1m at https://github.com/sdrausty/TermuxArch/pulls with script modifications.  Alternatively, \033[37;1msubmit a modification request\033[36;1m at https://github.com/sdrausty/TermuxArch/issues if you find a configuration match.  Please include output from \033[37;1muname -mo\033[36;1m on the device in order to expand autodetection for \033[37;1msetupTermuxArch.sh\033[36;1m.  See https://sdrausty.github.io/TermuxArchPlus/Known_Configurations for more information.  \n\n	\033[36;1mRun setupTermuxArch.sh again. \033[31;1mExiting...  \n\033[0m"

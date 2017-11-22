@@ -33,7 +33,7 @@ addbashrc ()
 	#alias gp='git push https://username:password@github.com/username/repository.git master'
 	alias h='history >> \$HOME/.historyfile'
 	alias j='jobs'
-	alias l='ls -al'
+	alias l='ls -alG'
 	alias ls='ls --color=always'
 	alias p='pwd'
 	alias q='exit'

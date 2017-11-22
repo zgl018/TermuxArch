@@ -49,7 +49,7 @@ i686 ()
 
 x86_64 ()
 {
-	# Download latest file automatically.  $file is not needed.
+	# Wants to download latest file automatically.  $file is needed for md5sum check and download.
 	file=archlinux-bootstrap-2017.11.01-x86_64.tar.gz
 	mirror=mirrors.evowise.com
 	path=/archlinux/iso/latest/

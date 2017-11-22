@@ -17,7 +17,6 @@ adjustmd5file ()
 
 callsystem ()
 {
-	integratycheck2
 	mkdir -p $HOME/arch
 	cd $HOME/arch
 	detectsystem
@@ -48,12 +47,12 @@ copybin2path ()
 detectsystem ()
 {
 	printdetectedsystem
-	if [ "$(getprop ro.product.cpu.abi)" = "arm64-v8a" ];then
-		aarch64
-	elif [ "$(getprop ro.product.cpu.abi)" = "armeabi" ];then
+	if [ "$(getprop ro.product.cpu.abi)" = "armeabi" ];then
 		armv5l
 	elif [ "$(getprop ro.product.cpu.abi)" = "armeabi-v7a" ];then
 		detectsystem2 
+	elif [ "$(getprop ro.product.cpu.abi)" = "arm64-v8a" ];then
+		aarch64
 	elif [ "$(getprop ro.product.cpu.abi)" = "x86" ];then
 		i686 
 	elif [ "$(getprop ro.product.cpu.abi)" = "x86_64" ];then
@@ -83,23 +82,13 @@ detectsystem2p ()
 
 getimage ()
 {
-	# Get latest image for x86_64 wants refinement.  __Continue does not work!__  https://stackoverflow.com/questions/15040132/how-to-wget-the-more-recent-file-of-a-directory
-	if [ "$(getprop ro.product.cpu.abi)" = "x86_64" ];then
-		wget -A tar.gz -m -nd -np http://$mirror$path
-	else
-		wget -q -c --show-progress http://$mirror$path$file
-	fi
-}
-
-integratycheck2 ()
-{
-	if md5sum -c termuxarchchecksum.md5 ; then
-		rmfiles2  
-		printmd5syschksuccess 
-	else
-		rmfiles2  
-		printmd5syschkerror
-	fi
+	# Get latest image for x86_64 wants refinement.  __Continue does not work and when implemented will break md5sum check.__  https://stackoverflow.com/questions/15040132/how-to-wget-the-more-recent-file-of-a-directory
+#	if [ "$(getprop ro.product.cpu.abi)" = "x86_64" ];then
+#		wget -A tar.gz -m -nd -np http://$mirror$path
+#	else
+#		wget -q -c --show-progress http://$mirror$path$file
+#	fi
+wget -q -c --show-progress http://$mirror$path$file
 }
 
 makebin ()
@@ -185,14 +174,5 @@ touchupsys ()
 	finishsetup
 	locale.gen
 	setupbin 
-}
-
-rmfiles2 ()
-{
-	rm archsystemconfigs.sh
-	rm knownconfigurations.sh
-	rm necessaryfunctions.sh
-	rm printoutstatements.sh
-	rm termuxarchchecksum.md5
 }
 
