@@ -159,8 +159,39 @@ releasewakelock ()
 touchupsys ()
 {
 	mkdir -p root/bin
+	#add questions for editors for/fron finishsetup
+	printf "\033[32;1m"
+	while true; do
+	read -p "Do you want to use \\\`nano\\\` or \\\`vi\\\` to edit your Arch Linux configuration files [n|v]?  "  nv
+	if [[ \$nv = [Nn]* ]];then
+		ed=nano
+		apt-get -qq install nano --yes 
+		break
+	elif [[ \$nv = [Vv]* ]];then
+		ed=vi
+		break
+	else
+		printf "\nYou answered \033[36;1m\$nv\033[32;1m.\n"
+		printf "\nAnswer nano or vi (n|v).\n\n"
+	fi
+	done	
+	printf "\n"
+	while true; do
+	read -p "Would you like to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale or do you want to edit /etc/locale.gen specifying your preferred language before running \\\`locale-gen\\\`?  Answer run or edit [r|e].  " ye
+	if [[ \$ye = [Rr]* ]];then
+		:
+	elif [[ \$ye = [Ee]* ]];then
+		\$ed $HOME/arch/etc/locale.gen
+		break
+	else
+		printf "\nYou answered \033[36;1m\$ye\033[32;1m.\n"
+		printf "\nAnswer yes or edit (Yy|Ee).\n\n"
+	fi
+	\$ed $HOME/arch/etc/pacman.d/mirrorlist
+	done
 	addbash_profile 
 	addbashrc 
+	addprofile 
 	addga
 	addgcl
 	addgcm

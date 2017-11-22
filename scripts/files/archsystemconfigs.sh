@@ -14,7 +14,7 @@ addbash_profile ()
 	if [ ! -e $HOME/.bash_profile ] ; then
 		:
 	else
-		grep proxy $HOME/.bash_profile >>  root/.bash_profile 2>/dev/null||:
+		grep proxy $HOME/.bash_profile |grep "export" >>  root/.bash_profile 2>/dev/null||:
 	fi
 }
 
@@ -44,7 +44,19 @@ addbashrc ()
 	if [ ! -e $HOME/.bashrc ] ; then
 		:
 	else
-		grep proxy $HOME/.bashrc >>  root/.bashrc 2>/dev/null||:
+		grep proxy $HOME/.bashrc |grep "export" >>  root/.bashrc 2>/dev/null||:
+	fi
+}
+
+addprofile ()
+{
+	cat > root/.profile <<- EOM
+	. \$HOME/.bash_profile
+	EOM
+	if [ ! -e $HOME/.profile ] ; then
+		:
+	else
+		grep proxy $HOME/.profile |grep "export" >>  root/.profile 2>/dev/null||:
 	fi
 }
 
@@ -152,37 +164,10 @@ finishsetup ()
 	EOM
 	grep proxy $HOME/.bash_profile >>  root/bin/finishsetup.sh 2>/dev/null||:
 	grep proxy $HOME/.bashrc >>  root/bin/finishsetup.sh 2>/dev/null||:
+	grep proxy $HOME/.profile >>  root/bin/finishsetup.sh 2>/dev/null||:
 	cat >> root/bin/finishsetup.sh  <<- EOM
 	printf "\033[32;1m"
-	while true; do
-	read -p "Do you want to use \\\`nano\\\` or \\\`vi\\\` to edit your Arch Linux configuration files [n|v]?  "  nv
-	if [[ \$nv = [Nn]* ]];then
-		ed=nano
-		break
-	elif [[ \$nv = [Vv]* ]];then
-		ed=vi
-		break
-	else
-		printf "\nYou answered \033[36;1m\$nv\033[32;1m.\n"
-		printf "\nAnswer nano or vi (n|v).\n\n"
-	fi
-	done	
-	printf "\n"
-	while true; do
-	read -p "Would you like to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale or do you want to edit /etc/locale.gen specifying your preferred language before running \\\`locale-gen\\\`?  Answer run or edit [r|e].  " ye
-	if [[ \$ye = [Rr]* ]];then
-		locale-gen
-		break
-	elif [[ \$ye = [Ee]* ]];then
-		\$ed /etc/locale.gen
-		locale-gen
-		break
-	else
-		printf "\nYou answered \033[36;1m\$ye\033[32;1m.\n"
-		printf "\nAnswer yes or edit (Yy|Ee).\n\n"
-	fi
-	done
-	\$ed /etc/pacman.d/mirrorlist
+	locale-gen
 	pacman -Syu --noconfirm ||:
 	printf '\033]2; 🕙 < 🕛 Your Arch Linux in Termux is installed and configured.  📲  \007'
 	rm \$HOME/bin/finishsetup.sh 2>/dev/null ||:
