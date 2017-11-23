@@ -8,7 +8,8 @@ adjustmd5file ()
 {
 	if [ "$(uname -m)" = "x86_64" ] || [ "$(uname -m)" = "i686" ];then
 		wget -q -N --show-progress http://$mirror${path}md5sums.txt
-		sed '2q;d' md5sums.txt > $(ls *tar.gz).md5
+		filename=$(ls *tar.gz)
+		sed '2q;d' md5sums.txt > $filename.md5
 		rm md5sums.txt
 	else
 		wget -q -N --show-progress http://$mirror$path$file.md5
