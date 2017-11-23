@@ -174,12 +174,13 @@ touchupsys ()
 		printf "\nYou answered \033[36;1m$nv\033[32;1m.\n"
 		printf "\nAnswer nano or vi (n|v).\n\n"
 	fi
+		printf "\nYou answered \033[36;1m$nv\033[32;1m.\n"
 	done	
 	printf "\n"
 	while true; do
 	read -p "Would you like to run \\\`locale-gen\\\` to generate the en_US.UTF-8 locale or do you want to edit /etc/locale.gen specifying your preferred language before running \\\`locale-gen\\\`?  Answer run or edit [r|e].  " ye
 	if [[ $ye = [Rr]* ]];then
-		:
+		break
 	elif [[ $ye = [Ee]* ]];then
 		$ed $HOME/arch/etc/locale.gen
 		break
