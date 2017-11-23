@@ -5,7 +5,9 @@
 # If you are encountering issues with the system-image.tar.gz file regarding download time, repository website connection and/or md5 checksum error, edit this script and change $mirror to your desired geographic location in knownconfigurations.sh.  Before editing this file, ensure termux-wake-lock is running during script operation and that you have a stable Internet connection. 
 ################################################################################
 
-printf '\033]2;  Thank you for using `setupTermuxArch.sh` 📲 \007'"\n 🕛 \033[36;1m< 🕛 \033[1;34mThis setup script will attempt to set Arch Linux up in your Termux environment.  When successfully completed, you will be enjoying the bash prompt in Arch Linux in Termux on your smartphone or tablet.  If you do not see 🕐 one o'clock below, check your Internet connection and run this script again.  "
+depends ()
+{
+	printf '\033]2;  Thank you for using `setupTermuxArch.sh` 📲 \007'"\n 🕛 \033[36;1m< 🕛 \033[1;34mThis setup script will attempt to set Arch Linux up in your Termux environment.  When successfully completed, you will be enjoying the bash prompt in Arch Linux in Termux on your smartphone or tablet.  If you do not see 🕐 one o'clock below, check your Internet connection and run this script again.  "
 if [ -e $PREFIX/bin/bsdtar ] && [ -e $PREFIX/bin/proot ] && [ -e $PREFIX/bin/wget ] ; then
 	printf "Termux package requirements for Arch Linux: \033[36;1mOK  \n\n"
 else
@@ -36,6 +38,7 @@ else
 	rmdsc 
 	printmd5syschkerror
 fi
+}
 
 printmd5syschkerror ()
 {
@@ -59,6 +62,7 @@ rmds ()
 }
 
 # Main Block
+depends
 callsystem 
 $HOME/arch/root/bin/setupbin.sh ||: 
 termux-wake-unlock
