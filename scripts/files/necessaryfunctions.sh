@@ -143,7 +143,6 @@ touchupsys ()
 	addyt 
 	addv 
 	localegen
-	finishsetup
 	printf "\n\033[32;1m"
 	while true; do
 	read -p "Do you want to use \`nano\` or \`vi\` to edit your Arch Linux configuration files [n|v]?  "  nv
@@ -174,6 +173,7 @@ touchupsys ()
 	fi
 	done
 	$ed $HOME/arch/etc/pacman.d/mirrorlist
+	finishsetup
 	setupbin 
 }
 
