@@ -202,8 +202,8 @@ touchupsys ()
 		printf "\nYou answered \033[36;1m$ye\033[32;1m.\n"
 		printf "\nAnswer yes or edit (Yy|Ee).\n\n"
 	fi
-	$ed $HOME/arch/etc/pacman.d/mirrorlist
 	done
+	$ed $HOME/arch/etc/pacman.d/mirrorlist
 	setupbin 
 }
 
