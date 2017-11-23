@@ -20,9 +20,9 @@ printf "\n"
 if md5sum -c setupTermuxArch.md5 ; then
 	printf "\n 🕐 \033[36;1m< 🕛 \033[1;34mInstallation script download: \033[36;1mOK  \n\n\033[36;1m"
 	bsdtar -xf setupTermuxArch.tar.gz
-	removedownloadedscript
+	rmds 
 else
-	removedownloadedscript
+	rmds 
 	printmd5syschkerror
 fi
 if md5sum -c termuxarchchecksum.md5 ; then
@@ -30,10 +30,10 @@ if md5sum -c termuxarchchecksum.md5 ; then
 	. knownconfigurations.sh
 	. necessaryfunctions.sh
 	. printoutstatements.sh
-	removedownloadedscriptcomponents
+	rmdsc 
 	printf "\n\033[36;1m 🕜 < 🕛 \033[1;34mInstallation script integrity: \033[36;1mOK  \n\033[0m"
 else
-	removedownloadedscriptcomponents
+	rmdsc 
 	printmd5syschkerror
 fi
 
@@ -43,7 +43,7 @@ printmd5syschkerror ()
 	exit 
 }
 
-removedownloadedscriptcomponents ()
+rmdsc ()
 {
 	rm archsystemconfigs.sh
 	rm knownconfigurations.sh
@@ -52,7 +52,7 @@ removedownloadedscriptcomponents ()
 	rm termuxarchchecksum.md5
 }
 
-removedownloadedscript ()
+rmds ()
 {
 	rm setupTermuxArch.md5
 	rm setupTermuxArch.tar.gz
