@@ -142,8 +142,8 @@ touchupsys ()
 	addt 
 	addyt 
 	addv 
+	localegen
 	finishsetup
-	locale.gen
 	printf "\n\033[32;1m"
 	while true; do
 	read -p "Do you want to use \`nano\` or \`vi\` to edit your Arch Linux configuration files [n|v]?  "  nv

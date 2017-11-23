@@ -174,7 +174,7 @@ finishsetup ()
 	chmod 700 root/bin/finishsetup.sh 
 }
 
-locale.gen ()
+localegen ()
 {
 	if [ -e "etc/locale.gen" ]; then
 		sed -i '/\#en_US.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}' etc/locale.gen 
