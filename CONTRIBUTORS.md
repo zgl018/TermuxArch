@@ -28,6 +28,8 @@ jlam: contributed `getprop ro.product.device` Chromebook detection, `getprop ro.
 
 [@Neo-Oli](https://github.com/Neo-Oli) suggested `unset LD_PRELOAD` to resolve an issue when using `termux-exec`.  Result: setupTermuxArch.sh improved! 
 
+[@smu](https://github.com/smu) submitted an issue and helped debug i686 Chromebook installation.  Result: setupTermuxArch.sh improved!
+
 [@Soph1a7](https://github.com/Soph1a7) contributed to issues and submitted pull requests (locale-gen, printf, quiet, mirrors, `wget -A tar.gz -m -nd -np http://mirrors.evowise.com/archlinux/iso/latest`, et al ).  Also provided numerous constructive suggestions.  Result: setupTermuxArch.sh greatly improved, and working with this project improved too! 
 
 [@vishalbiswas](https://github.com/vishalbiswas) contributed: `export LD_PRELOAD=$PREFIX/lib/libtermux-exec.so`.  Result: setupTermuxArch.sh improved!
