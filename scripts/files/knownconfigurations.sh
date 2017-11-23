@@ -40,7 +40,7 @@ armv7lChrome ()
 
 i686 ()
 {
-	# i686 is frozen at release 2017.03.01-i686. See https://www.archlinux.org/news/phasing-out-i686-support/
+	# i686 is frozen at release 2017.03.01-i686. See https://www.archlinux.org/news/phasing-out-i686-support/ for more information.  
 	file=archlinux-bootstrap-2017.03.01-i686.tar.gz
 	mirror=archive.archlinux.org
 	path=/iso/2017.03.01/
@@ -49,8 +49,7 @@ i686 ()
 
 x86_64 ()
 {
-	# Wants to download latest file automatically.  $file is needed for md5sum check and download.
-#	file=archlinux-bootstrap-2017.11.01-x86_64.tar.gz
+	# x86_64 downloads the latest file automatically.  $file is unnecessary for download.
 	mirror=mirrors.evowise.com
 	path=/archlinux/iso/latest/
 	makesystem 

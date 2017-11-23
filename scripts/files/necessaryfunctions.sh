@@ -82,7 +82,7 @@ detectsystem2p ()
 
 getimage ()
 {
-	# Get latest image for x86_64 wants refinement.  __Continue does not work and when implemented will break md5sum check.__  https://stackoverflow.com/questions/15040132/how-to-wget-the-more-recent-file-of-a-directory
+	# Get latest image for x86_64 wants refinement.  __Continue does not work.__ 
 	if [ "$(getprop ro.product.cpu.abi)" = "x86_64" ];then
 		wget -A tar.gz -m -nd -np http://$mirror$path
 	else
