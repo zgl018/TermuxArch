@@ -138,7 +138,7 @@ touchupsys ()
 	addgp
 	addgpl
 	addmotd
-	addresolv.conf 
+	addresolvconf 
 	addt 
 	addyt 
 	addv 

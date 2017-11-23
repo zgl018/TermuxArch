@@ -131,7 +131,7 @@ addgp ()
 	chmod 700 root/bin/gp 
 }
 
-addresolv.conf ()
+addresolvconf ()
 {
 	rm etc/resolv* 2>/dev/null||:
 	cat > etc/resolv.conf <<- EOM
