@@ -8,7 +8,7 @@ adjustmd5file ()
 {
 	if [ "$(uname -m)" = "x86_64" ] || [ "$(uname -m)" = "i686" ];then
 		wget -q -N --show-progress http://$mirror${path}md5sums.txt
-		sed '2q;d' md5sums.txt > $file.md5
+		sed '2q;d' md5sums.txt > $(ls *tar.gz).md5
 		rm md5sums.txt
 	else
 		wget -q -N --show-progress http://$mirror$path$file.md5
@@ -83,12 +83,11 @@ detectsystem2p ()
 getimage ()
 {
 	# Get latest image for x86_64 wants refinement.  __Continue does not work and when implemented will break md5sum check.__  https://stackoverflow.com/questions/15040132/how-to-wget-the-more-recent-file-of-a-directory
-#	if [ "$(getprop ro.product.cpu.abi)" = "x86_64" ];then
-#		wget -A tar.gz -m -nd -np http://$mirror$path
-#	else
-#		wget -q -c --show-progress http://$mirror$path$file
-#	fi
-wget -q -c --show-progress http://$mirror$path$file
+	if [ "$(getprop ro.product.cpu.abi)" = "x86_64" ];then
+		wget -A tar.gz -m -nd -np http://$mirror$path
+	else
+		wget -q -c --show-progress http://$mirror$path$file
+	fi
 }
 
 makebin ()
@@ -102,9 +101,9 @@ makebin ()
 makesystem ()
 {
 	printdownloading 
-	adjustmd5file 
 	termux-wake-lock 
 	getimage
+	adjustmd5file 
 	printmd5check
 	if md5sum -c $file.md5 ; then
 		printmd5success
