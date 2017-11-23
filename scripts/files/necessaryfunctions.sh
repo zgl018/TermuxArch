@@ -6,7 +6,7 @@
 
 adjustmd5file ()
 {
-	if [ "$(uname -m)" = "x86_64" ] || [ "$(uname -m)" = "i686" ];then
+	if [ $(uname -m) = x86_64 ] || [ $(uname -m) = i686 ];then
 		wget -q -N --show-progress http://$mirror${path}md5sums.txt
 		filename=$(ls *tar.gz)
 		sed '2q;d' md5sums.txt > $filename.md5
@@ -48,15 +48,15 @@ copybin2path ()
 detectsystem ()
 {
 	printdetectedsystem
-	if [ "$(getprop ro.product.cpu.abi)" = "armeabi" ];then
+	if [ $(getprop ro.product.cpu.abi) = armeabi ];then
 		armv5l
-	elif [ "$(getprop ro.product.cpu.abi)" = "armeabi-v7a" ];then
+	elif [ $(getprop ro.product.cpu.abi) = armeabi-v7a ];then
 		detectsystem2 
-	elif [ "$(getprop ro.product.cpu.abi)" = "arm64-v8a" ];then
+	elif [ $(getprop ro.product.cpu.abi) = arm64-v8a ];then
 		aarch64
-	elif [ "$(getprop ro.product.cpu.abi)" = "x86" ];then
+	elif [ $(getprop ro.product.cpu.abi) = x86 ];then
 		i686 
-	elif [ "$(getprop ro.product.cpu.abi)" = "x86_64" ];then
+	elif [ $(getprop ro.product.cpu.abi) = x86_64 ];then
 		x86_64
 	else
 		printmismatch 
@@ -84,7 +84,7 @@ detectsystem2p ()
 getimage ()
 {
 	# Get latest image for x86_64 wants refinement.  __Continue does not work.__ 
-	if [ "$(getprop ro.product.cpu.abi)" = "x86_64" ];then
+	if [ $(getprop ro.product.cpu.abi) = x86_64 ];then
 		wget -A tar.gz -m -nd -np http://$mirror$path
 	else
 		wget -q -c --show-progress http://$mirror$path$file
@@ -119,7 +119,7 @@ makesystem ()
 
 preproot ()
 {
-	if [ "$(uname -m)" = "x86_64" ] || [ "$(uname -m)" = "i686" ];then
+	if [ $(uname -m) = x86_64 ] || [ $(uname -m) = i686 ];then
 		proot --link2symlink bsdtar -xpf $file --strip-components 1 2>/dev/null||:
 	else
 		proot --link2symlink bsdtar -xpf $file 2>/dev/null||:
