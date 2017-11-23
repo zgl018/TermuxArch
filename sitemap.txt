@@ -30,6 +30,7 @@ https://sdrausty.github.io/TermuxArch/docs/imgs/wdih.html
 https://sdrausty.github.io/TermuxArch/docs/index.html
 https://sdrausty.github.io/TermuxArch/docs/install.html
 https://sdrausty.github.io/TermuxArch/docs/Known_Configurations.html
+https://sdrausty.github.io/TermuxArch/docs/listofarchpackages.html
 https://sdrausty.github.io/TermuxArch/docs/LICENSE
 https://sdrausty.github.io/TermuxArch/docs/md5sums.html
 https://sdrausty.github.io/TermuxArch/docs/mirrors.html
