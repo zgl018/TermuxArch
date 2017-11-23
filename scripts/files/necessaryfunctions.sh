@@ -95,6 +95,7 @@ makebin ()
 {
 	bin=startarch
 	startbin 
+	printconfigq 
 	touchupsys 
 }
 
@@ -114,7 +115,6 @@ makesystem ()
 	fi
 	rm *.tar.gz *.tar.gz.md5
 	makebin 
-	printconfigq 
 }
 
 preproot ()
