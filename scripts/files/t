@@ -1,8 +1,0 @@
-
-	if [[ $(getprop ro.product.device) == *d ]];then
-		echo true 
-		getprop ro.product.device
-	else
-		echo false 
-		getprop ro.product.device
-	fi
