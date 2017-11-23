@@ -166,7 +166,6 @@ finishsetup ()
 	grep proxy $HOME/.bashrc >>  root/bin/finishsetup.sh 2>/dev/null||:
 	grep proxy $HOME/.profile >>  root/bin/finishsetup.sh 2>/dev/null||:
 	cat >> root/bin/finishsetup.sh  <<- EOM
-	printf "\033[32;1m"
 	locale-gen
 	pacman -Syu --noconfirm ||:
 	printf '\033]2; 🕙 < 🕛 Your Arch Linux in Termux is installed and configured.  📲  \007'
