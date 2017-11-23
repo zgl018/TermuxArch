@@ -181,13 +181,13 @@ touchupsys ()
 	if [[ $ye = [Rr]* ]];then
 		:
 	elif [[ $ye = [Ee]* ]];then
-		\$ed $HOME/arch/etc/locale.gen
+		$ed $HOME/arch/etc/locale.gen
 		break
 	else
 		printf "\nYou answered \033[36;1m$ye\033[32;1m.\n"
 		printf "\nAnswer yes or edit (Yy|Ee).\n\n"
 	fi
-	\$ed $HOME/arch/etc/pacman.d/mirrorlist
+	$ed $HOME/arch/etc/pacman.d/mirrorlist
 	done
 	addbash_profile 
 	addbashrc 
