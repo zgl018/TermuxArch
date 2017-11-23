@@ -64,7 +64,7 @@ detectsystem ()
 
 detectsystem2 ()
 {
-	if [ "$(getprop ro.product.device)" = "*_cheets" ];then
+	if [[ $(getprop ro.product.device) == *_cheets ]];then
 		armv7lChrome 
 	else
 		armv7lAndroid  
