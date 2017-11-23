@@ -94,7 +94,7 @@ getimage ()
 makebin ()
 {
 	bin=startarch
-	startbin 
+	makestartbin 
 	printconfigq 
 	touchupsys 
 }
@@ -142,7 +142,7 @@ touchupsys ()
 	addt 
 	addyt 
 	addv 
-	localegen
+	setlocalegen
 	printf "\n\033[32;1m"
 	while true; do
 	read -p "Do you want to use \`nano\` or \`vi\` to edit your Arch Linux configuration files [n|v]?  "  nv
@@ -155,7 +155,7 @@ touchupsys ()
 		break
 	else
 		printf "\nYou answered \033[36;1m$nv\033[32;1m.\n"
-		printf "\nAnswer nano or vi (n|v).\n\n"
+		printf "\nAnswer nano or vi (n|v).  \n\n"
 	fi
 		printf "\nYou answered \033[36;1m$nv\033[32;1m.\n"
 	done	
@@ -169,11 +169,11 @@ touchupsys ()
 		break
 	else
 		printf "\nYou answered \033[36;1m$ye\033[32;1m.\n"
-		printf "\nAnswer yes or edit (Yy|Ee).\n\n"
+		printf "\nAnswer run or edit (Rr|Ee).  \n\n"
 	fi
 	done
 	$ed $HOME/arch/etc/pacman.d/mirrorlist
-	finishsetup
-	setupbin 
+	makefinishsetup
+	makesetupbin 
 }
 

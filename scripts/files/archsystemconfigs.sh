@@ -157,7 +157,7 @@ addmotd ()
 	chmod 700 root/bin/gp 
 }
 
-finishsetup ()
+makefinishsetup ()
 {
 	cat > root/bin/finishsetup.sh  <<- EOM
 	#!/bin/bash -e
@@ -174,7 +174,7 @@ finishsetup ()
 	chmod 700 root/bin/finishsetup.sh 
 }
 
-localegen ()
+setlocalegen()
 {
 	if [ -e "etc/locale.gen" ]; then
 		sed -i '/\#en_US.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}' etc/locale.gen 
@@ -185,7 +185,7 @@ localegen ()
 	fi
 }
 
-startbin ()
+makestartbin ()
 {
 	cat > $bin <<- EOM
 	#!/data/data/com.termux/files/usr/bin/bash -e
@@ -195,7 +195,7 @@ startbin ()
 	chmod 700 $bin
 }
 
-setupbin ()
+makesetupbin ()
 {
 	cat > root/bin/setupbin.sh <<- EOM
 	#!/data/data/com.termux/files/usr/bin/bash -e
