@@ -4,13 +4,13 @@
 
 ##### -rwxrwx--- [printoutstatements.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/scripts/files/printoutstatements.sh)
 
-##### -rwxrwx--- [setupTermuxArch.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/scripts/files/setupTermuxArch.sh)
+##### -rwxrwx--- [setupTermuxArch.sh](https://sdrausty.github.io/TermuxArch/setupTermuxArch.sh) 
 
 ##### -rwxrwx--- [setupTermuxArch.tar.gz](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.tar.gz)
 
 ##### -rwxrwx--- [archsystemconfigs.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/scripts/files/archsystemconfigs.sh)
 
-## Contributions have helped in the successful development of this script and project immensely.  The following contributors have helped to refine [setupTermuxArch.sh](https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.sh) 📲 __Thank you for contributing and collaborating!__  
+## Contributions have helped in the successful development of this script and project immensely.  The following contributors have helped to refine [setupTermuxArch.sh](https://sdrausty.github.io/TermuxArch/setupTermuxArch.sh) 📲 __Thank you for contributing and collaborating!__  
 
 [@BearChavez](https://github.com/BearChavez) submitted an issue.  Result: setupTermuxArch.sh improved!
 
