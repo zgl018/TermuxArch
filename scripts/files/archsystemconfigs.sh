@@ -163,9 +163,21 @@ makefinishsetup ()
 	cat > root/bin/$binfs <<- EOM
 	#!/bin/bash -e
 	EOM
-	grep "proxy" $HOME/.bash_profile | grep "export" >>  root/bin/$binfs 2>/dev/null ||:
-	grep "proxy" $HOME/.bashrc  | grep "export" >>  root/bin/$binfs 2>/dev/null ||:
-	grep "proxy" $HOME/.profile | grep "export" >>  root/bin/$binfs 2>/dev/null ||:
+	if [ -e $HOME/.bash_profile ]; then
+	grep "proxy" $HOME/.bash_profile | grep "export" >>  root/bin/$binfs
+	else
+		:
+	fi
+	if [ -e $HOME/.bashrc ]; then
+	grep "proxy" $HOME/.bashrc  | grep "export" >>  root/bin/$binfs
+	else
+		:
+	fi
+	if [ -e $HOME/.profile ]; then
+	grep "proxy" $HOME/.profile | grep "export" >>  root/bin/$binfs 
+	else
+		:
+	fi
 	cat >> root/bin/$binfs <<- EOM
 	pacman -Syu sed nano vim --noconfirm ||:
 	locale-gen
@@ -177,7 +189,7 @@ makefinishsetup ()
 
 setlocalegen()
 {
-	if [ -e "etc/locale.gen" ]; then
+	if [ -e etc/locale.gen ]; then
 		sed -i '/\#en_US.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}' etc/locale.gen 
 	else
 		cat >  etc/locale.gen <<- EOM
