@@ -96,8 +96,8 @@ elif [[ $1 = [Uu]* ]];then
 		printf "setupTermuxArch.sh uninstalling Arch Linux done\n"
 	else 
 		printf "setupTermuxArch.sh Uninstalling Arch Linux nothing to do for $HOME/arch\n"
-		printtail
 	fi
+	printtail
 	elif [[ $uanswer = [Nn]* ]];then
 		printf "\n"
 		break
