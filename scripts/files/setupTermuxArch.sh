@@ -11,19 +11,19 @@ debuginfo ()
 {
 printf "Begin setupTermuxArch debug information.\n" > setupTermuxArchDebug.log
 date >> setupTermuxArchDebug.log
-printf "\ngetprop ro.product.device results:\n" >> setupTermuxArchDebug.log
+printf "\ngetprop ro.product.device result:\n" >> setupTermuxArchDebug.log
 getprop ro.product.device >> setupTermuxArchDebug.log
-printf "\ngetprop ro.product.cpu.abi results:\n" >> setupTermuxArchDebug.log
+printf "\ngetprop ro.product.cpu.abi result:\n" >> setupTermuxArchDebug.log
 getprop ro.product.cpu.abi >> setupTermuxArchDebug.log
 printf "\nuname -mo results:\n" >> setupTermuxArchDebug.log
 uname -mo >> setupTermuxArchDebug.log
 printf "\ncat /proc/cpuinfo results:\n" >> setupTermuxArchDebug.log
 cat /proc/cpuinfo >> setupTermuxArchDebug.log
-printf "\ndpkg --print-architecture results:\n" >> setupTermuxArchDebug.log
+printf "\ndpkg --print-architecture result:\n" >> setupTermuxArchDebug.log
 dpkg --print-architecture >> setupTermuxArchDebug.log
-printf "\nDownload directory information.\n" >> setupTermuxArchDebug.log
+printf "\nDownload directory information result.\n" >> setupTermuxArchDebug.log
 ls -al ~/storage/downloads >> setupTermuxArchDebug.log
-printf "\nEnd setupTermuxArch debug information.\n" >> setupTermuxArchDebug.log
+printf "\nEnd setupTermuxArch debug information.\nPost this information along with what your issue is about at https://github.com/sdrausty/TermuxArch/issues. If you think screenshots will help us in resolving your issue better, please include them in your post." >> setupTermuxArchDebug.log
 cat setupTermuxArchDebug.log
 }
 
@@ -95,7 +95,7 @@ if [[ $1 = [Dd]* ]];then
 	printf "\nPlease submit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  It is found in $(ls setupTermuxArchDebug.log).  \n"
 	printtail
 elif [[ $1 = [Hh]* ]];then
-	printf "\n\033[1;33m\`setupTermuxArch.sh\` \033[1;32musage:\n\n\033[1;33m\`setupTermuxArch.sh help\` \033[1;32moutputs this help screen\n\n\033[1;33m\`setupTermuxArch.sh debug\` \033[1;32mcreates debug information in \033[1;33m\`setupTermuxArchDebug.log\`\n\n\`setupTermuxArch.sh uninstall\` \033[1;32mpurges your Arch Linux installation from Termux\n"
+	printf "\n\033[1;33m\`setupTermuxArch.sh\` \033[1;32musage:\n\n\033[1;33m\`setupTermuxArch.sh help\` \033[1;32moutputs this help screen,\n\n\033[1;33m\`setupTermuxArch.sh debug\` \033[1;32mcreates debug information in \033[1;33m\`setupTermuxArchDebug.log\`\033[1;32m,\033[1;33m\n\n\`setupTermuxArch.sh uninstall\` \033[1;32mpurges your Arch Linux installation from Termux.\n"
 	printtail
 elif [[ $1 = [Uu]* ]];then
 	while true; do
