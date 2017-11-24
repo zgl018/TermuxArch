@@ -164,17 +164,17 @@ makefinishsetup ()
 	#!/bin/bash -e
 	EOM
 	if [ -e $HOME/.bash_profile ]; then
-	grep "proxy" $HOME/.bash_profile | grep "export" >>  root/bin/$binfs
+	grep "proxy" $HOME/.bash_profile | grep "export" >>  root/bin/$binfs 2>/dev/null ||:
 	else
 		:
 	fi
 	if [ -e $HOME/.bashrc ]; then
-	grep "proxy" $HOME/.bashrc  | grep "export" >>  root/bin/$binfs
+	grep "proxy" $HOME/.bashrc  | grep "export" >>  root/bin/$binfs 2>/dev/null ||:
 	else
 		:
 	fi
 	if [ -e $HOME/.profile ]; then
-	grep "proxy" $HOME/.profile | grep "export" >>  root/bin/$binfs 
+	grep "proxy" $HOME/.profile | grep "export" >>  root/bin/$binfs 2>/dev/null ||:
 	else
 		:
 	fi
