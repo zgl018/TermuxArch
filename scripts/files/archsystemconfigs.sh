@@ -56,7 +56,7 @@ addprofile ()
 	if [ ! -e $HOME/.profile ] ; then
 		:
 	else
-		grep proxy $HOME/.profile |grep "export" >>  root/.profile 2>/dev/null||:
+		grep "proxy" $HOME/.profile |grep "export" >>  root/.profile 2>/dev/null||:
 	fi
 }
 
@@ -131,15 +131,6 @@ addgp ()
 	chmod 700 root/bin/gp 
 }
 
-addresolvconf ()
-{
-	rm etc/resolv* 2>/dev/null||:
-	cat > etc/resolv.conf <<- EOM
-	nameserver 8.8.8.8
-	nameserver 8.8.4.4
-	EOM
-}
-
 addmotd ()
 {
 	cat > etc/motd  <<- EOM
@@ -155,6 +146,58 @@ addmotd ()
 	Upgrade  packages: \033[0m\033[34mpacman -Syu \n\033[0m"
 	EOM
 	chmod 700 root/bin/gp 
+}
+
+addresolvconf ()
+{
+	rm etc/resolv* 2>/dev/null||:
+	cat > etc/resolv.conf <<- EOM
+	nameserver 8.8.8.8
+	nameserver 8.8.4.4
+	EOM
+}
+
+addt ()
+{
+	cat > root/bin/t  <<- EOM
+	#!/bin/bash -e
+	if [ ! -e /usr/bin/tree ] ; then
+		pacman -Syu tree --noconfirm
+		tree \$@
+	else
+		tree \$@
+	fi
+	EOM
+	chmod 700 root/bin/t 
+}
+
+addv ()
+{
+	cat > root/bin/v  <<- EOM
+	#!/bin/bash -e
+	if [ ! -e /usr/bin/vim ] ; then
+		pacman -Syu vim --noconfirm
+		vim \$@
+	else
+		vim \$@
+	fi
+	EOM
+	chmod 700 root/bin/v 
+}
+
+addyt ()
+{
+	cat > root/bin/yt  <<- EOM
+	#!/bin/bash -e
+	if [ ! -e /usr/bin/youtube-dl ] ; then
+		pacman -Syu python-pip --noconfirm
+		pip install youtube-dl
+		youtube-dl \$@
+	else
+		youtube-dl \$@
+	fi
+	EOM
+	chmod 700 root/bin/yt 
 }
 
 makefinishsetup ()
@@ -216,48 +259,5 @@ makesetupbin ()
 	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin $HOME/arch/root/bin/finishsetup.sh
 	EOM
 	chmod 700 root/bin/setupbin.sh
-}
-
-addt ()
-{
-	cat > root/bin/t  <<- EOM
-	#!/bin/bash -e
-	if [ ! -e /usr/bin/tree ] ; then
-		pacman -Syu tree --noconfirm
-		tree \$@
-	else
-		tree \$@
-	fi
-	EOM
-	chmod 700 root/bin/t 
-}
-
-addyt ()
-{
-	cat > root/bin/yt  <<- EOM
-	#!/bin/bash -e
-	if [ ! -e /usr/bin/youtube-dl ] ; then
-		pacman -Syu python-pip --noconfirm
-		pip install youtube-dl
-		youtube-dl \$@
-	else
-		youtube-dl \$@
-	fi
-	EOM
-	chmod 700 root/bin/yt 
-}
-
-addv ()
-{
-	cat > root/bin/v  <<- EOM
-	#!/bin/bash -e
-	if [ ! -e /usr/bin/vim ] ; then
-		pacman -Syu vim --noconfirm
-		vim \$@
-	else
-		vim \$@
-	fi
-	EOM
-	chmod 700 root/bin/v 
 }
 

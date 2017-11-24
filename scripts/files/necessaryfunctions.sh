@@ -93,7 +93,6 @@ getimage ()
 
 makebin ()
 {
-	bin=startarch
 	makestartbin 
 	printconfigq 
 	touchupsys 

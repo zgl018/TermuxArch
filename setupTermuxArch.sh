@@ -5,6 +5,8 @@
 # If you are encountering issues with the system-image.tar.gz file regarding download time, repository website connection and/or md5 checksum error, edit this script and change $mirror to your desired geographic location in knownconfigurations.sh.  Before editing this file, ensure termux-wake-lock is running during script operation and that you have a stable Internet connection. 
 ################################################################################
 
+bin=startarch
+
 depends ()
 {
 	printf '\033]2;  Thank you for using `setupTermuxArch.sh` 📲 \007'"\n 🕛 \033[36;1m< 🕛 \033[1;34mThis setup script will attempt to set Arch Linux up in your Termux environment.  When successfully completed, you will be enjoying the bash prompt in Arch Linux in Termux on your smartphone or tablet.  If you do not see 🕐 one o'clock below, check your Internet connection and run this script again.  "
@@ -46,6 +48,12 @@ printmd5syschkerror ()
 	exit 
 }
 
+printtail ()
+{
+	printf "\n\033[0mThank you for using \033[1;32m\`setupTermuxArch.sh\`\033[0m to install Arch Linux in Termux 🏁  \n\n\033[0m"'\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'
+	exit
+}
+
 rmdsc ()
 {
 	rm archsystemconfigs.sh
@@ -61,6 +69,35 @@ rmds ()
 	rm setupTermuxArch.tar.gz
 }
 
+# Begin
+if [[ $1 = [Dd]* ]];then
+	printf "debug wanted\n"
+	printtail
+elif [[ $1 = [Hh]* ]];then
+	printf "help wanted\n"
+	printtail
+elif [[ $1 = [Uu]* ]];then
+	printf "Uninstalling Arch Linux \n"
+	if [ -e $PREFIX/bin/$bin ] ;then
+	       	rm $PREFIX/bin/$bin 
+	else 
+		printf "setupTermuxArch.sh Uninstalling Arch Linux nothing to do for $bin\n"
+       	fi
+	if [ -d $HOME/arch ] ;then
+		cd $HOME/arch
+		rm -rf * 2>/dev/null||:
+		find -type d -exec chmod 700 {} \; 2>/dev/null||:
+		cd ..
+		rm -rf $HOME/arch
+		printf "setupTermuxArch.sh uninstalling Arch Linux done\n"
+	else 
+		printf "setupTermuxArch.sh Uninstalling Arch Linux nothing to do for $HOME/arch\n"
+	fi
+	printtail
+else
+	:
+fi
+
 # Main Block
 depends
 callsystem 
@@ -70,5 +107,4 @@ rm $HOME/arch/root/bin/setupbin.sh
 printfooter
 $HOME/arch/$bin ||: 
 printtail
-exit 
 

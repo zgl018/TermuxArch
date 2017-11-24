@@ -51,8 +51,3 @@ printfooter ()
 	printf "\033[1;32m 🕛 = 🕛 \033[1;34mTermux-wake-lock released.  Your Arch Linux in Termux is installed and updated.  Use \033[32;1m\`tzselect\`\033[1;34m to assit in setting your time zone.  \n\n\033[0m"
 }
 
-printtail ()
-{
-	printf "\n\033[0mThank you for using \033[1;32m\`setupTermuxArch.sh\`\033[0m to install Arch Linux in Termux 🏁  \n\n\033[0m"'\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'
-}
-
