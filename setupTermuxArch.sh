@@ -7,6 +7,25 @@
 
 bin=startarch
 
+debuginfo ()
+{
+printf "Begin debug information.\n" > setupTermuxArchDebug.log
+date >> setupTermuxArchDebug.log
+printf "getprop ro.product.device results:\n" >> setupTermuxArchDebug.log
+getprop ro.product.device >> setupTermuxArchDebug.log
+printf "getprop ro.product.cpu.abi results:\n" >> setupTermuxArchDebug.log
+getprop ro.product.cpu.abi >> setupTermuxArchDebug.log
+printf "uname -mo results:\n" >> setupTermuxArchDebug.log
+uname -mo >> setupTermuxArchDebug.log
+printf "cat /proc/cpuinfo results:\n" >> setupTermuxArchDebug.log
+getprop ro.product.cpu.abi >> setupTermuxArchDebug.log
+printf "dpkg –print-architecture results:\n" >> setupTermuxArchDebug.log
+getprop ro.product.cpu.abi >> setupTermuxArchDebug.log
+ls -al ~/storage >> setupTermuxArchDebug.log
+printf "End debug information.\n" > setupTermuxArchDebug.log
+cat setupTermuxArchDebug.log
+}
+
 depends ()
 {
 	printf '\033]2;  Thank you for using `setupTermuxArch.sh` 📲 \007'"\n 🕛 \033[36;1m< 🕛 \033[1;34mThis setup script will attempt to set Arch Linux up in your Termux environment.  When successfully completed, you will be enjoying the bash prompt in Arch Linux in Termux on your smartphone or tablet.  If you do not see 🕐 one o'clock below, check your Internet connection and run this script again.  "
@@ -71,7 +90,8 @@ rmds ()
 
 # Begin
 if [[ $1 = [Dd]* ]];then
-	printf "\ndebug wanted\n"
+	debuginfo 
+	printf "\nPlease submit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  \n"
 	printtail
 elif [[ $1 = [Hh]* ]];then
 	printf "\nhelp wanted\n"
@@ -80,7 +100,13 @@ elif [[ $1 = [Uu]* ]];then
 	while true; do
 	printf "\n\033[1;31m"
 	read -p "Run Arch Linux uninstall? [y|n]  " uanswer
-	if [[ $uanswer = [Yy]* ]];then
+	if [[ $uanswer = [Ee]* ]];then
+		break
+	elif [[ $uanswer = [Nn]* ]];then
+		break
+	elif [[ $uanswer = [Qq]* ]];then
+		break
+	elif [[ $uanswer = [Yy]* ]];then
 	printf "\nUninstalling Arch Linux...  \n"
 	if [ -e $PREFIX/bin/$bin ] ;then
 	       	rm $PREFIX/bin/$bin 
@@ -98,12 +124,6 @@ elif [[ $1 = [Uu]* ]];then
 		printf "Uninstalling Arch Linux, nothing to do for $HOME/arch.\n"
 	fi
 	printtail
-	elif [[ $uanswer = [Nn]* ]];then
-		printf "\n"
-		break
-	elif [[ $uanswer = [Qq]* ]];then
-		printf "\n"
-		break
 	else
 		printf "\nYou answered \033[33;1m$uanswer\033[1;31m.\n\nAnswer \033[32mYes\033[1;31m or No. [\033[32my\033[1;31m|n]\n"
 	fi
