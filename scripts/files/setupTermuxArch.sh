@@ -50,7 +50,7 @@ printmd5syschkerror ()
 
 printtail ()
 {
-	printf "\n\033[0mThank you for using \033[1;32m\`setupTermuxArch.sh\`\033[0m to install Arch Linux in Termux 🏁  \n\n\033[0m"'\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'
+	printf "\n\033[0mThank you for using \033[1;32m\`setupTermuxArch.sh\`\033[0m 🏁  \n\n\033[0m"'\033]2;  Thank you for using `setupTermuxArch.sh` 📲  \007'
 	exit
 }
 
@@ -71,17 +71,21 @@ rmds ()
 
 # Begin
 if [[ $1 = [Dd]* ]];then
-	printf "debug wanted\n"
+	printf "\ndebug wanted\n"
 	printtail
 elif [[ $1 = [Hh]* ]];then
-	printf "help wanted\n"
+	printf "\nhelp wanted\n"
 	printtail
 elif [[ $1 = [Uu]* ]];then
-	printf "Uninstalling Arch Linux \n"
+	while true; do
+	printf "\n\033[1;31m"
+	read -p "Run Arch Linux uninstall? [y|n]  " uanswer
+	if [[ $uanswer = [Yy]* ]];then
+	printf "\nUninstalling Arch Linux \n"
 	if [ -e $PREFIX/bin/$bin ] ;then
 	       	rm $PREFIX/bin/$bin 
 	else 
-		printf "setupTermuxArch.sh Uninstalling Arch Linux nothing to do for $bin\n"
+		printf "setupTermuxArch.sh Uninstalling Arch Linux nothing to do for $PREFIX/bin/$bin\n"
        	fi
 	if [ -d $HOME/arch ] ;then
 		cd $HOME/arch
@@ -92,7 +96,18 @@ elif [[ $1 = [Uu]* ]];then
 		printf "setupTermuxArch.sh uninstalling Arch Linux done\n"
 	else 
 		printf "setupTermuxArch.sh Uninstalling Arch Linux nothing to do for $HOME/arch\n"
+		printtail
 	fi
+	elif [[ $uanswer = [Nn]* ]];then
+		printf "\n"
+		break
+	elif [[ $uanswer = [Qq]* ]];then
+		printf "\n"
+		break
+	else
+		printf "\nYou answered \033[33;1m$uanswer\033[1;31m.\n\nAnswer \033[32mYes\033[1;31m or No. [\033[32my\033[1;31m|n]\n"
+	fi
+	done
 	printtail
 else
 	:
