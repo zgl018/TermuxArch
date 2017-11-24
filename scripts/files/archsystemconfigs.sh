@@ -159,15 +159,16 @@ addmotd ()
 
 makefinishsetup ()
 {
-	cat > root/bin/finishsetup.sh  <<- EOM
+	binfs=finishsetup.sh  
+	cat > root/bin/$binfs <<- EOM
 	#!/bin/bash -e
 	EOM
-	grep proxy $HOME/.bash_profile >>  root/bin/finishsetup.sh 2>/dev/null||:
-	grep proxy $HOME/.bashrc >>  root/bin/finishsetup.sh 2>/dev/null||:
-	grep proxy $HOME/.profile >>  root/bin/finishsetup.sh 2>/dev/null||:
-	cat >> root/bin/finishsetup.sh  <<- EOM
+	grep "proxy" $HOME/.bash_profile | grep "export" >>  root/bin/$binfs 2>/dev/null ||:
+	grep "proxy" $HOME/.bashrc  | grep "export" >>  root/bin/$binfs 2>/dev/null ||:
+	grep "proxy" $HOME/.profile | grep "export" >>  root/bin/$binfs 2>/dev/null ||:
+	cat >> root/bin/$binfs <<- EOM
+	pacman -Syu sed nano vim --noconfirm ||:
 	locale-gen
-	pacman -Syu --noconfirm ||:
 	printf '\033]2; 🕙 < 🕛 Your Arch Linux in Termux is installed and configured.  📲  \007'
 	rm \$HOME/bin/finishsetup.sh 2>/dev/null ||:
 	EOM
