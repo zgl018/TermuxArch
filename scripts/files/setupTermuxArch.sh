@@ -81,11 +81,11 @@ elif [[ $1 = [Uu]* ]];then
 	printf "\n\033[1;31m"
 	read -p "Run Arch Linux uninstall? [y|n]  " uanswer
 	if [[ $uanswer = [Yy]* ]];then
-	printf "\nUninstalling Arch Linux \n"
+	printf "\nUninstalling Arch Linux...  \n"
 	if [ -e $PREFIX/bin/$bin ] ;then
 	       	rm $PREFIX/bin/$bin 
 	else 
-		printf "setupTermuxArch.sh Uninstalling Arch Linux nothing to do for $PREFIX/bin/$bin\n"
+		printf "Uninstalling Arch Linux, nothing to do for $PREFIX/bin/$bin.\n"
        	fi
 	if [ -d $HOME/arch ] ;then
 		cd $HOME/arch
@@ -93,9 +93,9 @@ elif [[ $1 = [Uu]* ]];then
 		find -type d -exec chmod 700 {} \; 2>/dev/null||:
 		cd ..
 		rm -rf $HOME/arch
-		printf "setupTermuxArch.sh uninstalling Arch Linux done\n"
+		printf "Uninstalling Arch Linux done.  \n"
 	else 
-		printf "setupTermuxArch.sh Uninstalling Arch Linux nothing to do for $HOME/arch\n"
+		printf "Uninstalling Arch Linux, nothing to do for $HOME/arch.\n"
 	fi
 	printtail
 	elif [[ $uanswer = [Nn]* ]];then
