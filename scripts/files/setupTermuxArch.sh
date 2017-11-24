@@ -24,7 +24,7 @@ debuginfo ()
 	dpkg --print-architecture >> setupTermuxArchDebug.log
 	printf "\nDownload directory information result.\n\n" >> setupTermuxArchDebug.log
 	ls -al ~/storage/downloads >> setupTermuxArchDebug.log
-	printf "\nEnd setupTermuxArch debug information.\n\nPost this information along with what your issue is about at https://github.com/sdrausty/TermuxArch/issues.  If you think screenshots will help us in resolving your issue better, include them in your post.  " >> setupTermuxArchDebug.log
+	printf "\nEnd setupTermuxArch debug information.\n\nPost this information along with what your issue is about at https://github.com/sdrausty/TermuxArch/issues.  This debugging information is found in $(ls setupTermuxArchDebug.log).  If you think screenshots will help us in resolving your issue better, include them in your post.  " >> setupTermuxArchDebug.log
 	cat setupTermuxArchDebug.log
 }
 
@@ -93,7 +93,7 @@ rmds ()
 # Begin
 if [[ $1 = [Dd]* ]];then
 	debuginfo 
-	printf "Submit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  It is found in $(ls setupTermuxArchDebug.log).  \n"
+	printf "Submit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  \n"
 	printtail
 elif [[ $1 = [Hh]* ]];then
 	printf "\n\n\033[1;34mUsage information for \033[1;32m\`setupTermuxArch.sh\`\033[1;34m:\n\n\n\033[1;33mDEBUG\033[1;34m      Run \033[1;32m\`setupTermuxArch.sh debug\` \033[1;34mto create debug information in \033[1;32m\`setupTermuxArchDebug.log\`\033[1;34m.  Post this information along with detailed information about your issue at https://github.com/sdrausty/TermuxArch/issues.  If you think screenshots will help us in resolving your issue better, then please include them in your post.\n\n\033[1;33mHELP\033[1;34m       Run \033[1;32m\`setupTermuxArch.sh help\` \033[1;34mto output this help screen.\n\n\033[1;33mINSTALL\033[1;34m    Run \033[1;32m\`setupTermuxArch.sh\`\033[1;34m without arguments in a bash shell to install Arch Linux in Termux.\n\n\033[1;33mUNINSTALL\033[1;34m  Run \033[1;32m\`setupTermuxArch.sh uninstall\` \033[1;34mto purge your Arch Linux installation from Termux.\n"
