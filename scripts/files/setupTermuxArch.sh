@@ -95,7 +95,7 @@ if [[ $1 = [Dd]* ]];then
 	printf "\nPlease submit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  It is found in $(ls setupTermuxArchDebug.log).  \n"
 	printtail
 elif [[ $1 = [Hh]* ]];then
-	printf "\n\033[1;33m\`setupTermuxArch.sh\` \033[1;32musage:\n\n\033[1;33m\`setupTermuxArch.sh help\` \033[1;32moutputs this help screen,\n\n\033[1;33m\`setupTermuxArch.sh debug\` \033[1;32mcreates debug information in \033[1;33m\`setupTermuxArchDebug.log\`\033[1;32m,\033[1;33m\n\n\`setupTermuxArch.sh uninstall\` \033[1;32mpurges your Arch Linux installation from Termux,\n\n\033[1;32mRun \033[1;33m\`bash setupTermuxArch.sh\` \033[1;32m without arguments to install Arch Linux in Termux.\n"
+	printf "\n\033[1;32mUsage information for \033[1;33m\`setupTermuxArch.sh\`\033[1;32m:\n\nHELP - Run \033[1;33m\`setupTermuxArch.sh help\` \033[1;32mto output this help screen.\n\nDEBUG - Run \033[1;33m\`setupTermuxArch.sh debug\` \033[1;32mto create debug information in \033[1;33m\`setupTermuxArchDebug.log\`\033[1;32m.  Post this information along with detailed information about your issue at https://github.com/sdrausty/TermuxArch/issues.  If you think screenshots will help us in resolving your issue better, then please include them in your post.\n\nUNINSTALL - Run \033[1;33m\`setupTermuxArch.sh uninstall\` \033[1;32mto purge your Arch Linux installation from Termux.\n\n\033[1;32mRun \033[1;33m\`setupTermuxArch.sh\`\033[1;32m without arguments in a bash shell to install Arch Linux in Termux.\n"
 	printtail
 elif [[ $1 = [Uu]* ]];then
 	while true; do
