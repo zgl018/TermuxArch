@@ -12,18 +12,18 @@ debuginfo ()
 	printf "\n\033[1;32m"
 	printf "Begin setupTermuxArch debug information.\n\n" > setupTermuxArchDebug.log
 	date >> setupTermuxArchDebug.log
-	printf "\ngetprop ro.product.device result:\n\n" >> setupTermuxArchDebug.log
-	getprop ro.product.device >> setupTermuxArchDebug.log
-	printf "\ngetprop ro.product.cpu.abi result:\n\n" >> setupTermuxArchDebug.log
-	getprop ro.product.cpu.abi >> setupTermuxArchDebug.log
-	printf "\nuname -mo results:\n\n" >> setupTermuxArchDebug.log
-	uname -mo >> setupTermuxArchDebug.log
 	printf "\ncat /proc/cpuinfo results:\n\n" >> setupTermuxArchDebug.log
 	cat /proc/cpuinfo >> setupTermuxArchDebug.log
 	printf "\ndpkg --print-architecture result:\n\n" >> setupTermuxArchDebug.log
 	dpkg --print-architecture >> setupTermuxArchDebug.log
+	printf "\ngetprop ro.product.cpu.abi result:\n\n" >> setupTermuxArchDebug.log
+	getprop ro.product.cpu.abi >> setupTermuxArchDebug.log
+	printf "\ngetprop ro.product.device result:\n\n" >> setupTermuxArchDebug.log
+	getprop ro.product.device >> setupTermuxArchDebug.log
 	printf "\nDownload directory information result.\n\n" >> setupTermuxArchDebug.log
-	ls -al ~/storage/downloads >> setupTermuxArchDebug.log
+	ls -al ~/storage/downloads >> setupTermuxArchDebug.log ||:
+	printf "\nuname -mo results:\n\n" >> setupTermuxArchDebug.log
+	uname -mo >> setupTermuxArchDebug.log
 	printf "\nEnd setupTermuxArch debug information.\n\nPost this information along with what your issue is about at https://github.com/sdrausty/TermuxArch/issues.  This debugging information is found in $(ls setupTermuxArchDebug.log).  If you think screenshots will help us in resolving your issue better, include them in your post.  " >> setupTermuxArchDebug.log
 	cat setupTermuxArchDebug.log
 }
