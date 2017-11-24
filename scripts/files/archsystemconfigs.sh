@@ -27,7 +27,7 @@ addbashrc ()
 	alias ....="cd ../../../.. && pwd"
 	alias .....="cd ../../../../.. && pwd"
 	alias d='du -hs'
-	alias e='exit'
+	alias e='logout'
 	alias g='ga; gcm; gp'
 	alias gca='git commit -a'
 	alias gcam='git commit -am'
@@ -37,7 +37,7 @@ addbashrc ()
 	alias l='ls -alG'
 	alias ls='ls --color=always'
 	alias p='pwd'
-	alias q='exit'
+	alias q='logout'
 	alias rf='rm -rf'
 	. /etc/motd
 	EOM
