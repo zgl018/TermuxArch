@@ -9,22 +9,23 @@ bin=startarch
 
 debuginfo ()
 {
-printf "Begin setupTermuxArch debug information.\n" > setupTermuxArchDebug.log
-date >> setupTermuxArchDebug.log
-printf "\ngetprop ro.product.device result:\n" >> setupTermuxArchDebug.log
-getprop ro.product.device >> setupTermuxArchDebug.log
-printf "\ngetprop ro.product.cpu.abi result:\n" >> setupTermuxArchDebug.log
-getprop ro.product.cpu.abi >> setupTermuxArchDebug.log
-printf "\nuname -mo results:\n" >> setupTermuxArchDebug.log
-uname -mo >> setupTermuxArchDebug.log
-printf "\ncat /proc/cpuinfo results:\n" >> setupTermuxArchDebug.log
-cat /proc/cpuinfo >> setupTermuxArchDebug.log
-printf "\ndpkg --print-architecture result:\n" >> setupTermuxArchDebug.log
-dpkg --print-architecture >> setupTermuxArchDebug.log
-printf "\nDownload directory information result.\n" >> setupTermuxArchDebug.log
-ls -al ~/storage/downloads >> setupTermuxArchDebug.log
-printf "\nEnd setupTermuxArch debug information.\nPost this information along with what your issue is about at https://github.com/sdrausty/TermuxArch/issues. If you think screenshots will help us in resolving your issue better, please include them in your post." >> setupTermuxArchDebug.log
-cat setupTermuxArchDebug.log
+	printf "\n\033[1;32m"
+	printf "Begin setupTermuxArch debug information.\n\n" > setupTermuxArchDebug.log
+	date >> setupTermuxArchDebug.log
+	printf "\ngetprop ro.product.device result:\n\n" >> setupTermuxArchDebug.log
+	getprop ro.product.device >> setupTermuxArchDebug.log
+	printf "\ngetprop ro.product.cpu.abi result:\n\n" >> setupTermuxArchDebug.log
+	getprop ro.product.cpu.abi >> setupTermuxArchDebug.log
+	printf "\nuname -mo results:\n\n" >> setupTermuxArchDebug.log
+	uname -mo >> setupTermuxArchDebug.log
+	printf "\ncat /proc/cpuinfo results:\n\n" >> setupTermuxArchDebug.log
+	cat /proc/cpuinfo >> setupTermuxArchDebug.log
+	printf "\ndpkg --print-architecture result:\n\n" >> setupTermuxArchDebug.log
+	dpkg --print-architecture >> setupTermuxArchDebug.log
+	printf "\nDownload directory information result.\n\n" >> setupTermuxArchDebug.log
+	ls -al ~/storage/downloads >> setupTermuxArchDebug.log
+	printf "\nEnd setupTermuxArch debug information.\n\nPost this information along with what your issue is about at https://github.com/sdrausty/TermuxArch/issues.  If you think screenshots will help us in resolving your issue better, include them in your post.  " >> setupTermuxArchDebug.log
+	cat setupTermuxArchDebug.log
 }
 
 depends ()
@@ -92,7 +93,7 @@ rmds ()
 # Begin
 if [[ $1 = [Dd]* ]];then
 	debuginfo 
-	printf "\nPlease submit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  It is found in $(ls setupTermuxArchDebug.log).  \n"
+	printf "Submit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  It is found in $(ls setupTermuxArchDebug.log).  \n"
 	printtail
 elif [[ $1 = [Hh]* ]];then
 	printf "\n\033[1;32mUsage information for \033[1;33m\`setupTermuxArch.sh\`\033[1;32m:\n\nHELP - Run \033[1;33m\`setupTermuxArch.sh help\` \033[1;32mto output this help screen.\n\nDEBUG - Run \033[1;33m\`setupTermuxArch.sh debug\` \033[1;32mto create debug information in \033[1;33m\`setupTermuxArchDebug.log\`\033[1;32m.  Post this information along with detailed information about your issue at https://github.com/sdrausty/TermuxArch/issues.  If you think screenshots will help us in resolving your issue better, then please include them in your post.\n\nUNINSTALL - Run \033[1;33m\`setupTermuxArch.sh uninstall\` \033[1;32mto purge your Arch Linux installation from Termux.\n\n\033[1;32mRun \033[1;33m\`setupTermuxArch.sh\`\033[1;32m without arguments in a bash shell to install Arch Linux in Termux.\n"
