@@ -64,7 +64,7 @@ fi
 
 printmd5syschkerror ()
 {
-	printf "\033[07;1m\033[31;1m\n 🔆 ERROR md5sum mismatch!  Setup initialization mismatch!\033[36;1m  Update your copy of setupTermuxArch.sh.  If you have updated it, this kind of error can go away, sort of like magic.  Waiting a few minutes before executing again is recommended, especially if you are using a new copy from https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.sh on your system.  There are many reasons that generate checksum errors.  Proxies are one reason.  Mirroring and mirrors are another explaination for md5sum errors.  Either way this means,  \"Try again, initialization was not successful.\"  See https://sdrausty.github.io/TermuxArchPlus/md5sums for more information.  \n\n	Run setupTermuxArch.sh again. \033[31;1mExiting...  \n\033[0m"
+	printf "\033[07;1m\033[31;1m\n 🔆 ERROR md5sum mismatch!  Setup initialization mismatch!\033[36;1m  Update your copy of setupTermuxArch.sh.  If you have updated it, this kind of error can go away, sort of like magic.  Waiting a few minutes before executing again is recommended, especially if you are using a new copy from https://raw.githubusercontent.com/sdrausty/TermuxArch/master/setupTermuxArch.sh on your system.  There are many reasons that generate checksum errors.  Proxies are one reason.  Mirroring and mirrors are another explanation for md5sum errors.  Either way this means,  \"Try again, initialization was not successful.\"  See https://sdrausty.github.io/TermuxArchPlus/md5sums for more information.  \n\n	Run setupTermuxArch.sh again. \033[31;1mExiting...  \n\033[0m"
 	exit 
 }
 
@@ -95,7 +95,7 @@ if [[ $1 = [Dd]* ]];then
 	printf "\nPlease submit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  It is found in $(ls setupTermuxArchDebug.log).  \n"
 	printtail
 elif [[ $1 = [Hh]* ]];then
-	printf "\n\033[1;33m\`setupTermuxArch.sh\` \033[1;32musage:\n\n\033[1;33m\`setupTermuxArch.sh help\` \033[1;32moutputs this help screen,\n\n\033[1;33m\`setupTermuxArch.sh debug\` \033[1;32mcreates debug information in \033[1;33m\`setupTermuxArchDebug.log\`\033[1;32m,\033[1;33m\n\n\`setupTermuxArch.sh uninstall\` \033[1;32mpurges your Arch Linux installation from Termux.\n"
+	printf "\n\033[1;33m\`setupTermuxArch.sh\` \033[1;32musage:\n\n\033[1;33m\`setupTermuxArch.sh help\` \033[1;32moutputs this help screen,\n\n\033[1;33m\`setupTermuxArch.sh debug\` \033[1;32mcreates debug information in \033[1;33m\`setupTermuxArchDebug.log\`\033[1;32m,\033[1;33m\n\n\`setupTermuxArch.sh uninstall\` \033[1;32mpurges your Arch Linux installation from Termux,\n\n\033[1;32mRun \033[1;33m\`bash setupTermuxArch.sh\` \033[1;32m without arguments to install Arch Linux in Termux.\n"
 	printtail
 elif [[ $1 = [Uu]* ]];then
 	while true; do
