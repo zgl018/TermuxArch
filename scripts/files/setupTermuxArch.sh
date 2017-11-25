@@ -21,10 +21,10 @@ debuginfo ()
 	printf "\ngetprop ro.product.device result:\n\n" >> setupTermuxArchDebug.log
 	getprop ro.product.device >> setupTermuxArchDebug.log
 	printf "\nDownload directory information results.\n\n" >> setupTermuxArchDebug.log
-	ls -al ~/storage/downloads >> setupTermuxArchDebug.log ||:
-	ls -al ~/downloads >> setupTermuxArchDebug.log ||:
-	if [ -d /sdcard/Download ]; then echo "/sdcard/Download exists"; else echo "/sdcard/Download not found"; fi >> setupTermuxArchDebug.log ||:
-	if [ -d /storage/emulated/0/Download ]; then echo "/storage/emulated/0/Download exists"; else echo "/storage/emulated/0/Download not found"; fi >> setupTermuxArchDebug.log ||:
+	ls -al ~/storage/downloads  2>>setupTermuxArchDebug.log >> setupTermuxArchDebug.log ||:
+	ls -al ~/downloads 2>>setupTermuxArchDebug.log  >> setupTermuxArchDebug.log ||:
+	if [ -d /sdcard/Download ]; then echo "/sdcard/Download exists"; else echo "/sdcard/Download not found"; fi >> setupTermuxArchDebug.log 
+	if [ -d /storage/emulated/0/Download ]; then echo "/storage/emulated/0/Download exists"; else echo "/storage/emulated/0/Download not found"; fi >> setupTermuxArchDebug.log
 	printf "\nuname -mo results:\n\n" >> setupTermuxArchDebug.log
 	uname -mo >> setupTermuxArchDebug.log
 	printf "\nEnd setupTermuxArch debug information.\n\nPost this information along with information regarding your issue at https://github.com/sdrausty/TermuxArch/issues.  This debugging information is found in $(pwd)/$(ls setupTermuxArchDebug.log).  If you think screenshots will help in resolving this matter better, include them in your post please.  " >> setupTermuxArchDebug.log
