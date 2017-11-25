@@ -27,7 +27,6 @@ debuginfo ()
 	if [ -d /storage/emulated/0/Download ]; then echo "/storage/emulated/0/Download exists"; else echo "/storage/emulated/0/Download not found"; fi >> setupTermuxArchDebug.log ||:
 	printf "\nuname -mo results:\n\n" >> setupTermuxArchDebug.log
 	uname -mo >> setupTermuxArchDebug.log
-	echo 1
 	printf "\nEnd setupTermuxArch debug information.\n\nPost this information along with what your issue is about at https://github.com/sdrausty/TermuxArch/issues.  This debugging information is found in $(ls setupTermuxArchDebug.log).  If you think screenshots will help us in resolving your issue better, include them in your post.  " >> setupTermuxArchDebug.log
 	cat setupTermuxArchDebug.log
 }
