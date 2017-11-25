@@ -20,10 +20,14 @@ debuginfo ()
 	getprop ro.product.cpu.abi >> setupTermuxArchDebug.log
 	printf "\ngetprop ro.product.device result:\n\n" >> setupTermuxArchDebug.log
 	getprop ro.product.device >> setupTermuxArchDebug.log
-	printf "\nDownload directory information result.\n\n" >> setupTermuxArchDebug.log
+	printf "\nDownload directory information results.\n\n" >> setupTermuxArchDebug.log
 	ls -al ~/storage/downloads >> setupTermuxArchDebug.log ||:
+	ls -al ~/downloads >> setupTermuxArchDebug.log ||:
+	if [ -d /sdcard/Download ]; then echo "/sdcard/Download exists"; else echo "/sdcard/Download not found"; fi >> setupTermuxArchDebug.log ||:
+	if [ -d /storage/emulated/0/Download ]; then echo "/storage/emulated/0/Download exists"; else echo "/storage/emulated/0/Download not found"; fi >> setupTermuxArchDebug.log ||:
 	printf "\nuname -mo results:\n\n" >> setupTermuxArchDebug.log
 	uname -mo >> setupTermuxArchDebug.log
+	echo 1
 	printf "\nEnd setupTermuxArch debug information.\n\nPost this information along with what your issue is about at https://github.com/sdrausty/TermuxArch/issues.  This debugging information is found in $(ls setupTermuxArchDebug.log).  If you think screenshots will help us in resolving your issue better, include them in your post.  " >> setupTermuxArchDebug.log
 	cat setupTermuxArchDebug.log
 }
@@ -90,6 +94,11 @@ rmds ()
 	rm setupTermuxArch.tar.gz
 }
 
+printusage ()
+{
+	printf "\n\n\033[1;34mUsage information for \033[1;32m\`setupTermuxArch.sh\`\033[1;34m.  You can abbreviate the argument to one letter:  \n\n\033[1;33mDEBUG\033[1;34m    Run \033[1;32m\`setupTermuxArch.sh debug\` \033[1;34mto create \033[1;32m\`setupTermuxArchDebug.log\`\033[1;34m and populate it with debug information.  Post this information along with detailed information about your issue at https://github.com/sdrausty/TermuxArch/issues.  If you think screenshots will help in resolving your issue better, include them in your post along with this log file.\n\n\033[1;33mHELP\033[1;34m     Run \033[1;32m\`setupTermuxArch.sh help\` \033[1;34mto output this help screen.\n\n\033[1;33mINSTALL\033[1;34m  Run \033[1;32m\`setupTermuxArch.sh\`\033[1;34m without arguments in a bash shell to install Arch Linux in Termux.\n\n\033[1;33mPURGE\033[1;34m    Run \033[1;32m\`setupTermuxArch.sh purge\` \033[1;34mto uninstall your Arch Linux installation from Termux.\n"
+}
+
 # Begin
 if [[ $1 = "" ]] || [[ $1 = [Ii]* ]];then
 	# Main Block
@@ -101,23 +110,18 @@ if [[ $1 = "" ]] || [[ $1 = [Ii]* ]];then
 	printfooter
 	$HOME/arch/$bin ||: 
 	printtail
-	exit
 elif [[ $1 = [Dd]* ]];then
 	debuginfo 
 	printf "Submit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  \n"
 	printtail
 elif [[ $1 = [Hh]* ]];then
-	printf "\n\n\033[1;34mUsage information for \033[1;32m\`setupTermuxArch.sh\`\033[1;34m.  You can abbreviate the argument to one letter:  \n\n\033[1;33mDEBUG\033[1;34m    Run \033[1;32m\`setupTermuxArch.sh debug\` \033[1;34mto create \033[1;32m\`setupTermuxArchDebug.log\`\033[1;34m and populate it with debug information.  Post this information along with detailed information about your issue at https://github.com/sdrausty/TermuxArch/issues.  If you think screenshots will help in resolving your issue better, include them in your post along with this log file.\n\n\033[1;33mHELP\033[1;34m     Run \033[1;32m\`setupTermuxArch.sh help\` \033[1;34mto output this help screen.\n\n\033[1;33mINSTALL\033[1;34m  Run \033[1;32m\`setupTermuxArch.sh\`\033[1;34m without arguments in a bash shell to install Arch Linux in Termux.\n\n\033[1;33mPURGE\033[1;34m    Run \033[1;32m\`setupTermuxArch.sh purge\` \033[1;34mto uninstall your Arch Linux installation from Termux.\n"
+	printusage
 	printtail
 elif [[ $1 = [Pp]* ]] || [[ $1 = [Uu]* ]];then
 	while true; do
 	printf "\n\033[1;31m"
 	read -p "Run purge to uninstall Arch Linux? [y|n]  " uanswer
-	if [[ $uanswer = [Ee]* ]];then
-		break
-	elif [[ $uanswer = [Nn]* ]];then
-		break
-	elif [[ $uanswer = [Qq]* ]];then
+	if [[ $uanswer = [Ee]* ]] || [[ $uanswer = [Nn]* ]] || [[ $uanswer = [Qq]* ]];then
 		break
 	elif [[ $uanswer = [Yy]* ]];then
 	printf "\nUninstalling Arch Linux...  \033[1;32m\n"
@@ -143,6 +147,7 @@ elif [[ $1 = [Pp]* ]] || [[ $1 = [Uu]* ]];then
 	done
 	printtail
 else
-	printf "\n\n\033[1;34mUsage information for \033[1;32m\`setupTermuxArch.sh\`\033[1;34m.  You can abbreviate the argument to one letter:  \n\n\033[1;33mDEBUG\033[1;34m    Run \033[1;32m\`setupTermuxArch.sh debug\` \033[1;34mto create \033[1;32m\`setupTermuxArchDebug.log\`\033[1;34m and populate it with debug information.  Post this information along with detailed information about your issue at https://github.com/sdrausty/TermuxArch/issues.  If you think screenshots will help in resolving your issue better, include them in your post along with this log file.\n\n\033[1;33mHELP\033[1;34m     Run \033[1;32m\`setupTermuxArch.sh help\` \033[1;34mto output this help screen.\n\n\033[1;33mINSTALL\033[1;34m  Run \033[1;32m\`setupTermuxArch.sh\`\033[1;34m without arguments in a bash shell to install Arch Linux in Termux.\n\n\033[1;33mPURGE\033[1;34m    Run \033[1;32m\`setupTermuxArch.sh purge\` \033[1;34mto uninstall your Arch Linux installation from Termux.\nThank you for using \033[1;32m\`setupTermuxArch.sh\`\033[0m 🏁  \n\n\033[0m"'\033]2;  Thank you for using `setupTermuxArch.sh` 📲  \007'
+	printusage
+	printtail
 fi
 
