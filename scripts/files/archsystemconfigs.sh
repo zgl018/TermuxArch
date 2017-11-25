@@ -175,12 +175,7 @@ addv ()
 {
 	cat > root/bin/v  <<- EOM
 	#!/bin/bash -e
-	if [ ! -e /usr/bin/vim ] ; then
-		pacman -Syu vim --noconfirm
-		vim \$@
-	else
-		vim \$@
-	fi
+	vim \$@
 	EOM
 	chmod 700 root/bin/v 
 }
