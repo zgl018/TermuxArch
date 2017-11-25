@@ -91,7 +91,18 @@ rmds ()
 }
 
 # Begin
-if [[ $1 = [Dd]* ]];then
+if [[ $1 = "" ]] || [[ $1 = [Ii]* ]];then
+	# Main Block
+	depends
+	callsystem 
+	$HOME/arch/root/bin/setupbin.sh ||: 
+	termux-wake-unlock
+	rm $HOME/arch/root/bin/setupbin.sh
+	printfooter
+	$HOME/arch/$bin ||: 
+	printtail
+	exit
+elif [[ $1 = [Dd]* ]];then
 	debuginfo 
 	printf "Submit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  \n"
 	printtail
@@ -132,16 +143,6 @@ elif [[ $1 = [Pp]* ]] || [[ $1 = [Uu]* ]];then
 	done
 	printtail
 else
-	:
+	printf "\n\n\033[1;34mUsage information for \033[1;32m\`setupTermuxArch.sh\`\033[1;34m.  You can abbreviate the argument to one letter:  \n\n\033[1;33mDEBUG\033[1;34m    Run \033[1;32m\`setupTermuxArch.sh debug\` \033[1;34mto create \033[1;32m\`setupTermuxArchDebug.log\`\033[1;34m and populate it with debug information.  Post this information along with detailed information about your issue at https://github.com/sdrausty/TermuxArch/issues.  If you think screenshots will help in resolving your issue better, include them in your post along with this log file.\n\n\033[1;33mHELP\033[1;34m     Run \033[1;32m\`setupTermuxArch.sh help\` \033[1;34mto output this help screen.\n\n\033[1;33mINSTALL\033[1;34m  Run \033[1;32m\`setupTermuxArch.sh\`\033[1;34m without arguments in a bash shell to install Arch Linux in Termux.\n\n\033[1;33mPURGE\033[1;34m    Run \033[1;32m\`setupTermuxArch.sh purge\` \033[1;34mto uninstall your Arch Linux installation from Termux.\nThank you for using \033[1;32m\`setupTermuxArch.sh\`\033[0m 🏁  \n\n\033[0m"'\033]2;  Thank you for using `setupTermuxArch.sh` 📲  \007'
 fi
-
-# Main Block
-depends
-callsystem 
-$HOME/arch/root/bin/setupbin.sh ||: 
-termux-wake-unlock
-rm $HOME/arch/root/bin/setupbin.sh
-printfooter
-$HOME/arch/$bin ||: 
-printtail
 
