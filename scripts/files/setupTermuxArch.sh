@@ -109,11 +109,11 @@ if [[ $1 = "" ]] || [[ $1 = [Ii]* ]];then
 	printfooter
 	$HOME/arch/$bin ||: 
 	printtail
-elif [[ $1 = [Dd]* ]];then
+elif [[ $1 = [Dd]* ]] || [[ $1 = [Ss]* ]];then
 	debuginfo 
 	printf "Submit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  \n"
 	printtail
-elif [[ $1 = [Hh]* ]];then
+elif [[ $1 = [Hh]* ]] || [[ $1 = [?]* ]];then
 	printusage
 	printtail
 elif [[ $1 = [Pp]* ]] || [[ $1 = [Uu]* ]];then
