@@ -98,6 +98,26 @@ makebin ()
 	touchupsys 
 }
 
+makesetupbin ()
+{
+	cat > root/bin/setupbin.sh <<- EOM
+	#!/data/data/com.termux/files/usr/bin/bash -e
+	unset LD_PRELOAD
+	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin $HOME/arch/root/bin/finishsetup.sh
+	EOM
+	chmod 700 root/bin/setupbin.sh
+}
+
+makestartbin ()
+{
+	cat > $bin <<- EOM
+	#!/data/data/com.termux/files/usr/bin/bash -e
+	unset LD_PRELOAD
+	exec proot --link2symlink -0 -r $HOME/arch/ -b /dev/ -b /sys/ -b /proc/ -b /storage/ -b $HOME -w $HOME /bin/env -i HOME=/root TERM="$TERM" PS1='[termux@arch \W]\$ ' LANG=$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin /bin/bash --login
+	EOM
+	chmod 700 $bin
+}
+
 makesystem ()
 {
 	printdownloading 
@@ -122,6 +142,17 @@ preproot ()
 		proot --link2symlink bsdtar -xpf $file --strip-components 1 2>/dev/null||:
 	else
 		proot --link2symlink bsdtar -xpf $file 2>/dev/null||:
+	fi
+}
+
+setlocalegen()
+{
+	if [ -e etc/locale.gen ]; then
+		sed -i '/\#en_US.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}' etc/locale.gen 
+	else
+		cat >  etc/locale.gen <<- EOM
+		en_US.UTF-8 UTF-8 
+		EOM
 	fi
 }
 
