@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id0068"
+versionid="v1.6 id4785"
 
 ## Init Functions ##############################################################
 
@@ -677,7 +677,7 @@ elif [[ "${1//-}" = [Aa][Xx][Dd]* ]] || [[ "${1//-}" = [Aa][Xx][Ss]* ]] ; then
 	introdebug "$@" 
 ## [axel installdir|axi installdir]  Install Arch Linux with `axel`.
 elif [[ "${1//-}" = [Aa][Xx]* ]] || [[ "${1//-}" = [Aa][Xx][Ii]* ]] ; then
-	echo Installing with \`axel\`.
+	echo Setting \`axel\` as download manager.
 	dm=axel
 	opt2 "$@" 
 	intro "$@" 
@@ -688,7 +688,7 @@ elif [[ "${1//-}" = [Aa][Dd]* ]] || [[ "${1//-}" = [Aa][Ss]* ]] ; then
 	introdebug "$@" 
 ## [aria2c installdir|ai installdir]  Install Arch Linux with `aria2c`.
 elif [[ "${1//-}" = [Aa]* ]] ; then
-	echo Installing with \`aria2c\`.
+	echo Setting \`aria2c\` as download manager.
 	dm=aria2c
 	opt2 "$@" 
 	intro "$@" 
@@ -702,7 +702,7 @@ elif [[ "${1//-}" = [Cc][Dd]* ]] || [[ "${1//-}" = [Cc][Ss]* ]] ; then
 	introdebug "$@" 
 ## [curl installdir|ci installdir]  Install Arch Linux with `curl`.
 elif [[ "${1//-}" = [Cc]* ]] ; then
-	echo Installing with \`curl\`.
+	echo Setting \`curl\` as download manager.
 	dm=curl
 	opt2 "$@" 
 	intro "$@" 
@@ -723,7 +723,7 @@ elif [[ "${1//-}" = [Ll][Dd]* ]] || [[ "${1//-}" = [Ll][Ss]* ]] ; then
 	introdebug "$@" 
 ## [lftp installdir|li installdir]  Install Arch Linux with `lftp`.
 elif [[ "${1//-}" = [Ll]* ]] ; then
-	echo Installing with \`lftp\`.
+	echo Setting \`lftp\` as download manager.
 	dm=lftp
 	opt2 "$@" 
 	intro "$@" 
@@ -747,7 +747,7 @@ elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
 	introdebug "$@" 
 ## [wget installdir|wi installdir]  Install Arch Linux with `wget`.
 elif [[ "${1//-}" = [Ww]* ]] ; then
-	echo Installing with \`wget\`.
+	echo Setting \`wget\` as download manager.
 	dm=wget
 	opt2 "$@" 
 	intro "$@"  
