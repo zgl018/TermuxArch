@@ -34,11 +34,6 @@ bloom() { # Bloom = `setupTermuxArch.sh manual verbose`
 	cp *sh "$HOME"/TermuxArchBloom
 	cd "$HOME"/TermuxArchBloom
 	printf "\\e[1;34mTermuxArch Bloom option via \\e[1;32msetupTermuxArch.sh bloom\\e[0m 📲\\n\\n\\e[0m"'\033]2; TermuxArch Bloom option via `setupTermuxArch.sh bloom` 📲 \007'
-# 	ls -agl
-# 	printf "\\n"
-# 	pwd
-# 	printf "\\n"
-# 	dependsblock "$@" 
 	printf "\\n"
 	ls -agl
 	printf "\\n\\e[1;34mUse \\e[1;32mcd ~/TermuxArchBloom\\e[1;34m to continue.  Edit any of these files; Then use \\e[1;32mbash $0 [options] \\e[1;34mto run the files in \\e[1;32m~/TermuxArchBloom\\e[1;34m.\\n\\e[0m"'\033]2;  TermuxArch Bloom option via `setupTermuxArch.sh bloom` 📲 \007'
