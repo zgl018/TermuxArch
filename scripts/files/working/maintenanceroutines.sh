@@ -10,9 +10,9 @@ sysinfo() {
 	spaceinfo
 	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
 	systeminfo # & spinner "Generating" "System Info…" 
-	printf "\\n\\e[0mEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\nPost this information along with information regarding your issue at https://github.com/sdrausty/TermuxArch/issues.  Include information about input and output.  This system information is found in $(ls "${wdir}setupTermuxArchSysInfo${stime}".log).  If you think screenshots will help in resolving this matter better, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in "${wdir}setupTermuxArchSysInfo${stime}.log".  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
 	cat "${wdir}setupTermuxArchSysInfo${stime}".log
-	printf "\\n\\e[1mSubmit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  Include information about input and output.  \\n\\n"
+	printf "\\n\\e[1mSubmit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve \`setupTermuxArch.sh\` along with a screenshot of your topic.  Include information about input and output.  \\n\\n"
 	exit
 }
 
