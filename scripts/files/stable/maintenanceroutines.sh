@@ -5,49 +5,50 @@
 # https://sdrausty.github.io/TermuxArch/README has information about this project. 
 ################################################################################
 
+# 			cp setupTermuxArch.sh "${wdir}setupTermuxArch.sh"
 sysinfo() {
 	spaceinfo
-	printf "\\n\\e[1;32mGenerating TermuxArch debug information; Please wait…\\n" 
+	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
 	systeminfo # & spinner "Generating" "System Info…" 
-	printf "\\nEnd \`setupTermuxArchDebug$stime.log\` debug information.\\n\\nPost this information along with information regarding your issue at https://github.com/sdrausty/TermuxArch/issues.  Include information about input and output.  This debugging information is found in $PWD/$(ls setupTermuxArchDebug"$stime".log).  If you think screenshots will help in resolving this matter better, include them in your post as well.  \\n" >> setupTermuxArchDebug"$stime".log
-	cat setupTermuxArchDebug"$stime".log
-	printf "\\n\\e[0mSubmit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve this installation script along with a screenshot of your topic.  Include information about input and output.  \\n\\n"
+	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`"${wdir}setupTermuxArchSysInfo${stime}.log"\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	cat "${wdir}setupTermuxArchSysInfo${stime}".log
+	printf "\\n\\e[1mSubmit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve \`setupTermuxArch.sh\` along with a screenshot of the topic.  Include information about input and output.  \\n\\n"
 	exit
 }
 
 systeminfo () {
 	printf "\\n\\e[1;32m"
-	printf "Begin TermuxArch debug information.\\n" > setupTermuxArchDebug"$stime".log
-	printf "\\n\`termux-info\` results:\\n\\n" >> setupTermuxArchDebug"$stime".log
-	termux-info >> setupTermuxArchDebug"$stime".log
-	printf "\\nDisk report $usrspace on /data $(date)\\n\\n" >> setupTermuxArchDebug"$stime".log 
+	printf "Begin TermuxArch system information.\\n" > "${wdir}setupTermuxArchSysInfo${stime}".log
+	printf "\\n\`termux-info\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	termux-info >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	printf "\\nDisk report $usrspace on /data $(date)\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log 
 	for n in 0 1 2 3 4 5 
 	do 
-		echo "BASH_VERSINFO[$n] = ${BASH_VERSINFO[$n]}"  >> setupTermuxArchDebug"$stime".log
+		echo "BASH_VERSINFO[$n] = ${BASH_VERSINFO[$n]}"  >> "${wdir}setupTermuxArchSysInfo${stime}".log
 	done
-	printf "\\ncat /proc/cpuinfo results:\\n\\n" >> setupTermuxArchDebug"$stime".log
-	cat /proc/cpuinfo >> setupTermuxArchDebug"$stime".log
-	printf "\\ndpkg --print-architecture result:\\n\\n" >> setupTermuxArchDebug"$stime".log
-	dpkg --print-architecture >> setupTermuxArchDebug"$stime".log
-	printf "\\ngetprop ro.product.cpu.abi result:\\n\\n" >> setupTermuxArchDebug"$stime".log
-	getprop ro.product.cpu.abi >> setupTermuxArchDebug"$stime".log
-	printf "\\ngetprop ro.product.device result:\\n\\n" >> setupTermuxArchDebug"$stime".log
-	getprop ro.product.device >> setupTermuxArchDebug"$stime".log
-	printf "\\nDownload directory information results.\\n\\n" >> setupTermuxArchDebug"$stime".log
-	if [[ -d /sdcard/Download ]]; then echo "/sdcard/Download exists"; else echo "/sdcard/Download not found"; fi >> setupTermuxArchDebug"$stime".log 
-	if [[ -d /storage/emulated/0/Download ]]; then echo "/storage/emulated/0/Download exists"; else echo "/storage/emulated/0/Download not found"; fi >> setupTermuxArchDebug"$stime".log
-	if [[ -d $HOME/downloads ]]; then echo "$HOME/downloads exists"; else echo "~/downloads not found"; fi >> setupTermuxArchDebug"$stime".log 
-	if [[ -d $HOME/storage/downloads ]]; then echo "$HOME/storage/downloads exists"; else echo "$HOME/storage/downloads not found"; fi >> setupTermuxArchDebug"$stime".log 
-	printf "\\ndf $installdir results:\\n\\n" >> setupTermuxArchDebug"$stime".log
-	df "$installdir" >> setupTermuxArchDebug"$stime".log 2>/dev/null ||:
-	printf "\\ndf results:\\n\\n" >> setupTermuxArchDebug"$stime".log
-	df >> setupTermuxArchDebug"$stime".log 2>/dev/null ||:
-	printf "\\ndu -hs $installdir results:\\n\\n" >> setupTermuxArchDebug"$stime".log
-	du -hs "$installdir" >> setupTermuxArchDebug"$stime".log 2>/dev/null ||:
-	printf "\\nls -al $installdir results:\\n\\n" >> setupTermuxArchDebug"$stime".log
-	ls -al "$installdir" >> setupTermuxArchDebug"$stime".log 2>/dev/null ||:
-	printf "\\nuname -a results:\\n\\n" >> setupTermuxArchDebug"$stime".log
-	uname -a >> setupTermuxArchDebug"$stime".log
+	printf "\\ncat /proc/cpuinfo results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	cat /proc/cpuinfo >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	printf "\\ndpkg --print-architecture result:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	dpkg --print-architecture >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	printf "\\ngetprop ro.product.cpu.abi result:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	getprop ro.product.cpu.abi >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	printf "\\ngetprop ro.product.device result:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	getprop ro.product.device >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	printf "\\nDownload directory information results.\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	if [[ -d /sdcard/Download ]]; then echo "/sdcard/Download exists"; else echo "/sdcard/Download not found"; fi >> "${wdir}setupTermuxArchSysInfo${stime}".log 
+	if [[ -d /storage/emulated/0/Download ]]; then echo "/storage/emulated/0/Download exists"; else echo "/storage/emulated/0/Download not found"; fi >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	if [[ -d $HOME/downloads ]]; then echo "$HOME/downloads exists"; else echo "~/downloads not found"; fi >> "${wdir}setupTermuxArchSysInfo${stime}".log 
+	if [[ -d $HOME/storage/downloads ]]; then echo "$HOME/storage/downloads exists"; else echo "$HOME/storage/downloads not found"; fi >> "${wdir}setupTermuxArchSysInfo${stime}".log 
+	printf "\\ndf $installdir results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	df "$installdir" >> "${wdir}setupTermuxArchSysInfo${stime}".log 2>/dev/null ||:
+	printf "\\ndf results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	df >> "${wdir}setupTermuxArchSysInfo${stime}".log 2>/dev/null ||:
+	printf "\\ndu -hs $installdir results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	du -hs "$installdir" >> "${wdir}setupTermuxArchSysInfo${stime}".log 2>/dev/null ||:
+	printf "\\nls -al $installdir results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	ls -al "$installdir" >> "${wdir}setupTermuxArchSysInfo${stime}".log 2>/dev/null ||:
+	printf "\\nuname -a results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+	uname -a >> "${wdir}setupTermuxArchSysInfo${stime}".log
 }
 
 copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`
