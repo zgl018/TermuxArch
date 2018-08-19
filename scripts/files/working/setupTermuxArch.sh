@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id4125"
+versionid="v1.6 id8443"
 
 ## Init Functions ##############################################################
 
@@ -647,7 +647,7 @@ preptmpdir
 setrootdir  
 
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`.  Options are optional.  Available Arguments Grammar: [HOW (aria2c, axel, curl, lftp and wget)] [TASK (install, purge, refresh and sysinfo)] [WHERE (default: arch)]  NOTE: ONLY CURL AND WGET ARE THOROUGHLY TESTED AT PRESENT!  Downloading with the remaining download managers is currently being developed.  Usage example: `setupTermuxArch.sh curl sysinfo` will use curl as the download manager and produce a system information file.  
-## []  Run default Arch Linux install.  `bash setupTermuxArch.sh help` has more information; All options can be abbreviated. 
+## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  All options can be abbreviated. 
 if [[ -z "${1:-}" ]] ; then
 	intro "$@" 
 ## A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`; [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. 
@@ -656,7 +656,7 @@ elif [[ "${args:0:1}" = "." ]] ; then
 	arg2dir "$@"  
 	intro "$@"    
 	loadimage "$@"
-## [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
+## A systemimage.tar.gz file can be used: [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
 elif [[ "${args:0:1}" = "/" ]] ; then
 	arg2dir "$@"  
 	intro "$@"   
