@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id360486481682"
+versionid="v1.6 id0068"
 
 ## Init Functions ##############################################################
 
@@ -321,7 +321,6 @@ manual() {
 		printconfloaded 
 	else
 		cp knownconfigurations.sh "${wdir}setupTermuxArchConfigs.sh"
-# 		sed -i "7s/.*/t/" "${wdir}setupTermuxArchConfigs.sh" 
  		sed -i "7s/.*/\# The architecture of this device is $cpuabi; Adjust configurations in the appropriate section.  Change mirror (https:\/\/wiki.archlinux.org\/index.php\/Mirrors and https:\/\/archlinuxarm.org\/about\/mirrors) to desired geographic location to resolve 404 and checksum issues.  /" "${wdir}setupTermuxArchConfigs.sh" 
 		"$ed" "${wdir}setupTermuxArchConfigs.sh"
 		. "${wdir}setupTermuxArchConfigs.sh"
@@ -399,7 +398,7 @@ preptmpdir() {
 }
 
 printconfloaded() {
-	printf "\\n\\e[0;34m 🕛 > 🕑 \\e[1;34mTermuxArch configuration \\e[0;32m$PWD/\\e[1;32msetupTermuxArchConfigs.sh \\e[1;34mloaded: \\e[1;32mOK\\n"
+	printf "\\n\\e[0;34m 🕛 > 🕑 \\e[1;34mTermuxArch configuration \\e[0;32m${wdir}\\e[1;32msetupTermuxArchConfigs.sh \\e[1;34mloaded: \\e[1;32mOK\\n"
 }
 
 printsha512syschker() {
