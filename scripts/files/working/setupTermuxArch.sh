@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id8989"
+versionid="gen.v1.6 id003970414060"
 
 ## Init Functions ##############################################################
 
@@ -624,8 +624,8 @@ declare opt=""
 declare rootdir=""
 declare wdir="$PWD/"
 declare spaceMessage=""
-declare stim="$(date +%s)"
-declare stime="${stim:6:4}"
+declare sti="$(date +%s)"
+declare stime="$(echo ${sti:6:4}|rev)"
 declare tm="" # tar manager
 declare usrspace=""
 declare idir="$PWD"
