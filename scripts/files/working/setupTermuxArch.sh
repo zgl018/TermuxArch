@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id4785"
+versionid="gen.v1.6 id155045299199"
 
 ## Init Functions ##############################################################
 
@@ -347,25 +347,18 @@ namestartarch() { # ${@%/} removes trailing slash
 	declare -g startbin=start"$startbi2$aarch"
 }
 
-opt1() { 
-	if [[ -z "${2:-}" ]] ; then
-		arg2dir "$@" 
-	elif [[ "$2" = [Dd]* ]] || [[ "$2" = [Ss]* ]] ; then
-		introdebug "$@" 
-	elif [[ "$2" = [Ii]* ]] ; then
-		arg3dir "$@" 
-	elif [[ "$2" = [Rr]* ]] ; then
-		arg3dir "$@" 
-		introrefresh "$@"  
-	fi
-}
-
 opt2() { 
 	if [[ -z "${2:-}" ]] ; then
 		arg2dir "$@" 
+	elif [[ "$2" = [Bb]* ]] ; then
+		introbloom "$@"  
 	elif [[ "$2" = [Dd]* ]] || [[ "$2" = [Ss]* ]] ; then
 		introdebug "$@"  
 	elif [[ "$2" = [Ii]* ]] ; then
+		arg3dir "$@" 
+	elif [[ "$2" = [Mm]* ]] ; then
+		opt=manual
+		intro "$@"  
 		arg3dir "$@" 
 	elif [[ "$2" = [Rr]* ]] ; then
 		arg3dir "$@" 
@@ -654,8 +647,7 @@ namestartarch
 preptmpdir
 setrootdir  
 
-## Available Arguments #########################################################
-## Grammar: [how] [action] [where] #############################################
+## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`.  Options are optional.  Available Arguments Grammar: [HOW (aria2c, axel, curl, lftp and wget)] [TASK (install, purge, refresh and sysinfo)] [WHERE (default: arch)]  NOTE: ONLY CURL AND WGET ARE THOROUGHLY TESTED AT PRESENT!  Downloading with the remaining download managers is currently being developed.  Usage example: `setupTermuxArch.sh curl sysinfo` will use curl as the download manager and produce a system information file.  
 ## []  Run default Arch Linux install.  `bash setupTermuxArch.sh help` has more information; All options can be abbreviated. 
 if [[ -z "${1:-}" ]] ; then
 	intro "$@" 
@@ -730,7 +722,7 @@ elif [[ "${1//-}" = [Ll]* ]] ; then
 ## [manual]  Manual Arch Linux install, useful for resolving download issues.
 elif [[ "${1//-}" = [Mm]* ]] ; then
 	opt=manual
-	opt1 "$@" 
+	opt2 "$@" 
 	intro "$@"  
 ## [purge |uninstall]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
