@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id920423545452"
+versionid="gen.v1.6 id775222954089"
 
 ## Init Functions ##############################################################
 
@@ -199,7 +199,7 @@ dependsblock() {
 			manual
 		fi 
 	else
-		cd "$tmpdir" 
+		cd "$tampdir" 
 		dwnl
 		if [[ -f "${wdir}setupTermuxArch.sh" ]] ; then
 			cp "${wdir}setupTermuxArch.sh" setupTermuxArch.tmp
@@ -230,7 +230,7 @@ dwnl() {
 }
 
 finishe() { # on exit
-	rm -rf "$tmpdir"
+	rm -rf "$tampdir"
 	printf "\\e[?25h\\e[0m"
 	set +Eeuo pipefail 
   	printtail "$args"  
@@ -385,9 +385,8 @@ pecc() {
 }
 
 preptmpdir() { 
-  	sdate="$(date +%s)"
- 	tmpdir="$TMPDIR/setupTermuxArch$sdate"
-	mkdir -p "$tmpdir" 
+ 	tampdir="$TMPDIR/setupTermuxArch$stime"
+	mkdir -p "$tampdir" 
 }
 
 printconfloaded() {
@@ -625,8 +624,7 @@ declare opt=""
 declare rootdir=""
 declare wdir="$PWD/"
 declare spaceMessage=""
-declare stim="$(date +%s)"
-declare stime="${stim:0:4}"
+declare stime="$(date +%s)"
 declare tm="" # tar manager
 declare usrspace=""
 declare idir="$PWD"
