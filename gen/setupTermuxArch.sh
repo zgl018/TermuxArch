@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id177772347688"
+versionid="gen.v1.6 id500257492517"
 
 ## Init Functions ##############################################################
 
@@ -258,7 +258,11 @@ intro() {
 	spaceinfo
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34mTermuxArch $versionid will attempt to install Linux in \\e[0;32m$installdir\\e[1;34m.  Arch Linux in Termux PRoot will be available upon successful completion.  To run this BASH script again, use \`!!\`.  Ensure background data is not restricted.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
-	mainblock
+	if [[ "$lcc" = "1" ]] ; then
+		loadimage "$@" 
+	else
+		mainblock
+	fi
 }
 
 introbloom() { # Bloom = `setupTermuxArch.sh manual verbose` 
@@ -619,7 +623,8 @@ declare dmverbose="-q" # -v for verbose download manager output from curl and wg
 declare	ed=""
 declare installdir=""
 declare kid=""
-declare	lc=""
+declare lc=""
+declare lcc=""
 declare opt=""
 declare rootdir=""
 declare wdir="$PWD/"
@@ -646,21 +651,45 @@ namestartarch
 preptmpdir
 setrootdir  
 
+# if [[ "${wdir}${args:0:1}" = "." ]] ; then
+# 	echo "${wdir}${args:0:2} dot "
+# elif [[ "${wdir}${args:0}" = *.tar.gz* ]] ; then
+# 	echo "${wdir}${args:0} .tar.gz "
+# elif [[ "${wdir%/}${args:0:1}" = "/" ]] ; then
+# # ${@} removes trailing slash
+# 	echo "${wdir}${args:0:1} slash "
+# else
+# 	echo none
+# 	exit
+# fi
+
+# ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
-## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`.  All options are optional.  AVAILABLE ARGUMENTS: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Usage example: `setupTermuxArch.sh curl sysinfo` shall use curl as the download manager and produce a system information file in the working directory.  NOTE: ONLY curl AND wget ARE THOROUGHLY TESTED; Pull requests are welcome!  Downloading with the other download managers is currently being tested. 
+
+## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [TASK] [WHERE]` and `setupTermuxArch.sh [.|/]systemimage.tar.gz [WHERE]`.  Explaination: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Usage example: `setupTermuxArch.sh curl sysinfo` shall use curl as the download manager and produce a system information file in the working directory.  NOTE: ONLY curl AND wget ARE THOROUGHLY TESTED; Pull requests are welcome!  Downloading with the other download managers is currently being tested. 
 
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION; USE WITH CAUTION!!  
+## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
+
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  All options can be abbreviated. 
 if [[ -z "${1:-}" ]] ; then
 	intro "$@" 
-## A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`; [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. 
-elif [[ "${args:0:1}" = "." ]] ; then
+## A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`; [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. 
+elif [[ "${wdir}${args:0:1}" = "." ]] ; then
 	lc="1"
+	lcc="1"
 	arg2dir "$@"  
 	intro "$@"    
+	loadimage "$@" 
+ ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
+elif [[ "${wdir}${args:0}" = *.tar.gz* ]] ; then
+	lcc="1"
+	arg2dir "$@"  
+	intro "$@"   
 	loadimage "$@"
-## A systemimage.tar.gz file can be used: [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
-elif [[ "${args:0:1}" = "/" ]] ; then
+ ## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
+elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
+	lcc="1"
 	arg2dir "$@"  
 	intro "$@"   
 	loadimage "$@"
@@ -700,7 +729,7 @@ elif [[ "${1//-}" = [Cc][Dd]* ]] || [[ "${1//-}" = [Cc][Ss]* ]] ; then
 	dm=curl
 	introdebug "$@" 
 ## [curl installdir|ci installdir]  Install Arch Linux with `curl`.
-elif [[ "${1//-}" = [Cc]* ]] ; then
+elif [[ "${1//-}" = [Cc][Ii]* ]] || [[ "${1//-}" = [Cc]* ]] ; then
 	echo
 	echo Setting \`curl\` as download manager.
 	dm=curl
