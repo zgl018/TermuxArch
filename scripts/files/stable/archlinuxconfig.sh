@@ -204,7 +204,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="v1.6 id0382"
+versionid="v1.6 id3783"
 
 
 	finishe() { # on exit
@@ -280,7 +280,7 @@ adddfa() {
 }
 
 addfake_proc_shmem() {
-	cat > var/fake_proc_shmem <<- EOM
+	cat > binds/fake_proc_shmem <<- EOM
 	------ Message Queues --------
 	key        msqid      owner      perms      used-bytes   messages
 	
@@ -293,7 +293,7 @@ addfake_proc_shmem() {
 }
 
 addfake_proc_stat() {
-	cat > var/fake_proc_stat <<- EOM
+	cat > binds/fake_proc_stat <<- EOM
 	cpu  4232003 351921 6702657 254559583 519846 1828 215588 0 0 0
 	cpu0 1595013 127789 2759942 61446568 310224 1132 92124 0 0 0
 	cpu1 1348297 91900 1908179 63099166 110243 334 78861 0 0 0
@@ -425,7 +425,7 @@ addkeys() {
 	shopt -s nullglob globstar
 
 	declare -a keyrings
-versionid="v1.6 id0382"
+versionid="v1.6 id3783"
 
 
 	finishe() { # on exit
@@ -527,7 +527,7 @@ addpc() { # pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare -g args="\$@"
-versionid="v1.6 id0382"
+versionid="v1.6 id3783"
 
 
 	finishe() { # on exit
@@ -590,7 +590,7 @@ addpci() { # system update with pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare args="\$@"
-versionid="v1.6 id0382"
+versionid="v1.6 id3783"
 
 
 	finishe() { # on exit

@@ -124,7 +124,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-	versionid="v1.6"
+versionid="v1.6 id3783"
 
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
@@ -174,7 +174,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-	versionid="v1.6"
+versionid="v1.6 id3783"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -191,7 +191,7 @@ makestartbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-	versionid="v1.6"
+versionid="v1.6 id3783"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -279,13 +279,17 @@ md5check() {
 	fi
 }
 
-prepinstalldir() {
+preprootdir() {
 	mkdir -p "$installdir"
 	cd "$installdir"
 	mkdir -p etc 
+	mkdir -p binds 
 	mkdir -p root/bin
 	mkdir -p usr/bin
-	mkdir -p var 
+}
+
+prepinstalldir() {
+	preprootdir
 	addREADME
 	addae
 	addauser

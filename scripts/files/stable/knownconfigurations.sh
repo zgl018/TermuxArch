@@ -61,7 +61,7 @@ x86_64() { # $file is read from md5sums.txt
 
 prs() { 
 prootstmnt="exec proot "
-if [[ -z "${kid:-}" ]];then
+if [[ -z "${kid:-}" ]]; then
 	prootstmnt+=""
 elif [[ "$kid" ]]; then
  	prootstmnt+="--kernel-release=4.14.15 "
@@ -69,8 +69,14 @@ fi
 if [[ "$koe" ]]; then
 	prootstmnt+="--kill-on-exit "
 fi
-prootstmnt+="--link2symlink -0 -r $installdir -b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ -w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
-# prootstmnt+="--link2symlink -0 -r $installdir -b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b $installdir/var/fake_proc_shmem:/proc/shmem -b $installdir/var/fake_proc_stat:/proc/stat -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ -w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
+prootstmnt+="--link2symlink -0 -r $installdir -b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ "
+if [ -n "$(ls -A ${installdir}/binds/*.prs)" ]; then
+    for f in ${installdir}/binds/*.prs ; do
+      . $f
+    done
+fi
+prootstmnt+="-w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
+# prootstmnt+="--link2symlink -0 -r $installdir -b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b $installdir/binds/fake_proc_shmem:/proc/shmem -b $installdir/binds/fake_proc_stat:/proc/stat -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ -w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
 }
 prs 
 

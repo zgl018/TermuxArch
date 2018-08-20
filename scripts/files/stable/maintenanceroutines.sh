@@ -113,12 +113,11 @@ refreshsys() { # Refreshes
 	nameinstalldir 
 	namestartarch  
 	setrootdir  
-	mkdir -p "$installdir"/root/bin
-	if [[ ! -d "$installdir" ]] || [[ ! -f "$installdir"/bin/env ]];then
+	if [[ ! -d "$installdir" ]] || [[ ! -f "$installdir"/bin/env ]] || [[ ! -f "$installdir"/bin/we ]] || [[ ! -d "$installdir"/root/bin ]];then
 		printf "\\n\\e[0;33m%s\\e[1;33m%s\\e[0;33m.\\e[0m\\n" "The root directory structure is incorrect; Cannot continue " "setupTermuxArch.sh refresh"
 		exit $?
 	fi
-	cd "$installdir"
+	preprootdir
 	addREADME
 	addae
 	addauser
