@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id3783"
+versionid="gen.v1.6 id171162740088"
 
 ## Init Functions ##############################################################
 
@@ -666,7 +666,7 @@ setrootdir
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 
-## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [TASK] [WHERE]` and `setupTermuxArch.sh [./|/]systemimage.tar.gz [WHERE]`.  Explaination: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: wget)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Usage example: `setupTermuxArch.sh curl sysinfo` shall use curl as the download manager and produce a system information file in the working directory.  NOTE: ONLY curl AND wget ARE THOROUGHLY TESTED; Pull requests are welcome!  Downloading with the other download managers is currently being tested. 
+## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [TASK] [WHERE]` and `setupTermuxArch.sh [./|/]systemimage.tar.gz [WHERE]`.  Explaination: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: wget)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Usage example: `setupTermuxArch.sh curl sysinfo` shall use curl as the download manager and produce a system information file in the working directory.  NOTE: ONLY curl AND wget ARE THOROUGHLY TESTED; Pull requests are welcome!  Downloading with the other download managers is being tested. 
 
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!  
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
