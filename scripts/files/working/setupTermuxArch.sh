@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id963443098145"
+versionid="gen.v1.6 id994932847975"
 
 ## Init Functions ##############################################################
 
@@ -646,7 +646,8 @@ namestartarch
 preptmpdir
 setrootdir  
 
-## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`.  Options are optional.  Available Arguments Grammar: [HOW (aria2c, axel, curl, lftp and wget)] [TASK (install, purge, refresh and sysinfo)] [WHERE (default: arch)]  NOTE: ONLY CURL AND WGET ARE THOROUGHLY TESTED AT PRESENT!  Downloading with the remaining download managers is currently being developed.  Usage example: `setupTermuxArch.sh curl sysinfo` will use curl as the download manager and produce a system information file.  
+## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION; USE WITH CAUTION!!
+## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`.  All options are optional!  AVAILABLE ARGUMENTS: [HOW (aria2c, axel, curl, lftp and wget (default 1: what's available on system (default 2: curl)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  NOTE: ONLY CURL AND WGET ARE THOROUGHLY TESTED AT PRESENT!  Pull requests welcome; Downloading with the remaining download managers is currently being developed.  Usage example: `setupTermuxArch.sh curl sysinfo` shall use curl as the download manager and produce a system information file in the working directory. IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION; USE WITH CAUTION!!  All options are optional.  
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  All options can be abbreviated. 
 if [[ -z "${1:-}" ]] ; then
 	intro "$@" 
@@ -663,22 +664,26 @@ elif [[ "${args:0:1}" = "/" ]] ; then
 	loadimage "$@"
 ## [axd|axs]  Get device system information with `axel`.
 elif [[ "${1//-}" = [Aa][Xx][Dd]* ]] || [[ "${1//-}" = [Aa][Xx][Ss]* ]] ; then
+	echo
 	echo Getting device system information with \`axel\`.
 	dm=axel
 	introdebug "$@" 
 ## [axel installdir|axi installdir]  Install Arch Linux with `axel`.
 elif [[ "${1//-}" = [Aa][Xx]* ]] || [[ "${1//-}" = [Aa][Xx][Ii]* ]] ; then
+	echo
 	echo Setting \`axel\` as download manager.
 	dm=axel
 	opt2 "$@" 
 	intro "$@" 
 ## [ad|as]  Get device system information with `aria2c`.
 elif [[ "${1//-}" = [Aa][Dd]* ]] || [[ "${1//-}" = [Aa][Ss]* ]] ; then
+	echo
 	echo Getting device system information with \`aria2c\`.
 	dm=aria2c
 	introdebug "$@" 
 ## [aria2c installdir|ai installdir]  Install Arch Linux with `aria2c`.
 elif [[ "${1//-}" = [Aa]* ]] ; then
+	echo
 	echo Setting \`aria2c\` as download manager.
 	dm=aria2c
 	opt2 "$@" 
@@ -688,11 +693,13 @@ elif [[ "${1//-}" = [Bb]* ]] ; then
 	introbloom "$@"  
 ## [cd|cs]  Get device system information with `curl`.
 elif [[ "${1//-}" = [Cc][Dd]* ]] || [[ "${1//-}" = [Cc][Ss]* ]] ; then
+	echo
 	echo Getting device system information with \`curl\`.
 	dm=curl
 	introdebug "$@" 
 ## [curl installdir|ci installdir]  Install Arch Linux with `curl`.
 elif [[ "${1//-}" = [Cc]* ]] ; then
+	echo
 	echo Setting \`curl\` as download manager.
 	dm=curl
 	opt2 "$@" 
@@ -709,11 +716,13 @@ elif [[ "${1//-}" = [Ii]* ]] ||  [[ "${1//-}" = [Rr][Oo]* ]] ; then
 	intro "$@"  
 ## [ld|ls]  Get device system information with `lftp`.
 elif [[ "${1//-}" = [Ll][Dd]* ]] || [[ "${1//-}" = [Ll][Ss]* ]] ; then
+	echo
 	echo Getting device system information with \`lftp\`.
 	dm=lftp
 	introdebug "$@" 
 ## [lftp installdir|li installdir]  Install Arch Linux with `lftp`.
 elif [[ "${1//-}" = [Ll]* ]] ; then
+	echo
 	echo Setting \`lftp\` as download manager.
 	dm=lftp
 	opt2 "$@" 
@@ -733,11 +742,13 @@ elif [[ "${1//-}" = [Rr]* ]] ; then
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.
 elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
+	echo
 	echo Getting device system information with \`wget\`.
 	dm=wget
 	introdebug "$@" 
 ## [wget installdir|wi installdir]  Install Arch Linux with `wget`.
 elif [[ "${1//-}" = [Ww]* ]] ; then
+	echo
 	echo Setting \`wget\` as download manager.
 	dm=wget
 	opt2 "$@" 
