@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id994932847975"
+versionid="gen.v1.6 id177772347688"
 
 ## Init Functions ##############################################################
 
@@ -646,8 +646,10 @@ namestartarch
 preptmpdir
 setrootdir  
 
-## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION; USE WITH CAUTION!!
-## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`.  All options are optional!  AVAILABLE ARGUMENTS: [HOW (aria2c, axel, curl, lftp and wget (default 1: what's available on system (default 2: curl)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  NOTE: ONLY CURL AND WGET ARE THOROUGHLY TESTED AT PRESENT!  Pull requests welcome; Downloading with the remaining download managers is currently being developed.  Usage example: `setupTermuxArch.sh curl sysinfo` shall use curl as the download manager and produce a system information file in the working directory. IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION; USE WITH CAUTION!!  All options are optional.  
+## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
+## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`.  All options are optional.  AVAILABLE ARGUMENTS: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Usage example: `setupTermuxArch.sh curl sysinfo` shall use curl as the download manager and produce a system information file in the working directory.  NOTE: ONLY curl AND wget ARE THOROUGHLY TESTED; Pull requests are welcome!  Downloading with the other download managers is currently being tested. 
+
+## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION; USE WITH CAUTION!!  
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  All options can be abbreviated. 
 if [[ -z "${1:-}" ]] ; then
 	intro "$@" 

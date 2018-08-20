@@ -204,7 +204,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="gen.v1.6 id994932847975"
+versionid="gen.v1.6 id177772347688"
 
 
 	finishe() { # on exit
@@ -425,7 +425,7 @@ addkeys() {
 	shopt -s nullglob globstar
 
 	declare -a keyrings
-versionid="gen.v1.6 id994932847975"
+versionid="gen.v1.6 id177772347688"
 
 
 	finishe() { # on exit
@@ -527,7 +527,7 @@ addpc() { # pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare -g args="\$@"
-versionid="gen.v1.6 id994932847975"
+versionid="gen.v1.6 id177772347688"
 
 
 	finishe() { # on exit
@@ -590,7 +590,7 @@ addpci() { # system update with pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare args="\$@"
-versionid="gen.v1.6 id994932847975"
+versionid="gen.v1.6 id177772347688"
 
 
 	finishe() { # on exit
@@ -779,7 +779,7 @@ addv() {
 }
 
 addwe() {
-	cat > bin/we <<- EOM
+	cat > usr/bin/we <<- EOM
 	#!/bin/bash -e
 	# Watch available entropy on device.
 	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
@@ -924,7 +924,7 @@ addwe() {
 	fi
 	printtail 
 	EOM
-	chmod 770 bin/we 
+	chmod 770 usr/bin/we 
 }
 
 addyt() {

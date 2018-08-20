@@ -284,6 +284,7 @@ prepinstalldir() {
 	cd "$installdir"
 	mkdir -p etc 
 	mkdir -p root/bin
+	mkdir -p usr/bin
 	mkdir -p var 
 	addREADME
 	addae
@@ -316,6 +317,7 @@ prepinstalldir() {
 	addtour
 	addtrim 
 	addyt
+	addwe  
 	addv 
 	makefinishsetup
 	makesetupbin 
@@ -386,7 +388,6 @@ setlocale() {
 }
 
 touchupsys() {
-	addwe  
 	addmotd
 	setlocale
 	runfinishsetup
