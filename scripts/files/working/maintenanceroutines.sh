@@ -5,7 +5,6 @@
 # https://sdrausty.github.io/TermuxArch/README has information about this project. 
 ################################################################################
 
-# 			cp setupTermuxArch.sh "${wdir}setupTermuxArch.sh"
 sysinfo() {
 	spaceinfo
 	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
@@ -63,6 +62,29 @@ copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[pa
 	fi
 }
 
+# loadimage() { 
+# 	set +Ee
+# 	namestartarch 
+#  	spaceinfo
+# 	printf "\\n" 
+# 	wakelock
+# 	prepinstalldir 
+# 	copyimage "$@"
+# 	printmd5check
+# 	md5check
+# 	printcu 
+# 	rm -f "$installdir"/*.tar.gz "$installdir"/*.tar.gz.md5
+# 	printdone 
+# 	printconfigup 
+# 	touchupsys 
+# 	printf "\\n" 
+# 	wakeunlock 
+# 	printfooter
+# 	"$installdir/$startbin" ||:
+# 	"$startbin" help
+# 	printfooter2
+# }
+# 
 loadimage() { 
 	set +Ee
 	namestartarch 

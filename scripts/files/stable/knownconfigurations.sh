@@ -7,11 +7,11 @@
 # `bash setupTermuxArch.sh manual` shall create `setupTermuxArchConfigs.sh` from this file in your working directory.  Run `bash setupTermuxArch.sh` and `setupTermuxArchConfigs.sh` loads automaticaly.  `bash setupTermuxArch.sh help` has more information.  Change mirror (https://wiki.archlinux.org/index.php/Mirrors and https://archlinuxarm.org/about/mirrors) to desired geographic location in `setupTermuxArchConfigs.sh` to resolve 404 and checksum issues.  The following user configurable variables are available in this file:   
 # cmirror="http://mirror.archlinuxarm.org/"
 cmirror="http://os.archlinuxarm.org/"
-# dm=aria2c 
-# dm=axel tba
-# dm=lftp 
-# dm=curl
-# dm=wget
+# dm=aria2c	# Works wants improvement 
+# dm=axel tba	# Not fully implemented
+# dm=lftp 	# Works wants improvement 
+# dm=curl	# Works 
+# dm=wget	# Works 
 # dmverbose="-v" # Uncomment for verbose download manager output with curl and wget;  for verbose output throughout runtime, change this setting setting in `setupTermuxArch.sh` also.  
 koe=1
 
