@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id500257492517"
+versionid="gen.v1.6 id573644124979"
 
 ## Init Functions ##############################################################
 
@@ -663,15 +663,15 @@ setrootdir
 # 	exit
 # fi
 
-# ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
+## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 
-## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [TASK] [WHERE]` and `setupTermuxArch.sh [.|/]systemimage.tar.gz [WHERE]`.  Explaination: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Usage example: `setupTermuxArch.sh curl sysinfo` shall use curl as the download manager and produce a system information file in the working directory.  NOTE: ONLY curl AND wget ARE THOROUGHLY TESTED; Pull requests are welcome!  Downloading with the other download managers is currently being tested. 
+## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [TASK] [WHERE]` and `setupTermuxArch.sh [./|/]systemimage.tar.gz [WHERE]`.  Explaination: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: wget)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Usage example: `setupTermuxArch.sh curl sysinfo` shall use curl as the download manager and produce a system information file in the working directory.  NOTE: ONLY curl AND wget ARE THOROUGHLY TESTED; Pull requests are welcome!  Downloading with the other download managers is currently being tested. 
 
-## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION; USE WITH CAUTION!!  
+## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!  
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 
-## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  All options can be abbreviated. 
+## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  
 if [[ -z "${1:-}" ]] ; then
 	intro "$@" 
 ## A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`; [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. 
@@ -682,7 +682,7 @@ elif [[ "${wdir}${args:0:1}" = "." ]] ; then
 	intro "$@"    
 	loadimage "$@" 
  ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
-elif [[ "${wdir}${args:0}" = *.tar.gz* ]] ; then
+elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
 	lcc="1"
 	arg2dir "$@"  
 	intro "$@"   
