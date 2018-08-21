@@ -54,37 +54,18 @@ copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[pa
 	cfile="${1##/*/}" 
  	file="$cfile" 
 	if [[ "$lc" = "" ]];then
-		cp "${wdir}$1".md5  "$installdir" # & spinner "Copying" "…" 
-		cp "${wdir}$1" "$installdir" # & spinner "Copying" "…" 
+		echo "Copying $1.md5…" 
+		cp "${wdir}$1".md5  "$installdir"
+		echo "Copying $1…" 
+		cp "${wdir}$1" "$installdir"
 	elif [[ "$lc" = "1" ]];then
-		cp "$idir/$cfile".md5  "$installdir" # & spinner "Copying" "…" 
-		cp "$idir/$cfile" "$installdir" # & spinner "Copying" "…" 
+		echo "Copying $1.md5…" 
+		cp "$idir/$cfile".md5  "$installdir" 
+		echo "Copying $1…" 
+		cp "$idir/$cfile" "$installdir"
 	fi
 }
 
-# loadimage() { 
-# 	set +Ee
-# 	namestartarch 
-#  	spaceinfo
-# 	printf "\\n" 
-# 	wakelock
-# 	prepinstalldir 
-# 	copyimage "$@"
-# 	printmd5check
-# 	md5check
-# 	printcu 
-# 	rm -f "$installdir"/*.tar.gz "$installdir"/*.tar.gz.md5
-# 	printdone 
-# 	printconfigup 
-# 	touchupsys 
-# 	printf "\\n" 
-# 	wakeunlock 
-# 	printfooter
-# 	"$installdir/$startbin" ||:
-# 	"$startbin" help
-# 	printfooter2
-# }
-# 
 loadimage() { 
 	set +Ee
 	namestartarch 
