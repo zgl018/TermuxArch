@@ -162,7 +162,7 @@ addbashrc() {
 	alias rf='rm -rf'
 	EOM
 	if [ -e "$HOME"/.bashrc ] ; then
-		grep proxy "$HOME"/.bashrc |grep "export" >>  root/.bashrc 2>/dev/null||:
+		grep proxy "$HOME"/.bashrc | grep "export" >>  root/.bashrc 2>/dev/null ||:
 	fi
 }
 
@@ -218,7 +218,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="v1.6 id9416"
+versionid="v1.6 id0440"
 
 
 	finishe() { # on exit
@@ -439,7 +439,7 @@ addkeys() {
 	shopt -s nullglob globstar
 
 	declare -a keyrings
-versionid="v1.6 id9416"
+versionid="v1.6 id0440"
 
 
 	finishe() { # on exit
@@ -541,7 +541,7 @@ addpc() { # pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare -g args="\$@"
-versionid="v1.6 id9416"
+versionid="v1.6 id0440"
 
 
 	finishe() { # on exit
@@ -604,7 +604,7 @@ addpci() { # system update with pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare args="\$@"
-versionid="v1.6 id9416"
+versionid="v1.6 id0440"
 
 
 	finishe() { # on exit

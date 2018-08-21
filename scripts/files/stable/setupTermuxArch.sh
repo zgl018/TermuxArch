@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id9416"
+versionid="v1.6 id0440"
 
 ## Init Functions ##############################################################
 
@@ -37,7 +37,7 @@ aria2cifdm() {
 	fi
 }
 
-arg2dir() { 
+arg2dir() {  # Second argument is rootdir.
 	arg2="${@:2:1}"
 	if [[ -z "${arg2:-}" ]] ; then
 		rootdir=/arch
@@ -48,13 +48,24 @@ arg2dir() {
 	fi
 }
 
-arg3dir() {
+arg3dir() { # Third argument is rootdir.
 	arg3="${@:3:1}"
 	if [[ -z "${arg3:-}" ]] ; then
 		rootdir=/arch
 		nameinstalldir 
 	else
 		rootdir=/"$arg3"
+		nameinstalldir 
+	fi
+}
+
+arg4dir() { # Fourth argument is rootdir.
+	arg4="${@:4:1}"
+	if [[ -z "${arg4:-}" ]] ; then
+		rootdir=/arch
+		nameinstalldir 
+	else
+		rootdir=/"$arg4"
 		nameinstalldir 
 	fi
 }
@@ -373,10 +384,21 @@ opt2() {
 		arg3dir "$@" 
 	elif [[ "$2" = [Mm]* ]] ; then
 		opt=manual
+ 		opt3 "$@"  
 		intro "$@"  
-		arg3dir "$@" 
 	elif [[ "$2" = [Rr]* ]] ; then
 		arg3dir "$@" 
+		introrefresh "$@"  
+	fi
+}
+
+opt3() { 
+	if [[ -z "${3:-}" ]] ; then
+		arg3dir "$@" 
+	elif [[ "$3" = [Ii]* ]] ; then
+		arg4dir "$@" 
+	elif [[ "$3" = [Rr]* ]] ; then
+		arg4dir "$@" 
 		introrefresh "$@"  
 	fi
 }
@@ -761,7 +783,7 @@ elif [[ "${1//-}" = [Hh]* ]] || [[ "${1//-}" = [?]* ]] ; then
 	printusage
 ## [install installdir|rootdir installdir]  Install Arch Linux in a custom directory.  Instructions: Install in userspace. $HOME is appended to installation directory. To install Arch Linux in $HOME/installdir use `bash setupTermuxArch.sh install installdir`. In bash shell use `./setupTermuxArch.sh install installdir`.  All options can be abbreviated to one or two letters.  Hence `./setupTermuxArch.sh install installdir` can be run as `./setupTermuxArch.sh i installdir` in BASH.
 elif [[ "${1//-}" = [Ii]* ]] ||  [[ "${1//-}" = [Rr][Oo]* ]] ; then
-	arg2dir "$@"  
+	opt2 "$@" 
 	intro "$@"  
 ## [ld|ls]  Get device system information with `lftp`.
 elif [[ "${1//-}" = [Ll][Dd]* ]] || [[ "${1//-}" = [Ll][Ss]* ]] ; then
@@ -787,7 +809,7 @@ elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	rmarch
 ## [refresh|refresh installdir]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
 elif [[ "${1//-}" = [Rr]* ]] ; then
-	arg2dir "$@"  
+	opt2 "$@" 
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.
 elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
