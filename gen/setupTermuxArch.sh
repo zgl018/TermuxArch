@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id713436714118"
+versionid="gen.v1.6 id706096124009"
 
 ## Init Functions ##############################################################
 
@@ -177,11 +177,11 @@ depends() { # Checks for missing commands.
 			wgetif 
 		fi
 	fi
-	# Adds curl if present on system. 
-	if [[ ! -x "$PREFIX"/bin/curl ]] && [[ -x /system/bin/curl ]] ;then
-		dm=curl 
-		addcurl
-	fi
+# 	# Adds curl if present on system. 
+# 	if [[ ! -x "$PREFIX"/bin/curl ]] && [[ -x /system/bin/curl ]] ;then
+# 		dm=curl 
+# 		addcurl
+# 	fi
 	# Sets and installs curl. 
 	if [[ "$dm" = "" ]] ; then
 		curlif 
