@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id9713"
+versionid="v1.6 id2094"
 
 ## Init Functions ##############################################################
 
@@ -27,7 +27,7 @@ aria2cif() {
 		:
 	else
 		aptin+="aria2 "
-		pins+="aria2c "
+		peins+="aria2c "
 	fi
 }
 
@@ -76,7 +76,7 @@ axelif() {
 		:
 	else
 		aptin+="axel "
-		pins+="axel "
+		peins+="axel "
 	fi
 }
 
@@ -92,7 +92,7 @@ bsdtarif() {
 		:
 	else
 		aptin+="bsdtar "
-		pins+="bsdtar "
+		peins+="bsdtar "
 	fi
 }
 
@@ -147,7 +147,7 @@ curlif() {
 		:
 	else
 		aptin+="curl "
-		pins+="curl "
+		peins+="curl "
 	fi
 }
 
@@ -203,7 +203,7 @@ depends() { # Checks for missing commands.
 #	# Installs missing commands.  
 	tapin "$aptin"
 #	# Checks whether installing missing commands was successful.  
-# 	pe "$pins"
+# 	pe "$peins"
 	echo
 	echo "Using ${dm:-curl} to manage downloads." 
 	printf "\\n\\e[0;34m 🕛 > 🕧 \\e[1;34mPrerequisites: \\e[1;32mOK  \\e[1;34mDownloading TermuxArch…\\n\\n\\e[0;32m"
@@ -323,7 +323,7 @@ lftpif() {
 		:
 	else
 		aptin+="lftp "
-		pins+="lftpget "
+		peins+="lftpget "
 	fi
 }
 
@@ -408,26 +408,28 @@ opt3() {
 }
 
 pe() {
-	echo "$pins" 
+	echo "$peins" 
 	printf "\\n\\e[1;31mPrerequisites exception.  Run the script again…\\n\\n\\e[0m"'\033]2; Run `bash setupTermuxArch.sh` again…\007'
 	exit
 }
 
 pec() {
-	if [[ "$pins" != "" ]] ; then
-		pe @pins
+	if [[ "$peins" != "" ]] ; then
+		pe @peins
 	fi
 }
 
 pecc() {
-	if [[ "$pins" != "" ]] ; then
-		pe @pins
+	if [[ "$peins" != "" ]] ; then
+		pe @peins
 	fi
 }
 
 preptmpdir() { 
- 	tampdir="$TMPDIR/setupTermuxArch$stime"
-	mkdir -p "$tampdir" 
+	mkdir -p "$installdir/tmp"
+	chmod 777 "$installdir/tmp"
+	chmod +t "$installdir/tmp"
+ 	tampdir="$installdir/tmp/setupTermuxArch$stime"
 }
 
 printconfloaded() {
@@ -459,7 +461,7 @@ prootif() {
 		:
 	else
 		aptin+="proot "
-		pins+="proot "
+		peins+="proot "
 	fi
 }
 
@@ -638,7 +640,7 @@ wgetif() {
 	dm=wget 
 	if [[ ! -x "$PREFIX"/bin/wget ]] ; then
 		aptin+="wget "
-		pins+="wget "
+		peins+="wget "
 	fi
 }
 
@@ -653,7 +655,7 @@ wgetifdm() {
 declare COUNTER=""
 declare -a args="$@"
 declare aptin="" # apt string
-declare pins="" # Prerequisites exception string
+declare peins="" # exception string
 declare bin=""
 declare commandif="$(command -v getprop)" ||:
 declare cpuabi="$(getprop ro.product.cpu.abi 2>/dev/null)" ||:
@@ -693,10 +695,10 @@ if [[ "$commandif" = "" ]] ; then
 	exit
 fi
 
-preptmpdir
 nameinstalldir 
 namestartarch  
 setrootdir  
+preptmpdir
 
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 ## if [[ "${wdir}${args:0:1}" = "." ]] ; then
