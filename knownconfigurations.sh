@@ -70,13 +70,13 @@ if [[ "$koe" ]]; then
 	prootstmnt+="--kill-on-exit "
 fi
 prootstmnt+="--link2symlink -0 -r $installdir -b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ "
-if [ -n "$(ls -A ${installdir}/binds/*.prs)" ]; then
-    for f in ${installdir}/binds/*.prs ; do
+if [ -n "$(ls -A ${installdir}/var/binds/*.prs)" ]; then
+    for f in ${installdir}/var/binds/*.prs ; do
       . $f
     done
 fi
 prootstmnt+="-w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
-# prootstmnt+="--link2symlink -0 -r $installdir -b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b $installdir/binds/fake_proc_shmem:/proc/shmem -b $installdir/binds/fake_proc_stat:/proc/stat -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ -w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
+# prootstmnt+="--link2symlink -0 -r $installdir -b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b $installdir/var/binds/fake_proc_shmem:/proc/shmem -b $installdir/var/binds/fake_proc_stat:/proc/stat -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ -w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
 }
 prs 
 

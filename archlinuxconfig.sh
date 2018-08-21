@@ -175,7 +175,7 @@ addcdtd() {
 	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
 	# Usage: \`. cdtd\`  The dot sources \`cdtd\` which makes this shortcut script work.
 	################################################################################
-	cd /data/data/com.termux/files/home/storage/downloads && pwd
+	cd \$PREFIX/home/storage/downloads && pwd
 	EOM
 	chmod 770 root/bin/cdtd 
 }
@@ -189,9 +189,23 @@ addcdth() {
 	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
 	# Usage: \`. cdth\`  The dot sources \`cdth\` which makes this shortcut script work. 
 	################################################################################
-	cd /data/data/com.termux/files/home && pwd
+	cd \$PREFIX/home && pwd
 	EOM
 	chmod 770 root/bin/cdth 
+}
+
+addcdtmp() {
+	cat > root/bin/cdtmp <<- EOM
+	#!/bin/bash -e
+	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
+	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
+	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+	# Usage: \`. cdtmp\`  The dot sources \`cdtmp\` which makes this shortcut script work. 
+	################################################################################
+	cd \$PREFIX/usr/tmp && pwd
+	EOM
+	chmod 770 root/bin/cdtmp 
 }
 
 addch() { # Creates .hushlogin and .hushlogout file
@@ -204,7 +218,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="v1.6 id3783"
+versionid="v1.6 id9416"
 
 
 	finishe() { # on exit
@@ -280,7 +294,7 @@ adddfa() {
 }
 
 addfake_proc_shmem() {
-	cat > binds/fake_proc_shmem <<- EOM
+	cat > var/binds/fake_proc_shmem <<- EOM
 	------ Message Queues --------
 	key        msqid      owner      perms      used-bytes   messages
 	
@@ -293,7 +307,7 @@ addfake_proc_shmem() {
 }
 
 addfake_proc_stat() {
-	cat > binds/fake_proc_stat <<- EOM
+	cat > var/binds/fake_proc_stat <<- EOM
 	cpu  4232003 351921 6702657 254559583 519846 1828 215588 0 0 0
 	cpu0 1595013 127789 2759942 61446568 310224 1132 92124 0 0 0
 	cpu1 1348297 91900 1908179 63099166 110243 334 78861 0 0 0
@@ -425,7 +439,7 @@ addkeys() {
 	shopt -s nullglob globstar
 
 	declare -a keyrings
-versionid="v1.6 id3783"
+versionid="v1.6 id9416"
 
 
 	finishe() { # on exit
@@ -527,7 +541,7 @@ addpc() { # pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare -g args="\$@"
-versionid="v1.6 id3783"
+versionid="v1.6 id9416"
 
 
 	finishe() { # on exit
@@ -590,7 +604,7 @@ addpci() { # system update with pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare args="\$@"
-versionid="v1.6 id3783"
+versionid="v1.6 id9416"
 
 
 	finishe() { # on exit
