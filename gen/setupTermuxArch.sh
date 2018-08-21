@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id634803640004"
+versionid="gen.v1.6 id356434972845"
 
 ## Init Functions ##############################################################
 
@@ -37,7 +37,7 @@ aria2cifdm() {
 	fi
 }
 
-arg2dir() {  # Second argument is rootdir.
+arg2dir() {  # Second argument as rootdir.
 	arg2="${@:2:1}"
 	if [[ -z "${arg2:-}" ]] ; then
 		rootdir=/arch
@@ -48,7 +48,7 @@ arg2dir() {  # Second argument is rootdir.
 	fi
 }
 
-arg3dir() { # Third argument is rootdir.
+arg3dir() { # Third argument as rootdir.
 	arg3="${@:3:1}"
 	if [[ -z "${arg3:-}" ]] ; then
 		rootdir=/arch
@@ -59,7 +59,7 @@ arg3dir() { # Third argument is rootdir.
 	fi
 }
 
-arg4dir() { # Fourth argument is rootdir.
+arg4dir() { # Fourth argument as rootdir.
 	arg4="${@:4:1}"
 	if [[ -z "${arg4:-}" ]] ; then
 		rootdir=/arch
@@ -691,26 +691,19 @@ nameinstalldir
 namestartarch  
 setrootdir  
 
-# if [[ "${wdir}${args:0:1}" = "." ]] ; then
-# 	echo "${wdir}${args:0:2} dot "
-# elif [[ "${wdir}${args:0}" = *.tar.gz* ]] ; then
-# 	echo "${wdir}${args:0} .tar.gz "
-# elif [[ "${wdir%/}${args:0:1}" = "/" ]] ; then
-# # ${@} removes trailing slash
-# 	echo "${wdir}${args:0:1} slash "
-# else
-# 	echo none
-# 	exit
-# fi
-
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
+## if [[ "${wdir}${args:0:1}" = "." ]] ; then
+## 	echo "${wdir}${args:0:2} dot "
+## elif [[ "${wdir}${args:0}" = *.tar.gz* ]] ; then
+## 	echo "${wdir}${args:0} .tar.gz "
+## elif [[ "${args:0:1}" = "/" ]] ; then
+## 	echo "$args slash "
+## else
+## 	echo none
+## 	exit
+## fi
+## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [TASK] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied.  USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual install customname` will install the installation in customname with wget.  While `setupTermuxArch.sh wget refresh customname` will refresh this installation with wget.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED and all the download managers are fully implemented yet.    
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
-
-## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [TASK] [WHERE]` and `setupTermuxArch.sh [./|/]systemimage.tar.gz [WHERE]`.  Explaination: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: wget)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Usage example: `setupTermuxArch.sh curl sysinfo` shall use curl as the download manager and produce a system information file in the working directory.  NOTE: ONLY curl AND wget ARE THOROUGHLY TESTED; Pull requests are welcome!  Downloading with the other download managers is being tested. 
-
-## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!  
-## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
-
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  
 if [[ -z "${1:-}" ]] ; then
 	intro "$@" 
