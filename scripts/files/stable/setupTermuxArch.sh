@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id2094"
+versionid="v1.6 id8775"
 
 ## Init Functions ##############################################################
 
@@ -430,6 +430,7 @@ preptmpdir() {
 	chmod 777 "$installdir/tmp"
 	chmod +t "$installdir/tmp"
  	tampdir="$installdir/tmp/setupTermuxArch$stime"
+	mkdir -p "$tampdir" 
 }
 
 printconfloaded() {
