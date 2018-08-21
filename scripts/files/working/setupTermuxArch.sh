@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id297384081004"
+versionid="v1.6 id9713"
 
 ## Init Functions ##############################################################
 
@@ -195,14 +195,14 @@ depends() { # Checks for missing commands.
 # 		dm=curl 
 # 		addcurl
 # 	fi
-	# Sets and installs curl if nothing else was found, installed and set. 
+#	# Sets and installs curl if nothing else was found, installed and set. 
 	if [[ "$dm" = "" ]] ; then
 		curlif 
 	fi
 	dependbp 
-#	Installs missing commands.  
+#	# Installs missing commands.  
 	tapin "$aptin"
-#	Checks whether installing missing commands actuallyworked.  
+#	# Checks whether installing missing commands was successful.  
 # 	pe "$pins"
 	echo
 	echo "Using ${dm:-curl} to manage downloads." 
