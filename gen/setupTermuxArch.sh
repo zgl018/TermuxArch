@@ -8,16 +8,17 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id171162740088"
+versionid="gen.v1.6 id713436714118"
 
 ## Init Functions ##############################################################
 
-apin() {
-	if [[ "$aptin" != "" ]] ; then
-		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\e[1;34m…\\n\\n\\e[1;32m" "$aptin"
-		pkg install "$aptin" -o APT::Keep-Downloaded-Packages="true" --yes
-		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\e[1;34m: \\e[1;32mDONE\\n\\e[0m" "$aptin"
-	fi
+addcurl() {
+	cat > "$PREFIX"/bin/curl <<- EOM
+	#!/bin/sh
+	unset LD_LIBRARY_PATH LD_PRELOAD
+	PATH=\$PATH:/system/bin exec /system/bin/curl "\$@"
+	EOM
+	chmod 555 "$PREFIX"/bin/curl 
 }
 
 aria2cif() { 
@@ -154,31 +155,39 @@ dependbp() {
 	fi
 }
 
-depends() { # checks for missing commands.  
+depends() { # Checks for missing commands.  
 	printf "\\e[1;34mChecking prerequisites…\\n\\e[1;32m"
+	# Checks if download manager is set. 
 	aria2cifdm 
 	axelifdm 
 	lftpifdm 
 	curlifdm 
 	wgetifdm 
+	# Checks if download manager is present. 
 	if [[ "$dm" = "" ]] ; then
-		if [[ -x "$PREFIX"/bin/aria2c ]] || [[ -x "$(command -v aria2c)" ]] ; then
+		if  [[ -x "$(command -v aria2c)" ]] || [[ -x "$PREFIX"/bin/aria2c ]]; then
 			aria2cif 
-	 	elif [[ -x "$PREFIX"/bin/axel ]] || [[ -x "$(command -v axel)" ]] ; then
+	 	elif [[ -x "$(command -v axel)" ]] || [[ -x "$PREFIX"/bin/axel ]] ; then
 			axelif 
-	 	elif [[ -x "$PREFIX"/bin/lftpget ]] || [[ -x "$(command -v lftpget)" ]] ; then
+	 	elif [[ -x "$(command -v lftpget)" ]] || [[ -x "$PREFIX"/bin/lftpget ]] ; then
 			lftpif 
-		elif [[ -x "$PREFIX"/bin/curl ]] || [[ -x "$(command -v curl)" ]] ; then
+		elif [[ -x "$(command -v curl)" ]] || [[ -x "$PREFIX"/bin/curl ]] ; then
 			curlif 
-		elif [[ -x "$PREFIX"/bin/wget ]] || [[ -x "$(command -v wget)" ]] ; then
+		elif [[ -x "$(command -v wget)" ]] && [[ -x "$PREFIX"/bin/wget ]] ; then
 			wgetif 
 		fi
 	fi
+	# Adds curl if present on system. 
+	if [[ ! -x "$PREFIX"/bin/curl ]] && [[ -x /system/bin/curl ]] ;then
+		dm=curl 
+		addcurl
+	fi
+	# Sets and installs curl. 
 	if [[ "$dm" = "" ]] ; then
 		curlif 
 	fi
 	dependbp 
-	apin "$aptin"
+	tapin "$aptin"
 # 	pe "$pins"
 	echo
 	echo "Using ${dm:-curl} to manage downloads." 
@@ -242,11 +251,13 @@ finisher() { # on script signal
 }
 
 finishs() { # on signal
+	rm -rf "$tampdir"
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch warning:  Signal $? received!\\e[0m\\n"
  	exit 
 }
 
 finishq() { # on quit
+	rm -rf "$tampdir"
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch warning:  Quit signal $? received!\\e[0m\\n"
  	exit 
 }
@@ -423,6 +434,14 @@ prootif() {
 	else
 		aptin+="proot "
 		pins+="proot "
+	fi
+}
+
+tapin() {
+	if [[ "$aptin" != "" ]] ; then
+		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\e[1;34m…\\n\\n\\e[1;32m" "$aptin"
+		pkg install "$aptin" -o APT::Keep-Downloaded-Packages="true" --yes
+		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\e[1;34m: \\e[1;32mDONE\\n\\e[0m" "$aptin"
 	fi
 }
 
@@ -635,7 +654,6 @@ declare tm="" # tar manager
 declare usrspace=""
 declare idir="$PWD"
 
-
 trap finishe EXIT
 trap finisher ERR 
 trap finishs INT TERM 
@@ -646,9 +664,9 @@ if [[ "$commandif" = "" ]] ; then
 	exit
 fi
 
+preptmpdir
 nameinstalldir 
 namestartarch  
-preptmpdir
 setrootdir  
 
 # if [[ "${wdir}${args:0:1}" = "." ]] ; then
