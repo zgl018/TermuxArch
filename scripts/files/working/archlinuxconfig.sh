@@ -218,7 +218,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="gen.v1.6 id544974046910"
+versionid="gen.v1.6 id578438275474"
 
 
 	finishe() { # on exit
@@ -326,6 +326,13 @@ addfbindprocstat() {
 	procs_running 2
 	procs_blocked 0
 	softirq 71223290 12005 18257219 222294 2975533 4317 4317 7683319 19799901 40540 22223845
+	EOM
+}
+
+addfbindexample() {
+	cat > var/binds/fbindexample.prs <<- EOM
+	# To regenerate the start script use \`setupTermuxArch.sh refresh\`.
+	# prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
 	EOM
 }
 
@@ -445,7 +452,7 @@ addkeys() {
 	shopt -s nullglob globstar
 
 	declare -a keyrings
-versionid="gen.v1.6 id544974046910"
+versionid="gen.v1.6 id578438275474"
 
 
 	finishe() { # on exit
@@ -547,7 +554,7 @@ addpc() { # pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare -g args="\$@"
-versionid="gen.v1.6 id544974046910"
+versionid="gen.v1.6 id578438275474"
 
 
 	finishe() { # on exit
@@ -610,7 +617,7 @@ addpci() { # system update with pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare args="\$@"
-versionid="gen.v1.6 id544974046910"
+versionid="gen.v1.6 id578438275474"
 
 
 	finishe() { # on exit
