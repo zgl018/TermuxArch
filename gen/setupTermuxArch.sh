@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id578438275474"
+versionid="gen.v1.6 id297384081004"
 
 ## Init Functions ##############################################################
 
@@ -466,7 +466,7 @@ prootif() {
 tapin() {
 	if [[ "$aptin" != "" ]] ; then
 		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\b\\e[1;34m…\\n\\n\\e[1;32m" "$aptin"
-		pkg install "$aptin" -o APT::Keep-Downloaded-Packages="true" --yes
+		pkg install "$aptin" -o APT::Keep-Downloaded-Packages="true" --yes ||:
 		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\b\\e[1;34m: \\e[1;32mDONE\\n\\e[0m" "$aptin"
 	fi
 }
@@ -685,6 +685,9 @@ trap finisher ERR
 trap finishs INT TERM 
 trap finishq QUIT 
 
+if [[ -z "${tampdir:-}" ]] ; then
+	tampdir=""
+fi
 if [[ "$commandif" = "" ]] ; then
 	printf "\\nWarning: Run \`setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook.\\n"
 	exit
