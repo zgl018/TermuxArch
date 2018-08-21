@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id852069004590"
+versionid="gen.v1.6 id867885443863"
 
 ## Init Functions ##############################################################
 
@@ -465,9 +465,9 @@ prootif() {
 
 tapin() {
 	if [[ "$aptin" != "" ]] ; then
-		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\e[1;34m…\\n\\n\\e[1;32m" "$aptin"
+		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\b\\e[1;34m…\\n\\n\\e[1;32m" "$aptin"
 		pkg install "$aptin" -o APT::Keep-Downloaded-Packages="true" --yes
-		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\e[1;34m: \\e[1;32mDONE\\n\\e[0m" "$aptin"
+		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\b\\e[1;34m: \\e[1;32mDONE\\n\\e[0m" "$aptin"
 	fi
 }
 

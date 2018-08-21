@@ -218,7 +218,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="gen.v1.6 id852069004590"
+versionid="gen.v1.6 id867885443863"
 
 
 	finishe() { # on exit
@@ -293,8 +293,11 @@ adddfa() {
 	chmod 770 root/bin/dfa 
 }
 
-addfake_proc_shmem() {
-	cat > var/binds/fake_proc_shmem <<- EOM
+addfbindprocshmem() {
+	cat > var/binds/fbindprocshmem.prs  <<- EOM
+	prootstmnt+="-b $installdir/var/binds/fbindprocshmem:/proc/shmem " 
+	EOM
+	cat > var/binds/fbindprocshmem <<- EOM
 	------ Message Queues --------
 	key        msqid      owner      perms      used-bytes   messages
 	
@@ -306,8 +309,11 @@ addfake_proc_shmem() {
 	EOM
 }
 
-addfake_proc_stat() {
-	cat > var/binds/fake_proc_stat <<- EOM
+addfbindprocstat() {
+	cat > var/binds/fbindprocstat.prs <<- EOM
+	prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
+	EOM
+	cat > var/binds/fbindprocstat <<- EOM
 	cpu  4232003 351921 6702657 254559583 519846 1828 215588 0 0 0
 	cpu0 1595013 127789 2759942 61446568 310224 1132 92124 0 0 0
 	cpu1 1348297 91900 1908179 63099166 110243 334 78861 0 0 0
@@ -439,7 +445,7 @@ addkeys() {
 	shopt -s nullglob globstar
 
 	declare -a keyrings
-versionid="gen.v1.6 id852069004590"
+versionid="gen.v1.6 id867885443863"
 
 
 	finishe() { # on exit
@@ -541,7 +547,7 @@ addpc() { # pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare -g args="\$@"
-versionid="gen.v1.6 id852069004590"
+versionid="gen.v1.6 id867885443863"
 
 
 	finishe() { # on exit
@@ -604,7 +610,7 @@ addpci() { # system update with pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare args="\$@"
-versionid="gen.v1.6 id852069004590"
+versionid="gen.v1.6 id867885443863"
 
 
 	finishe() { # on exit

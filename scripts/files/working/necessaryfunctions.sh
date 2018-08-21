@@ -5,6 +5,15 @@
 # https://sdrausty.github.io/TermuxArch/README has information about this project. 
 ################################################################################
 
+addfbinds() { ## Checks if system files exist and makes adjustments.
+#	# Checks if files is zero size.
+ 	if [[ -f /proc/stat ]] ; then
+ 		if [[ ! $(head /proc/stat ) ]] ; then
+	 		addfbindprocstat
+		fi
+	fi
+}
+
 callsystem() {
 	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
 		getimage
@@ -301,14 +310,15 @@ prepinstalldir() {
 	addbash_logout 
 	addbash_profile 
 	addbashrc 
+	addfbinds
 	addcdtd
 	addcdth
 	addcdtmp
 	addch 
 	adddfa
 	addexd
-	addfake_proc_stat
-	addfake_proc_shmem
+	addfbindprocstat
+	addfbindprocshmem
 	addga
 	addgcl
 	addgcm

@@ -131,8 +131,8 @@ refreshsys() { # Refreshes
 	addch 
 	adddfa
 	addexd
-	addfake_proc_stat
-	addfake_proc_shmem
+	addfbindprocstat
+	addfbindprocshmem
 	addfibs
 	addga
 	addgcl
