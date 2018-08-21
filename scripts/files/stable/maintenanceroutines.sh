@@ -130,8 +130,9 @@ refreshsys() { # Refreshes
 	addcdth
 	addch 
 	adddfa
-	addexd
+	addfbindexample
 	addfbinds
+	addexd
 	addfibs
 	addga
 	addgcl
