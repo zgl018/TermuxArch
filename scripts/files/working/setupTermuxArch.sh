@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id8775"
+versionid="v1.6 id8602"
 
 ## Init Functions ##############################################################
 
@@ -223,6 +223,7 @@ dependsblock() {
 			manual
 		fi 
 	else
+		preptmpdir
 		cd "$tampdir" 
 		dwnl
 		if [[ -f "${wdir}setupTermuxArch.sh" ]] ; then
