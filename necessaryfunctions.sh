@@ -6,7 +6,12 @@
 ################################################################################
 
 addfbinds() { ## Checks if system files exist and makes adjustments.
-#	# Checks if files is zero size.
+#	# Checks if files exist and are zero size.
+ 	if [[ -f /proc/ashmem ]] ; then
+ 		if [[ ! $(head /proc/ashmem ) ]] ; then
+	 		: # addfbindashmem 
+	 	fi
+	fi
  	if [[ -f /proc/stat ]] ; then
  		if [[ ! $(head /proc/stat ) ]] ; then
 	 		addfbindprocstat
@@ -133,7 +138,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id8668"
+versionid="v1.6 id3210"
 
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
@@ -183,7 +188,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id8668"
+versionid="v1.6 id3210"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -200,7 +205,7 @@ makestartbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id8668"
+versionid="v1.6 id3210"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"

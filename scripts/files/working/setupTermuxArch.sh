@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id8668"
+versionid="v1.6 id3210"
 
 ## Init Functions ##############################################################
 
@@ -685,6 +685,9 @@ trap finisher ERR
 trap finishs INT TERM 
 trap finishq QUIT 
 
+if [[ -z "${tampdir:-}" ]] ; then
+	tampdir=""
+fi
 if [[ "$commandif" = "" ]] ; then
 	printf "\\nWarning: Run \`setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook.\\n"
 	exit
