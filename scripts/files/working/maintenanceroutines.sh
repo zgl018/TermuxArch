@@ -131,8 +131,7 @@ refreshsys() { # Refreshes
 	addch 
 	adddfa
 	addexd
-	addfbindprocstat
-	addfbindprocshmem
+	addfbinds
 	addfibs
 	addga
 	addgcl

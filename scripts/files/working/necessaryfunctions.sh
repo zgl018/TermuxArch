@@ -296,7 +296,7 @@ preprootdir() {
 	mkdir -p root/bin
 	mkdir -p tmp 
 	chmod 777 tmp
-	chmod -t tmp
+	chmod +t tmp
 	mkdir -p usr/bin
 }
 
@@ -310,15 +310,13 @@ prepinstalldir() {
 	addbash_logout 
 	addbash_profile 
 	addbashrc 
-	addfbinds
 	addcdtd
 	addcdth
 	addcdtmp
 	addch 
 	adddfa
+	addfbinds
 	addexd
-	addfbindprocstat
-	addfbindprocshmem
 	addga
 	addgcl
 	addgcm
