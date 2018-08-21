@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id4129"
+versionid="gen.v1.6 id706096124009"
 
 ## Init Functions ##############################################################
 
@@ -37,7 +37,7 @@ aria2cifdm() {
 	fi
 }
 
-arg2dir() {  # Second argument as rootdir.
+arg2dir() { 
 	arg2="${@:2:1}"
 	if [[ -z "${arg2:-}" ]] ; then
 		rootdir=/arch
@@ -48,24 +48,13 @@ arg2dir() {  # Second argument as rootdir.
 	fi
 }
 
-arg3dir() { # Third argument as rootdir.
+arg3dir() {
 	arg3="${@:3:1}"
 	if [[ -z "${arg3:-}" ]] ; then
 		rootdir=/arch
 		nameinstalldir 
 	else
 		rootdir=/"$arg3"
-		nameinstalldir 
-	fi
-}
-
-arg4dir() { # Fourth argument as rootdir.
-	arg4="${@:4:1}"
-	if [[ -z "${arg4:-}" ]] ; then
-		rootdir=/arch
-		nameinstalldir 
-	else
-		rootdir=/"$arg4"
 		nameinstalldir 
 	fi
 }
@@ -384,21 +373,10 @@ opt2() {
 		arg3dir "$@" 
 	elif [[ "$2" = [Mm]* ]] ; then
 		opt=manual
- 		opt3 "$@"  
 		intro "$@"  
+		arg3dir "$@" 
 	elif [[ "$2" = [Rr]* ]] ; then
 		arg3dir "$@" 
-		introrefresh "$@"  
-	fi
-}
-
-opt3() { 
-	if [[ -z "${3:-}" ]] ; then
-		arg3dir "$@" 
-	elif [[ "$3" = [Ii]* ]] ; then
-		arg4dir "$@" 
-	elif [[ "$3" = [Rr]* ]] ; then
-		arg4dir "$@" 
 		introrefresh "$@"  
 	fi
 }
@@ -702,7 +680,7 @@ setrootdir
 ## 	echo none
 ## 	exit
 ## fi
-## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [TASK] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: wget)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Usage example: `setupTermuxArch.sh curl sysinfo` will use curl as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh cs` and `setupTermuxArch.sh c s`. `setupTermuxArch.sh curl manual install customname` will install the installation in customname with curl.  While `setupTermuxArch.sh curl refresh customname` will refresh this installation with curl.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.  
+## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [TASK] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: wget)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Usage example: `setupTermuxArch.sh curl sysinfo` will use curl as the download manager and produce a system information file in the working directory.  While `setupTermuxArch.sh curl manual refresh` will refresh the installation with curl.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.  
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  
 if [[ -z "${1:-}" ]] ; then
@@ -776,7 +754,7 @@ elif [[ "${1//-}" = [Hh]* ]] || [[ "${1//-}" = [?]* ]] ; then
 	printusage
 ## [install installdir|rootdir installdir]  Install Arch Linux in a custom directory.  Instructions: Install in userspace. $HOME is appended to installation directory. To install Arch Linux in $HOME/installdir use `bash setupTermuxArch.sh install installdir`. In bash shell use `./setupTermuxArch.sh install installdir`.  All options can be abbreviated to one or two letters.  Hence `./setupTermuxArch.sh install installdir` can be run as `./setupTermuxArch.sh i installdir` in BASH.
 elif [[ "${1//-}" = [Ii]* ]] ||  [[ "${1//-}" = [Rr][Oo]* ]] ; then
-	opt2 "$@" 
+	arg2dir "$@"  
 	intro "$@"  
 ## [ld|ls]  Get device system information with `lftp`.
 elif [[ "${1//-}" = [Ll][Dd]* ]] || [[ "${1//-}" = [Ll][Ss]* ]] ; then
@@ -802,7 +780,7 @@ elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	rmarch
 ## [refresh|refresh installdir]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
 elif [[ "${1//-}" = [Rr]* ]] ; then
-	opt2 "$@" 
+	arg2dir "$@"  
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.
 elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
