@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id802604694950"
+versionid="gen.v1.6 id634803640004"
 
 ## Init Functions ##############################################################
 
@@ -60,7 +60,7 @@ arg3dir() { # Third argument is rootdir.
 }
 
 arg4dir() { # Fourth argument is rootdir.
-	arg3="${@:4:1}"
+	arg4="${@:4:1}"
 	if [[ -z "${arg4:-}" ]] ; then
 		rootdir=/arch
 		nameinstalldir 
@@ -68,11 +68,6 @@ arg4dir() { # Fourth argument is rootdir.
 		rootdir=/"$arg4"
 		nameinstalldir 
 	fi
-}
-
-argLdir() { # Last argument is rootdir.
-	argL="${@:${#@}:1}"
-	rootdir=/"$argL"
 }
 
 axelif() { 
@@ -389,8 +384,8 @@ opt2() {
 		arg3dir "$@" 
 	elif [[ "$2" = [Mm]* ]] ; then
 		opt=manual
+ 		opt3 "$@"  
 		intro "$@"  
-		opt3 "$@"  
 	elif [[ "$2" = [Rr]* ]] ; then
 		arg3dir "$@" 
 		introrefresh "$@"  
@@ -406,6 +401,8 @@ opt3() {
 		arg4dir "$@" 
 		introrefresh "$@"  
 	fi
+}
+
 pe() {
 	echo "$pins" 
 	printf "\\n\\e[1;31mPrerequisites exception.  Run the script again…\\n\\n\\e[0m"'\033]2; Run `bash setupTermuxArch.sh` again…\007'
