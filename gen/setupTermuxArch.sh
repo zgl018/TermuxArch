@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id356434972845"
+versionid="gen.v1.6 id852069004590"
 
 ## Init Functions ##############################################################
 
@@ -175,30 +175,34 @@ depends() { # Checks for missing commands.
 	curlifdm 
 	wgetifdm 
 	# Checks if download manager is present. 
+	# IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT yet fully implemented.    
 	if [[ "$dm" = "" ]] ; then
-		if  [[ -x "$(command -v aria2c)" ]] || [[ -x "$PREFIX"/bin/aria2c ]]; then
-			aria2cif 
-	 	elif [[ -x "$(command -v axel)" ]] || [[ -x "$PREFIX"/bin/axel ]] ; then
-			axelif 
-	 	elif [[ -x "$(command -v lftpget)" ]] || [[ -x "$PREFIX"/bin/lftpget ]] ; then
-			lftpif 
-		elif [[ -x "$(command -v curl)" ]] || [[ -x "$PREFIX"/bin/curl ]] ; then
+		if [[ -x "$(command -v curl)" ]] || [[ -x "$PREFIX"/bin/curl ]] ; then
 			curlif 
 		elif [[ -x "$(command -v wget)" ]] && [[ -x "$PREFIX"/bin/wget ]] ; then
 			wgetif 
+		elif  [[ -x "$(command -v aria2c)" ]] || [[ -x "$PREFIX"/bin/aria2c ]]; then
+			aria2cif 
+	 	elif [[ -x "$(command -v lftpget)" ]] || [[ -x "$PREFIX"/bin/lftpget ]] ; then
+			lftpif 
+	 	elif [[ -x "$(command -v axel)" ]] || [[ -x "$PREFIX"/bin/axel ]] ; then
+			axelif 
 		fi
 	fi
 # 	# Adds curl if present on system. 
+# 	# This feature desires testing.
 # 	if [[ ! -x "$PREFIX"/bin/curl ]] && [[ -x /system/bin/curl ]] ;then
 # 		dm=curl 
 # 		addcurl
 # 	fi
-	# Sets and installs curl. 
+	# Sets and installs curl if nothing else was found, installed and set. 
 	if [[ "$dm" = "" ]] ; then
 		curlif 
 	fi
 	dependbp 
+#	Installs missing commands.  
 	tapin "$aptin"
+#	Checks whether installing missing commands actuallyworked.  
 # 	pe "$pins"
 	echo
 	echo "Using ${dm:-curl} to manage downloads." 
@@ -702,7 +706,7 @@ setrootdir
 ## 	echo none
 ## 	exit
 ## fi
-## GRAMMAR: `setupTermuxArch.sh [HOW] [TASK] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [TASK] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [TASK (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied.  USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual install customname` will install the installation in customname with wget.  While `setupTermuxArch.sh wget refresh customname` will refresh this installation with wget.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED and all the download managers are fully implemented yet.    
+## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [WHAT (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied.  USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual install customname` will install the installation in customname with wget.  While `setupTermuxArch.sh wget refresh customname` will refresh this installation with wget.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT fully implemented yet.    
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  
 if [[ -z "${1:-}" ]] ; then
