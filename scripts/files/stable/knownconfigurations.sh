@@ -57,7 +57,7 @@ x86_64() { # $file is read from md5sums.txt
 	makesystem 
 }
 
-# `info proot` and `man proot` have more information about what can be configured in a proot init statement.  `setupTermuxArch.sh manual refresh` shall refresh the installation globally.  If more suitable configurations are found, share them at https://github.com/sdrausty/TermuxArch/issues to improve TermuxArch.  
+# Appending to the PRoot statement can be accomplished on the fly by creating a *.prs file in /var/binds.  The format is straightforward, `prootstmnt+="option command "`.  The space is required before the last double quote.  `info proot` and `man proot` have more information about what can be configured in a proot init statement.  `setupTermuxArch.sh manual refresh` will refresh the installation globally.  If more suitable configurations are found, share them at https://github.com/sdrausty/TermuxArch/issues to improve TermuxArch.  
 
 prs() { 
 prootstmnt="exec proot "
@@ -69,14 +69,14 @@ fi
 if [[ "$koe" ]]; then
 	prootstmnt+="--kill-on-exit "
 fi
-prootstmnt+="--link2symlink -0 -r $installdir -b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ "
+prootstmnt+="--link2symlink -0 -r $installdir "
 if [ -n "$(ls -A ${installdir}/var/binds/*.prs)" ]; then
     for f in ${installdir}/var/binds/*.prs ; do
       . $f
     done
 fi
-prootstmnt+="-w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
-# prootstmnt+="--link2symlink -0 -r $installdir -b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b $installdir/var/binds/fake_proc_shmem:/proc/shmem -b $installdir/var/binds/fake_proc_stat:/proc/stat -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ -w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
+prootstmnt+="-b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ -w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
+# prootstmnt+="--link2symlink -0 -r $installdir -b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b $installdir/var/binds/fbindprocshmem:/proc/shmem -b $installdir/var/binds/fbindprocstat:/proc/stat -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ -w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
 }
 prs 
 
