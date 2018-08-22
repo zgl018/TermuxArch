@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id291614446426"
+versionid="gen.v1.6 id041909439696"
 
 ## Init Functions ##############################################################
 
@@ -280,7 +280,6 @@ finishq() { # on quit
 
 intro() {
 	printf '\033]2;  bash setupTermuxArch.sh 📲 \007'
-	rmarchq
 	rootdirexception 
 	spaceinfo
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34mTermuxArch $versionid will attempt to install Linux in \\e[0;32m$installdir\\e[1;34m.  Arch Linux in Termux PRoot will be available upon successful completion.  To run this BASH script again, use \`!!\`.  Ensure background data is not restricted.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
