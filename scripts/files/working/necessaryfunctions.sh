@@ -93,6 +93,7 @@ detectsystem2() {
 }
 
 lkernid() {
+	declare kid=""
 	ur="$("$PREFIX"/bin/applets/uname -r)"
 	declare -i KERNEL_VERSION="$(echo "$ur" |awk -F'.' '{print $1}')"
 	declare -i MAJOR_REVISION="$(echo "$ur" |awk -F'.' '{print $2}')"
@@ -138,7 +139,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id317123945850"
+versionid="gen.v1.6 id190274826970"
 
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
@@ -188,7 +189,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id317123945850"
+versionid="gen.v1.6 id190274826970"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -205,7 +206,7 @@ makestartbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id317123945850"
+versionid="gen.v1.6 id190274826970"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"

@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id317123945850"
+versionid="gen.v1.6 id190274826970"
 
 ## Init Functions ###################################################################################################################################
 
@@ -18,6 +18,7 @@ aria2cif() {
 		:
 	else
 		aptin+="aria2 "
+		apton+="proot "
 	fi
 }
 
@@ -66,6 +67,7 @@ axelif() {
 		:
 	else
 		aptin+="axel "
+		apton+="proot "
 	fi
 }
 
@@ -81,6 +83,7 @@ bsdtarif() {
 		:
 	else
 		aptin+="bsdtar "
+		apton+="proot "
 	fi
 }
 
@@ -135,6 +138,7 @@ curlif() {
 		:
 	else
 		aptin+="curl "
+		apton+="proot "
 	fi
 }
 
@@ -310,7 +314,7 @@ lftpif() {
 		:
 	else
 		aptin+="lftp "
-		peins+="lftpget "
+		apton+="proot "
 	fi
 }
 
@@ -400,14 +404,14 @@ pe() {
 }
 
 pec() {
-	if [[ "$peins" != "" ]] ; then
-		pe @peins
+	if [[ "$apton" != "" ]] ; then
+		pe @apton
 	fi
 }
 
 pecc() {
-	if [[ "$peins" != "" ]] ; then
-		pe @peins
+	if [[ "$apton" != "" ]] ; then
+		pe @apton
 	fi
 }
 
@@ -448,7 +452,7 @@ prootif() {
 		:
 	else
 		aptin+="proot "
-		peins+="proot "
+		apton+="proot "
 	fi
 }
 
@@ -491,7 +495,7 @@ wgetif() {
 	dm=wget 
 	if [[ ! -x "$PREFIX"/bin/wget ]] ; then
 		aptin+="wget "
-		peins+="wget "
+		apton+="wget "
 	fi
 }
 
@@ -506,9 +510,8 @@ wgetifdm() {
 declare COUNTER=""
 declare -a args="$@"
 declare aptin="" # apt string
-declare peins="" # exception string
-declare bin=""
-declare commandif="$(command -v getprop)" ||:
+declare apton="" # exception string
+declare commandif=""
 declare cpuabi="$(getprop ro.product.cpu.abi 2>/dev/null)" ||:
 declare cpuabi5="armeabi"
 declare cpuabi7="armeabi-v7a"
@@ -520,7 +523,6 @@ declare dm="curl" # download manager
 declare dmverbose="-q" # -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
 declare installdir=""
-declare kid=""
 declare lcc=""
 declare opt=""
 declare rootdir=""
@@ -535,6 +537,7 @@ trap finisher ERR
 trap finishs INT TERM 
 trap finishq QUIT 
 
+commandif="$(command -v getprop)" ||:
 sti="$(date +%s)"
 stime="$(echo "${sti:6:4}"|rev)"
 
