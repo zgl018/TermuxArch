@@ -219,7 +219,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="v1.6 id5243"
+versionid="v1.6 id3036"
 
 
 	finishe() { # on exit
@@ -485,7 +485,7 @@ addkeys() {
 	shopt -s nullglob globstar
 
 	declare -a keyrings
-versionid="v1.6 id5243"
+versionid="v1.6 id3036"
 
 
 	finishe() { # on exit
@@ -587,7 +587,7 @@ addpc() { # pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare -g args="\$@"
-versionid="v1.6 id5243"
+versionid="v1.6 id3036"
 
 
 	finishe() { # on exit
@@ -650,7 +650,7 @@ addpci() { # system update with pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare args="\$@"
-versionid="v1.6 id5243"
+versionid="v1.6 id3036"
 
 
 	finishe() { # on exit

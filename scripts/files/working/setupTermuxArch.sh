@@ -8,18 +8,10 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id3036"
+versionid="gen.v1.6 id523239092749"
 
 ## Init Functions ##############################################################
-
-addcurl() {
-	cat > "$PREFIX"/bin/curl <<- EOM
-	#!/bin/sh
-	unset LD_LIBRARY_PATH LD_PRELOAD
-	PATH=\$PATH:/system/bin exec /system/bin/curl "\$@"
-	EOM
-	chmod 555 "$PREFIX"/bin/curl 
-}
+############################################################################################################################################################
 
 aria2cif() { 
 	dm=aria2c
@@ -185,12 +177,6 @@ depends() { # Checks for missing commands.
 			axelif 
 		fi
 	fi
-# 	# Adds curl if present on system. 
-# 	# This feature desires testing.
-# 	if [[ ! -x "$PREFIX"/bin/curl ]] && [[ -x /system/bin/curl ]] ;then
-# 		dm=curl 
-# 		addcurl
-# 	fi
 #	# Sets and installs curl if nothing else was found, installed and set. 
 	if [[ "$dm" = "" ]] ; then
 		curlif 
@@ -198,7 +184,7 @@ depends() { # Checks for missing commands.
 	dependbp 
 #	# Installs missing commands.  
 	tapin "$aptin"
-#	# Checks whether installing missing commands was successful.  
+#	# Checks whether install missing commands was successful.  
 # 	pe "$aptin"
 	echo
 	echo "Using ${dm:-curl} to manage downloads." 
