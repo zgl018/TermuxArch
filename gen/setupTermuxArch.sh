@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id205547249040"
+versionid="gen.v1.6 id744975476862"
 
 ## Init Functions ##############################################################
 
@@ -281,7 +281,6 @@ finishq() { # on quit
 intro() {
 	printf '\033]2;  bash setupTermuxArch.sh 📲 \007'
 	rootdirexception 
-	spaceinfo
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34mTermuxArch $versionid will attempt to install Linux in \\e[0;32m$installdir\\e[1;34m.  Arch Linux in Termux PRoot will be available upon successful completion.  To run this BASH script again, use \`!!\`.  Ensure background data is not restricted.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
 	if [[ "$lcc" = "1" ]] ; then
@@ -294,15 +293,13 @@ intro() {
 introbloom() { # Bloom = `setupTermuxArch.sh manual verbose` 
 	opt=bloom 
 	printf '\033]2;  bash setupTermuxArch.sh bloom 📲 \007'
-	spaceinfo
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34mTermuxArch $versionid bloom option.  Run \\e[1;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Ensure background data is not restricted.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
 	bloom 
 }
 
-introdebug() {
+introsysinfo() {
 	printf '\033]2;  bash setupTermuxArch.sh sysinfo 📲 \007'
-	spaceinfo
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid will create a system information file.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
 	sysinfo 
@@ -311,10 +308,19 @@ introdebug() {
 introrefresh() {
 	printf '\033]2;  bash setupTermuxArch.sh refresh 📲 \007'
 	rootdirexception 
-	spaceinfo
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid will refresh your TermuxArch files in \\e[0;32m$installdir\\e[1;34m.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
 	refreshsys "$@"
+}
+
+introstnd() {
+	printf '\033]2;  bash setupTermuxArch.sh '"$introstndid"' 📲 \007'
+	rootdirexception 
+	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid will $introstndidstmt your TermuxArch files in \\e[0;32m$installdir\\e[1;34m.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
+}
+
+introstndidstmt() { # depends $introstndid
+	printf "refresh your TermuxArch files in \\e[0;32m$installdir\\e[1;34m.  " 
 }
 
 lftpif() {
@@ -383,7 +389,7 @@ opt2() {
 	elif [[ "$2" = [Bb]* ]] ; then
 		introbloom "$@"  
 	elif [[ "$2" = [Dd]* ]] || [[ "$2" = [Ss]* ]] ; then
-		introdebug "$@"  
+		introsysinfo "$@"  
 	elif [[ "$2" = [Ii]* ]] ; then
 		arg3dir "$@" 
 	elif [[ "$2" = [Mm]* ]] ; then
@@ -474,54 +480,6 @@ tapin() {
 	fi
 }
 
-rmarch() {
-	namestartarch 
-	nameinstalldir
-	while true; do
-		printf "\\n\\e[1;30m"
-		read -n 1 -p "Uninstall $installdir? [Y|n] " ruanswer
-		if [[ "$ruanswer" = [Ee]* ]] || [[ "$ruanswer" = [Nn]* ]] || [[ "$ruanswer" = [Qq]* ]] ; then
-			break
-		elif [[ "$ruanswer" = [Yy]* ]] || [[ "$ruanswer" = "" ]] ; then
-			printf "\\e[30mUninstalling $installdir…\\n"
-			if [[ -e "$PREFIX/bin/$startbin" ]] ; then
-				rm -f "$PREFIX/bin/$startbin" 
-			else 
-				printf "Uninstalling $PREFIX/bin/$startbin: nothing to do for $PREFIX/bin/$startbin.\\n"
-			fi
-			if [[ -e "$HOME/bin/$startbin" ]] ; then
-				rm -f "$HOME/bin/$startbin" 
-			else 
-				printf "Uninstalling $HOME/bin/$startbin: nothing to do for $HOME/bin/$startbin.\\n"
-			fi
-			if [[ -d "$installdir" ]] ; then
-				rmarchrm 
-			else 
-				printf "Uninstalling $installdir: nothing to do for $installdir.\\n"
-			fi
-			printf "Uninstalling $installdir: \\e[1;32mDone\\n\\e[30m"
-			break
-		else
-			printf "\\nYou answered \\e[33;1m$ruanswer\\e[30m.\\n\\nAnswer \\e[32mYes\\e[30m or \\e[1;31mNo\\e[30m. [\\e[32my\\e[30m|\\e[1;31mn\\e[30m]\\n"
-		fi
-	done
-	printf "\\e[0m\\n"
-}
-
-rmarchrm() {
-	rootdirexception 
-	rm -rf "$installdir"/* 2>/dev/null ||:
-	find  "$installdir" -type d -exec chmod 700 {} \; 2>/dev/null ||:
-	rm -rf "$installdir" 2>/dev/null ||:
-}
-
-rmarchq() {
-	if [[ -d "$installdir" ]] ; then
-		printf "\\n\\e[0;33mTermuxArch: \\e[1;33mDIRECTORY WARNING!  $installdir/ \\e[0;33mdirectory detected.  \\e[1;30mTermux Arch installation shall continue.  If in doubt, answer yes.\\n"
-		rmarch
-	fi
-}
-
 rootdirexception() {
 	if [[ "$installdir" = "$HOME" ]] || [[ "$installdir" = "$HOME"/ ]] || [[ "$installdir" = "$HOME"/.. ]] || [[ "$installdir" = "$HOME"/../ ]] || [[ "$installdir" = "$HOME"/../.. ]] || [[ "$installdir" = "$HOME"/../../ ]] ; then
 		printf "\\n\\e[1;31mRootdir exception.  Run the script again with different options…\\n\\n\\e[0m"'\033]2;Rootdir exception.  Run `bash setupTermuxArch.sh` again with different options…\007'
@@ -541,100 +499,10 @@ setrootdir() {
 	fi
 }
 
-spaceinfo() {
-	units="$(df "$installdir" 2>/dev/null | awk 'FNR == 1 {print $2}')" 
-	if [[ "$units" = Size ]] ; then
-		spaceinfogsize 
-		printf "$spaceMessage"
-	elif [[ "$units" = 1K-blocks ]] ; then
-		spaceinfoksize 
-		printf "$spaceMessage"
-	fi
-}
-
-spaceinfogsize() {
-	userspace 
-	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]] ; then
-		if [[ "$usrspace" = *G ]] ; then 
-			spaceMessage=""
-		elif [[ "$usrspace" = *M ]] ; then
-			usspace="${usrspace: : -1}"
-			if [[ "$usspace" < "800" ]] ; then
-				spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for x86 and x86_64 is 800M of free user space.\\n\\e[0m"
-			fi
-		fi
-	elif [[ "$usrspace" = *G ]] ; then
-		usspace="${usrspace: : -1}"
-		if [[ "$cpuabi" = "$cpuabi8" ]] ; then
-			if [[ "$usspace" < "1.5" ]] ; then
-				spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for aarch64 is 1.5G of free user space.\\n\\e[0m"
-			else
-				spaceMessage=""
-			fi
-		elif [[ "$cpuabi" = "$cpuabi7" ]] ; then
-			if [[ "$usspace" < "1.23" ]] ; then
-				spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for armv7 is 1.23G of free user space.\\n\\e[0m"
-			else
-				spaceMessage=""
-			fi
-		else
-			spaceMessage=""
-		fi
-	else
-		spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot is more than 1.5G for aarch64, more than 1.25G for armv7 and about 800M of free user space for x86 and x86_64 architectures.\\n\\e[0m"
-	fi
-}
-
-spaceinfoq() {
-	if [[ "$suanswer" != [Yy]* ]] ; then
-		spaceinfo
-		if [[ -n "$spaceMessage" ]] ; then
-			while true; do
-				printf "\\n\\e[1;30m"
-				read -n 1 -p "Continue with setupTermuxArch.sh? [Y|n] " suanswer
-				if [[ "$suanswer" = [Ee]* ]] || [[ "$suanswer" = [Nn]* ]] || [[ "$suanswer" = [Qq]* ]] ; then
-					printf "\\n" 
-					exit $?
-				elif [[ "$suanswer" = [Yy]* ]] || [[ "$suanswer" = "" ]] ; then
-					suanswer=yes
-					printf "Continuing with setupTermuxArch.sh.\\n"
-					break
-				else
-					printf "\\nYou answered \\e[33;1m$suanswer\\e[30m.\\n\\nAnswer \\e[32mYes\\e[30m or \\e[1;31mNo\\e[30m. [\\e[32my\\e[30m|\\e[1;31mn\\e[30m]\\n"
-				fi
-			done
-		fi
-	fi
-}
-
-spaceinfoksize() {
-	userspace 
-	if [[ "$cpuabi" = "$cpuabi8" ]] ; then
-		if [[ "$usrspace" -lt "1500000" ]] ; then
-			spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace $units of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for aarch64 is 1.5G of free user space.\\n\\e[0m"
-		else
-			spaceMessage=""
-		fi
-	elif [[ "$cpuabi" = "$cpuabi7" ]] ; then
-		if [[ "$usrspace" -lt "1250000" ]] ; then
-			spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace $units of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for armv7 is 1.25G of free user space.\\n\\e[0m"
-		else
-			spaceMessage=""
-		fi
-	elif [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]] ; then
-		if [[ "$usrspace" -lt "800000" ]] ; then
-			spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace $units of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for x86 and x86_64 is 800M of free user space.\\n\\e[0m"
-		else
-			spaceMessage=""
-		fi
-	fi
-}
-
-userspace() {
-	usrspace="$(df "$installdir" 2>/dev/null | awk 'FNR == 2 {print $4}')"
-	if [[ "$usrspace" = "" ]] ; then
-		usrspace="$(df "$installdir" 2>/dev/null | awk 'FNR == 3 {print $3}')"
-	fi
+standardid() {
+	introstndid="$1" 
+	introstndidstmt="$(printf "%s \\e[0;32m%s" "$1 the TermuxArch files in" "$installdir")" 
+	introstnd
 }
 
 wgetif() {
@@ -741,7 +609,7 @@ elif [[ "${1//-}" = [Aa][Xx][Dd]* ]] || [[ "${1//-}" = [Aa][Xx][Ss]* ]] ; then
 	echo
 	echo Getting device system information with \`axel\`.
 	dm=axel
-	introdebug "$@" 
+	introsysinfo "$@" 
 ## [axel installdir|axi installdir]  Install Arch Linux with `axel`.
 elif [[ "${1//-}" = [Aa][Xx]* ]] || [[ "${1//-}" = [Aa][Xx][Ii]* ]] ; then
 	echo
@@ -754,7 +622,7 @@ elif [[ "${1//-}" = [Aa][Dd]* ]] || [[ "${1//-}" = [Aa][Ss]* ]] ; then
 	echo
 	echo Getting device system information with \`aria2c\`.
 	dm=aria2c
-	introdebug "$@" 
+	introsysinfo "$@" 
 ## [aria2c installdir|ai installdir]  Install Arch Linux with `aria2c`.
 elif [[ "${1//-}" = [Aa]* ]] ; then
 	echo
@@ -770,7 +638,7 @@ elif [[ "${1//-}" = [Cc][Dd]* ]] || [[ "${1//-}" = [Cc][Ss]* ]] ; then
 	echo
 	echo Getting device system information with \`curl\`.
 	dm=curl
-	introdebug "$@" 
+	introsysinfo "$@" 
 ## [curl installdir|ci installdir]  Install Arch Linux with `curl`.
 elif [[ "${1//-}" = [Cc][Ii]* ]] || [[ "${1//-}" = [Cc]* ]] ; then
 	echo
@@ -780,7 +648,7 @@ elif [[ "${1//-}" = [Cc][Ii]* ]] || [[ "${1//-}" = [Cc]* ]] ; then
 	intro "$@" 
 ## [debug|sysinfo]  Generate system information.
 elif [[ "${1//-}" = [Dd]* ]] || [[ "${1//-}" = [Ss]* ]] ; then
-	introdebug "$@" 
+	introsysinfo "$@" 
 ## [help|?]  Display builtin help.
 elif [[ "${1//-}" = [Hh]* ]] || [[ "${1//-}" = [?]* ]] ; then
 	printusage
@@ -793,7 +661,7 @@ elif [[ "${1//-}" = [Ll][Dd]* ]] || [[ "${1//-}" = [Ll][Ss]* ]] ; then
 	echo
 	echo Getting device system information with \`lftp\`.
 	dm=lftp
-	introdebug "$@" 
+	introsysinfo "$@" 
 ## [lftp installdir|li installdir]  Install Arch Linux with `lftp`.
 elif [[ "${1//-}" = [Ll]* ]] ; then
 	echo
@@ -809,7 +677,11 @@ elif [[ "${1//-}" = [Mm]* ]] ; then
 ## [purge |uninstall]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	arg2dir "$@" 
-	rmarch
+	echo depreciated untill further notice
+	exit
+	standardid rmarch
+	dependsblock "$@" 
+	refreshsys "$@"
 ## [refresh|refresh installdir]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
 elif [[ "${1//-}" = [Rr]* ]] ; then
 	opt2 "$@" 
@@ -819,7 +691,7 @@ elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
 	echo
 	echo Getting device system information with \`wget\`.
 	dm=wget
-	introdebug "$@" 
+	introsysinfo "$@" 
 ## [wget installdir|wi installdir]  Install Arch Linux with `wget`.
 elif [[ "${1//-}" = [Ww]* ]] ; then
 	echo
