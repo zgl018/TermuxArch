@@ -151,6 +151,7 @@ addbashrc() {
 	alias grep='grep --color=always'
 	alias h='history >> \$HOME/.historyfile'
 	alias j='jobs'
+	alias i='whoami'
 	alias l='ls -alG'
 	alias lr='ls -alR'
 	alias ls='ls --color=always'
@@ -218,7 +219,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="v1.6 id5243"
+versionid="gen.v1.6 id502187514995"
 
 
 	finishe() { # on exit
@@ -484,7 +485,7 @@ addkeys() {
 	shopt -s nullglob globstar
 
 	declare -a keyrings
-versionid="v1.6 id5243"
+versionid="gen.v1.6 id502187514995"
 
 
 	finishe() { # on exit
@@ -586,7 +587,7 @@ addpc() { # pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare -g args="\$@"
-versionid="v1.6 id5243"
+versionid="gen.v1.6 id502187514995"
 
 
 	finishe() { # on exit
@@ -649,7 +650,7 @@ addpci() { # system update with pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare args="\$@"
-versionid="v1.6 id5243"
+versionid="gen.v1.6 id502187514995"
 
 
 	finishe() { # on exit

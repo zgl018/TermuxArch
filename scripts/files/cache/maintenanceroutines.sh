@@ -159,4 +159,149 @@ refreshsys() { # Refreshes
 	exit
 }
 
+rmarch() {
+	namestartarch 
+	nameinstalldir
+	while true; do
+		printf "\\n\\e[1;30m"
+		read -n 1 -p "Uninstall $installdir? [Y|n] " ruanswer
+		if [[ "$ruanswer" = [Ee]* ]] || [[ "$ruanswer" = [Nn]* ]] || [[ "$ruanswer" = [Qq]* ]] ; then
+			break
+		elif [[ "$ruanswer" = [Yy]* ]] || [[ "$ruanswer" = "" ]] ; then
+			printf "\\e[30mUninstalling $installdir…\\n"
+			if [[ -e "$PREFIX/bin/$startbin" ]] ; then
+				rm -f "$PREFIX/bin/$startbin" 
+			else 
+				printf "Uninstalling $PREFIX/bin/$startbin: nothing to do for $PREFIX/bin/$startbin.\\n"
+			fi
+			if [[ -e "$HOME/bin/$startbin" ]] ; then
+				rm -f "$HOME/bin/$startbin" 
+			else 
+				printf "Uninstalling $HOME/bin/$startbin: nothing to do for $HOME/bin/$startbin.\\n"
+			fi
+			if [[ -d "$installdir" ]] ; then
+				rmarchrm 
+			else 
+				printf "Uninstalling $installdir: nothing to do for $installdir.\\n"
+			fi
+			printf "Uninstalling $installdir: \\e[1;32mDone\\n\\e[30m"
+			break
+		else
+			printf "\\nYou answered \\e[33;1m$ruanswer\\e[30m.\\n\\nAnswer \\e[32mYes\\e[30m or \\e[1;31mNo\\e[30m. [\\e[32my\\e[30m|\\e[1;31mn\\e[30m]\\n"
+		fi
+	done
+	printf "\\e[0m\\n"
+}
+
+rmarchrm() {
+	rootdirexception 
+	rm -rf "$installdir"/* 2>/dev/null ||:
+	find  "$installdir" -type d -exec chmod 700 {} \; 2>/dev/null ||:
+	rm -rf "$installdir" 2>/dev/null ||:
+}
+
+rmarchq() {
+	if [[ -d "$installdir" ]] ; then
+		printf "\\n\\e[0;33mTermuxArch: \\e[1;33mDIRECTORY WARNING!  $installdir/ \\e[0;33mdirectory detected.  \\e[1;30mTermux Arch installation shall continue.  If in doubt, answer yes.\\n"
+		rmarch
+	fi
+}
+
+
+spaceinfo() {
+	units="$(df "$installdir" 2>/dev/null | awk 'FNR == 1 {print $2}')" 
+	if [[ "$units" = Size ]] ; then
+		spaceinfogsize 
+		printf "$spaceMessage"
+	elif [[ "$units" = 1K-blocks ]] ; then
+		spaceinfoksize 
+		printf "$spaceMessage"
+	fi
+}
+
+spaceinfogsize() {
+	userspace 
+	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]] ; then
+		if [[ "$usrspace" = *G ]] ; then 
+			spaceMessage=""
+		elif [[ "$usrspace" = *M ]] ; then
+			usspace="${usrspace: : -1}"
+			if [[ "$usspace" < "800" ]] ; then
+				spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for x86 and x86_64 is 800M of free user space.\\n\\e[0m"
+			fi
+		fi
+	elif [[ "$usrspace" = *G ]] ; then
+		usspace="${usrspace: : -1}"
+		if [[ "$cpuabi" = "$cpuabi8" ]] ; then
+			if [[ "$usspace" < "1.5" ]] ; then
+				spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for aarch64 is 1.5G of free user space.\\n\\e[0m"
+			else
+				spaceMessage=""
+			fi
+		elif [[ "$cpuabi" = "$cpuabi7" ]] ; then
+			if [[ "$usspace" < "1.23" ]] ; then
+				spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for armv7 is 1.23G of free user space.\\n\\e[0m"
+			else
+				spaceMessage=""
+			fi
+		else
+			spaceMessage=""
+		fi
+	else
+		spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot is more than 1.5G for aarch64, more than 1.25G for armv7 and about 800M of free user space for x86 and x86_64 architectures.\\n\\e[0m"
+	fi
+}
+
+spaceinfoq() {
+	if [[ "$suanswer" != [Yy]* ]] ; then
+		spaceinfo
+		if [[ -n "$spaceMessage" ]] ; then
+			while true; do
+				printf "\\n\\e[1;30m"
+				read -n 1 -p "Continue with setupTermuxArch.sh? [Y|n] " suanswer
+				if [[ "$suanswer" = [Ee]* ]] || [[ "$suanswer" = [Nn]* ]] || [[ "$suanswer" = [Qq]* ]] ; then
+					printf "\\n" 
+					exit $?
+				elif [[ "$suanswer" = [Yy]* ]] || [[ "$suanswer" = "" ]] ; then
+					suanswer=yes
+					printf "Continuing with setupTermuxArch.sh.\\n"
+					break
+				else
+					printf "\\nYou answered \\e[33;1m$suanswer\\e[30m.\\n\\nAnswer \\e[32mYes\\e[30m or \\e[1;31mNo\\e[30m. [\\e[32my\\e[30m|\\e[1;31mn\\e[30m]\\n"
+				fi
+			done
+		fi
+	fi
+}
+
+spaceinfoksize() {
+	userspace 
+	if [[ "$cpuabi" = "$cpuabi8" ]] ; then
+		if [[ "$usrspace" -lt "1500000" ]] ; then
+			spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace $units of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for aarch64 is 1.5G of free user space.\\n\\e[0m"
+		else
+			spaceMessage=""
+		fi
+	elif [[ "$cpuabi" = "$cpuabi7" ]] ; then
+		if [[ "$usrspace" -lt "1250000" ]] ; then
+			spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace $units of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for armv7 is 1.25G of free user space.\\n\\e[0m"
+		else
+			spaceMessage=""
+		fi
+	elif [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]] ; then
+		if [[ "$usrspace" -lt "800000" ]] ; then
+			spaceMessage="\\n\\e[0;33mTermuxArch: \\e[1;33mFREE SPACE WARNING!  \\e[1;30mStart thinking about cleaning out some stuff.  \\e[33m$usrspace $units of free user space is available on this device.  \\e[1;30mThe recommended minimum to install Arch Linux in Termux PRoot for x86 and x86_64 is 800M of free user space.\\n\\e[0m"
+		else
+			spaceMessage=""
+		fi
+	fi
+}
+
+userspace() {
+	usrspace="$(df "$installdir" 2>/dev/null | awk 'FNR == 2 {print $4}')"
+	if [[ "$usrspace" = "" ]] ; then
+		usrspace="$(df "$installdir" 2>/dev/null | awk 'FNR == 3 {print $3}')"
+	fi
+}
+
 #EOF
