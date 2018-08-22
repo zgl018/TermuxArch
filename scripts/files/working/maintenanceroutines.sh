@@ -51,6 +51,7 @@ systeminfo () {
 }
 
 copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`
+	declare idir="$PWD"
 	cfile="${1##/*/}" 
  	file="$cfile" 
 	if [[ "$lc" = "" ]];then
@@ -298,6 +299,7 @@ spaceinfoksize() {
 }
 
 userspace() {
+	declare usrspace=""
 	usrspace="$(df "$installdir" 2>/dev/null | awk 'FNR == 2 {print $4}')"
 	if [[ "$usrspace" = "" ]] ; then
 		usrspace="$(df "$installdir" 2>/dev/null | awk 'FNR == 3 {print $3}')"
