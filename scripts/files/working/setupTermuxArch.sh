@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id502187514995"
+versionid="gen.v1.6 id218152642444"
 
 ## Init Functions ##############################################################
 
@@ -27,7 +27,6 @@ aria2cif() {
 		:
 	else
 		aptin+="aria2 "
-		peins+="aria2c "
 	fi
 }
 
@@ -76,7 +75,6 @@ axelif() {
 		:
 	else
 		aptin+="axel "
-		peins+="axel "
 	fi
 }
 
@@ -92,7 +90,6 @@ bsdtarif() {
 		:
 	else
 		aptin+="bsdtar "
-		peins+="bsdtar "
 	fi
 }
 
@@ -147,7 +144,6 @@ curlif() {
 		:
 	else
 		aptin+="curl "
-		peins+="curl "
 	fi
 }
 
@@ -203,7 +199,7 @@ depends() { # Checks for missing commands.
 #	# Installs missing commands.  
 	tapin "$aptin"
 #	# Checks whether installing missing commands was successful.  
-# 	pe "$peins"
+# 	pe "$aptin"
 	echo
 	echo "Using ${dm:-curl} to manage downloads." 
 	printf "\\n\\e[0;34m 🕛 > 🕧 \\e[1;34mPrerequisites: \\e[1;32mOK  \\e[1;34mDownloading TermuxArch…\\n\\n\\e[0;32m"
@@ -414,7 +410,6 @@ opt3() {
 }
 
 pe() {
-	echo "$peins" 
 	printf "\\n\\e[1;31mPrerequisites exception.  Run the script again…\\n\\n\\e[0m"'\033]2; Run `bash setupTermuxArch.sh` again…\007'
 	exit
 }
@@ -475,7 +470,9 @@ prootif() {
 tapin() {
 	if [[ "$aptin" != "" ]] ; then
 		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\b\\e[1;34m…\\n\\n\\e[1;32m" "$aptin"
-		pkg install "$aptin" -o APT::Keep-Downloaded-Packages="true" --yes ||:
+#		apt update && apt -o APT::Keep-Downloaded-Packages="true" upgrade -y
+#		apt -o APT::Keep-Downloaded-Packages="true" install "$aptin" -y
+		pkg install "$aptin" -o APT::Keep-Downloaded-Packages="true" --yes 
 		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\b\\e[1;34m: \\e[1;32mDONE\\n\\e[0m" "$aptin"
 	fi
 }
@@ -534,7 +531,7 @@ declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
 declare dfl="/gen" # Used for development 
-declare dm="" # download manager
+declare dm="curl" # download manager
 declare dmverbose="-q" # -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
 declare installdir=""
