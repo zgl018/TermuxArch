@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id190274826970"
+versionid="gen.v1.6 id327215204898"
 
 ## Init Functions ###################################################################################################################################
 
@@ -473,18 +473,6 @@ rootdirexception() {
 	fi
 }
 
-setrootdir() {
-	if [[ "$cpuabi" = "$cpuabix86" ]] ; then
-	#	rootdir=/root.i686
-		rootdir=/arch
-	elif [[ "$cpuabi" = "$cpuabix86_64" ]] ; then
-	#	rootdir=/root.x86_64
-		rootdir=/arch
-	else
-		rootdir=/arch
-	fi
-}
-
 standardid() {
 	introstndid="$1" 
 	introstndidstmt="$(printf "%s \\e[0;32m%s" "$1 the TermuxArch files in" "$installdir")" 
@@ -518,7 +506,7 @@ declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
-declare dfl="/gen" # Used for development 
+declare dfl="/gen" # Used for development.
 declare dm="curl" # download manager
 declare dmverbose="-q" # -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
@@ -538,6 +526,7 @@ trap finishs INT TERM
 trap finishq QUIT 
 
 commandif="$(command -v getprop)" ||:
+rootdir=/arch
 sti="$(date +%s)"
 stime="$(echo "${sti:6:4}"|rev)"
 
@@ -551,7 +540,6 @@ fi
 
 nameinstalldir 
 namestartarch  
-setrootdir  
 preptmpdir
 
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
