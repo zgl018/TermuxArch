@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id744975476862"
+versionid="v1.6 id5243"
 
 ## Init Functions ##############################################################
 
@@ -677,6 +677,7 @@ elif [[ "${1//-}" = [Mm]* ]] ; then
 ## [purge |uninstall]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	arg2dir "$@" 
+	echo 
 	echo depreciated untill further notice
 	exit
 	standardid rmarch
