@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id190785747317"
+versionid="gen.v1.6 id042744259076"
 
 ## Init Functions ###################################################################################################################################
 
@@ -680,7 +680,7 @@ elif [[ "${1//-}" = [Mm]* ]] ; then
 	echo
 	echo Setting install to manual.
 	opt=manual
-	arg2dir "$@" 
+	opt2 "$@" 
 	intro "$@"  
 ## [purge |uninstall]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
@@ -694,7 +694,7 @@ elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 elif [[ "${1//-}" = [Rr]* ]] ; then
 	echo 
 	echo Setting mode to refresh .
-	arg2dir "$@" 
+	opt2 "$@" 
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.
 elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
