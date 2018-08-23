@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id3605"
+versionid="v1.6 id0285"
 
 ## Init Functions ###################################################################################################################################
 
@@ -375,12 +375,14 @@ opt2() {
 		echo Setting mode to bloom. 
 		introbloom "$@"  
 	elif [[ "$2" = [Dd]* ]] || [[ "$2" = [Ss]* ]] ; then
+		echo Setting mode to sysinfo.
 		introsysinfo "$@"  
 	elif [[ "$2" = [Ii]* ]] ; then
+		echo Setting mode to install.
 		arg3dir "$@" 
 	elif [[ "$2" = [Mm]* ]] ; then
-		opt=manual
 		echo Setting mode to manual.
+		opt=manual
  		opt3 "$@"  
 		intro "$@"  
 	elif [[ "$2" = [Rr]* ]] ; then
@@ -396,12 +398,8 @@ opt3() {
 	if [[ -z "${3:-}" ]] ; then
 		arg3dir "$@" 
 	elif [[ "$3" = [Ii]* ]] ; then
+		echo Setting mode to install.
 		arg4dir "$@" 
-	elif [[ "$3" = [Mm]* ]] ; then
-		opt=manual
-		echo Setting mode to manual.
-		arg4dir "$@" 
-		intro "$@"  
 	elif [[ "$3" = [Rr]* ]] ; then
 		echo Setting mode to refresh.
 		arg4dir "$@" 
@@ -654,12 +652,16 @@ elif [[ "${1//-}" = [Cc][Ii]* ]] || [[ "${1//-}" = [Cc]* ]] ; then
 	intro "$@" 
 ## [debug|sysinfo]  Generate system information.
 elif [[ "${1//-}" = [Dd]* ]] || [[ "${1//-}" = [Ss]* ]] ; then
+	echo 
+	echo Setting mode to sysinfo.
 	introsysinfo "$@" 
 ## [help|?]  Display builtin help.
 elif [[ "${1//-}" = [Hh]* ]] || [[ "${1//-}" = [?]* ]] ; then
 	printusage
 ## [install installdir|rootdir installdir]  Install Arch Linux in a custom directory.  Instructions: Install in userspace. $HOME is appended to installation directory. To install Arch Linux in $HOME/installdir use `bash setupTermuxArch.sh install installdir`. In bash shell use `./setupTermuxArch.sh install installdir`.  All options can be abbreviated to one or two letters.  Hence `./setupTermuxArch.sh install installdir` can be run as `./setupTermuxArch.sh i installdir` in BASH.
 elif [[ "${1//-}" = [Ii]* ]] ||  [[ "${1//-}" = [Rr][Oo]* ]] ; then
+	echo
+	echo Setting mode to install.
 	opt2 "$@" 
 	intro "$@"  
 ## [ld|ls]  Get device system information with `lftp`.
@@ -694,7 +696,7 @@ elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 elif [[ "${1//-}" = [Rr]* ]] ; then
 	echo 
 	echo Setting mode to refresh.
-	opt2 "$@" 
+	arg2dir "$@" 
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.
 elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
