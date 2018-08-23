@@ -103,8 +103,6 @@ refreshsys() { # Refreshes
 	addREADME
 	addae
 	addauser
-	addauserps
-	addauserpsc
 	addbash_logout 
 	addbash_profile 
 	addbashrc 
@@ -210,6 +208,7 @@ rmarchq() {
 
 
 spaceinfo() {
+	declare usrspace=""
 	units="$(df "$installdir" 2>/dev/null | awk 'FNR == 1 {print $2}')" 
 	if [[ "$units" = Size ]] ; then
 		spaceinfogsize 
@@ -299,7 +298,6 @@ spaceinfoksize() {
 }
 
 userspace() {
-	declare usrspace=""
 	usrspace="$(df "$installdir" 2>/dev/null | awk 'FNR == 2 {print $4}')"
 	if [[ "$usrspace" = "" ]] ; then
 		usrspace="$(df "$installdir" 2>/dev/null | awk 'FNR == 3 {print $3}')"

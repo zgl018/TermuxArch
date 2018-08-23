@@ -208,6 +208,7 @@ rmarchq() {
 
 
 spaceinfo() {
+	declare spaceMessage=""
 	declare usrspace=""
 	units="$(df "$installdir" 2>/dev/null | awk 'FNR == 1 {print $2}')" 
 	if [[ "$units" = Size ]] ; then
