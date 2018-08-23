@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id1915"
+versionid="v1.6 id8016"
 
 ## Init Functions ###################################################################################################################################
 
@@ -30,7 +30,6 @@ aria2cifdm() {
 
 arg2dir() {  # Second argument as rootdir.
 	arg2="${@:2:1}"
-	echo Setting installation directory to $arg2.
 	if [[ -z "${arg2:-}" ]] ; then
 		rootdir=/arch
 		preptermuxarch
@@ -42,7 +41,6 @@ arg2dir() {  # Second argument as rootdir.
 
 arg3dir() { # Third argument as rootdir.
 	arg3="${@:3:1}"
-	echo Setting installation directory to $arg3.
 	if [[ -z "${arg3:-}" ]] ; then
 		rootdir=/arch
 		preptermuxarch
@@ -54,7 +52,6 @@ arg3dir() { # Third argument as rootdir.
 
 arg4dir() { # Fourth argument as rootdir.
 	arg4="${@:4:1}"
-	echo Setting installation directory to $arg4.
 	if [[ -z "${arg4:-}" ]] ; then
 		rootdir=/arch
 		preptermuxarch
@@ -678,7 +675,7 @@ elif [[ "${1//-}" = [Mm]* ]] ; then
 	echo
 	echo Setting install to manual.
 	opt=manual
-	opt2 "$@" 
+	arg2dir "$@" 
 	intro "$@"  
 ## [purge |uninstall]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
@@ -692,7 +689,7 @@ elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 elif [[ "${1//-}" = [Rr]* ]] ; then
 	echo 
 	echo Setting mode to refresh .
-	opt2 "$@" 
+	arg2dir "$@" 
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.
 elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
