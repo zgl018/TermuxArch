@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id319599545683"
+versionid="gen.v1.6 id902752114607"
 
 ## Init Functions ###################################################################################################################################
 
@@ -288,6 +288,7 @@ introbloom() { # Bloom = `setupTermuxArch.sh manual verbose`
 introsysinfo() {
 	printf '\033]2;  bash setupTermuxArch.sh sysinfo 📲 \007'
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid will create a system information file.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
+	preptermuxarch
 	dependsblock "$@" 
 	sysinfo 
 }
