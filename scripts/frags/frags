@@ -1,3 +1,23 @@
+preptermuxarch() { 
+# 	setrootdir
+	echo setrootdir
+	echo $rootdir
+	nameinstalldir 
+# 	nameinstalldir 
+# 	echo nameinstalldir 
+	echo installdir 
+	echo $installdir
+	namestartarch  
+	echo namestartarch  
+	echo $darch
+	echo $startbin
+	preptmpdir
+	echo preptmpdir
+	echo $tampdir
+	exit
+}
+
+}
 # 	echo ----
 # 	echo $1
 # 	echo $@
