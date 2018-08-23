@@ -51,6 +51,7 @@ systeminfo () {
 }
 
 copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`
+	declare idir="$PWD"
 	cfile="${1##/*/}" 
  	file="$cfile" 
 	if [[ "$lc" = "" ]];then
@@ -102,8 +103,6 @@ refreshsys() { # Refreshes
 	addREADME
 	addae
 	addauser
-	addauserps
-	addauserpsc
 	addbash_logout 
 	addbash_profile 
 	addbashrc 
@@ -209,6 +208,8 @@ rmarchq() {
 
 
 spaceinfo() {
+	declare spaceMessage=""
+	declare usrspace=""
 	units="$(df "$installdir" 2>/dev/null | awk 'FNR == 1 {print $2}')" 
 	if [[ "$units" = Size ]] ; then
 		spaceinfogsize 

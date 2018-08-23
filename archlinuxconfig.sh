@@ -46,66 +46,6 @@ addauser() { # Add Arch Linux user.
 	chmod 770 root/bin/addauser 
 }
 
-addauserps() { # Add Arch Linux user and create user login Termux startup script. 
-	cat > root/bin/addauserps <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	useradd \$1
-	cp -r /root /home/\$1
-	su - \$1
-	EOM
-	echo "cat > $HOME/bin/${bin}user\$1 <<- EOM " >> root/bin/addauserps 
-	cat >> root/bin/addauserps <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	unset LD_PRELOAD
-	exec proot --kill-on-exit --link2symlink -0 -r $installdir -b /dev/ -b \$ANDROID_DATA -b \$EXTERNAL_STORAGE -b /proc/ -w "\$PWD" /bin/env -i HOME=/root TERM=\$TERM /bin/su - \$1 --login
-	EOM
-	echo EOM >> root/bin/addauserps 
-	cat >> root/bin/addauserps <<- EOM
-	chmod 770 $HOME/bin/${bin}user\$1
-	EOM
-	chmod 770 root/bin/addauserps 
-}
-
-addauserpsc() { # Add Arch Linux user and create user login Termux startup script. 
-	cat > root/bin/addauserpsc <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	useradd \$1
-	cp -r /root /home/\$1
-	su - \$1
-	EOM
-	echo "cat > $HOME/bin/${bin}user\$1 <<- EOM " >> root/bin/addauserpsc 
-	cat >> root/bin/addauserpsc <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	unset LD_PRELOAD
-	exec proot --kill-on-exit --link2symlink -0 -r $installdir -b /dev/ -b \$ANDROID_DATA -b \$EXTERNAL_STORAGE -b /proc/ -w "\$PWD" /bin/env -i HOME=/root TERM=\$TERM /bin/su - \$1 --login
-	EOM
-	echo EOM >> root/bin/addauserpsc 
-	cat >> root/bin/addauserpsc <<- EOM
-	chmod 770 $HOME/bin/${bin}user\$1
-	EOM
-	chmod 770 root/bin/addauserpsc 
-}
-
 addbash_logout() {
 	cat > root/.bash_logout <<- EOM
 	if [ ! -e \$HOME/.hushlogout ] && [ ! -e \$HOME/.chushlogout ];then
@@ -219,7 +159,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="v1.6 id3036"
+versionid="v1.6 id1485"
 
 
 	finishe() { # on exit
@@ -485,7 +425,7 @@ addkeys() {
 	shopt -s nullglob globstar
 
 	declare -a keyrings
-versionid="v1.6 id3036"
+versionid="v1.6 id1485"
 
 
 	finishe() { # on exit
@@ -587,7 +527,7 @@ addpc() { # pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare -g args="\$@"
-versionid="v1.6 id3036"
+versionid="v1.6 id1485"
 
 
 	finishe() { # on exit
@@ -650,7 +590,7 @@ addpci() { # system update with pacman install packages shortcut
 	shopt -s nullglob globstar
 
 	declare args="\$@"
-versionid="v1.6 id3036"
+versionid="v1.6 id1485"
 
 
 	finishe() { # on exit
