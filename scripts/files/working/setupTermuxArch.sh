@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id908576401712"
+versionid="gen.v1.6 id147272335440"
 
 ## Init Functions ###################################################################################################################################
 
@@ -475,6 +475,18 @@ rootdirexception() {
 	fi
 }
 
+setrootdir() {
+	if [[ "$cpuabi" = "$cpuabix86" ]] ; then
+	#	rootdir=/root.i686
+		rootdir=/arch
+	elif [[ "$cpuabi" = "$cpuabix86_64" ]] ; then
+	#	rootdir=/root.x86_64
+		rootdir=/arch
+	else
+		rootdir=/arch
+	fi
+}
+
 standardid() {
 	introstndid="$1" 
 	introstndidstmt="$(printf "%s \\e[0;32m%s" "$1 the TermuxArch files in" "$installdir")" 
@@ -536,7 +548,6 @@ if [[ "$commandif" = "" ]] ; then
 	exit
 fi
 
-rootdir=/arch
 sti="$(date +%s)" ##  Used to generate random number.
 stime="$(echo "${sti:6:4}"|rev)" ##  Used to generate random number.
 cpuabi="$(getprop ro.product.cpu.abi)" ##  Used to get information about device.
@@ -544,6 +555,7 @@ cpuabi="$(getprop ro.product.cpu.abi)" ##  Used to get information about device.
 nameinstalldir 
 namestartarch  
 preptmpdir
+setrootdir
 
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 ## if [[ "${wdir}${args:0:1}" = "." ]] ; then
