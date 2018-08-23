@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id8016"
+versionid="gen.v1.6 id190785747317"
 
 ## Init Functions ###################################################################################################################################
 
@@ -380,11 +380,11 @@ opt2() {
 		arg3dir "$@" 
 	elif [[ "$2" = [Mm]* ]] ; then
 		opt=manual
-		echo Setting install to manual.
+		echo Setting mode to manual.
  		opt3 "$@"  
 		intro "$@"  
 	elif [[ "$2" = [Rr]* ]] ; then
-		echo Setting mode to refresh .
+		echo Setting mode to refresh.
  		opt3 "$@"  
 		introrefresh "$@"  
 	else
@@ -397,6 +397,11 @@ opt3() {
 		arg3dir "$@" 
 	elif [[ "$3" = [Ii]* ]] ; then
 		arg4dir "$@" 
+	elif [[ "$3" = [Mm]* ]] ; then
+		opt=manual
+		echo Setting mode to manual.
+		arg4dir "$@" 
+		intro "$@"  
 	elif [[ "$3" = [Rr]* ]] ; then
 		echo Setting mode to refresh .
 		arg4dir "$@" 
