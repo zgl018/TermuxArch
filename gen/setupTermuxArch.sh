@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id039054863834"
+versionid="gen.v1.6 id908576401712"
 
 ## Init Functions ###################################################################################################################################
 
@@ -299,13 +299,13 @@ introrefresh() {
 }
 
 introstnd() {
-	printf '\033]2;  bash setupTermuxArch.sh '"$introstndid"' 📲 \007'
+	printf '\033]2; %s\007' " bash setupTermuxArch.sh $@ 📲 "
 	rootdirexception 
-	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid will $introstndidstmt your TermuxArch files in \\e[0;32m$installdir\\e[1;34m.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
+	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s" " 🕛 > 🕛" "setupTermuxArch $versionid will $introstndidstmt your TermuxArch files in" "$installdir" ".  Ensure background data is not restricted.  Run " "bash setupTermuxArch.sh help" "for additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 }
 
 introstndidstmt() { # depends $introstndid
-	printf "refresh your TermuxArch files in \\e[0;32m$installdir\\e[1;34m.  " 
+	printf "the TermuxArch files in \\e[0;32m%s\\e[1;34m.  " "$installdir"
 }
 
 lftpif() {
@@ -469,7 +469,8 @@ tapin() {
 
 rootdirexception() {
 	if [[ "$installdir" = "$HOME" ]] || [[ "$installdir" = "$HOME"/ ]] || [[ "$installdir" = "$HOME"/.. ]] || [[ "$installdir" = "$HOME"/../ ]] || [[ "$installdir" = "$HOME"/../.. ]] || [[ "$installdir" = "$HOME"/../../ ]] ; then
-		printf "\\n\\e[1;31mRootdir exception.  Run the script again with different options…\\n\\n\\e[0m"'\033]2;Rootdir exception.  Run `bash setupTermuxArch.sh` again with different options…\007'
+		printf  '\033]2;%s\007' "Rootdir exception.  Run bash setupTermuxArch.sh again with different options…"	
+		printf "\\n\\e[1;31m%s\\n\\n\\e[0m" "Rootdir exception.  Run the script again with different options…"
 		exit
 	fi
 }
@@ -500,7 +501,7 @@ declare -a args="$@"
 declare aptin="" # apt string
 declare apton="" # exception string
 declare commandif=""
-declare cpuabi="$(getprop ro.product.cpu.abi 2>/dev/null)" ||:
+declare cpuabi=""
 declare cpuabi5="armeabi"
 declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
@@ -515,8 +516,8 @@ declare lcc=""
 declare opt=""
 declare rootdir=""
 declare wdir="$PWD/"
-declare sti=""
-declare stime=""
+declare sti="" # Used to generate random number.
+declare stime="" # Used to generate random number.
 declare tm="" # tar manager
 
 trap finishe EXIT
@@ -536,9 +537,9 @@ if [[ "$commandif" = "" ]] ; then
 fi
 
 rootdir=/arch
-sti="$(date +%s)"
-stime="$(echo "${sti:6:4}"|rev)"
-cpuabi="$(getprop ro.product.cpu.abi 2>/dev/null)" 
+sti="$(date +%s)" ##  Used to generate random number.
+stime="$(echo "${sti:6:4}"|rev)" ##  Used to generate random number.
+cpuabi="$(getprop ro.product.cpu.abi)" ##  Used to get information about device.
 
 nameinstalldir 
 namestartarch  
