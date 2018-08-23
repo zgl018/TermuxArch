@@ -6,8 +6,8 @@
 ################################################################################
 
 sysinfo() {
-	spaceinfo
 	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
+	spaceinfo
 	systeminfo # & spinner "Generating" "System Info…" 
 	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`"${wdir}setupTermuxArchSysInfo${stime}.log"\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
 	cat "${wdir}setupTermuxArchSysInfo${stime}".log
@@ -18,8 +18,8 @@ sysinfo() {
 systeminfo () {
 	printf "\\n\\e[1;32m"
 	printf "Begin TermuxArch system information.\\n" > "${wdir}setupTermuxArchSysInfo${stime}".log
-	printf "\\n\`termux-info\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
-	termux-info >> "${wdir}setupTermuxArchSysInfo${stime}".log
+# 	printf "\\n\`termux-info\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+# 	termux-info >> "${wdir}setupTermuxArchSysInfo${stime}".log
 	printf "\\nDisk report $usrspace on /data $(date)\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log 
 	for n in 0 1 2 3 4 5 
 	do 
@@ -209,7 +209,6 @@ rmarchq() {
 
 spaceinfo() {
 	declare spaceMessage=""
-	declare usrspace=""
 	units="$(df "$installdir" 2>/dev/null | awk 'FNR == 1 {print $2}')" 
 	if [[ "$units" = Size ]] ; then
 		spaceinfogsize 
