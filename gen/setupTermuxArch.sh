@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id900851054069"
+versionid="gen.v1.6 id244872043444"
 
 ## Init Functions ###################################################################################################################################
 
@@ -696,7 +696,7 @@ elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 elif [[ "${1//-}" = [Rr]* ]] ; then
 	echo 
 	echo Setting mode to refresh.
-	opt2 "$@" 
+	arg2dir "$@" 
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.
 elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
