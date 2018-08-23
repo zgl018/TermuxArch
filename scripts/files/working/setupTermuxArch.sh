@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id1485"
+versionid="gen.v1.6 id133275244433"
 
 ## Init Functions ###################################################################################################################################
 
@@ -33,9 +33,11 @@ arg2dir() {  # Second argument as rootdir.
 	if [[ -z "${arg2:-}" ]] ; then
 		rootdir=/arch
 		nameinstalldir 
+		namestartarch  
 	else
 		rootdir=/"$arg2" 
 		nameinstalldir 
+		namestartarch  
 	fi
 }
 
@@ -44,9 +46,11 @@ arg3dir() { # Third argument as rootdir.
 	if [[ -z "${arg3:-}" ]] ; then
 		rootdir=/arch
 		nameinstalldir 
+		namestartarch  
 	else
 		rootdir=/"$arg3"
 		nameinstalldir 
+		namestartarch  
 	fi
 }
 
@@ -55,9 +59,11 @@ arg4dir() { # Fourth argument as rootdir.
 	if [[ -z "${arg4:-}" ]] ; then
 		rootdir=/arch
 		nameinstalldir 
+		namestartarch  
 	else
 		rootdir=/"$arg4"
 		nameinstalldir 
+		namestartarch  
 	fi
 }
 
@@ -552,24 +558,24 @@ sti="$(date +%s)" ##  Used to generate random number.
 stime="$(echo "${sti:6:4}"|rev)" ##  Used to generate random number.
 cpuabi="$(getprop ro.product.cpu.abi)" ##  Used to get information about device.
 
-nameinstalldir 
-namestartarch  
+# nameinstalldir 
+# namestartarch  
 preptmpdir
 setrootdir
 
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
-## if [[ "${wdir}${args:0:1}" = "." ]] ; then
-## 	echo "${wdir}${args:0:2} dot "
-## elif [[ "${wdir}${args:0}" = *.tar.gz* ]] ; then
-## 	echo "${wdir}${args:0} .tar.gz "
-## elif [[ "${args:0:1}" = "/" ]] ; then
-## 	echo "$args slash "
-## else
-## 	echo none
-## 	exit
-## fi
-## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [WHAT (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied.  USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual install customname` will install the installation in customname with wget.  While `setupTermuxArch.sh wget refresh customname` will refresh this installation with wget.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT fully implemented yet.    
+# if [[ "${wdir}${args:0:1}" = "." ]] ; then
+# 	echo "${wdir}${args:0:2} dot "
+# elif [[ "${wdir}${args:0}" = *.tar.gz* ]] ; then
+# 	echo "${wdir}${args:0} .tar.gz "
+# elif [[ "${args:0:1}" = "/" ]] ; then
+# 	echo "$args slash "
+# else
+# 	echo none
+# 	exit
+# fi
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
+## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [WHAT (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied.  USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual install customname` will install the installation in customname with wget.  While `setupTermuxArch.sh wget refresh customname` will refresh this installation with wget.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT fully implemented yet.    
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  
 if [[ -z "${1:-}" ]] ; then
 	intro "$@" 
@@ -602,7 +608,7 @@ elif [[ "${1//-}" = [Aa][Xx]* ]] || [[ "${1//-}" = [Aa][Xx][Ii]* ]] ; then
 	echo
 	echo Setting \`axel\` as download manager.
 	dm=axel
-	opt2 "$@" 
+	arg2dir "$@" 
 	intro "$@" 
 ## [ad|as]  Get device system information with `aria2c`.
 elif [[ "${1//-}" = [Aa][Dd]* ]] || [[ "${1//-}" = [Aa][Ss]* ]] ; then
@@ -615,7 +621,7 @@ elif [[ "${1//-}" = [Aa]* ]] ; then
 	echo
 	echo Setting \`aria2c\` as download manager.
 	dm=aria2c
-	opt2 "$@" 
+	arg2dir "$@" 
 	intro "$@" 
 ## [bloom]  Create and run a local copy of TermuxArch in TermuxArchBloom.  Useful for running a customized setupTermuxArch.sh locally, for developing and hacking TermuxArch.  
 elif [[ "${1//-}" = [Bb]* ]] ; then
@@ -631,7 +637,7 @@ elif [[ "${1//-}" = [Cc][Ii]* ]] || [[ "${1//-}" = [Cc]* ]] ; then
 	echo
 	echo Setting \`curl\` as download manager.
 	dm=curl
-	opt2 "$@" 
+	arg2dir "$@" 
 	intro "$@" 
 ## [debug|sysinfo]  Generate system information.
 elif [[ "${1//-}" = [Dd]* ]] || [[ "${1//-}" = [Ss]* ]] ; then
@@ -641,7 +647,7 @@ elif [[ "${1//-}" = [Hh]* ]] || [[ "${1//-}" = [?]* ]] ; then
 	printusage
 ## [install installdir|rootdir installdir]  Install Arch Linux in a custom directory.  Instructions: Install in userspace. $HOME is appended to installation directory. To install Arch Linux in $HOME/installdir use `bash setupTermuxArch.sh install installdir`. In bash shell use `./setupTermuxArch.sh install installdir`.  All options can be abbreviated to one or two letters.  Hence `./setupTermuxArch.sh install installdir` can be run as `./setupTermuxArch.sh i installdir` in BASH.
 elif [[ "${1//-}" = [Ii]* ]] ||  [[ "${1//-}" = [Rr][Oo]* ]] ; then
-	opt2 "$@" 
+	arg2dir "$@" 
 	intro "$@"  
 ## [ld|ls]  Get device system information with `lftp`.
 elif [[ "${1//-}" = [Ll][Dd]* ]] || [[ "${1//-}" = [Ll][Ss]* ]] ; then
@@ -654,12 +660,12 @@ elif [[ "${1//-}" = [Ll]* ]] ; then
 	echo
 	echo Setting \`lftp\` as download manager.
 	dm=lftp
-	opt2 "$@" 
+	arg2dir "$@" 
 	intro "$@" 
 ## [manual]  Manual Arch Linux install, useful for resolving download issues.
 elif [[ "${1//-}" = [Mm]* ]] ; then
 	opt=manual
-	opt2 "$@" 
+	arg2dir "$@" 
 	intro "$@"  
 ## [purge |uninstall]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
@@ -672,7 +678,7 @@ elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	refreshsys "$@"
 ## [refresh|refresh installdir]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
 elif [[ "${1//-}" = [Rr]* ]] ; then
-	opt2 "$@" 
+	arg2dir "$@" 
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.
 elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
@@ -685,7 +691,7 @@ elif [[ "${1//-}" = [Ww]* ]] ; then
 	echo
 	echo Setting \`wget\` as download manager.
 	dm=wget
-	opt2 "$@" 
+	arg2dir "$@" 
 	intro "$@"  
 else
 	printusage
