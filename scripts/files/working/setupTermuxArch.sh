@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id680216617465"
+versionid="gen.v1.6 id319599545683"
 
 ## Init Functions ###################################################################################################################################
 
@@ -389,6 +389,8 @@ opt2() {
 		echo Setting mode to refresh .
  		opt3 "$@"  
 		introrefresh "$@"  
+	else
+		arg2dir "$@" 
 	fi
 }
 
@@ -401,6 +403,8 @@ opt3() {
 		echo Setting mode to refresh .
 		arg4dir "$@" 
 		introrefresh "$@"  
+	else
+		arg3dir "$@" 
 	fi
 }
 

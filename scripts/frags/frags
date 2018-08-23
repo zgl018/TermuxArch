@@ -17,7 +17,6 @@ preptermuxarch() {
 	exit
 }
 
-}
 # 	echo ----
 # 	echo $1
 # 	echo $@
