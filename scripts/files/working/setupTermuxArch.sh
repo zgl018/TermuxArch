@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id291414804333"
+versionid="gen.v1.6 id771225043389"
 
 ## Init Functions ###################################################################################################################################
 
@@ -560,7 +560,7 @@ fi
 setrootdir
 commandif="$(command -v getprop)" ||:
 if [[ "$commandif" = "" ]] ; then
-	printf "\\nWARNING: Run \`bash setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook.\\n"
+	printf "\\nWARNING: Run \`bash setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook.\\n\\n"
 	exit
 fi
 ## Gets information about device.
