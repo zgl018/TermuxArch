@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id839730331416"
+versionid="gen.v1.6 id268544992491"
 
 ## Init Functions ###################################################################################################################################
 
@@ -544,6 +544,7 @@ declare dmverbose="-q" # -v for verbose download manager output from curl and wg
 declare	ed=""
 declare installdir=""
 declare lcc=""
+declare lcp=""
 declare opt=""
 declare rootdir=""
 declare wdir="$PWD/"
@@ -597,18 +598,21 @@ if [[ -z "${1:-}" ]] ; then
 ## A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`; [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. 
 elif [[ "${wdir}${args:0:1}" = "." ]] ; then
 	lcc="1"
+	lcp="1"
 	arg2dir "$@"  
 	intro "$@"    
 	loadimage "$@" 
  ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
 elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
 	lcc="1"
+	lcp="1"
 	arg2dir "$@"  
 	intro "$@"   
 	loadimage "$@"
  ## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
 elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
 	lcc="1"
+	lcp="1"
 	arg2dir "$@"  
 	intro "$@"   
 	loadimage "$@"
