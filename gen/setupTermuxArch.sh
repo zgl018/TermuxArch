@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id446985884245"
+versionid="gen.v1.6 id291414804333"
 
 ## Init Functions ###################################################################################################################################
 
@@ -239,7 +239,7 @@ dwnl() {
 }
 
 finishe() { # on exit
-	echo "Exiting with code $?."
+	echo "Exited with code $?."
 	rm -rf "$tampdir"
 	printf "\\e[?25h\\e[0m"
 	set +Eeuo pipefail 
@@ -539,7 +539,7 @@ declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
 declare dfl="/gen" ## Used for development 
-declare dm="curl"  ## download manager
+declare dm=""  ## download manager
 declare dmverbose="-q" # -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
 declare installdir=""
