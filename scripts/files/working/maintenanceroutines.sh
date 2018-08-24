@@ -18,8 +18,8 @@ sysinfo() {
 systeminfo () {
 	printf "\\n\\e[1;32m"
 	printf "Begin TermuxArch system information.\\n" > "${wdir}setupTermuxArchSysInfo${stime}".log
-# 	printf "\\n\`termux-info\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
-# 	termux-info >> "${wdir}setupTermuxArchSysInfo${stime}".log
+ 	printf "\\n\`termux-info\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+ 	termux-info >> "${wdir}setupTermuxArchSysInfo${stime}".log
 	printf "\\nDisk report $usrspace on /data $(date)\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log 
 	for n in 0 1 2 3 4 5 
 	do 
