@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id680385381407"
+versionid="gen.v1.6 id671706445687"
 
 ## Init Functions ###################################################################################################################################
 
@@ -239,6 +239,8 @@ dwnl() {
 }
 
 finishe() { # on exit
+	echo 
+	echo "Exiting with code $?."
 	rm -rf "$tampdir"
 	printf "\\e[?25h\\e[0m"
 	set +Eeuo pipefail 
@@ -247,18 +249,19 @@ finishe() { # on exit
 
 finisher() { # on script signal
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch warning:  Script signal $? generated!\\e[0m\\n"
+	rm -rf "$tampdir"
  	exit 
 }
 
 finishs() { # on signal
-	rm -rf "$tampdir"
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch warning:  Signal $? received!\\e[0m\\n"
+	rm -rf "$tampdir"
  	exit 
 }
 
 finishq() { # on quit
-	rm -rf "$tampdir"
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch warning:  Quit signal $? received!\\e[0m\\n"
+	rm -rf "$tampdir"
  	exit 
 }
 
@@ -524,7 +527,7 @@ wgetifdm() {
 	fi
 }
 
-## User Information ############################################################
+## User Information #################################################################################################################################
 #  Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is very simple, use `setupTermuxArch.sh manual` to create and edit `setupTermuxArchConfigs.sh`; See `setupTermuxArch.sh help` for information.  
 declare -a args="$@"
 declare aptin="" # apt string
@@ -545,29 +548,36 @@ declare lcc=""
 declare opt=""
 declare rootdir=""
 declare wdir="$PWD/"
-declare sti="" # Used to generate random number.
-declare stime="" # Used to generate random number.
+declare sti="" # Used to generate pseudo random number.
+declare stime="" # Used to generate pseudo random number.
 declare tm="" # tar manager
-
 trap finishe EXIT
 trap finisher ERR 
 trap finishs INT TERM 
 trap finishq QUIT 
 
-commandif="$(command -v getprop)" ||:
-
-if [[ "$commandif" = "" ]] ; then
-	printf "\\nWarning: Run \`setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook.\\n"
-	exit
-fi
-
-sti="$(date +%s)" ##  Used to generate random number.
-stime="$(echo "${sti:6:4}"|rev)" ##  Used to generate random number.
-cpuabi="$(getprop ro.product.cpu.abi)" ##  Used to get information about device.
-
 if [[ -z "${tampdir:-}" ]] ; then
 	tampdir=""
 fi
+
+commandif="$(command -v getprop)" ||:
+
+if [[ "$commandif" = "" ]] ; then
+	printf "\\nWARNING: Run \`bash setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook.\\n"
+	exit
+fi
+
+cpuabi="$(getprop ro.product.cpu.abi)" ##  Used to get information about device.
+
+if [[ -f  /proc/sys/kernel/random/uuid ]] ; then
+	sti="$(cat /proc/sys/kernel/random/uuid)"
+	stime="${sti//-}"	
+elif [[ "${1//-}" = [Ww]* ]] ; then
+	sti="$(date +%s)" ##  Used to generate random number.
+	stime="$(echo "${sti:6:4}"|rev)" ##  Used to generate random number.
+fi
+echo $stime
+exit	
 
 setrootdir
 
@@ -715,4 +725,4 @@ else
 	printusage
 fi
 
-# EOF
+## EOF
