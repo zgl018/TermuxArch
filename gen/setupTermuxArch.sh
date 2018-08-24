@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id268544992491"
+versionid="gen.v1.6 id114307094438"
 
 ## Init Functions ###################################################################################################################################
 
@@ -239,7 +239,7 @@ dwnl() {
 }
 
 finishe() { # on exit
-	echo "Exited with code $?."
+#	echo "Exited with code $?."
 	rm -rf "$tampdir"
 	printf "\\e[?25h\\e[0m"
 	set +Eeuo pipefail 
@@ -597,6 +597,8 @@ if [[ -z "${1:-}" ]] ; then
 	intro "$@" 
 ## A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`; [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. 
 elif [[ "${wdir}${args:0:1}" = "." ]] ; then
+	echo
+	echo Setting mode to copy.
 	lcc="1"
 	lcp="1"
 	arg2dir "$@"  
@@ -604,6 +606,8 @@ elif [[ "${wdir}${args:0:1}" = "." ]] ; then
 	loadimage "$@" 
  ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
 elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
+	echo
+	echo Setting mode to copy.
 	lcc="1"
 	lcp="1"
 	arg2dir "$@"  
@@ -611,6 +615,8 @@ elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
 	loadimage "$@"
  ## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
 elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
+	echo
+	echo Setting mode to copy.
 	lcc="1"
 	lcp="1"
 	arg2dir "$@"  
@@ -690,15 +696,18 @@ elif [[ "${1//-}" = [Ll]* ]] ; then
 ## [manual]  Manual Arch Linux install, useful for resolving download issues.
 elif [[ "${1//-}" = [Mm]* ]] ; then
 	echo
-	echo Setting install to manual.
+	echo Setting mode to manual.
 	opt=manual
 	opt2 "$@" 
 	intro "$@"  
+## [option]  Option
+elif [[ "${1//-}" = [Oo]* ]] ; then
+	printusage
 ## [purge |uninstall]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	arg2dir "$@" 
 	echo 
-	echo depreciated untill further notice
+	echo Depreciated untill further notice.
 	exit
 	standardid rmarch
 	dependsblock "$@" 
