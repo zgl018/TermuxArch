@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id268544992491"
+versionid="v1.6 id1946"
 
 ## Init Functions ###################################################################################################################################
 
@@ -239,7 +239,7 @@ dwnl() {
 }
 
 finishe() { # on exit
-	echo "Exited with code $?."
+#	echo "Exited with code $?."
 	rm -rf "$tampdir"
 	printf "\\e[?25h\\e[0m"
 	set +Eeuo pipefail 
