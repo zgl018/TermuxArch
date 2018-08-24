@@ -6,8 +6,8 @@
 ################################################################################
 
 sysinfo() {
-	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
 	spaceinfo
+	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
 	systeminfo # & spinner "Generating" "System Info…" 
 	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`"${wdir}setupTermuxArchSysInfo${stime}.log"\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
 	cat "${wdir}setupTermuxArchSysInfo${stime}".log
