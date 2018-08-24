@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id671706445687"
+versionid="gen.v1.6 id446985884245"
 
 ## Init Functions ###################################################################################################################################
 
@@ -239,7 +239,6 @@ dwnl() {
 }
 
 finishe() { # on exit
-	echo 
 	echo "Exiting with code $?."
 	rm -rf "$tampdir"
 	printf "\\e[?25h\\e[0m"
@@ -530,8 +529,8 @@ wgetifdm() {
 ## User Information #################################################################################################################################
 #  Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is very simple, use `setupTermuxArch.sh manual` to create and edit `setupTermuxArchConfigs.sh`; See `setupTermuxArch.sh help` for information.  
 declare -a args="$@"
-declare aptin="" # apt string
-declare apton="" # exception string
+declare aptin="" ## apt string
+declare apton="" ## exception string
 declare commandif=""
 declare cpuabi=""
 declare cpuabi5="armeabi"
@@ -539,8 +538,8 @@ declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
-declare dfl="/gen" # Used for development 
-declare dm="curl" # download manager
+declare dfl="/gen" ## Used for development 
+declare dm="curl"  ## download manager
 declare dmverbose="-q" # -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
 declare installdir=""
@@ -548,39 +547,36 @@ declare lcc=""
 declare opt=""
 declare rootdir=""
 declare wdir="$PWD/"
-declare sti="" # Used to generate pseudo random number.
-declare stime="" # Used to generate pseudo random number.
-declare tm="" # tar manager
+declare sti=""   ## Generates pseudo random number.
+declare stime="" ## Generates pseudo random number.
+declare tm=""    ## tar manager
 trap finishe EXIT
 trap finisher ERR 
 trap finishs INT TERM 
 trap finishq QUIT 
-
 if [[ -z "${tampdir:-}" ]] ; then
 	tampdir=""
 fi
-
+setrootdir
 commandif="$(command -v getprop)" ||:
-
 if [[ "$commandif" = "" ]] ; then
 	printf "\\nWARNING: Run \`bash setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook.\\n"
 	exit
 fi
-
-cpuabi="$(getprop ro.product.cpu.abi)" ##  Used to get information about device.
-
+## Gets information about device.
+cpuabi="$(getprop ro.product.cpu.abi)" 
+## Generates pseudo random number.
 if [[ -f  /proc/sys/kernel/random/uuid ]] ; then
 	sti="$(cat /proc/sys/kernel/random/uuid)"
-	stime="${sti//-}"	
-elif [[ "${1//-}" = [Ww]* ]] ; then
-	sti="$(date +%s)" ##  Used to generate random number.
-	stime="$(echo "${sti:6:4}"|rev)" ##  Used to generate random number.
+	stim="${sti//-}"	
+	stime="${stim:0:7}"	
+else
+	sti="$(date +%s)" 
+	stime="$(echo "${sti:7:4}"|rev)" 
 fi
-echo $stime
-exit	
-
-setrootdir
-
+onedi="$(date +%s)" 
+onedij="${onedi: -1}" 
+stime="${onedij}${stime}"
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 # if [[ "${wdir}${args:0:1}" = "." ]] ; then
 # 	echo "${wdir}${args:0:2} dot "
