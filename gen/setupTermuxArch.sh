@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id114307094438"
+versionid="gen.v1.6 id005517410952"
 
 ## Init Functions ###################################################################################################################################
 
@@ -538,7 +538,7 @@ declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
-declare dfl="/gen" # Used for development 
+declare dfl="/gen" ## Used for development 
 declare dm=""  ## download manager
 declare dmverbose="-q" # -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
@@ -596,7 +596,8 @@ if [[ -z "${1:-}" ]] ; then
 	preptermuxarch 
 	intro "$@" 
 ## A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`; [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. 
-elif [[ "${wdir}${args:0:1}" = "." ]] ; then
+# elif [[ "${wdir}${args:0:1}" = "." ]] ; then
+elif [[ "${args:0:1}" = "." ]] ; then
 	echo
 	echo Setting mode to copy.
 	lcc="1"
@@ -604,17 +605,19 @@ elif [[ "${wdir}${args:0:1}" = "." ]] ; then
 	arg2dir "$@"  
 	intro "$@"    
 	loadimage "$@" 
- ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
-elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
+## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
+# elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
+elif [[ "${args:0:1}" = "/" ]] ; then
 	echo
 	echo Setting mode to copy.
 	lcc="1"
-	lcp="1"
+	lcp="0"
 	arg2dir "$@"  
 	intro "$@"   
 	loadimage "$@"
- ## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
-elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
+## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
+# elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
+elif [[ "${args}" = *.tar.gz* ]] ; then
 	echo
 	echo Setting mode to copy.
 	lcc="1"
@@ -705,10 +708,10 @@ elif [[ "${1//-}" = [Oo]* ]] ; then
 	printusage
 ## [purge |uninstall]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
-	arg2dir "$@" 
 	echo 
 	echo Depreciated untill further notice.
 	exit
+	arg2dir "$@" 
 	standardid rmarch
 	dependsblock "$@" 
 ## [refresh|refresh installdir]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
