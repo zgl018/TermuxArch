@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id662315540867"
+versionid="gen.v1.6 id266057854992"
 
 ## Init Functions ###################################################################################################################################
 
@@ -581,7 +581,7 @@ elif [[ "${args:0:1}" = "." ]] ; then
 	lcc="1"
 	lcp="1"
 	arg2dir "$@"  
-	loadimage "$@" 
+	intro "$@" 
 ## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
 # elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
 elif [[ "${args:0:1}" = "/" ]] ; then
@@ -590,7 +590,7 @@ elif [[ "${args:0:1}" = "/" ]] ; then
 	lcc="1"
 	lcp="0"
 	arg2dir "$@"  
-	loadimage "$@"
+	intro "$@" 
 ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
 # elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
 elif [[ "${args}" = *.tar.gz* ]] ; then
@@ -599,7 +599,7 @@ elif [[ "${args}" = *.tar.gz* ]] ; then
 	lcc="1"
 	lcp="1"
 	arg2dir "$@"  
-	loadimage "$@"
+	intro "$@" 
 ## [axd|axs]  Get device system information with `axel`.
 elif [[ "${1//-}" = [Aa][Xx][Dd]* ]] || [[ "${1//-}" = [Aa][Xx][Ss]* ]] ; then
 	echo
