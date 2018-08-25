@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id1946"
+versionid="v1.6 id5164"
 
 ## Init Functions ###################################################################################################################################
 
@@ -596,21 +596,30 @@ if [[ -z "${1:-}" ]] ; then
 	preptermuxarch 
 	intro "$@" 
 ## A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`; [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. 
-elif [[ "${wdir}${args:0:1}" = "." ]] ; then
+# elif [[ "${wdir}${args:0:1}" = "." ]] ; then
+elif [[ "${args:0:1}" = "." ]] ; then
+	echo
+	echo Setting mode to copy.
 	lcc="1"
 	lcp="1"
 	arg2dir "$@"  
 	intro "$@"    
 	loadimage "$@" 
- ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
-elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
+## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
+# elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
+elif [[ "${args:0:1}" = "/" ]] ; then
+	echo
+	echo Setting mode to copy.
 	lcc="1"
-	lcp="1"
+	lcp="0"
 	arg2dir "$@"  
 	intro "$@"   
 	loadimage "$@"
- ## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
-elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
+## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
+# elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
+elif [[ "${args}" = *.tar.gz* ]] ; then
+	echo
+	echo Setting mode to copy.
 	lcc="1"
 	lcp="1"
 	arg2dir "$@"  
@@ -690,16 +699,19 @@ elif [[ "${1//-}" = [Ll]* ]] ; then
 ## [manual]  Manual Arch Linux install, useful for resolving download issues.
 elif [[ "${1//-}" = [Mm]* ]] ; then
 	echo
-	echo Setting install to manual.
+	echo Setting mode to manual.
 	opt=manual
 	opt2 "$@" 
 	intro "$@"  
+## [option]  Option
+elif [[ "${1//-}" = [Oo]* ]] ; then
+	printusage
 ## [purge |uninstall]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
-	arg2dir "$@" 
 	echo 
-	echo depreciated untill further notice
+	echo Depreciated untill further notice.
 	exit
+	arg2dir "$@" 
 	standardid rmarch
 	dependsblock "$@" 
 ## [refresh|refresh installdir]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
