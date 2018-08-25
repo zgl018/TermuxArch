@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id699307444529"
+versionid="gen.v1.6 id610262571944"
 
 ## Init Functions ###################################################################################################################################
 
@@ -285,7 +285,7 @@ introrefresh() {
 }
 
 introstnd() {
-	printf '\033]2; %s\007' " bash setupTermuxArch.sh $@ 📲 "
+	printf '\033]2; %s\007' " bash setupTermuxArch.sh $args 📲 "
 	rootdirexception 
 	archw
 	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s" " 🕛 > 🕛" "setupTermuxArch $versionid will $introstndidstmt your TermuxArch files in" "$installdir" ".  Ensure background data is not restricted.  Run " "bash setupTermuxArch.sh help" "for additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
@@ -496,14 +496,14 @@ rmarch() {
 
 rmarchrm() {
 	rootdirexception 
-	rm -rf "$installdir"/* 2>/dev/null ||:
+	rm -rf "${installdir:?}"/* 2>/dev/null ||:
 	find  "$installdir" -type d -exec chmod 700 {} \; 2>/dev/null ||:
 	rm -rf "$installdir" 2>/dev/null ||:
 }
 
 rmarchq() {
 	if [[ -d "$installdir" ]] ; then
-		printf "\\n\\e[0;33m%s \\e[1;33m%s \\e[0;33m%s\\e[1;30m%s\\n" "TermuxArch:" "DIRECTORY WARNING!  $installdir/" "directory detected." "Purge $installdir as requested?"
+		printf "\\n\\e[0;33m%s \\e[1;33m%s \\e[0;33m%s\\n\\n\\e[1;30m%s\\n" "TermuxArch:" "DIRECTORY WARNING!  $installdir/" "directory detected." "Purge $installdir as requested?"
 		rmarch
 	fi
 }
@@ -520,8 +520,8 @@ tapin() {
 
 rootdirexception() {
 	if [[ "$installdir" = "$HOME" ]] || [[ "$installdir" = "$HOME"/ ]] || [[ "$installdir" = "$HOME"/.. ]] || [[ "$installdir" = "$HOME"/../ ]] || [[ "$installdir" = "$HOME"/../.. ]] || [[ "$installdir" = "$HOME"/../../ ]] ; then
-		printf  '\033]2;%s\007' "Rootdir exception.  Run bash setupTermuxArch.sh $@ again with different options…"	
-		printf "\\n\\e[1;31m%s\\n\\n\\e[0m" "Rootdir exception.  Run the script $@ again with different options…"
+		printf  '\033]2;%s\007' "Rootdir exception.  Run bash setupTermuxArch.sh $args again with different options…"	
+		printf "\\n\\e[1;31m%s\\n\\n\\e[0m" "Rootdir exception.  Run the script $args again with different options…"
 		exit
 	fi
 }
