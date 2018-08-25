@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id005517410952"
+versionid="gen.v1.6 id662315540867"
 
 ## Init Functions ###################################################################################################################################
 
@@ -35,28 +35,6 @@ arg2dir() {  # Second argument as rootdir.
 		preptermuxarch
 	else
 		rootdir=/"$arg2" 
-		preptermuxarch
-	fi
-}
-
-arg3dir() { # Third argument as rootdir.
-	arg3="${@:3:1}"
-	if [[ -z "${arg3:-}" ]] ; then
-		rootdir=/arch
-		preptermuxarch
-	else
-		rootdir=/"$arg3"
-		preptermuxarch
-	fi
-}
-
-arg4dir() { # Fourth argument as rootdir.
-	arg4="${@:4:1}"
-	if [[ -z "${arg4:-}" ]] ; then
-		rootdir=/arch
-		preptermuxarch
-	else
-		rootdir=/"$arg4"
 		preptermuxarch
 	fi
 }
@@ -381,7 +359,7 @@ opt2() {
 		introsysinfo "$@"  
 	elif [[ "$2" = [Ii]* ]] ; then
 		echo Setting mode to install.
-		arg3dir "$@" 
+		arg2dir shift 1 "$@" 
 	elif [[ "$2" = [Mm]* ]] ; then
 		echo Setting mode to manual.
 		opt=manual
@@ -389,7 +367,7 @@ opt2() {
 		intro "$@"  
 	elif [[ "$2" = [Rr]* ]] ; then
 		echo Setting mode to refresh.
-		arg3dir "$@" 
+		arg2dir shift 1 "$@" 
 		introrefresh "$@"  
 	else
 		arg2dir "$@" 
@@ -398,16 +376,16 @@ opt2() {
 
 opt3() { 
 	if [[ -z "${3:-}" ]] ; then
-		arg3dir "$@" 
+		arg2dir shift 1 "$@" 
 	elif [[ "$3" = [Ii]* ]] ; then
 		echo Setting mode to install.
-		arg4dir "$@" 
+		arg2dir shift 2 "$@" 
 	elif [[ "$3" = [Rr]* ]] ; then
 		echo Setting mode to refresh.
-		arg4dir "$@" 
+		arg2dir shift 2 "$@" 
 		introrefresh "$@"  
 	else
-		arg3dir "$@" 
+		arg2dir shift 1 "$@" 
 	fi
 }
 
@@ -461,8 +439,8 @@ printtail() {
 
 printusage() {
 	printf "\\n\\n\\e[1;34mUsage information for \\e[0;32msetupTermuxArch.sh \\e[1;34m$versionid.  Arguments can abbreviated to one letter; Two letter arguments are acceptable.  For example, \\e[0;32mbash setupTermuxArch.sh cs\\e[1;34m will use \\e[0;32mcurl\\e[1;34m to download TermuxArch and produce a \\e[0;32msetupTermuxArchSysInfo$stime.log\\e[1;34m file.\\n\\nUser configurable variables are in \\e[0;32msetupTermuxArchConfigs.sh\\e[1;34m.  Create this file from \\e[0;32mkownconfigurations.sh\\e[1;34m in the working directory.  Use \\e[0;32mbash setupTermuxArch.sh manual\\e[1;34m to create and edit \\e[0;32msetupTermuxArchConfigs.sh\\e[1;34m.\\n\\n\\e[1;33mDEBUG\\e[1;34m    Use \\e[0;32msetupTermuxArch.sh sysinfo \\e[1;34mto create a \\e[0;32msetupTermuxArchSysInfo$stime.log\\e[1;34m and populate it with system information.  Post this along with detailed information about the issue at https://github.com/sdrausty/TermuxArch/issues.  If screenshots will help in resolving the issue better, include them in a post along with information from the debug log file.\\n\\n\\e[1;33mHELP\\e[1;34m     Use \\e[0;32msetupTermuxArch.sh help \\e[1;34mto output this help screen.\\n\\n\\e[1;33mINSTALL\\e[1;34m  Run \\e[0;32m./setupTermuxArch.sh\\e[1;34m without arguments in a bash shell to install Arch Linux in Termux.  Use \\e[0;32mbash setupTermuxArch.sh curl \\e[1;34mto envoke \\e[0;32mcurl\\e[1;34m as the download manager.  Copy \\e[0;32mknownconfigurations.sh\\e[1;34m to \\e[0;32msetupTermuxArchConfigs.sh\\e[1;34m with \\e[0;32mbash setupTermuxArch.sh manual\\e[1;34m to edit preferred mirror site location and to access more options.  After editing \\e[0;32msetupTermuxArchConfigs.sh\\e[1;34m, run \\e[0;32mbash setupTermuxArch.sh\\e[1;34m and \\e[0;32msetupTermuxArchConfigs.sh\\e[1;34m loads automatically from the working directory.  Change mirror to desired geographic location to resolve download errors.\\n\\n\\e[1;33mPURGE\\e[1;34m    Use \\e[0;32msetupTermuxArch.sh uninstall\\e[1;34m \\e[1;34mto uninstall Arch Linux from Termux.\\n\\n\\e[0;32m"
+ 	namestartarch 
 	if [[ -x "$(command -v "$startbin")" ]] ; then
- 		namestartarch 
 		"$startbin" help 2>/dev/null
 	fi
 }
@@ -538,7 +516,7 @@ declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
-declare dfl="/gen" ## Used for development 
+declare dfl="/gen" # Used for development 
 declare dm=""  ## download manager
 declare dmverbose="-q" # -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
@@ -603,7 +581,6 @@ elif [[ "${args:0:1}" = "." ]] ; then
 	lcc="1"
 	lcp="1"
 	arg2dir "$@"  
-	intro "$@"    
 	loadimage "$@" 
 ## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
 # elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
@@ -613,7 +590,6 @@ elif [[ "${args:0:1}" = "/" ]] ; then
 	lcc="1"
 	lcp="0"
 	arg2dir "$@"  
-	intro "$@"   
 	loadimage "$@"
 ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
 # elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
@@ -623,7 +599,6 @@ elif [[ "${args}" = *.tar.gz* ]] ; then
 	lcc="1"
 	lcp="1"
 	arg2dir "$@"  
-	intro "$@"   
 	loadimage "$@"
 ## [axd|axs]  Get device system information with `axel`.
 elif [[ "${1//-}" = [Aa][Xx][Dd]* ]] || [[ "${1//-}" = [Aa][Xx][Ss]* ]] ; then

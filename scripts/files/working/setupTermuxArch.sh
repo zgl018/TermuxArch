@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id0646"
+versionid="gen.v1.6 id662315540867"
 
 ## Init Functions ###################################################################################################################################
 
@@ -35,28 +35,6 @@ arg2dir() {  # Second argument as rootdir.
 		preptermuxarch
 	else
 		rootdir=/"$arg2" 
-		preptermuxarch
-	fi
-}
-
-arg3dir() { # Third argument as rootdir.
-	arg3="${@:3:1}"
-	if [[ -z "${arg3:-}" ]] ; then
-		rootdir=/arch
-		preptermuxarch
-	else
-		rootdir=/"$arg3"
-		preptermuxarch
-	fi
-}
-
-arg4dir() { # Fourth argument as rootdir.
-	arg4="${@:4:1}"
-	if [[ -z "${arg4:-}" ]] ; then
-		rootdir=/arch
-		preptermuxarch
-	else
-		rootdir=/"$arg4"
 		preptermuxarch
 	fi
 }
@@ -381,7 +359,7 @@ opt2() {
 		introsysinfo "$@"  
 	elif [[ "$2" = [Ii]* ]] ; then
 		echo Setting mode to install.
-		arg3dir "$@" 
+		arg2dir shift 1 "$@" 
 	elif [[ "$2" = [Mm]* ]] ; then
 		echo Setting mode to manual.
 		opt=manual
@@ -389,7 +367,7 @@ opt2() {
 		intro "$@"  
 	elif [[ "$2" = [Rr]* ]] ; then
 		echo Setting mode to refresh.
-		arg3dir "$@" 
+		arg2dir shift 1 "$@" 
 		introrefresh "$@"  
 	else
 		arg2dir "$@" 
@@ -398,16 +376,16 @@ opt2() {
 
 opt3() { 
 	if [[ -z "${3:-}" ]] ; then
-		arg3dir "$@" 
+		arg2dir shift 1 "$@" 
 	elif [[ "$3" = [Ii]* ]] ; then
 		echo Setting mode to install.
-		arg4dir "$@" 
+		arg2dir shift 2 "$@" 
 	elif [[ "$3" = [Rr]* ]] ; then
 		echo Setting mode to refresh.
-		arg4dir "$@" 
+		arg2dir shift 2 "$@" 
 		introrefresh "$@"  
 	else
-		arg3dir "$@" 
+		arg2dir shift 1 "$@" 
 	fi
 }
 
@@ -603,7 +581,6 @@ elif [[ "${args:0:1}" = "." ]] ; then
 	lcc="1"
 	lcp="1"
 	arg2dir "$@"  
-	intro "$@"    
 	loadimage "$@" 
 ## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
 # elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
@@ -613,7 +590,6 @@ elif [[ "${args:0:1}" = "/" ]] ; then
 	lcc="1"
 	lcp="0"
 	arg2dir "$@"  
-	intro "$@"   
 	loadimage "$@"
 ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
 # elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
@@ -623,7 +599,6 @@ elif [[ "${args}" = *.tar.gz* ]] ; then
 	lcc="1"
 	lcp="1"
 	arg2dir "$@"  
-	intro "$@"   
 	loadimage "$@"
 ## [axd|axs]  Get device system information with `axel`.
 elif [[ "${1//-}" = [Aa][Xx][Dd]* ]] || [[ "${1//-}" = [Aa][Xx][Ss]* ]] ; then
