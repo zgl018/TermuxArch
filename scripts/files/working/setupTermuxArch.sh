@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id421544239439"
+versionid="gen.v1.6 id350708334815"
 
 ## Init Functions ###################################################################################################################################
 
@@ -68,7 +68,7 @@ bsdtarif() {
 chk() {
 	if "$PREFIX"/bin/applets/sha512sum -c termuxarchchecksum.sha512 1>/dev/null ; then
  		chkself "$@"
-		printf "\\e[0;34m 🕛 > 🕜 \\e[1;34mTermuxArch $versionid integrity: \\e[1;32mOK\\e[0m\\n"
+		printf "\\e[0;34m%s \\e[1;34m%s \\e[1;32m%s\\e[0m\\n" " 🕛 > 🕜" "TermuxArch $versionid integrity:" "OK"
 		loadconf
 		. archlinuxconfig.sh
 		. espritfunctions.sh
@@ -389,7 +389,8 @@ opt3() {
 }
 
 pe() {
-	printf "\\n\\e[1;31mPrerequisites exception.  Run the script again…\\n\\n\\e[0m"'\033]2; Run `bash setupTermuxArch.sh` again…\007'
+	printf "\\n\\e[1;31mPrerequisites exception.  Run the script again…\\n\\n\\e[0m"
+	printf '\033]2; Run `bash setupTermuxArch.sh %s` again…\007' "$args" 
 	exit
 }
 
@@ -414,11 +415,12 @@ preptermuxarch() {
 }
 
 printconfloaded() {
-	printf "\\n\\e[0;34m 🕛 > 🕑 \\e[1;34mTermuxArch configuration \\e[0;32m${wdir}\\e[1;32msetupTermuxArchConfigs.sh \\e[1;34mloaded: \\e[1;32mOK\\n"
+	printf "\\n\\e[0;34m%s \\e[1;34m%s\\e[0;32m%s \\e[1;32m%s \\e[1;34m%s \\e[1;32m%s\\n" " 🕛 > 🕑" "TermuxArch configuration" "${wdir}" "setupTermuxArchConfigs.sh" "loaded:" "OK"
 }
 
 printsha512syschker() {
-	printf "\\n\\e[07;1m\\e[31;1m\\n 🔆 WARNING sha512sum mismatch!  Setup initialization mismatch!\\e[34;1m\\e[30;1m  Try again, initialization was not successful this time.  Wait a little while.  Then run \`bash setupTermuxArch.sh\` again…\\n\\e[0;0m\\n"'\033]2; Run `bash setupTermuxArch.sh` again…\007'
+	printf "\\n\\e[07;1m\\e[31;1m\\n%s \\e[34;1m\\e[30;1m%s \\n\\e[0;0m\\n" " 🔆 WARNING sha512sum mismatch!  Setup initialization mismatch!" "  Try again, initialization was not successful this time.  Wait a little while.  Then run \`bash setupTermuxArch.sh\` again…"
+	printf '\033]2; Run `bash setupTermuxArch.sh %s` again…\007' "$args" 
 	exit 
 }
 
@@ -462,8 +464,8 @@ tapin() {
 
 rootdirexception() {
 	if [[ "$installdir" = "$HOME" ]] || [[ "$installdir" = "$HOME"/ ]] || [[ "$installdir" = "$HOME"/.. ]] || [[ "$installdir" = "$HOME"/../ ]] || [[ "$installdir" = "$HOME"/../.. ]] || [[ "$installdir" = "$HOME"/../../ ]] ; then
-		printf  '\033]2;%s\007' "Rootdir exception.  Run bash setupTermuxArch.sh again with different options…"	
-		printf "\\n\\e[1;31m%s\\n\\n\\e[0m" "Rootdir exception.  Run the script again with different options…"
+		printf  '\033]2;%s\007' "Rootdir exception.  Run bash setupTermuxArch.sh $@ again with different options…"	
+		printf "\\n\\e[1;31m%s\\n\\n\\e[0m" "Rootdir exception.  Run the script $@ again with different options…"
 		exit
 	fi
 }
