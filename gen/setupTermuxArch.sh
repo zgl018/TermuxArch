@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id759256617444"
+versionid="gen.v1.6 id178499864728"
 
 ## Init Functions ###################################################################################################################################
 
@@ -399,12 +399,6 @@ pec() {
 	fi
 }
 
-pecc() {
-	if [[ "$apton" != "" ]] ; then
-		pe @apton
-	fi
-}
-
 preptmpdir() { 
 	mkdir -p "$installdir/tmp"
 	chmod 777 "$installdir/tmp"
@@ -503,7 +497,7 @@ wgetifdm() {
 }
 
 ## User Information #################################################################################################################################
-#  Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is very simple, use `setupTermuxArch.sh manual` to create and edit `setupTermuxArchConfigs.sh`; See `setupTermuxArch.sh help` for information.  
+## Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is very simple, use `setupTermuxArch.sh manual` to create and edit `setupTermuxArchConfigs.sh`; See `setupTermuxArch.sh help` for information.  
 declare -a args="$@"
 declare aptin="" ## apt string
 declare apton="" ## exception string
@@ -551,9 +545,9 @@ else
 	sti="$(date +%s)" 
 	stime="$(echo "${sti:7:4}"|rev)" 
 fi
-onedi="$(date +%s)" 
-onedij="${onedi: -1}" 
-stime="${onedij}${stime}"
+oned="$(date +%s)" 
+onedi="${oned: -1}" 
+stime="${onedi}${stime}"
 ## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
 # if [[ "${wdir}${args:0:1}" = "." ]] ; then
 # 	echo "${wdir}${args:0:2} dot "
@@ -573,7 +567,7 @@ if [[ -z "${1:-}" ]] ; then
 	intro "$@" 
 ## A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`; [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. 
 # elif [[ "${wdir}${args:0:1}" = "." ]] ; then
-elif [[ "${args:0:1}" = "." ]] ; then
+elif [[ "${wdir}${args:0:1}" = "." ]] ; then
 	echo
 	echo Setting mode to copy.
 	lcc="1"
@@ -582,7 +576,7 @@ elif [[ "${args:0:1}" = "." ]] ; then
 	intro "$@" 
 ## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
 # elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
-elif [[ "${args:0:1}" = "/" ]] ; then
+elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
 	echo
 	echo Setting mode to copy.
 	lcc="1"
@@ -591,7 +585,7 @@ elif [[ "${args:0:1}" = "/" ]] ; then
 	intro "$@" 
 ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
 # elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
-elif [[ "${args}" = *.tar.gz* ]] ; then
+elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
 	echo
 	echo Setting mode to copy.
 	lcc="1"
@@ -679,6 +673,7 @@ elif [[ "${1//-}" = [Mm]* ]] ; then
 ## [option]  Option
 elif [[ "${1//-}" = [Oo]* ]] ; then
 	printusage
+	opt2 "$@" 
 ## [purge |uninstall]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	echo 

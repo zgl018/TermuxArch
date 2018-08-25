@@ -18,8 +18,8 @@ sysinfo() {
 systeminfo () {
 	printf "\\n\\e[1;32m"
 	printf "Begin TermuxArch system information.\\n" > "${wdir}setupTermuxArchSysInfo${stime}".log
-	printf "\\n\`termux-info\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
-	termux-info >> "${wdir}setupTermuxArchSysInfo${stime}".log
+ 	printf "\\n\`termux-info\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
+ 	termux-info >> "${wdir}setupTermuxArchSysInfo${stime}".log
 	printf "\\nDisk report $usrspace on /data $(date)\\n\\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log 
 	for n in 0 1 2 3 4 5 
 	do 
@@ -51,19 +51,28 @@ systeminfo () {
 }
 
 copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`
+	declare idir="$PWD"
 	cfile="${1##/*/}" 
  	file="$cfile" 
-	if [[ "$lc" = "" ]];then
+	echo lcp
+	echo $lcp
+	pwd
 		echo "Copying $1.md5…" 
-		cp "${wdir}$1".md5  "$installdir"
+		cp "$1".md5  "$installdir"
 		echo "Copying $1…" 
-		cp "${wdir}$1" "$installdir"
-	elif [[ "$lc" = "1" ]];then
-		echo "Copying $1.md5…" 
-		cp "$idir/$cfile".md5  "$installdir" 
-		echo "Copying $1…" 
-		cp "$idir/$cfile" "$installdir"
-	fi
+		cp "$1" "$installdir"
+# 	if [[ "$lcp" = "" ]];then
+# 		echo "Copying $1.md5…" 
+# 		cp "${wdir}$1".md5  "$installdir"
+# 		echo "Copying $1…" 
+# 		cp "${wdir}$1" "$installdir"
+# 	elif [[ "$lcp" = "1" ]];then
+# 		echo "Copying $1.md5…" 
+# 		cp "$idir/$cfile".md5  "$installdir" 
+# 		echo "Copying $1…" 
+# 		cp "$idir/$cfile" "$installdir"
+# 	fi
+	exit
 }
 
 loadimage() { 
@@ -102,8 +111,6 @@ refreshsys() { # Refreshes
 	addREADME
 	addae
 	addauser
-	addauserps
-	addauserpsc
 	addbash_logout 
 	addbash_profile 
 	addbashrc 
@@ -209,6 +216,7 @@ rmarchq() {
 
 
 spaceinfo() {
+	declare spaceMessage=""
 	units="$(df "$installdir" 2>/dev/null | awk 'FNR == 1 {print $2}')" 
 	if [[ "$units" = Size ]] ; then
 		spaceinfogsize 

@@ -54,14 +54,14 @@ copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[pa
  	cfile="${1##/*/}" 
   	file="$cfile" 
  	if [[ "$lcp" = "0" ]];then
-		echo "Copying $1.md5…" 
+		echo "Copying $1.md5 to $installdir…" 
 		cp "$1".md5  "$installdir"
-		echo "Copying $1…" 
+		echo "Copying $1 to $installdir…" 
 		cp "$1" "$installdir"
  	elif [[ "$lcp" = "1" ]];then
-		echo "Copying $1.md5…" 
+		echo "Copying $1.md5 to $installdir…" 
 		cp "${wdir}$1".md5  "$installdir"
-		echo "Copying $1…" 
+		echo "Copying $1 to $installdir…" 
 		cp "${wdir}$1" "$installdir"
  	fi
 }
