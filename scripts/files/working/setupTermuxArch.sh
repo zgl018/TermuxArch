@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id899645391498"
+versionid="gen.v1.6 id759256617444"
 
 ## Init Functions ###################################################################################################################################
 
@@ -28,7 +28,7 @@ aria2cifdm() {
 	fi
 }
 
-arg2dir() {  # Second argument as rootdir.
+arg2dir() {  # Argument as rootdir.
 	arg2="${@:2:1}"
 	if [[ -z "${arg2:-}" ]] ; then
 		rootdir=/arch
@@ -209,41 +209,40 @@ dwnl() {
 	elif [[ "$dm" = wget ]] ; then
 		wget "$dmverbose" -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.sha512 
 		wget "$dmverbose" -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.tar.gz 
-		printf "\\n\\e[1;33m"
 	else
 		curl "$dmverbose" -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.sha512 -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.tar.gz
-		printf "\\n\\e[1;33m"
 	fi
+	printf "\\n\\e[1;33m"
 }
 
-finishe() { # on exit
-#	echo "Exited with code $?."
+finishe() { # Run on exit.
+#	echo "Exit Code $?"
 	rm -rf "$tampdir"
 	printf "\\e[?25h\\e[0m"
 	set +Eeuo pipefail 
   	printtail "$args"  
 }
 
-finisher() { # on script signal
+finisher() { # Run on script signal.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch warning:  Script signal $? generated!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 
 }
 
-finishs() { # on signal
+finishs() { # Run on signal.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch warning:  Signal $? received!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 
 }
 
-finishq() { # on quit
+finishq() { # Run on quit.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch warning:  Quit signal $? received!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 
 }
 
 intro() {
-	printf '\033]2;  bash setupTermuxArch.sh 📲 \007'
+	printf '\033]2;  bash setupTermuxArch.sh $@ 📲 \007'
 	rootdirexception 
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34mTermuxArch $versionid will attempt to install Linux in \\e[0;32m$installdir\\e[1;34m.  Arch Linux in Termux PRoot will be available upon successful completion.  To run this BASH script again, use \`!!\`.  Ensure background data is not restricted.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
@@ -433,7 +432,6 @@ printtail() {
  	printf "\\a\\a\\a\\a"
 	sleep 0.4
  	printf "\\a\\n\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁 "
-# 	printf '\033]2; '"${0##*/} $args"': DONE 🏁 \007'
 	printf '\033]2; %s: DONE 🏁 \007' "${0##*/} $args"
 }
 
