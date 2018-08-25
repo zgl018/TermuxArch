@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id408296470238"
+versionid="gen.v1.6 id421544239439"
 
 ## Init Functions ###################################################################################################################################
 
@@ -430,11 +430,11 @@ printtail() {
 }
 
 printusage() {
-	printf "\\n\\n\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\n\\n%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s\\n" "Usage information for" "setupTermuxArch.sh" "$versionid.  Arguments can abbreviated to one or letters each; Two letter arguments are acceptable.  For example," "bash setupTermuxArch.sh cs" "will use" "curl" "to download TermuxArch and produce a" "setupTermuxArchSysInfo$stime.log" "system information file." "User configurable variables are in" "setupTermuxArchConfigs.sh" ".  To create this file from" "kownconfigurations.sh" "in the working directory, run" "bash setupTermuxArch.sh manual" "to create and edit" "setupTermuxArchConfigs.sh" "." 
-	printf "\\n\\e[1;33m%s\\e[1;34m    %s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\n" "SYSINFO" "Use" "setupTermuxArch.sh sysinfo" "to create" "setupTermuxArchSysInfo$stime.log" "and populate it with system information.  Post it along with detailed information at" "https://github.com/sdrausty/TermuxArch/issues" ".  If screenshots will help in resolving an issue better, include these in a post along with information from the system information log file as well." 
+	printf "\\n\\n\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\n\\n%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s\\n" "Usage information for" "setupTermuxArch.sh" "$versionid.  Arguments can abbreviated to one, two and three letters each; Two letter arguments are acceptable.  For example," "bash setupTermuxArch.sh cs" "will use" "curl" "to download TermuxArch and produce a" "setupTermuxArchSysInfo$stime.log" "system information file." "User configurable variables are in" "setupTermuxArchConfigs.sh" ".  To create this file from" "kownconfigurations.sh" "in the working directory, run" "bash setupTermuxArch.sh manual" "to create and edit" "setupTermuxArchConfigs.sh" "." 
 	printf "\\n\\e[1;33m%s\\e[1;34m     %s \\e[0;32m%s \\e[1;34m%s\\n" "HELP" "Use" "setupTermuxArch.sh help" "to output this help screen." 
-	printf "\\n\\e[1;33m%s\\e[1;34m  %s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34mw%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s\\n" "INSTALL" "Run" "./setupTermuxArch.sh" "without arguments in a bash shell to install Arch Linux in Termux.  Use" "bash setupTermuxArch.sh curl" "to envoke" "curl" "as the download manager.  Copy" "knownconfigurations.sh" "to" "setupTermuxArchConfigs.sh" "with" "bash setupTermuxArch.sh manual" "to edit preferred mirror site location and to access more options.  After editing" "setupTermuxArchConfigs.sh" ", run" "bash setupTermuxArch.sh" "and" "setupTermuxArchConfigs.sh" "loads automatically from the working directory.  Change mirror to desired geographic location to resolve download errors." 
+	printf "\\n\\e[1;33m%s\\e[1;34m  %s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s\\n" "INSTALL" "Run" "./setupTermuxArch.sh" "without arguments in a bash shell to install Arch Linux in Termux.  Use" "bash setupTermuxArch.sh curl" "to envoke" "curl" "as the download manager.  Copy" "knownconfigurations.sh" "to" "setupTermuxArchConfigs.sh" "with" "bash setupTermuxArch.sh manual" "to edit preferred mirror site and to access more options.  After editing" "setupTermuxArchConfigs.sh" ", run" "bash setupTermuxArch.sh" "and" "setupTermuxArchConfigs.sh" "loads automatically from the working directory.  Change mirror to desired geographic location to resolve download errors." 
 # 	printf "\\n\\e[1;33m%s\\e[1;34m     %s \\e[0;32m%s \\e[1;34m%s\\n" "PURGE" "Use" "setupTermuxArch.sh purge" "to uninstall Arch Linux from Termux." 
+	printf "\\n\\e[1;33m%s\\e[1;34m    %s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\n" "SYSINFO" "Use" "setupTermuxArch.sh sysinfo" "to create" "setupTermuxArchSysInfo$stime.log" "and populate it with system information.  Post it along with detailed information at" "https://github.com/sdrausty/TermuxArch/issues" ".  If screenshots will help in resolving an issue better, include these along with information from the system information log file in a post as well." 
  	namestartarch 
 	if [[ -x "$(command -v "$startbin")" ]] ; then
 		"$startbin" help 2>/dev/null
@@ -545,7 +545,7 @@ cpuabi="$(getprop ro.product.cpu.abi)"
 if [[ -f  /proc/sys/kernel/random/uuid ]] ; then
 	sti="$(cat /proc/sys/kernel/random/uuid)"
 	stim="${sti//-}"	
-	stime="${stim:0:7}"	
+	stime="${stim:0:3}"	
 else
 	sti="$(date +%s)" 
 	stime="$(echo "${sti:7:4}"|rev)" 
