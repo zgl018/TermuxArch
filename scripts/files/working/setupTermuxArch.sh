@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id610262571944"
+versionid="v1.6 id8180"
 
 ## Init Functions ###################################################################################################################################
 
@@ -25,12 +25,6 @@ aria2cif() {
 aria2cifdm() {
 	if [[ "$dm" = aria2c ]] ; then
 		aria2cif 
-	fi
-}
-
-archw() {
-	if [[ -d "$installdir" ]] ; then
-		printf "\\n\\e[0;33m%s \\e[1;33m%s \\e[0;33m%s\\n" "TermuxArch:" "DIRECTORY WARNING!  $installdir/" "directory detected." 
 	fi
 }
 
@@ -250,7 +244,6 @@ finishq() { # Run on quit.
 intro() {
 	printf '\033]2;  bash setupTermuxArch.sh $@ 📲 \007'
 	rootdirexception 
-	archw
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34mTermuxArch $versionid will attempt to install Linux in \\e[0;32m$installdir\\e[1;34m.  Arch Linux in Termux PRoot will be available upon successful completion.  To run this BASH script again, use \`!!\`.  Ensure background data is not restricted.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
 	if [[ "$lcc" = "1" ]] ; then
@@ -287,7 +280,6 @@ introrefresh() {
 introstnd() {
 	printf '\033]2; %s\007' " bash setupTermuxArch.sh $args 📲 "
 	rootdirexception 
-	archw
 	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s" " 🕛 > 🕛" "setupTermuxArch $versionid will $introstndidstmt your TermuxArch files in" "$installdir" ".  Ensure background data is not restricted.  Run " "bash setupTermuxArch.sh help" "for additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 }
 
