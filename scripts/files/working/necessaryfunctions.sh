@@ -140,7 +140,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id365521598141"
+versionid="gen.v1.6 id259819587415"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -189,7 +189,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id365521598141"
+versionid="gen.v1.6 id259819587415"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -206,7 +206,7 @@ makestartbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id365521598141"
+versionid="gen.v1.6 id259819587415"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -286,7 +286,9 @@ md5check() {
 	if "$PREFIX"/bin/applets/md5sum -c "$file".md5 1>/dev/null ; then
 		printmd5success
 		printf "\\e[0;32m"
-		preproot # & spinner "Uncompressing" "…"  
+		set +Ee
+		preproot & spinner "Uncompressing" "…"  
+		set -Ee
 	else
 		rm -f "$installdir"/*.tar.gz "$installdir"/*.tar.gz.md5
 		printmd5error

@@ -206,19 +206,16 @@ spinner() { # Based on https://github.com/ringohub/sh-spinner
 	SPINNER="🕛🕐🕑🕓🕔🕕🕖🕗🕘🕙🕚"
 	task="$1"
 	msg="$2"
-# 	while true ; do
-# 		jobs %1 > /dev/null 2>&1
-# 		until jobs %1 > /dev/null 2>&1 ; do
-		until "$?" ; do
-# 		[[ "$?" = 0 ]] || {
-# 			break 0
-# 		}
+	while true ; do
+		jobs %1 > /dev/null 2>&1
+		[[ "$?" = 0 ]] || {
+		printf " %s %s\\e[1;34m:\\e[1;32m %s\\e[?25h\\e[0m\\n\\n" "✓" "$task" "DONE              "
+		break
+		}
 		for (( i=0; i<${#SPINNER}; i++ )) ; do
-			printf " %s %s %s\r" "${SPINNER:$i:1}" "$task" "$msg"
-			sleep 0.5
+			sleep 0.05
+			printf " %s %s %s\\r" "${SPINNER:$i:1}" "$task" "$msg"
 		done
-		printf " %s %s\e[1;34m:\e[1;32m %s\e[?25h\e[0m\n" "✓" "$task" "DONE                    "
-		sleep 0.5
 	done
 }
 

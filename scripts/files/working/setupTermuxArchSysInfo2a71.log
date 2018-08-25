@@ -1,0 +1,195 @@
+Begin TermuxArch system information.
+
+`termux-info` results:
+
+Updatable packages:
+gdbm/stable 1.18 arm [upgradable from: 1.17]
+libnghttp2/stable 1.32.1 arm [upgradable from: 1.32.0]
+openssh/stable 7.8p1 arm [upgradable from: 7.7p1-4]
+System information:
+Linux localhost 3.18.22+ #1 SMP PREEMPT Mon May 28 12:38:45 KST 2018 armv7l Android
+Termux-packages arch:
+arm
+Android version:
+6.0.1
+Device manufacturer:
+LGE
+Device model:
+LGLS755
+
+Disk report 2.37G on /data Sat Aug 25 19:09:37 EDT 2018
+
+BASH_VERSINFO[0] = 4
+BASH_VERSINFO[1] = 4
+BASH_VERSINFO[2] = 23
+BASH_VERSINFO[3] = 1
+BASH_VERSINFO[4] = release
+BASH_VERSINFO[5] = arm-unknown-linux-androideabi
+
+cat /proc/cpuinfo results:
+
+Processor	: ARMv7 Processor rev 2 (v7l)
+processor	: 0
+model name	: ARMv7 Processor rev 2 (v7l)
+BogoMIPS	: 37.77
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm sha2 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x0
+CPU part	: 0xd03
+CPU revision	: 2
+
+processor	: 1
+model name	: ARMv7 Processor rev 2 (v7l)
+BogoMIPS	: 37.77
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm sha2 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x0
+CPU part	: 0xd03
+CPU revision	: 2
+
+processor	: 2
+model name	: ARMv7 Processor rev 2 (v7l)
+BogoMIPS	: 26.00
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm sha2 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x0
+CPU part	: 0xd03
+CPU revision	: 2
+
+processor	: 3
+model name	: ARMv7 Processor rev 2 (v7l)
+BogoMIPS	: 26.00
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm sha2 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x0
+CPU part	: 0xd03
+CPU revision	: 2
+
+processor	: 4
+model name	: ARMv7 Processor rev 2 (v7l)
+BogoMIPS	: 53.94
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm sha2 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x0
+CPU part	: 0xd03
+CPU revision	: 2
+
+processor	: 5
+model name	: ARMv7 Processor rev 2 (v7l)
+BogoMIPS	: 26.00
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm sha2 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x0
+CPU part	: 0xd03
+CPU revision	: 2
+
+processor	: 6
+model name	: ARMv7 Processor rev 2 (v7l)
+BogoMIPS	: 26.00
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm sha2 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x0
+CPU part	: 0xd03
+CPU revision	: 2
+
+processor	: 7
+model name	: ARMv7 Processor rev 2 (v7l)
+BogoMIPS	: 26.00
+Features	: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm sha2 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x0
+CPU part	: 0xd03
+CPU revision	: 2
+
+Hardware	: MT6755M
+Revision	: 0000
+Serial		: 0000000000000000
+
+dpkg --print-architecture result:
+
+arm
+
+getprop ro.product.cpu.abi result:
+
+armeabi-v7a
+
+getprop ro.product.device result:
+
+mk6p55
+
+Download directory information results.
+
+/sdcard/Download exists
+/storage/emulated/0/Download exists
+/data/data/com.termux/files/home/downloads exists
+/data/data/com.termux/files/home/storage/downloads exists
+
+df /data/data/com.termux/files/home/arch results:
+
+Filesystem                 Size         Used         Free    Blksize
+/data/data/com.termux/files/home/arch      9.87G        7.50G        2.37G       4096
+
+df results:
+
+Filesystem                 Size         Used         Free    Blksize
+/dev                    929.38M      140.00K      929.24M       4096
+/sys/fs/cgroup          929.38M       12.00K      929.36M       4096
+/mnt                    929.38M        0.00K      929.38M       4096
+/system                   2.90G        2.76G      137.22M       4096
+/cache                  875.65M       15.83M      859.82M       4096
+/protect_f                3.86M       80.00K        3.78M       4096
+/protect_s                3.86M       72.00K        3.79M       4096
+/nvdata                  27.48M        7.86M       19.62M       4096
+/persist                 43.23M       64.00K       43.17M       4096
+/nvcfg                    3.86M       60.00K        3.80M       4096
+/persist-lg               3.86M      312.00K        3.55M       4096
+/mpt                     17.64M       52.00K       17.59M       4096
+/carrier                 35.36M        3.20M       32.16M       4096
+/data                     9.87G        7.50G        2.37G       4096
+/storage                929.38M        0.00K      929.38M       4096
+/storage/emulated         9.87G        7.50G        2.37G       4096
+/storage/3861-6531      119.05G       56.87G       62.18G     131072
+/storage/self           929.38M        0.00K      929.38M       4096
+
+du -hs /data/data/com.termux/files/home/arch results:
+
+687.9M	/data/data/com.termux/files/home/arch
+
+ls -al /data/data/com.termux/files/home/arch results:
+
+total 84
+drwx------   19 u0_a113  u0_a113       4096 Aug 25 19:05 .
+drwx------   27 u0_a113  u0_a113       4096 Aug 25 18:38 ..
+lrwxrwxrwx    1 u0_a113  u0_a113          7 Aug 25 18:22 bin -> usr/bin
+drwxr-xr-x    2 u0_a113  u0_a113       4096 Aug 25 18:28 boot
+d---------    2 u0_a113  u0_a113       4096 Aug 25 19:05 data
+drwxr-xr-x    2 u0_a113  u0_a113       4096 Aug  1 03:38 dev
+drwxr-xr-x   37 u0_a113  u0_a113       4096 Aug 25 19:04 etc
+drwxr-xr-x    4 u0_a113  u0_a113       4096 Aug 25 19:04 home
+lrwxrwxrwx    1 u0_a113  u0_a113          7 Aug 25 18:23 lib -> usr/lib
+drwxr-xr-x    2 u0_a113  u0_a113       4096 Mar 11 15:24 mnt
+drwxr-xr-x    2 u0_a113  u0_a113       4096 Mar 11 15:24 opt
+dr-xr-xr-x    2 u0_a113  u0_a113       4096 Aug  1 03:38 proc
+drwxr-x---    4 u0_a113  u0_a113       4096 Aug 25 19:04 root
+drwxr-xr-x    2 u0_a113  u0_a113       4096 Aug  1 03:38 run
+lrwxrwxrwx    1 u0_a113  u0_a113          7 Aug 25 18:23 sbin -> usr/bin
+d---------    2 u0_a113  u0_a113       4096 Aug 25 19:05 sdcard
+drwxr-xr-x    4 u0_a113  u0_a113       4096 Aug 25 18:23 srv
+-rwx------    1 u0_a113  u0_a113       4873 Aug 25 18:22 startarch
+d---------    2 u0_a113  u0_a113       4096 Aug 25 19:05 storage
+dr-xr-xr-x    2 u0_a113  u0_a113       4096 Aug  1 03:38 sys
+drwxrwxrwt    3 u0_a113  u0_a113       4096 Aug 25 19:09 tmp
+drwxr-xr-x    8 u0_a113  u0_a113       4096 Aug 25 18:28 usr
+drwxr-xr-x   13 u0_a113  u0_a113       4096 Aug 25 18:28 var
+
+uname -a results:
+
+Linux localhost 3.18.22+ #1 SMP PREEMPT Mon May 28 12:38:45 KST 2018 armv7l Android
