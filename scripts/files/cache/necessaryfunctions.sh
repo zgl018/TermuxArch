@@ -20,6 +20,7 @@ addfbinds() { ## Checks if system files exist and makes adjustments.
 }
 
 callsystem() {
+	declare COUNTER=""
 	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
 		getimage
 	else
@@ -29,7 +30,7 @@ callsystem() {
 				sleep 2
 				printf "\\n"
 				COUNTER=$((COUNTER + 1))
-				if [[ "$COUNTER" = 12 ]];then 
+				if [[ "$COUNTER" = 4 ]];then 
 					printmax 
 					exit
 				fi
@@ -93,6 +94,7 @@ detectsystem2() {
 }
 
 lkernid() {
+	declare kid=""
 	ur="$("$PREFIX"/bin/applets/uname -r)"
 	declare -i KERNEL_VERSION="$(echo "$ur" |awk -F'.' '{print $1}')"
 	declare -i MAJOR_REVISION="$(echo "$ur" |awk -F'.' '{print $2}')"
@@ -138,8 +140,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id3036"
-
+versionid="gen.v1.6 id350708334815"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -188,7 +189,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id3036"
+versionid="gen.v1.6 id350708334815"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -205,7 +206,7 @@ makestartbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id3036"
+versionid="gen.v1.6 id350708334815"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -238,7 +239,7 @@ versionid="v1.6 id3036"
 		echo "$prootstmnt /bin/su - \"\$ar2ar\" " >> "$startbin"
 	cat >> "$startbin" <<- EOM
 		printf '\033]2; $startbin login user [options] 📲  \007'
-	# [raw args] Construct the \`startarch\` proot statement.  For example \`startarch r su - archuser\` will login as user archuser.  Use \`addauser archuser\` first to create this user and the user home directory.
+	# [raw args] Construct the \`startarch\` proot statement.  For example \`startarch r su - archuser\` will login as user archuser.  Use \`addauser user\` first to create this user and the user home directory.
 	elif [[ "\$1" = [Rr]* ]] || [[ "\$1" = -[Rr]* ]] || [[ "\$1" = --[Rr]* ]];then
 		printf '\033]2; $startbin raw args 📲  \007'
 	EOM
@@ -293,7 +294,6 @@ md5check() {
 }
 
 preprootdir() {
-	mkdir -p "$installdir"
 	cd "$installdir"
 	mkdir -p etc 
 	mkdir -p var/binds 
@@ -306,8 +306,6 @@ prepinstalldir() {
 	addREADME
 	addae
 	addauser
-	addauserps
-	addauserpsc
 	addbash_logout 
 	addbash_profile 
 	addbashrc 
