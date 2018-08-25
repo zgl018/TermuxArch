@@ -9,7 +9,7 @@ sysinfo() {
 	spaceinfo
 	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
 	set +Ee
-	systeminfo & spinner "Generating" "System Info…" 
+	systeminfo & spinner "Generating" "System Information…" 
 	set -Ee
 	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`"${wdir}setupTermuxArchSysInfo${stime}.log"\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
 	cat "${wdir}setupTermuxArchSysInfo${stime}".log
@@ -79,7 +79,8 @@ loadimage() {
 	wakelock
 	prepinstalldir 
 	set +Ee
-	copyimage "$@" & spinner "Copying" "…" 
+# 	copyimage "$@" & spinner "Copying" "…" 
+	copyimage "$@" 
 	set -Ee
 	printmd5check
 	md5check
