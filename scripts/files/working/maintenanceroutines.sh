@@ -55,11 +55,11 @@ systeminfo () {
 copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`
  	cfile="${1##/*/}" 
 	file="$(basename $cfile)" 
-	echo $file
-	echo $lcp
-	echo lcp
-	pwd
-	echo pwd
+# 	echo $file
+# 	echo $lcp
+# 	echo lcp
+# 	pwd
+# 	echo pwd
  	if [[ "$lcp" = "0" ]];then
 		echo "Copying $1.md5 to $installdir…" 
 		cp "$1".md5  "$installdir"
@@ -71,7 +71,7 @@ copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[pa
 		echo "Copying $1 to $installdir…" 
 		cp "${wdir}$1" "$installdir"
  	fi
-	ls  "$installdir"
+# 	ls  "$installdir"
 }
 
 loadimage() { 
