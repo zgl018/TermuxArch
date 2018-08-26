@@ -83,7 +83,7 @@ loadimage() {
 	set +Ee
  	copyimage "$@" 
 #  	copyimage "$@" & spinner "Copying" "…" 
-	echo $file
+# 	echo $file
 	set -Ee
 	printmd5check
 	md5check
