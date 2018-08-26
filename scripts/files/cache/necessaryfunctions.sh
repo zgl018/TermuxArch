@@ -140,7 +140,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id350708334815"
+versionid="v1.6 id8241"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -189,7 +189,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id350708334815"
+versionid="v1.6 id8241"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -204,9 +204,9 @@ makestartbin() {
 	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
 	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
 	################################################################################
- 	set -Eeou pipefail 
+	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id350708334815"
+versionid="v1.6 id8241"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -286,7 +286,7 @@ md5check() {
 	if "$PREFIX"/bin/applets/md5sum -c "$file".md5 1>/dev/null ; then
 		printmd5success
 		printf "\\e[0;32m"
-		preproot # & spinner "Uncompressing" "…"  
+		preproot 
 	else
 		rm -f "$installdir"/*.tar.gz "$installdir"/*.tar.gz.md5
 		printmd5error
@@ -343,13 +343,9 @@ prepinstalldir() {
 preproot() {
 	if [[ "$(du "$installdir"/*z | awk {'print $1'})" -gt 112233 ]];then
 		if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
-# 			proot --link2symlink -0 bsdtar -xpf "$file" --strip-components 1  
- 			proot --link2symlink -0 "$PREFIX"/bin/applets/tar -xpf "$file" 
+ 			proot --link2symlink -0 bsdtar -xpf "$file" --strip-components 1  
 		else
-#  			proot --link2symlink -0 bsdtar -xpf "$file" 
-#  			proot --link2symlink -0 "$PREFIX"/bin/tar -xpf "$file" 
  			proot --link2symlink -0 "$PREFIX"/bin/applets/tar -xpf "$file" 
-# 			proot --link2symlink -0 /system/bin/toybox tar -xpf "$file" 
 		fi
 	else
 		printf "\\n\\n\\e[1;31mDownload Exception!  Execute \\e[0;32mbash setupTermuxArch.sh\\e[1;31m again…\\n"'\033]2;  Execute `bash setupTermuxArch.sh` again …\007'

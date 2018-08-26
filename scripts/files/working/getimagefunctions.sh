@@ -104,4 +104,4 @@ getmsg() {
 	fi
 }
 
-# EOF
+## EOF

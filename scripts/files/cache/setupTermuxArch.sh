@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id350708334815"
+versionid="v1.6 id8241"
 
 ## Init Functions ###################################################################################################################################
 
@@ -166,7 +166,7 @@ depends() { # Checks for missing commands.
 #	# Installs missing commands.  
 	tapin "$aptin"
 #	# Checks whether install missing commands was successful.  
-# 	pe "$aptin"
+# 	pe "$apton"
 	echo
 	echo "Using ${dm:-curl} to manage downloads." 
 	printf "\\n\\e[0;34m 🕛 > 🕧 \\e[1;34mPrerequisites: \\e[1;32mOK  \\e[1;34mDownloading TermuxArch…\\n\\n\\e[0;32m"
@@ -278,7 +278,7 @@ introrefresh() {
 }
 
 introstnd() {
-	printf '\033]2; %s\007' " bash setupTermuxArch.sh $@ 📲 "
+	printf '\033]2; %s\007' " bash setupTermuxArch.sh $args 📲 "
 	rootdirexception 
 	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s" " 🕛 > 🕛" "setupTermuxArch $versionid will $introstndidstmt your TermuxArch files in" "$installdir" ".  Ensure background data is not restricted.  Run " "bash setupTermuxArch.sh help" "for additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 }
@@ -358,7 +358,8 @@ opt2() {
 		introsysinfo "$@"  
 	elif [[ "$2" = [Ii]* ]] ; then
 		echo Setting mode to install.
-		arg2dir shift 1 "$@" 
+		shift
+		arg2dir "$@" 
 	elif [[ "$2" = [Mm]* ]] ; then
 		echo Setting mode to manual.
 		opt=manual
@@ -366,7 +367,8 @@ opt2() {
 		intro "$@"  
 	elif [[ "$2" = [Rr]* ]] ; then
 		echo Setting mode to refresh.
-		arg2dir shift 1 "$@" 
+		shift
+		arg2dir "$@" 
 		introrefresh "$@"  
 	else
 		arg2dir "$@" 
@@ -375,16 +377,20 @@ opt2() {
 
 opt3() { 
 	if [[ -z "${3:-}" ]] ; then
-		arg2dir shift 1 "$@" 
+		shift
+		arg2dir "$@" 
 	elif [[ "$3" = [Ii]* ]] ; then
 		echo Setting mode to install.
-		arg2dir shift 2 "$@" 
+		shift 2 
+		arg2dir "$@" 
 	elif [[ "$3" = [Rr]* ]] ; then
 		echo Setting mode to refresh.
-		arg2dir shift 2 "$@" 
+		shift 2 
+		arg2dir "$@" 
 		introrefresh "$@"  
 	else
-		arg2dir shift 1 "$@" 
+		shift 
+		arg2dir "$@" 
 	fi
 }
 
@@ -452,6 +458,54 @@ prootif() {
 	fi
 }
 
+rmarch() {
+	namestartarch 
+	nameinstalldir
+	while true; do
+		printf "\\n\\e[1;30m"
+		read -n 1 -p "Uninstall $installdir? [Y|n] " ruanswer
+		if [[ "$ruanswer" = [Ee]* ]] || [[ "$ruanswer" = [Nn]* ]] || [[ "$ruanswer" = [Qq]* ]] ; then
+			break
+		elif [[ "$ruanswer" = [Yy]* ]] || [[ "$ruanswer" = "" ]] ; then
+			printf "\\e[30mUninstalling $installdir…\\n"
+			if [[ -e "$PREFIX/bin/$startbin" ]] ; then
+				rm -f "$PREFIX/bin/$startbin" 
+			else 
+				printf "Uninstalling $PREFIX/bin/$startbin: nothing to do for $PREFIX/bin/$startbin.\\n"
+			fi
+			if [[ -e "$HOME/bin/$startbin" ]] ; then
+				rm -f "$HOME/bin/$startbin" 
+			else 
+				printf "Uninstalling $HOME/bin/$startbin: nothing to do for $HOME/bin/$startbin.\\n"
+			fi
+			if [[ -d "$installdir" ]] ; then
+				rmarchrm 
+			else 
+				printf "Uninstalling $installdir: nothing to do for $installdir.\\n"
+			fi
+			printf "Uninstalling $installdir: \\e[1;32mDone\\n\\e[30m"
+			break
+		else
+			printf "\\nYou answered \\e[33;1m$ruanswer\\e[30m.\\n\\nAnswer \\e[32mYes\\e[30m or \\e[1;31mNo\\e[30m. [\\e[32my\\e[30m|\\e[1;31mn\\e[30m]\\n"
+		fi
+	done
+	printf "\\e[0m\\n"
+}
+
+rmarchrm() {
+	rootdirexception 
+	rm -rf "${installdir:?}"/* 2>/dev/null ||:
+	find  "$installdir" -type d -exec chmod 700 {} \; 2>/dev/null ||:
+	rm -rf "$installdir" 2>/dev/null ||:
+}
+
+rmarchq() {
+	if [[ -d "$installdir" ]] ; then
+		printf "\\n\\e[0;33m%s \\e[1;33m%s \\e[0;33m%s\\n\\n\\e[1;30m%s\\n" "TermuxArch:" "DIRECTORY WARNING!  $installdir/" "directory detected." "Purge $installdir as requested?"
+		rmarch
+	fi
+}
+
 tapin() {
 	if [[ "$aptin" != "" ]] ; then
 		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\b\\e[1;34m…\\n\\n\\e[1;32m" "$aptin"
@@ -464,8 +518,8 @@ tapin() {
 
 rootdirexception() {
 	if [[ "$installdir" = "$HOME" ]] || [[ "$installdir" = "$HOME"/ ]] || [[ "$installdir" = "$HOME"/.. ]] || [[ "$installdir" = "$HOME"/../ ]] || [[ "$installdir" = "$HOME"/../.. ]] || [[ "$installdir" = "$HOME"/../../ ]] ; then
-		printf  '\033]2;%s\007' "Rootdir exception.  Run bash setupTermuxArch.sh $@ again with different options…"	
-		printf "\\n\\e[1;31m%s\\n\\n\\e[0m" "Rootdir exception.  Run the script $@ again with different options…"
+		printf  '\033]2;%s\007' "Rootdir exception.  Run bash setupTermuxArch.sh $args again with different options…"	
+		printf "\\n\\e[1;31m%s\\n\\n\\e[0m" "Rootdir exception.  Run the script $args again with different options…"
 		exit
 	fi
 }
@@ -502,12 +556,11 @@ wgetifdm() {
 	fi
 }
 
-## User Information 
-## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
-## Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is very simple, use `setupTermuxArch.sh manual` to create and edit `setupTermuxArchConfigs.sh`; See `setupTermuxArch.sh help` for information.  
-declare -a args=( "$@" )
-declare aptin="" ## apt string
-declare apton="" ## exception string
+## User Information: 
+## Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is simple.  `bash setupTermuxArch.sh manual` will create `setupTermuxArchConfigs.sh` in the working directory for editing; See `setupTermuxArch.sh help` for more information.  
+declare -a args="$@"
+declare aptin=""	## apt string
+declare apton=""	## exception string
 declare commandif=""
 declare cpuabi=""
 declare cpuabi5="armeabi"
@@ -515,9 +568,9 @@ declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
-declare dfl="/gen" # Used for development 
-declare dm="wget"  ## download manager
-declare dmverbose="-q" # -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
+declare dfl="/gen"	## Used for development 
+declare dm="wget"	## download manager
+declare dmverbose="-q"	## -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
 declare installdir=""
 declare lcc=""
@@ -525,9 +578,9 @@ declare lcp=""
 declare opt=""
 declare rootdir=""
 declare wdir="$PWD/"
-declare sti=""   ## Generates pseudo random number.
-declare stime="" ## Generates pseudo random number.
-declare tm=""    ## tar manager
+declare sti=""		## Generates pseudo random number.
+declare stime=""	## Generates pseudo random number.
+declare tm=""		## tar manager
 trap finishe EXIT
 trap finisher ERR 
 trap finishs INT TERM 
@@ -538,12 +591,12 @@ fi
 setrootdir
 commandif="$(command -v getprop)" ||:
 if [[ "$commandif" = "" ]] ; then
-	printf "\\nWARNING: Run \`bash setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook.\\n\\n"
+	printf "\\n%s \\n\\n" "WARNING: Run \`bash setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook."
 	exit
 fi
-## Gets information about device.
+## Gets information about device cpu using getprop.
 cpuabi="$(getprop ro.product.cpu.abi)" 
-## Generates pseudo random number.
+## Generates pseudo random number to create uniq strings.
 if [[ -f  /proc/sys/kernel/random/uuid ]] ; then
 	sti="$(cat /proc/sys/kernel/random/uuid)"
 	stim="${sti//-}"	
@@ -553,49 +606,30 @@ else
 	stime="$(echo "${sti:7:4}"|rev)" 
 fi
 oned="$(date +%s)" 
-onedi="${oned: -1}" 
-stime="${onedi}${stime}"
-## IMPORTANT: GRAMMATICAL SYNTAX IS STILL UNDER CONSTRUCTION! USE WITH CAUTION!!
-# if [[ "${wdir}${args:0:1}" = "." ]] ; then
-# 	echo "${wdir}${args:0:2} dot "
-# elif [[ "${wdir}${args:0}" = *.tar.gz* ]] ; then
-# 	echo "${wdir}${args:0} .tar.gz "
-# elif [[ "${args:0:1}" = "/" ]] ; then
-# 	echo "$args slash "
-# else
-# 	echo none
-# 	exit
-# fi
+oneda="${oned: -1}" 
+stime="${oneda}${stime}"
+## User Information: 
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [WHAT (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied.  USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual install customname` will install the installation in customname with wget.  While `setupTermuxArch.sh wget refresh customname` will refresh this installation with wget.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT fully implemented yet.    
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  
 if [[ -z "${1:-}" ]] ; then
 	preptermuxarch 
 	intro "$@" 
 ## A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`; [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. 
-# elif [[ "${wdir}${args:0:1}" = "." ]] ; then
-elif [[ "${wdir}${args:0:1}" = "." ]] ; then
-	echo
-	echo Setting mode to copy.
-	lcc="1"
-	lcp="1"
-	arg2dir "$@"  
-	intro "$@" 
-## A systemimage.tar.gz file can substituted for network install:  [/absolutepath/systemimage.tar.gz [installdir]]  Use absolute path to system image file; install directory argument is optional. 
-# elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
-elif [[ "${wdir}${args:0:1}" = "/" ]] ; then
+elif [[ "${args:0:1}" = . ]] ; then
+ 	echo
+ 	echo Setting mode to copy.
+ 	lcc="1"
+ 	lcp="1"
+ 	arg2dir "$@"  
+ 	intro "$@" 
+## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
+# elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
+elif [[ "${args}" = *.tar.gz* ]] ; then
+# elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
 	echo
 	echo Setting mode to copy.
 	lcc="1"
 	lcp="0"
-	arg2dir "$@"  
-	intro "$@" 
-## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
-# elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
-elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
-	echo
-	echo Setting mode to copy.
-	lcc="1"
-	lcp="1"
 	arg2dir "$@"  
 	intro "$@" 
 ## [axd|axs]  Get device system information with `axel`.
@@ -683,11 +717,9 @@ elif [[ "${1//-}" = [Oo]* ]] ; then
 ## [purge |uninstall]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	echo 
-	echo Depreciated untill further notice.
-	exit
+	echo Setting mode to purge.
 	arg2dir "$@" 
-	standardid rmarch
-	dependsblock "$@" 
+	rmarchq
 ## [refresh|refresh installdir]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
 elif [[ "${1//-}" = [Rr]* ]] ; then
 	echo 

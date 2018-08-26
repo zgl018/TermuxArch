@@ -8,7 +8,9 @@
 sysinfo() {
 	spaceinfo
 	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
-	systeminfo # & spinner "Generating" "System Info…" 
+	set +Ee
+	systeminfo & spinner "Generating" "System Information…" 
+	set -Ee
 	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`"${wdir}setupTermuxArchSysInfo${stime}.log"\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
 	cat "${wdir}setupTermuxArchSysInfo${stime}".log
 	printf "\\n\\e[1mSubmit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve \`setupTermuxArch.sh\` along with a screenshot of the topic.  Include information about input and output.  \\n\\n"
@@ -52,11 +54,12 @@ systeminfo () {
 
 copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`
  	cfile="${1##/*/}" 
-  	file="$cfile" 
-	echo $lcp
-	echo lcp
-	pwd
-	echo pwd
+	file="$(basename $cfile)" 
+# 	echo $file
+# 	echo $lcp
+# 	echo lcp
+# 	pwd
+# 	echo pwd
  	if [[ "$lcp" = "0" ]];then
 		echo "Copying $1.md5 to $installdir…" 
 		cp "$1".md5  "$installdir"
@@ -68,16 +71,20 @@ copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[pa
 		echo "Copying $1 to $installdir…" 
 		cp "${wdir}$1" "$installdir"
  	fi
+# 	ls  "$installdir"
 }
 
 loadimage() { 
-	set +Ee
 	namestartarch 
  	spaceinfo
 	printf "\\n" 
 	wakelock
 	prepinstalldir 
-	copyimage "$@"
+	set +Ee
+ 	copyimage "$@" 
+#  	copyimage "$@" & spinner "Copying" "…" 
+# 	echo $file
+	set -Ee
 	printmd5check
 	md5check
 	printcu 
@@ -160,55 +167,6 @@ refreshsys() { # Refreshes
 	printfooter2
 	exit
 }
-
-rmarch() {
-	namestartarch 
-	nameinstalldir
-	while true; do
-		printf "\\n\\e[1;30m"
-		read -n 1 -p "Uninstall $installdir? [Y|n] " ruanswer
-		if [[ "$ruanswer" = [Ee]* ]] || [[ "$ruanswer" = [Nn]* ]] || [[ "$ruanswer" = [Qq]* ]] ; then
-			break
-		elif [[ "$ruanswer" = [Yy]* ]] || [[ "$ruanswer" = "" ]] ; then
-			printf "\\e[30mUninstalling $installdir…\\n"
-			if [[ -e "$PREFIX/bin/$startbin" ]] ; then
-				rm -f "$PREFIX/bin/$startbin" 
-			else 
-				printf "Uninstalling $PREFIX/bin/$startbin: nothing to do for $PREFIX/bin/$startbin.\\n"
-			fi
-			if [[ -e "$HOME/bin/$startbin" ]] ; then
-				rm -f "$HOME/bin/$startbin" 
-			else 
-				printf "Uninstalling $HOME/bin/$startbin: nothing to do for $HOME/bin/$startbin.\\n"
-			fi
-			if [[ -d "$installdir" ]] ; then
-				rmarchrm 
-			else 
-				printf "Uninstalling $installdir: nothing to do for $installdir.\\n"
-			fi
-			printf "Uninstalling $installdir: \\e[1;32mDone\\n\\e[30m"
-			break
-		else
-			printf "\\nYou answered \\e[33;1m$ruanswer\\e[30m.\\n\\nAnswer \\e[32mYes\\e[30m or \\e[1;31mNo\\e[30m. [\\e[32my\\e[30m|\\e[1;31mn\\e[30m]\\n"
-		fi
-	done
-	printf "\\e[0m\\n"
-}
-
-rmarchrm() {
-	rootdirexception 
-	rm -rf "$installdir"/* 2>/dev/null ||:
-	find  "$installdir" -type d -exec chmod 700 {} \; 2>/dev/null ||:
-	rm -rf "$installdir" 2>/dev/null ||:
-}
-
-rmarchq() {
-	if [[ -d "$installdir" ]] ; then
-		printf "\\n\\e[0;33mTermuxArch: \\e[1;33mDIRECTORY WARNING!  $installdir/ \\e[0;33mdirectory detected.  \\e[1;30mTermux Arch installation shall continue.  If in doubt, answer yes.\\n"
-		rmarch
-	fi
-}
-
 
 spaceinfo() {
 	declare spaceMessage=""
