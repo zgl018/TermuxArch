@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id632760543839"
+versionid="v1.6 id8241"
 
 ## Init Functions ###################################################################################################################################
 
@@ -166,7 +166,7 @@ depends() { # Checks for missing commands.
 #	# Installs missing commands.  
 	tapin "$aptin"
 #	# Checks whether install missing commands was successful.  
-# 	pe "$aptin"
+# 	pe "$apton"
 	echo
 	echo "Using ${dm:-curl} to manage downloads." 
 	printf "\\n\\e[0;34m 🕛 > 🕧 \\e[1;34mPrerequisites: \\e[1;32mOK  \\e[1;34mDownloading TermuxArch…\\n\\n\\e[0;32m"

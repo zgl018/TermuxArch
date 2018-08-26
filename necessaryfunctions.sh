@@ -140,7 +140,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id6541"
+versionid="v1.6 id8241"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -189,7 +189,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id6541"
+versionid="v1.6 id8241"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -204,9 +204,9 @@ makestartbin() {
 	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
 	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
 	################################################################################
- 	set -Eeou pipefail 
+	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id6541"
+versionid="v1.6 id8241"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
