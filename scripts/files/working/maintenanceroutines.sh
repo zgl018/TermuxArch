@@ -54,7 +54,8 @@ systeminfo () {
 
 copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`
  	cfile="${1##/*/}" 
-  	file="$cfile" 
+	file="$(basename $cfile)" 
+	echo $file
 	echo $lcp
 	echo lcp
 	pwd
@@ -70,6 +71,7 @@ copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[pa
 		echo "Copying $1 to $installdir…" 
 		cp "${wdir}$1" "$installdir"
  	fi
+	ls  "$installdir"
 }
 
 loadimage() { 
@@ -79,8 +81,9 @@ loadimage() {
 	wakelock
 	prepinstalldir 
 	set +Ee
-# 	copyimage "$@" & spinner "Copying" "…" 
-	copyimage "$@" 
+ 	copyimage "$@" 
+#  	copyimage "$@" & spinner "Copying" "…" 
+	echo $file
 	set -Ee
 	printmd5check
 	md5check
