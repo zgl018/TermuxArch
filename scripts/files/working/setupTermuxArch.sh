@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id8148"
+versionid="v1.6 id5732"
 
 ## Init Functions ###################################################################################################################################
 
@@ -104,7 +104,7 @@ chkself() {
 	if [[ -f "setupTermuxArch.tmp" ]] ; then
 		if [[ "$(<setupTermuxArch.sh)" != "$(<setupTermuxArch.tmp)" ]] ; then
 			cp setupTermuxArch.sh "${wdir}setupTermuxArch.sh"
-			printf "\\e[0;32m%s\\e[1;34m: \\e[1;32mUPDATED\\n\\e[1;32mRESTART %s %s \\n\\e[0m"  "${0##*/}" "${0##*/}" "$@"
+			printf "\\e[0;32m%s\\e[1;34m: \\e[1;32mUPDATED\\n\\e[1;32mRESTARTED %s %s \\n\\e[0m"  "${0##*/}" "${0##*/}" "$@"
 			.  "${wdir}setupTermuxArch.sh" "$@"
 		fi
 	fi
@@ -568,7 +568,7 @@ declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
-declare dfl="/gen"	## Used for development 
+declare dfl="/gen" # Used for development 
 declare dm="wget"	## download manager
 declare dmverbose="-q"	## -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
