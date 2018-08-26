@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id8301"
+versionid="v1.6 id7969"
 
 ## Init Functions ###################################################################################################################################
 
@@ -608,12 +608,12 @@ fi
 oned="$(date +%s)" 
 oneda="${oned: -1}" 
 stime="${oneda}${stime}"
+## OPTION STATUS: TESTING
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [WHAT (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied.  USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual install customname` will install the installation in customname with wget.  While `setupTermuxArch.sh wget refresh customname` will refresh this installation with wget.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT fully implemented yet.    
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  
 if [[ -z "${1:-}" ]] ; then
 	preptermuxarch 
 	intro "$@" 
-## Option Status: Testing
 ## A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`; [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. 
 elif [[ "${args:0:1}" = . ]] ; then
  	echo
@@ -622,7 +622,6 @@ elif [[ "${args:0:1}" = . ]] ; then
  	lcp="1"
  	arg2dir "$@"  
  	intro "$@" 
-## Option Status: Testing
 ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
 # elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
 elif [[ "${args}" = *.tar.gz* ]] ; then
