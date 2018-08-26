@@ -140,7 +140,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id0121"
+versionid="v1.6 id5271"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -189,7 +189,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id0121"
+versionid="v1.6 id5271"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -206,7 +206,7 @@ makestartbin() {
 	################################################################################
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id0121"
+versionid="v1.6 id5271"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -341,15 +341,10 @@ prepinstalldir() {
 }
 
 preproot() {
-	if [[ "$(du "$installdir"/*z | awk {'print $1'})" -gt 112233 ]];then
-		if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
- 			proot --link2symlink -0 bsdtar -xpf "$file" --strip-components 1  
-		else
- 			proot --link2symlink -0 "$PREFIX"/bin/applets/tar -xpf "$file" 
-		fi
+	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
+ 		proot --link2symlink -0 bsdtar -xpf "$file" --strip-components 1  
 	else
-		printf "\\n\\n\\e[1;31mDownload Exception!  Execute \\e[0;32mbash setupTermuxArch.sh\\e[1;31m again…\\n"'\033]2;  Execute `bash setupTermuxArch.sh` again …\007'
-		exit
+ 		proot --link2symlink -0 "$PREFIX"/bin/applets/tar -xpf "$file" 
 	fi
 }
 
