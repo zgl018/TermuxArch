@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id8180"
+versionid="v1.6 id3062"
 
 ## Init Functions ###################################################################################################################################
 
@@ -617,7 +617,8 @@ elif [[ "${args:0:1}" = . ]] ; then
  	intro "$@" 
 ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
 # elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
-elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
+elif [[ "${args}" = *.tar.gz* ]] ; then
+# elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
 	echo
 	echo Setting mode to copy.
 	lcc="1"

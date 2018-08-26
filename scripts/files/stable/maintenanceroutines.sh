@@ -8,7 +8,9 @@
 sysinfo() {
 	spaceinfo
 	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
-	systeminfo # & spinner "Generating" "System Info…" 
+	set +Ee
+	systeminfo & spinner "Generating" "System Information…" 
+	set -Ee
 	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`"${wdir}setupTermuxArchSysInfo${stime}.log"\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo${stime}".log
 	cat "${wdir}setupTermuxArchSysInfo${stime}".log
 	printf "\\n\\e[1mSubmit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve \`setupTermuxArch.sh\` along with a screenshot of the topic.  Include information about input and output.  \\n\\n"
@@ -52,11 +54,12 @@ systeminfo () {
 
 copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`
  	cfile="${1##/*/}" 
-  	file="$cfile" 
-	echo $lcp
-	echo lcp
-	pwd
-	echo pwd
+	file="$(basename $cfile)" 
+# 	echo $file
+# 	echo $lcp
+# 	echo lcp
+# 	pwd
+# 	echo pwd
  	if [[ "$lcp" = "0" ]];then
 		echo "Copying $1.md5 to $installdir…" 
 		cp "$1".md5  "$installdir"
@@ -68,16 +71,20 @@ copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[pa
 		echo "Copying $1 to $installdir…" 
 		cp "${wdir}$1" "$installdir"
  	fi
+# 	ls  "$installdir"
 }
 
 loadimage() { 
-	set +Ee
 	namestartarch 
  	spaceinfo
 	printf "\\n" 
 	wakelock
 	prepinstalldir 
-	copyimage "$@"
+	set +Ee
+ 	copyimage "$@" 
+#  	copyimage "$@" & spinner "Copying" "…" 
+# 	echo $file
+	set -Ee
 	printmd5check
 	md5check
 	printcu 
