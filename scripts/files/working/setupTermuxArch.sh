@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id3977"
+versionid="v1.6 id3118"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -166,7 +166,7 @@ depends() { # Checks for missing commands.
 #	# Checks whether install missing commands was successful.  
 # 	pechk "$apton"
 	echo
-	echo "Using ${dm:-curl} to manage downloads." 
+	echo "Using ${dm:-wget} to manage downloads." 
 	printf "\\n\\e[0;34m 🕛 > 🕧 \\e[1;34mPrerequisites: \\e[1;32mOK  \\e[1;34mDownloading TermuxArch…\\n\\n\\e[0;32m"
 }
 
@@ -384,7 +384,7 @@ preptmpdir() {
 	mkdir -p "$installdir/tmp"
 	chmod 777 "$installdir/tmp"
 	chmod +t "$installdir/tmp"
- 	tampdir="$installdir/tmp/setupTermuxArch$stime"
+ 	tampdir="$installdir/tmp/setupTermuxArch$$"
 	mkdir -p "$tampdir" 
 }
 
@@ -509,20 +509,26 @@ standardid() {
 	introstnd
 }
 
-trapexit() { # Run on exit.
-  	printf "\\a\\a\\a\\a"
-	sleep 0.4
-	rm -rf "$tampdir"
- 	printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
-	printf '\033]2; %s: %s \007' "${0##*/} $args" "DONE 🏁"
-	printf "\\e[?25h\\e[0m"
-	set +Eeuo pipefail 
-}
-
 traperror() { # Run on script signal.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Script signal $? generated!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 
+}
+
+trapexit() { # Run on exit.
+ 	rv=$?
+  	printf "\\a\\a\\a\\a"
+	sleep 0.4
+	rm -rf "$tampdir"
+	if [[ "$rv" = 0 ]] ; then
+		printf "\\a\\e[0;32m%s %s\\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
+		printf "\\e]2; %s: %s \007" "${0##*/} $args" "DONE 🏁"
+	else
+		printf "\\a\\e[0;32m%s %s\\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s %s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "(Code $rv)" "DONE 🏁"
+		printf "\033]2; %s: %s %s \007" "${0##*/} $args" "(Code $rv)" "DONE 🏁"
+	fi
+	printf "\\e[?25h\\e[0m"
+	set +Eeuo pipefail 
 }
 
 trapsignal() { # Run on signal.
