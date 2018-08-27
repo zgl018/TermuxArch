@@ -1,0 +1,2 @@
+
+			printf "\\e[0;32m%s\\e[1;34m: \\e[1;32mUPDATED\\n\\e[1;32mRESTARTED\\e[1;34m: %s %s \\n\\e[0m"  "${0##*/}" "${0##*/}" "$@"
