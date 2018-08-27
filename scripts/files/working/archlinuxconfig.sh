@@ -159,7 +159,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="gen.v1.6 id869864699645"
+versionid="gen.v1.6 id013836047004"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -168,14 +168,14 @@ versionid="gen.v1.6 id869864699645"
 	}
 	
 	finisher() { # on script signal
-		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") warning." 
+		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING." 
 	 	set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
 	}
 	
 	finishs() { # on signal
-		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") warning.  Signal caught!"
+		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING.  Signal caught!"
 		set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
@@ -423,7 +423,7 @@ addkeys() {
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
 	declare -a keyrings
-versionid="gen.v1.6 id869864699645"
+versionid="gen.v1.6 id013836047004"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -433,14 +433,14 @@ versionid="gen.v1.6 id869864699645"
 	}
 	
 	finisher() { # on script signal
-		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") warning." 
+		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING." 
 	 	set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
 	}
 	
 	finishs() { # on signal
-		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") warning.  Signal caught!"
+		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING.  Signal caught!"
 		set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
@@ -523,7 +523,7 @@ addpc() { # pacman install packages shortcut
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
 	declare -g args="\$@"
-versionid="gen.v1.6 id869864699645"
+versionid="gen.v1.6 id013836047004"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -533,14 +533,14 @@ versionid="gen.v1.6 id869864699645"
 	}
 	
 	finisher() { # on script signal
-		printf "\\n\\e[?25h\\e[0mTermuxArch pc warning.  \\n"
+		printf "\\n\\e[?25h\\e[0mTermuxArch pc WARNING.  \\n"
 	 	set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
 	}
 	
 	finishs() { # on signal
-		printf "\\n\\e[?25h\\e[0mTermuxArch pc warning.  Signal caught!\\n"
+		printf "\\n\\e[?25h\\e[0mTermuxArch pc WARNING.  Signal caught!\\n"
 		set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
@@ -584,7 +584,7 @@ addpci() { # system update with pacman install packages shortcut
 	set -Eeuo pipefail 
 	shopt -s nullglob globstar
 	declare args="\$@"
-versionid="gen.v1.6 id869864699645"
+versionid="gen.v1.6 id013836047004"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -593,14 +593,14 @@ versionid="gen.v1.6 id869864699645"
 	}
 	
 	finisher() { # on script signal
-		printf "\\n\\e[?25h\\e[0mTermuxArch pci warning.  \\n"
+		printf "\\n\\e[?25h\\e[0mTermuxArch pci WARNING.  \\n"
 	 	set +Eeuo pipefail 
 	 	printf "[ \$(basename "\$0") done ("\$?") ]\n" 
 	 	exit \$? 
 	}
 	
 	finishs() { # on signal
-		printf "\\n\\e[?25h\\e[0mTermuxArch pci warning.  Signal caught!\\n"
+		printf "\\n\\e[?25h\\e[0mTermuxArch pci WARNING.  Signal caught!\\n"
 		set +Eeuo pipefail 
 	 	printf "[ \$(basename "\$0") done ("\$?") ]\n" 
 	 	exit \$? 
