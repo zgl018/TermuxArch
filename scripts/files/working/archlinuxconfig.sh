@@ -46,66 +46,6 @@ addauser() { # Add Arch Linux user.
 	chmod 770 root/bin/addauser 
 }
 
-addauserps() { # Add Arch Linux user and create user login Termux startup script. 
-	cat > root/bin/addauserps <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	useradd \$1
-	cp -r /root /home/\$1
-	su - \$1
-	EOM
-	echo "cat > $HOME/bin/${bin}user\$1 <<- EOM " >> root/bin/addauserps 
-	cat >> root/bin/addauserps <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	unset LD_PRELOAD
-	exec proot --kill-on-exit --link2symlink -0 -r $installdir -b /dev/ -b \$ANDROID_DATA -b \$EXTERNAL_STORAGE -b /proc/ -w "\$PWD" /bin/env -i HOME=/root TERM=\$TERM /bin/su - \$1 --login
-	EOM
-	echo EOM >> root/bin/addauserps 
-	cat >> root/bin/addauserps <<- EOM
-	chmod 770 $HOME/bin/${bin}user\$1
-	EOM
-	chmod 770 root/bin/addauserps 
-}
-
-addauserpsc() { # Add Arch Linux user and create user login Termux startup script. 
-	cat > root/bin/addauserpsc <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	useradd \$1
-	cp -r /root /home/\$1
-	su - \$1
-	EOM
-	echo "cat > $HOME/bin/${bin}user\$1 <<- EOM " >> root/bin/addauserpsc 
-	cat >> root/bin/addauserpsc <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	unset LD_PRELOAD
-	exec proot --kill-on-exit --link2symlink -0 -r $installdir -b /dev/ -b \$ANDROID_DATA -b \$EXTERNAL_STORAGE -b /proc/ -w "\$PWD" /bin/env -i HOME=/root TERM=\$TERM /bin/su - \$1 --login
-	EOM
-	echo EOM >> root/bin/addauserpsc 
-	cat >> root/bin/addauserpsc <<- EOM
-	chmod 770 $HOME/bin/${bin}user\$1
-	EOM
-	chmod 770 root/bin/addauserpsc 
-}
-
 addbash_logout() {
 	cat > root/.bash_logout <<- EOM
 	if [ ! -e \$HOME/.hushlogout ] && [ ! -e \$HOME/.chushlogout ];then
@@ -219,8 +159,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="gen.v1.6 id523239092749"
-
+versionid="gen.v1.6 id869864699645"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -391,7 +330,7 @@ addga() {
 	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
 	################################################################################
 	if [ ! -e /usr/bin/git ] ; then
-		pacman --noconfirm --color=always -Syu git
+		pacman --noconfirm --color=always -S git
 		git add .
 	else
 		git add .
@@ -409,7 +348,7 @@ addgcl() {
 	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
 	################################################################################
 	if [ ! -e /usr/bin/git ] ; then
-		pacman --noconfirm --color=always -Syu git 
+		pacman --noconfirm --color=always -S git 
 		git clone \$@
 	else
 		git clone \$@
@@ -427,7 +366,7 @@ addgcm() {
 	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
 	################################################################################
 	if [ ! -e /usr/bin/git ] ; then
-		pacman --noconfirm --color=always -Syu git 
+		pacman --noconfirm --color=always -S git 
 		git commit
 	else
 		git commit
@@ -445,7 +384,7 @@ addgpl() {
 	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
 	################################################################################
 	if [ ! -e /usr/bin/git ] ; then
-		pacman --noconfirm --color=always -Syu git 
+		pacman --noconfirm --color=always -S git 
 		git pull
 	else
 		git pull
@@ -464,7 +403,7 @@ addgp() {
 	# git push https://username:password@github.com/username/repository.git master
 	################################################################################
 	if [ ! -e /usr/bin/git ] ; then
-		pacman --noconfirm --color=always -Syu git 
+		pacman --noconfirm --color=always -S git 
 		git push
 	else
 		git push
@@ -483,10 +422,8 @@ addkeys() {
 	################################################################################
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
-
 	declare -a keyrings
-versionid="gen.v1.6 id523239092749"
-
+versionid="gen.v1.6 id869864699645"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -585,10 +522,8 @@ addpc() { # pacman install packages shortcut
 	################################################################################
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
-
 	declare -g args="\$@"
-versionid="gen.v1.6 id523239092749"
-
+versionid="gen.v1.6 id869864699645"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -648,10 +583,8 @@ addpci() { # system update with pacman install packages shortcut
 	################################################################################
 	set -Eeuo pipefail 
 	shopt -s nullglob globstar
-
 	declare args="\$@"
-versionid="gen.v1.6 id523239092749"
-
+versionid="gen.v1.6 id869864699645"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -726,7 +659,7 @@ addt() {
 	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
 	################################################################################
 	if [ ! -e /usr/bin/tree ] ; then
-		pacman --noconfirm --color=always -Syu tree 
+		pacman --noconfirm --color=always -S tree 
 		tree \$@
 	else
 		tree \$@
@@ -829,7 +762,7 @@ addv() {
 		args="\$@"
 	fi
 	if [ ! -e /usr/bin/vim ] ; then
-		pacman --noconfirm --color=always -Syu vim 
+		pacman --noconfirm --color=always -S vim 
 		vim \$args
 	else
 		vim \$args
@@ -904,7 +837,7 @@ addwe() {
 			abcif=\$(command -v bc) ||:
 			if [[ \$abcif = "" ]];then
 				printf "\e[1;34mInstalling \e[0;32mbc\e[1;34m…\n\n\e[1;32m"
-				pacman -Syu bc --noconfirm --color=always
+				pacman -S bc --noconfirm --color=always
 				printf "\n\e[1;34mInstalling \e[0;32mbc\e[1;34m: \e[1;32mDONE\n\e[0m"
 			fi
 		else
@@ -996,7 +929,7 @@ addyt() {
 	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
 	################################################################################
 	if [ ! -e /usr/bin/youtube-dl ] ; then
-		pacman --noconfirm --color=always -Syu python-pip
+		pacman --noconfirm --color=always -S python-pip
 		pip install youtube-dl
 		youtube-dl \$@
 	else
@@ -1006,4 +939,4 @@ addyt() {
 	chmod 770 root/bin/yt 
 }
 
-# EOF
+## EOF

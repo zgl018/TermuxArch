@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id632760543839"
+versionid="gen.v1.6 id869864699645"
 
 ## Init Functions ###################################################################################################################################
 
@@ -104,7 +104,7 @@ chkself() {
 	if [[ -f "setupTermuxArch.tmp" ]] ; then
 		if [[ "$(<setupTermuxArch.sh)" != "$(<setupTermuxArch.tmp)" ]] ; then
 			cp setupTermuxArch.sh "${wdir}setupTermuxArch.sh"
-			printf "\\e[0;32m%s\\e[1;34m: \\e[1;32mUPDATED\\n\\e[1;32mRESTART %s %s \\n\\e[0m"  "${0##*/}" "${0##*/}" "$@"
+			printf "\\e[0;32m%s\\e[1;34m: \\e[1;32mUPDATED\\n\\e[1;32mRESTARTED\\e[1;34m: \\e[0;32m%s %s \\n\\e[0m"  "${0##*/}" "${0##*/}" "$args"
 			.  "${wdir}setupTermuxArch.sh" "$@"
 		fi
 	fi
@@ -166,7 +166,7 @@ depends() { # Checks for missing commands.
 #	# Installs missing commands.  
 	tapin "$aptin"
 #	# Checks whether install missing commands was successful.  
-# 	pe "$aptin"
+# 	pe "$apton"
 	echo
 	echo "Using ${dm:-curl} to manage downloads." 
 	printf "\\n\\e[0;34m 🕛 > 🕧 \\e[1;34mPrerequisites: \\e[1;32mOK  \\e[1;34mDownloading TermuxArch…\\n\\n\\e[0;32m"
@@ -212,7 +212,7 @@ dwnl() {
 	else
 		curl "$dmverbose" -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.sha512 -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.tar.gz
 	fi
-	printf "\\n\\e[1;33m"
+	printf "\\n\\e[1;32m"
 }
 
 finishe() { # Run on exit.
@@ -556,11 +556,11 @@ wgetifdm() {
 	fi
 }
 
-## User Information 
+## User Information: 
 ## Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is simple.  `bash setupTermuxArch.sh manual` will create `setupTermuxArchConfigs.sh` in the working directory for editing; See `setupTermuxArch.sh help` for more information.  
 declare -a args="$@"
-declare aptin="" ## apt string
-declare apton="" ## exception string
+declare aptin=""	## apt string
+declare apton=""	## exception string
 declare commandif=""
 declare cpuabi=""
 declare cpuabi5="armeabi"
@@ -569,8 +569,8 @@ declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
 declare dfl="/gen" # Used for development 
-declare dm="wget"  ## download manager
-declare dmverbose="-q" # -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
+declare dm="wget"	## download manager
+declare dmverbose="-q"	## -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
 declare installdir=""
 declare lcc=""
@@ -578,9 +578,9 @@ declare lcp=""
 declare opt=""
 declare rootdir=""
 declare wdir="$PWD/"
-declare sti=""   ## Generates pseudo random number.
-declare stime="" ## Generates pseudo random number.
-declare tm=""    ## tar manager
+declare sti=""		## Generates pseudo random number.
+declare stime=""	## Generates pseudo random number.
+declare tm=""		## tar manager
 trap finishe EXIT
 trap finisher ERR 
 trap finishs INT TERM 
@@ -594,7 +594,7 @@ if [[ "$commandif" = "" ]] ; then
 	printf "\\n%s \\n\\n" "WARNING: Run \`bash setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook."
 	exit
 fi
-## Gets information about device using getprop.
+## Gets information about device cpu using getprop.
 cpuabi="$(getprop ro.product.cpu.abi)" 
 ## Generates pseudo random number to create uniq strings.
 if [[ -f  /proc/sys/kernel/random/uuid ]] ; then
@@ -606,8 +606,9 @@ else
 	stime="$(echo "${sti:7:4}"|rev)" 
 fi
 oned="$(date +%s)" 
-onedi="${oned: -1}" 
-stime="${onedi}${stime}"
+oneda="${oned: -1}" 
+stime="${oneda}${stime}"
+## OPTION STATUS: TESTING
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [WHAT (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied.  USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual install customname` will install the installation in customname with wget.  While `setupTermuxArch.sh wget refresh customname` will refresh this installation with wget.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT fully implemented yet.    
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  
 if [[ -z "${1:-}" ]] ; then
@@ -624,7 +625,6 @@ elif [[ "${args:0:1}" = . ]] ; then
 ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
 # elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
 elif [[ "${args}" = *.tar.gz* ]] ; then
-# elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
 	echo
 	echo Setting mode to copy.
 	lcc="1"
@@ -742,4 +742,4 @@ else
 	printusage
 fi
 
-## EOF
+### EOF
