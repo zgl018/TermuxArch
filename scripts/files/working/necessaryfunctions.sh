@@ -8,12 +8,12 @@
 addfbinds() { ## Checks if system files exist and makes adjustments.
 #	# Checks if files exist and are zero size.
  	if [[ -f /proc/ashmem ]] ; then
- 		if [[ ! $(head /proc/ashmem ) ]] ; then
+ 		if [[ ! "$(head /proc/ashmem)" ]] ; then
 	 		: # addfbindashmem 
 	 	fi
 	fi
  	if [[ -f /proc/stat ]] ; then
- 		if [[ ! $(head /proc/stat ) ]] ; then
+ 		if [[ ! "$(head /proc/stat)" ]] ; then
 	 		addfbindprocstat
 		fi
 	fi
@@ -140,7 +140,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id0440"
+versionid="v1.6 id3977"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -189,7 +189,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id0440"
+versionid="v1.6 id3977"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -206,7 +206,7 @@ makestartbin() {
 	################################################################################
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id0440"
+versionid="v1.6 id3977"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -388,7 +388,7 @@ setlocale() {
 	echo LANG="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	echo LANGUAGE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	if [[ -e etc/locale.gen ]]; then
-		sed -i "/\\#"$_LANGUAGE".UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 
+		sed -i "/\\#$_LANGUAGE.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 
 	else
 		cat >  etc/locale.gen <<- EOM
 		$_LANGUAGE.UTF-8 UTF-8 

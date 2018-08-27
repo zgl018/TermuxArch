@@ -145,11 +145,13 @@ edq2() {
 }
 
 nanoif() {
-	if [[ ! -x "$(command -v nano)" ]];then
-		apin nano 
-		if [[ ! -x "$(command -v nano)" ]];then
-			pe
-		fi
+	if [[ ! -x "$PREFIX"/bin/nano ]] ; then
+		apt -o APT::Keep-Downloaded-Packages="true" install "nano" -y
+		if [[ ! -x "$PREFIX"/bin/nano ]] ; then
+				printf "\\n\\e[7;1;31m%s\\e[0;1;32m %s\\n\\n\\e[0m" "PREREQUISITE EXCEPTION!" "RUN ${0##*/} $args AGAIN…"
+				printf "\\e]2;%s %s\\007" "RUN ${0##*/} $args" "AGAIN…"
+				exit
+ 		fi
 	fi
 }
 
@@ -209,7 +211,7 @@ spinner() { # Based on https://github.com/ringohub/sh-spinner
 	while true ; do
 		jobs %1 > /dev/null 2>&1
 		[[ "$?" = 0 ]] || {
-		printf " %s %s\\e[1;34m:\\e[1;32m %s\\e[?25h\\e[0m\\n\\n" "✓" "$task" "DONE                              "
+		printf " %s %s\\e[1;34m:\\e[1;32m %s\\e[?25h\\e[0m\\n\\n" "✓" "$task" "DONE                                "
 		break
 		}
 		for (( i=0; i<${#SPINNER}; i++ )) ; do
@@ -219,4 +221,4 @@ spinner() { # Based on https://github.com/ringohub/sh-spinner
 	done
 }
 
-# EOF
+## EOF

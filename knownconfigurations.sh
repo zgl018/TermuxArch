@@ -70,9 +70,9 @@ if [[ "$koe" ]]; then
 	prootstmnt+="--kill-on-exit "
 fi
 prootstmnt+="--link2symlink -0 -r $installdir "
-if [ -n "$(ls -A ${installdir}/var/binds/*.prs)" ]; then
-    for f in ${installdir}/var/binds/*.prs ; do
-      . $f
+if [ -n "$(ls -A "$installdir"/var/binds/*.prs)" ]; then
+    for f in "$installdir"/var/binds/*.prs ; do
+      . "$f"
     done
 fi
 prootstmnt+="-b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ -w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
