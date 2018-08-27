@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id482582334414"
+versionid="gen.v1.6 id869864699645"
 
 ## Init Functions ###################################################################################################################################
 
@@ -104,7 +104,7 @@ chkself() {
 	if [[ -f "setupTermuxArch.tmp" ]] ; then
 		if [[ "$(<setupTermuxArch.sh)" != "$(<setupTermuxArch.tmp)" ]] ; then
 			cp setupTermuxArch.sh "${wdir}setupTermuxArch.sh"
-			printf "\\e[0;32m%s\\e[1;34m: \\e[1;32mUPDATED\\n\\e[1;32mRESTARTED\\e[1;34m: %s %s \\n\\e[0m"  "${0##*/}" "${0##*/}" "$args"
+			printf "\\e[0;32m%s\\e[1;34m: \\e[1;32mUPDATED\\n\\e[1;32mRESTARTED\\e[1;34m: \\e[0;32m%s %s \\n\\e[0m"  "${0##*/}" "${0##*/}" "$args"
 			.  "${wdir}setupTermuxArch.sh" "$@"
 		fi
 	fi
@@ -212,7 +212,7 @@ dwnl() {
 	else
 		curl "$dmverbose" -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.sha512 -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.tar.gz
 	fi
-	printf "\\n\\e[1;33m"
+	printf "\\n\\e[1;32m"
 }
 
 finishe() { # Run on exit.
