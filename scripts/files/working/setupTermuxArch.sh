@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id3977"
+versionid="v1.6 id4978"
 
 ## Init Functions ############################################################## ####################################################################
 
@@ -215,34 +215,6 @@ dwnl() {
 	printf "\\n\\e[1;32m"
 }
 
-trapexit() { # Run on exit.
-  	printf "\\a\\a\\a\\a"
-	sleep 0.4
-	rm -rf "$tampdir"
- 	printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
-	printf '\033]2; %s: %s \007' "${0##*/} $args" "DONE 🏁"
-	printf "\\e[?25h\\e[0m"
-	set +Eeuo pipefail 
-}
-
-traperror() { # Run on script signal.
-	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Script signal $? generated!\\e[0m\\n"
-	rm -rf "$tampdir"
- 	exit 
-}
-
-trapsignal() { # Run on signal.
-	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Signal $? received!\\e[0m\\n"
-	rm -rf "$tampdir"
- 	exit 
-}
-
-trapquit() { # Run on quit.
-	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Quit signal $? received!\\e[0m\\n"
-	rm -rf "$tampdir"
- 	exit 
-}
-
 intro() {
 	printf '\033]2;  bash setupTermuxArch.sh $@ 📲 \007'
 	rootdirexception 
@@ -366,7 +338,6 @@ opt2() {
 		echo Setting mode to manual.
 		opt=manual
  		opt3 "$@"  
-		intro "$@"  
 	elif [[ "$2" = [Rr]* ]] ; then
 		echo Setting mode to refresh.
 		shift
@@ -381,10 +352,12 @@ opt3() {
 	if [[ -z "${3:-}" ]] ; then
 		shift
 		arg2dir "$@" 
+		intro "$@"  
 	elif [[ "$3" = [Ii]* ]] ; then
 		echo Setting mode to install.
 		shift 2 
 		arg2dir "$@" 
+		intro "$@"  
 	elif [[ "$3" = [Rr]* ]] ; then
 		echo Setting mode to refresh.
 		shift 2 
@@ -393,6 +366,7 @@ opt3() {
 	else
 		shift 
 		arg2dir "$@" 
+		intro "$@"  
 	fi
 }
 
@@ -535,6 +509,34 @@ standardid() {
 	introstndid="$1" 
 	introstndidstmt="$(printf "%s \\e[0;32m%s" "$1 the TermuxArch files in" "$installdir")" 
 	introstnd
+}
+
+trapexit() { # Run on exit.
+  	printf "\\a\\a\\a\\a"
+	sleep 0.4
+	rm -rf "$tampdir"
+ 	printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
+	printf '\033]2; %s: %s \007' "${0##*/} $args" "DONE 🏁"
+	printf "\\e[?25h\\e[0m"
+	set +Eeuo pipefail 
+}
+
+traperror() { # Run on script signal.
+	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Script signal $? generated!\\e[0m\\n"
+	rm -rf "$tampdir"
+ 	exit 
+}
+
+trapsignal() { # Run on signal.
+	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Signal $? received!\\e[0m\\n"
+	rm -rf "$tampdir"
+ 	exit 
+}
+
+trapquit() { # Run on quit.
+	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Quit signal $? received!\\e[0m\\n"
+	rm -rf "$tampdir"
+ 	exit 
 }
 
 wgetif() {
