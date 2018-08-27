@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id5732"
+versionid="v1.6 id8449"
 
 ## Init Functions ###################################################################################################################################
 
@@ -104,7 +104,7 @@ chkself() {
 	if [[ -f "setupTermuxArch.tmp" ]] ; then
 		if [[ "$(<setupTermuxArch.sh)" != "$(<setupTermuxArch.tmp)" ]] ; then
 			cp setupTermuxArch.sh "${wdir}setupTermuxArch.sh"
-			printf "\\e[0;32m%s\\e[1;34m: \\e[1;32mUPDATED\\n\\e[1;32mRESTARTED %s %s \\n\\e[0m"  "${0##*/}" "${0##*/}" "$@"
+			printf "\\e[0;32m%s\\e[1;34m: \\e[1;32mUPDATED\\n\\e[1;32mRESTARTED\\e[1;34m: \\e[0;32m%s %s \\n\\e[0m"  "${0##*/}" "${0##*/}" "$args"
 			.  "${wdir}setupTermuxArch.sh" "$@"
 		fi
 	fi
@@ -212,7 +212,7 @@ dwnl() {
 	else
 		curl "$dmverbose" -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.sha512 -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.tar.gz
 	fi
-	printf "\\n\\e[1;33m"
+	printf "\\n\\e[1;32m"
 }
 
 finishe() { # Run on exit.
@@ -224,19 +224,19 @@ finishe() { # Run on exit.
 }
 
 finisher() { # Run on script signal.
-	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch warning:  Script signal $? generated!\\e[0m\\n"
+	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Script signal $? generated!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 
 }
 
 finishs() { # Run on signal.
-	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch warning:  Signal $? received!\\e[0m\\n"
+	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Signal $? received!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 
 }
 
 finishq() { # Run on quit.
-	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch warning:  Quit signal $? received!\\e[0m\\n"
+	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Quit signal $? received!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 
 }
@@ -568,7 +568,7 @@ declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
-declare dfl="" # Used for development.  
+declare dfl=""	## Used for development.  
 declare dm="wget"	## download manager
 declare dmverbose="-q"	## -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
