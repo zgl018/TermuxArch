@@ -8,9 +8,9 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id8449"
+versionid="v1.6 id7181"
 
-## Init Functions ###################################################################################################################################
+## Init Functions ############################################################## ####################################################################
 
 aria2cif() { 
 	dm=aria2c
@@ -166,7 +166,7 @@ depends() { # Checks for missing commands.
 #	# Installs missing commands.  
 	tapin "$aptin"
 #	# Checks whether install missing commands was successful.  
-# 	pe "$apton"
+# 	pechk "$apton"
 	echo
 	echo "Using ${dm:-curl} to manage downloads." 
 	printf "\\n\\e[0;34m 🕛 > 🕧 \\e[1;34mPrerequisites: \\e[1;32mOK  \\e[1;34mDownloading TermuxArch…\\n\\n\\e[0;32m"
@@ -215,27 +215,29 @@ dwnl() {
 	printf "\\n\\e[1;32m"
 }
 
-finishe() { # Run on exit.
-#	echo "Exit Code $?"
+trapexit() { # Run on exit.
+  	printf "\\a\\a\\a\\a"
+	sleep 0.4
 	rm -rf "$tampdir"
+ 	printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
+	printf '\033]2; %s: %s \007' "${0##*/} $args" "DONE 🏁"
 	printf "\\e[?25h\\e[0m"
 	set +Eeuo pipefail 
-  	printtail "$args"  
 }
 
-finisher() { # Run on script signal.
+traperror() { # Run on script signal.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Script signal $? generated!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 
 }
 
-finishs() { # Run on signal.
+trapsignal() { # Run on signal.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Signal $? received!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 
 }
 
-finishq() { # Run on quit.
+trapquit() { # Run on quit.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Quit signal $? received!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 
@@ -395,12 +397,12 @@ opt3() {
 }
 
 pe() {
-	printf "\\n\\e[1;31mPrerequisites exception.  Run the script again…\\n\\n\\e[0m"
-	printf '\033]2; Run `bash setupTermuxArch.sh %s` again…\007' "$args" 
+	printf "\\n\\e[7;1;31m%s\\e[0;1;32m %s\\n\\n\\e[0m" "PREREQUISITE EXCEPTION!" "RUN ${0##*/} $args AGAIN…"
+	printf "\\e]2;%s %s\\007" "RUN ${0##*/} $args" "AGAIN…"
 	exit
 }
 
-pec() {
+pechk() {
 	if [[ "$apton" != "" ]] ; then
 		pe @apton
 	fi
@@ -428,13 +430,6 @@ printsha512syschker() {
 	printf "\\n\\e[07;1m\\e[31;1m\\n%s \\e[34;1m\\e[30;1m%s \\n\\e[0;0m\\n" " 🔆 WARNING sha512sum mismatch!  Setup initialization mismatch!" "  Try again, initialization was not successful this time.  Wait a little while.  Then run \`bash setupTermuxArch.sh\` again…"
 	printf '\033]2; Run `bash setupTermuxArch.sh %s` again…\007' "$args" 
 	exit 
-}
-
-printtail() {   
- 	printf "\\a\\a\\a\\a"
-	sleep 0.4
- 	printf "\\a\\n\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁 "
-	printf '\033]2; %s: DONE 🏁 \007' "${0##*/} $args"
 }
 
 printusage() {
@@ -581,10 +576,10 @@ declare wdir="$PWD/"
 declare sti=""		## Generates pseudo random number.
 declare stime=""	## Generates pseudo random number.
 declare tm=""		## tar manager
-trap finishe EXIT
-trap finisher ERR 
-trap finishs INT TERM 
-trap finishq QUIT 
+trap traperror ERR 
+trap trapexit EXIT
+trap trapsignal INT TERM 
+trap trapquit QUIT 
 if [[ -z "${tampdir:-}" ]] ; then
 	tampdir=""
 fi
