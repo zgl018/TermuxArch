@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id6778"
+versionid="v1.6 id0216"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -105,7 +105,7 @@ chkself() {
 	if [[ -f "setupTermuxArch.tmp" ]] ; then
 		if [[ "$(<setupTermuxArch.sh)" != "$(<setupTermuxArch.tmp)" ]] ; then
 			cp setupTermuxArch.sh "${wdir}setupTermuxArch.sh"
-			printf "\\e[0;32m%s\\e[1;34m: \\e[1;32mUPDATED\\n\\e[1;32mRESTART\\e[1;34m: \\e[0;32m%s %s \\n\\e[0m"  "${0##*/}" "${0##*/}" "$args"
+			printf "\\e[0;32m%s\\e[1;34m: \\e[1;32mUPDATED\\n\\e[1;32mRESTART\\e[1;34m: \\e[0;32m%s %s \\n\\n\\e[0m"  "${0##*/}" "${0##*/}" "$args"
 			exit 231
 # 			.  "${wdir}setupTermuxArch.sh" "$@"
 		fi
@@ -333,6 +333,8 @@ opt2() {
 		introbloom "$@"  
 	elif [[ "$2" = [Dd]* ]] || [[ "$2" = [Ss]* ]] ; then
 		echo Setting mode to sysinfo.
+		shift
+		arg2dir "$@" 
 		introsysinfo "$@"  
 	elif [[ "$2" = [Ii]* ]] ; then
 		echo Setting mode to install.
@@ -535,7 +537,7 @@ standardid() {
 
 traperror() { # Run on script signal.
 	local rv="$?"
-	printf "\\n\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Generated script signal $rv at or near line ${1:-unknown} by ${2:-command}!\\e[0m\\n"
+	printf "\\e[?25h\\n\\e[1;48;5;138m%s\\e[0m\\n\\n" "TermuxArch WARNING:  Generated script signal ${rv:-unknown} near or at line number ${1:-unknown} by \`${2:-command}\`!"
 	exit 201
 }
 
@@ -619,7 +621,7 @@ fi
 setrootdir
 commandif="$(command -v getprop)" ||:
 if [[ "$commandif" = "" ]] ; then
-	printf "\\n%s \\n\\n" "WARNING: Run \`bash setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook."
+	printf "\\n\\e[1;48;5;138m%s\\e[0m\\n\\n" "WARNING: Run \`bash setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook."
 	exit
 fi
 ## Gets information about device cpu using getprop.
@@ -669,6 +671,8 @@ elif [[ "${1//-}" = [Aa][Xx][Dd]* ]] || [[ "${1//-}" = [Aa][Xx][Ss]* ]] ; then
 	echo
 	echo Getting device system information with \`axel\`.
 	dm=axel
+	shift
+	arg2dir "$@" 
 	introsysinfo "$@" 
 ## [axel installdir|axi installdir]  Install Arch Linux with `axel`.
 elif [[ "${1//-}" = [Aa][Xx]* ]] || [[ "${1//-}" = [Aa][Xx][Ii]* ]] ; then
@@ -682,6 +686,8 @@ elif [[ "${1//-}" = [Aa][Dd]* ]] || [[ "${1//-}" = [Aa][Ss]* ]] ; then
 	echo
 	echo Getting device system information with \`aria2c\`.
 	dm=aria2c
+	shift
+	arg2dir "$@" 
 	introsysinfo "$@" 
 ## [aria2c installdir|ai installdir]  Install Arch Linux with `aria2c`.
 elif [[ "${1//-}" = [Aa]* ]] ; then
@@ -700,6 +706,8 @@ elif [[ "${1//-}" = [Cc][Dd]* ]] || [[ "${1//-}" = [Cc][Ss]* ]] ; then
 	echo
 	echo Getting device system information with \`curl\`.
 	dm=curl
+	shift
+	arg2dir "$@" 
 	introsysinfo "$@" 
 ## [curl installdir|ci installdir]  Install Arch Linux with `curl`.
 elif [[ "${1//-}" = [Cc][Ii]* ]] || [[ "${1//-}" = [Cc]* ]] ; then
@@ -712,6 +720,8 @@ elif [[ "${1//-}" = [Cc][Ii]* ]] || [[ "${1//-}" = [Cc]* ]] ; then
 elif [[ "${1//-}" = [Dd]* ]] || [[ "${1//-}" = [Ss]* ]] ; then
 	echo 
 	echo Setting mode to sysinfo.
+	shift
+	arg2dir "$@" 
 	introsysinfo "$@" 
 ## [help|??]  Display terse builtin help.
 elif [[ "${1//-}" = [Hh][Ee]* ]] || [[ "${1//-}" = [??]* ]] ; then
@@ -731,6 +741,8 @@ elif [[ "${1//-}" = [Ll][Dd]* ]] || [[ "${1//-}" = [Ll][Ss]* ]] ; then
 	echo
 	echo Getting device system information with \`lftp\`.
 	dm=lftp
+	shift
+	arg2dir "$@" 
 	introsysinfo "$@" 
 ## [lftp installdir|li installdir]  Install Arch Linux with `lftp`.
 elif [[ "${1//-}" = [Ll]* ]] ; then
@@ -769,6 +781,8 @@ elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
 	echo
 	echo Getting device system information with \`wget\`.
 	dm=wget
+	shift
+	arg2dir "$@" 
 	introsysinfo "$@" 
 ## [wget installdir|wi installdir]  Install Arch Linux with `wget`.
 elif [[ "${1//-}" = [Ww]* ]] ; then
