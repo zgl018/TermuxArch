@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id3118"
+versionid="v1.6 id1189"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -521,10 +521,10 @@ trapexit() { # Run on exit.
 	sleep 0.4
 	rm -rf "$tampdir"
 	if [[ "$rv" = 0 ]] ; then
-		printf "\\a\\e[0;32m%s %s\\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
+		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
 		printf "\\e]2; %s: %s \007" "${0##*/} $args" "DONE 🏁"
 	else
-		printf "\\a\\e[0;32m%s %s\\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s %s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "(Code $rv)" "DONE 🏁"
+		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s %s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "(Return Value $rv)" "DONE 🏁"
 		printf "\033]2; %s: %s %s \007" "${0##*/} $args" "(Code $rv)" "DONE 🏁"
 	fi
 	printf "\\e[?25h\\e[0m"
