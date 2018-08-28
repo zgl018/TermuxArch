@@ -7,7 +7,8 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id2492"
+versionid="v1.6 id7674"
+
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -569,7 +570,7 @@ declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
-declare dfl="/gen"	## Used for development 
+declare dfl="/gen" # Used for development 
 declare dm="wget"	## download manager
 declare dmverbose="-q"	## -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
