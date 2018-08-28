@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id0440"
+versionid="v1.6 id2492"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -16,7 +16,8 @@ aria2cif() {
 		:
 	else
 		aptin+="aria2 "
-		apton+="proot "
+		maptin+=("aria2")
+		apton+=("aria2c")
 	fi
 }
 
@@ -43,7 +44,8 @@ axelif() {
 		:
 	else
 		aptin+="axel "
-		apton+="proot "
+		maptin+=("axel")
+		apton+=("axel")
 	fi
 }
 
@@ -59,7 +61,8 @@ bsdtarif() {
 		:
 	else
 		aptin+="bsdtar "
-		apton+="proot "
+		maptin+=("bsdtar")
+		apton+=("bsdtar")
 	fi
 }
 
@@ -114,7 +117,8 @@ curlif() {
 		:
 	else
 		aptin+="curl "
-		apton+="proot "
+		maptin+=("curl")
+		apton+=("curl")
 	fi
 }
 
@@ -166,7 +170,7 @@ depends() { # Checks for missing commands.
 #	# Checks whether install missing commands was successful.  
 # 	pechk "$apton"
 	echo
-	echo "Using ${dm:-curl} to manage downloads." 
+	echo "Using ${dm:-wget} to manage downloads." 
 	printf "\\n\\e[0;34m 🕛 > 🕧 \\e[1;34mPrerequisites: \\e[1;32mOK  \\e[1;34mDownloading TermuxArch…\\n\\n\\e[0;32m"
 }
 
@@ -216,7 +220,7 @@ dwnl() {
 intro() {
 	printf '\033]2;  bash setupTermuxArch.sh $@ 📲 \007'
 	rootdirexception 
-	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34mTermuxArch $versionid will attempt to install Linux in \\e[0;32m$installdir\\e[1;34m.  Arch Linux in Termux PRoot will be available upon successful completion.  To run this BASH script again, use \`!!\`.  Ensure background data is not restricted.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
+	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34mTermuxArch $versionid shall attempt to install Linux in \\e[0;32m$installdir\\e[1;34m.  Arch Linux in Termux PRoot shall be available upon successful completion.  To run this BASH script again, use \`!!\`.  Ensure background data is not restricted.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
 	if [[ "$lcc" = "1" ]] ; then
 		loadimage "$@" 
@@ -235,7 +239,7 @@ introbloom() { # Bloom = `setupTermuxArch.sh manual verbose`
 
 introsysinfo() {
 	printf '\033]2;  bash setupTermuxArch.sh sysinfo 📲 \007'
-	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid will create a system information file.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
+	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid shall create a system information file.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	preptermuxarch
 	dependsblock "$@" 
 	sysinfo 
@@ -244,7 +248,7 @@ introsysinfo() {
 introrefresh() {
 	printf '\033]2;  bash setupTermuxArch.sh refresh 📲 \007'
 	rootdirexception 
-	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid will refresh your TermuxArch files in \\e[0;32m$installdir\\e[1;34m.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
+	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid shall refresh your TermuxArch files in \\e[0;32m$installdir\\e[1;34m.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
 	refreshsys "$@"
 }
@@ -252,7 +256,7 @@ introrefresh() {
 introstnd() {
 	printf '\033]2; %s\007' " bash setupTermuxArch.sh $args 📲 "
 	rootdirexception 
-	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s" " 🕛 > 🕛" "setupTermuxArch $versionid will $introstndidstmt your TermuxArch files in" "$installdir" ".  Ensure background data is not restricted.  Run " "bash setupTermuxArch.sh help" "for additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
+	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s" " 🕛 > 🕛" "setupTermuxArch $versionid shall $introstndidstmt your TermuxArch files in" "$installdir" ".  Ensure background data is not restricted.  Run " "bash setupTermuxArch.sh help" "for additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 }
 
 introstndidstmt() { # depends $introstndid
@@ -265,7 +269,8 @@ lftpif() {
 		:
 	else
 		aptin+="lftp "
-		apton+="proot "
+		maptin+=("lftp")
+		apton+=("lftp")
 	fi
 }
 
@@ -384,7 +389,7 @@ preptmpdir() {
 	mkdir -p "$installdir/tmp"
 	chmod 777 "$installdir/tmp"
 	chmod +t "$installdir/tmp"
- 	tampdir="$installdir/tmp/setupTermuxArch$stime"
+ 	tampdir="$installdir/tmp/setupTermuxArch$$"
 	mkdir -p "$tampdir" 
 }
 
@@ -395,7 +400,7 @@ preptermuxarch() {
 }
 
 printconfloaded() {
-	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;32m%s \\e[1;34m%s \\e[1;32m%s\\n" " 🕛 > 🕑" "TermuxArch configuration" "${wdir}" "setupTermuxArchConfigs.sh" "loaded:" "OK"
+	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;32m%s \\e[1;34m%s \\e[1;32m%s\\n" " 🕛 > 🕑" "TermuxArch configuration" "$wdir" "setupTermuxArchConfigs.sh" "loaded:" "OK"
 }
 
 printsha512syschker() {
@@ -405,15 +410,25 @@ printsha512syschker() {
 }
 
 printusage() {
-	printf "\\n\\n\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\n\\n%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s\\n" "Usage information for" "setupTermuxArch.sh" "$versionid.  Arguments can abbreviated to one, two and three letters each; Two letter arguments are acceptable.  For example," "bash setupTermuxArch.sh cs" "will use" "curl" "to download TermuxArch and produce a" "setupTermuxArchSysInfo$stime.log" "system information file." "User configurable variables are in" "setupTermuxArchConfigs.sh" ".  To create this file from" "kownconfigurations.sh" "in the working directory, run" "bash setupTermuxArch.sh manual" "to create and edit" "setupTermuxArchConfigs.sh" "." 
-	printf "\\n\\e[1;33m%s\\e[1;34m     %s \\e[0;32m%s \\e[1;34m%s\\n" "HELP" "Use" "setupTermuxArch.sh help" "to output this help screen." 
-	printf "\\n\\e[1;33m%s\\e[1;34m  %s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s\\n" "INSTALL" "Run" "./setupTermuxArch.sh" "without arguments in a bash shell to install Arch Linux in Termux.  Use" "bash setupTermuxArch.sh curl" "to envoke" "curl" "as the download manager.  Copy" "knownconfigurations.sh" "to" "setupTermuxArchConfigs.sh" "with" "bash setupTermuxArch.sh manual" "to edit preferred mirror site and to access more options.  After editing" "setupTermuxArchConfigs.sh" ", run" "bash setupTermuxArch.sh" "and" "setupTermuxArchConfigs.sh" "loads automatically from the working directory.  Change mirror to desired geographic location to resolve download errors." 
-# 	printf "\\n\\e[1;33m%s\\e[1;34m     %s \\e[0;32m%s \\e[1;34m%s\\n" "PURGE" "Use" "setupTermuxArch.sh purge" "to uninstall Arch Linux from Termux." 
-	printf "\\n\\e[1;33m%s\\e[1;34m    %s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\n" "SYSINFO" "Use" "setupTermuxArch.sh sysinfo" "to create" "setupTermuxArchSysInfo$stime.log" "and populate it with system information.  Post it along with detailed information at" "https://github.com/sdrausty/TermuxArch/issues" ".  If screenshots will help in resolving an issue better, include these along with information from the system information log file in a post as well." 
+	printf "\\n\\e[1;33m%s     \\e[0;32m%s \\e[1;34m%s\\n" "HELP" "${0##*/} help" "shall output this help screen." 
+	printf "\\n\\e[1;33m%s    \\e[0;32m%s \\e[1;34m%s\\n" "TERSE" "${0##*/} he[lp]" "shall output the terse help screen." 
+	printf "\\n\\e[1;33m%s  \\e[0;32m%s \\e[1;34m%s\\n" "VERBOSE" "${0##*/} h" "shall output the verbose help screen." 
+	printf "\\n\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\n\\n%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s\\n" "Usage information for" "${0##*/}" "$versionid.  Arguments can abbreviated to one, two and three letters each; Two letter arguments are acceptable.  For example," "bash ${0##*/} cs" "shall use" "curl" "to download TermuxArch and produce a" "setupTermuxArchSysInfo$stime.log" "system information file." "User configurable variables are in" "setupTermuxArchConfigs.sh" ".  To create this file from" "kownconfigurations.sh" "in the working directory, run" "bash ${0##*/} manual" "to create and edit" "setupTermuxArchConfigs.sh" "." 
+	printf "\\n\\e[1;33m%s\\e[1;34m  %s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s\\n" "INSTALL" "Run" "./${0##*/}" "without arguments in a bash shell to install Arch Linux in Termux.  " "bash ${0##*/} curl" "shall envoke" "curl" "as the download manager.  Copy" "knownconfigurations.sh" "to" "setupTermuxArchConfigs.sh" "with" "bash ${0##*/} manual" "to edit preferred mirror site and to access more options.  After editing" "setupTermuxArchConfigs.sh" ", run" "bash ${0##*/}" "and" "setupTermuxArchConfigs.sh" "loads automatically from the working directory.  Change mirror to desired geographic location to resolve download errors." 
+ 	printf "\\n\\e[1;33m%s    \\e[0;32m%s \\e[1;34m%s\\n" "PURGE" "${0##*/} purge" "shall uninstall Arch Linux from Termux." 
+	printf "\\n\\e[1;33m%s  \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[1;32m\\n\\n" "SYSINFO" "${0##*/} sysinfo" "shall create" "setupTermuxArchSysInfo$stime.log" "and populate it with system information.  Post this file along with detailed information at" "https://github.com/sdrausty/TermuxArch/issues" ".  If screenshots will help in resolving an issue better, include these along with information from the system information log file in a post as well." 
+	if [[ "$lcc" = 1 ]] ; then
+	tail -n 142 "${0##*/}" 
+	printf "\\n" 
+	fi
  	namestartarch 
 	if [[ -x "$(command -v "$startbin")" ]] ; then
-		"$startbin" help 2>/dev/null
+		printf "\\n" 
+		echo "$startbin" help 
+		"$startbin" help 
 	fi
+	((1/0))
+	. foo
 }
 
 prootif() {
@@ -421,7 +436,8 @@ prootif() {
 		:
 	else
 		aptin+="proot "
-		apton+="proot "
+		maptin+=("proot")
+		apton+=("proot")
 	fi
 }
 
@@ -509,20 +525,27 @@ standardid() {
 	introstnd
 }
 
+traperror() { # Run on script signal.
+	local rv="$1"
+	printf "\\n\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Script signal $rv generated!\\e[0m\\n"
+	rm -rf "$tampdir"
+	exit 
+}
+
 trapexit() { # Run on exit.
+	local rv="$1"
   	printf "\\a\\a\\a\\a"
 	sleep 0.4
 	rm -rf "$tampdir"
- 	printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
-	printf '\033]2; %s: %s \007' "${0##*/} $args" "DONE 🏁"
+	if [[ "$rv" = 0 ]] ; then
+		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
+		printf "\\e]2; %s: %s \007" "${0##*/} $args" "DONE 🏁"
+	else
+		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s %s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "(Exit Signal $rv)" "DONE 🏁"
+		printf "\033]2; %s: %s %s \007" "${0##*/} $args" "(Exit Signal $rv)" "DONE 🏁"
+	fi
 	printf "\\e[?25h\\e[0m"
 	set +Eeuo pipefail 
-}
-
-traperror() { # Run on script signal.
-	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Script signal $? generated!\\e[0m\\n"
-	rm -rf "$tampdir"
- 	exit 
 }
 
 trapsignal() { # Run on signal.
@@ -541,7 +564,8 @@ wgetif() {
 	dm=wget 
 	if [[ ! -x "$PREFIX"/bin/wget ]] ; then
 		aptin+="wget "
-		apton+="wget "
+		maptin+=("wget")
+		apton+=("wget")
 	fi
 }
 
@@ -552,7 +576,7 @@ wgetifdm() {
 }
 
 ## User Information: 
-## Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is simple.  `bash setupTermuxArch.sh manual` will create `setupTermuxArchConfigs.sh` in the working directory for editing; See `setupTermuxArch.sh help` for more information.  
+## Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is simple.  `bash setupTermuxArch.sh manual` shall create `setupTermuxArchConfigs.sh` in the working directory for editing; See `setupTermuxArch.sh help` for more information.  
 declare -a args="$@"
 declare aptin=""	## apt string
 declare apton=""	## exception string
@@ -563,7 +587,7 @@ declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
-declare dfl="/gen" # Used for development 
+declare dfl="/gen"	## Used for development 
 declare dm="wget"	## download manager
 declare dmverbose="-q"	## -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
@@ -602,9 +626,10 @@ else
 fi
 oned="$(date +%s)" 
 oneda="${oned: -1}" 
-stime="${oneda}${stime}"
-## OPTION STATUS: TESTING
-## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [WHAT (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied.  USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual install customname` will install the installation in customname with wget.  While `setupTermuxArch.sh wget refresh customname` will refresh this installation with wget.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT fully implemented yet.    
+stime="$oneda$stime"
+## OPTIONS STATUS: UNDERGOING TESTING;  Compound options are still under development.  USE WITH CAUTION!  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT yet fully implemented.   
+## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [~/|./|/absolute/path/]systemimage.tar.gz [WHERE]`.  
+## EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [WHAT (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied.  USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` shall use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual install customname` shall install the installation in customname with wget.  While `setupTermuxArch.sh wget refresh customname` shall refresh this installation with wget. 
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  
 if [[ -z "${1:-}" ]] ; then
 	preptermuxarch 
@@ -619,7 +644,7 @@ elif [[ "${args:0:1}" = . ]] ; then
  	intro "$@" 
 ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
 # elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
-elif [[ "${args}" = *.tar.gz* ]] ; then
+elif [[ "$args" = *.tar.gz* ]] ; then
 	echo
 	echo Setting mode to copy.
 	lcc="1"
@@ -676,7 +701,11 @@ elif [[ "${1//-}" = [Dd]* ]] || [[ "${1//-}" = [Ss]* ]] ; then
 	echo Setting mode to sysinfo.
 	introsysinfo "$@" 
 ## [help|?]  Display builtin help.
+elif [[ "${1//-}" = [Hh][Ee]* ]] || [[ "${1//-}" = [??]* ]] ; then
+	printusage
+## [help|?]  Display builtin help.
 elif [[ "${1//-}" = [Hh]* ]] || [[ "${1//-}" = [?]* ]] ; then
+	lcc="1"
 	printusage
 ## [install installdir|rootdir installdir]  Install Arch Linux in a custom directory.  Instructions: Install in userspace. $HOME is appended to installation directory. To install Arch Linux in $HOME/installdir use `bash setupTermuxArch.sh install installdir`. In bash shell use `./setupTermuxArch.sh install installdir`.  All options can be abbreviated to one or two letters.  Hence `./setupTermuxArch.sh install installdir` can be run as `./setupTermuxArch.sh i installdir` in BASH.
 elif [[ "${1//-}" = [Ii]* ]] ||  [[ "${1//-}" = [Rr][Oo]* ]] ; then
@@ -706,6 +735,8 @@ elif [[ "${1//-}" = [Mm]* ]] ; then
 	intro "$@"  
 ## [option]  Option
 elif [[ "${1//-}" = [Oo]* ]] ; then
+	echo
+	echo Setting mode to option.
 	printusage
 	opt2 "$@" 
 ## [purge |uninstall]  Remove Arch Linux.

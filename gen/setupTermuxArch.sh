@@ -2,15 +2,14 @@
 # Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
 # Hosted https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
 # https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-# https://sdrausty.github.io/TermuxArch/README for TermuxArch information. 
 ################################################################################
 IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id891783464802"
+versionid="gen.v1.6 id992714819843"
 
-## Init Functions ###################################################################################################################################
+## Init Functions ##############################################################
 
 aria2cif() { 
 	dm=aria2c
@@ -166,9 +165,9 @@ depends() { # Checks for missing commands.
 #	# Installs missing commands.  
 	tapin "$aptin"
 #	# Checks whether install missing commands was successful.  
-# 	pe "$apton"
+# 	pechk "$apton"
 	echo
-	echo "Using ${dm:-curl} to manage downloads." 
+	echo "Using ${dm:-wget} to manage downloads." 
 	printf "\\n\\e[0;34m 🕛 > 🕧 \\e[1;34mPrerequisites: \\e[1;32mOK  \\e[1;34mDownloading TermuxArch…\\n\\n\\e[0;32m"
 }
 
@@ -213,32 +212,6 @@ dwnl() {
 		curl "$dmverbose" -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.sha512 -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.tar.gz
 	fi
 	printf "\\n\\e[1;32m"
-}
-
-finishe() { # Run on exit.
-#	echo "Exit Code $?"
-	rm -rf "$tampdir"
-	printf "\\e[?25h\\e[0m"
-	set +Eeuo pipefail 
-  	printtail "$args"  
-}
-
-finisher() { # Run on script signal.
-	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Script signal $? generated!\\e[0m\\n"
-	rm -rf "$tampdir"
- 	exit 
-}
-
-finishs() { # Run on signal.
-	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Signal $? received!\\e[0m\\n"
-	rm -rf "$tampdir"
- 	exit 
-}
-
-finishq() { # Run on quit.
-	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Quit signal $? received!\\e[0m\\n"
-	rm -rf "$tampdir"
- 	exit 
 }
 
 intro() {
@@ -364,7 +337,6 @@ opt2() {
 		echo Setting mode to manual.
 		opt=manual
  		opt3 "$@"  
-		intro "$@"  
 	elif [[ "$2" = [Rr]* ]] ; then
 		echo Setting mode to refresh.
 		shift
@@ -379,10 +351,12 @@ opt3() {
 	if [[ -z "${3:-}" ]] ; then
 		shift
 		arg2dir "$@" 
+		intro "$@"  
 	elif [[ "$3" = [Ii]* ]] ; then
 		echo Setting mode to install.
 		shift 2 
 		arg2dir "$@" 
+		intro "$@"  
 	elif [[ "$3" = [Rr]* ]] ; then
 		echo Setting mode to refresh.
 		shift 2 
@@ -391,16 +365,17 @@ opt3() {
 	else
 		shift 
 		arg2dir "$@" 
+		intro "$@"  
 	fi
 }
 
 pe() {
-	printf "\\n\\e[1;31mPrerequisites exception.  Run the script again…\\n\\n\\e[0m"
-	printf '\033]2; Run `bash setupTermuxArch.sh %s` again…\007' "$args" 
+	printf "\\n\\e[7;1;31m%s\\e[0;1;32m %s\\n\\n\\e[0m" "PREREQUISITE EXCEPTION!" "RUN ${0##*/} $args AGAIN…"
+	printf "\\e]2;%s %s\\007" "RUN ${0##*/} $args" "AGAIN…"
 	exit
 }
 
-pec() {
+pechk() {
 	if [[ "$apton" != "" ]] ; then
 		pe @apton
 	fi
@@ -410,7 +385,7 @@ preptmpdir() {
 	mkdir -p "$installdir/tmp"
 	chmod 777 "$installdir/tmp"
 	chmod +t "$installdir/tmp"
- 	tampdir="$installdir/tmp/setupTermuxArch$stime"
+ 	tampdir="$installdir/tmp/setupTermuxArch$$"
 	mkdir -p "$tampdir" 
 }
 
@@ -421,20 +396,13 @@ preptermuxarch() {
 }
 
 printconfloaded() {
-	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;32m%s \\e[1;34m%s \\e[1;32m%s\\n" " 🕛 > 🕑" "TermuxArch configuration" "${wdir}" "setupTermuxArchConfigs.sh" "loaded:" "OK"
+	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;32m%s \\e[1;34m%s \\e[1;32m%s\\n" " 🕛 > 🕑" "TermuxArch configuration" "$wdir" "setupTermuxArchConfigs.sh" "loaded:" "OK"
 }
 
 printsha512syschker() {
 	printf "\\n\\e[07;1m\\e[31;1m\\n%s \\e[34;1m\\e[30;1m%s \\n\\e[0;0m\\n" " 🔆 WARNING sha512sum mismatch!  Setup initialization mismatch!" "  Try again, initialization was not successful this time.  Wait a little while.  Then run \`bash setupTermuxArch.sh\` again…"
 	printf '\033]2; Run `bash setupTermuxArch.sh %s` again…\007' "$args" 
 	exit 
-}
-
-printtail() {   
- 	printf "\\a\\a\\a\\a"
-	sleep 0.4
- 	printf "\\a\\n\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁 "
-	printf '\033]2; %s: DONE 🏁 \007' "${0##*/} $args"
 }
 
 printusage() {
@@ -447,6 +415,8 @@ printusage() {
 	if [[ -x "$(command -v "$startbin")" ]] ; then
 		"$startbin" help 2>/dev/null
 	fi
+	((1/0))
+	. foo
 }
 
 prootif() {
@@ -542,6 +512,40 @@ standardid() {
 	introstnd
 }
 
+traperror() { # Run on script signal.
+	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Script signal $? generated!\\e[0m\\n"
+	rm -rf "$tampdir"
+ 	exit 
+}
+
+trapexit() { # Run on exit.
+ 	rv=$?
+  	printf "\\a\\a\\a\\a"
+	sleep 0.4
+	rm -rf "$tampdir"
+	if [[ "$rv" = 0 ]] ; then
+		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
+		printf "\\e]2; %s: %s \007" "${0##*/} $args" "DONE 🏁"
+	else
+		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s %s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "(Return Value $rv)" "DONE 🏁"
+		printf "\033]2; %s: %s %s \007" "${0##*/} $args" "(Code $rv)" "DONE 🏁"
+	fi
+	printf "\\e[?25h\\e[0m"
+	set +Eeuo pipefail 
+}
+
+trapsignal() { # Run on signal.
+	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Signal $? received!\\e[0m\\n"
+	rm -rf "$tampdir"
+ 	exit 
+}
+
+trapquit() { # Run on quit.
+	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Quit signal $? received!\\e[0m\\n"
+	rm -rf "$tampdir"
+ 	exit 
+}
+
 wgetif() {
 	dm=wget 
 	if [[ ! -x "$PREFIX"/bin/wget ]] ; then
@@ -581,10 +585,10 @@ declare wdir="$PWD/"
 declare sti=""		## Generates pseudo random number.
 declare stime=""	## Generates pseudo random number.
 declare tm=""		## tar manager
-trap finishe EXIT
-trap finisher ERR 
-trap finishs INT TERM 
-trap finishq QUIT 
+trap traperror ERR 
+trap trapexit EXIT
+trap trapsignal INT TERM 
+trap trapquit QUIT 
 if [[ -z "${tampdir:-}" ]] ; then
 	tampdir=""
 fi
@@ -607,7 +611,7 @@ else
 fi
 oned="$(date +%s)" 
 oneda="${oned: -1}" 
-stime="${oneda}${stime}"
+stime="$oneda$stime"
 ## OPTION STATUS: TESTING
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [./|/absolute/path/]systemimage.tar.gz [WHERE]`.  EXPLAINATION: [HOW (aria2c, axel, curl, lftp and wget (default 1: available on system (default 2: curl)))]  [WHAT (install, manual, purge, refresh and sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied.  USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual install customname` will install the installation in customname with wget.  While `setupTermuxArch.sh wget refresh customname` will refresh this installation with wget.  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT fully implemented yet.    
 ## []  Run default Arch Linux install; `bash setupTermuxArch.sh help` has more information.  
@@ -624,7 +628,7 @@ elif [[ "${args:0:1}" = . ]] ; then
  	intro "$@" 
 ## A systemimage.tar.gz file can substituted for network install:  [systemimage.tar.gz [installdir]]  Install directory argument is optional. 
 # elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
-elif [[ "${args}" = *.tar.gz* ]] ; then
+elif [[ "$args" = *.tar.gz* ]] ; then
 	echo
 	echo Setting mode to copy.
 	lcc="1"

@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id7674"
+versionid="gen.v1.6 id992714819843"
 
 ## Init Functions ##############################################################
 
@@ -415,6 +415,8 @@ printusage() {
 	if [[ -x "$(command -v "$startbin")" ]] ; then
 		"$startbin" help 2>/dev/null
 	fi
+	((1/0))
+	. foo
 }
 
 prootif() {
