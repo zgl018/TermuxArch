@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id807913204171"
+versionid="gen.v1.6 id410302914978"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -431,10 +431,10 @@ printusage() {
 #	## Used to generate signals.
 #  	((1/0)) # 1
 # 	echo hello | grep "asdf" # 1
-#	format c: #127
+# 	format c: #127
 #  	. foo
 # 	 (false; echo one) | cat; echo two # 1 & 200
-#	cat
+# 	cat
 }
 
 prootif() {
@@ -533,7 +533,7 @@ standardid() {
 
 traperror() { # Run on script signal.
 	local rv="$?"
-	printf "\\n\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Generated script signal $2 at or near line ${1:-unknown}!\\e[0m\\n"
+	printf "\\n\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Generated script signal $rv at or near line ${1:-unknown} by ${2:-command}!\\e[0m\\n"
 	exit 200
 }
 
@@ -607,9 +607,9 @@ declare sti=""		## Generates pseudo random number.
 declare stime=""	## Generates pseudo random number.
 declare tm=""		## tar manager
 # trap traperror ERR 
-trap 'traperror $LINENO $?' ERR 
+trap 'traperror $LINENO $BASH_COMMAND $?' ERR 
 trap trapexit EXIT
-trap trapsignal INT TERM 
+trap trapsignal HUP INT TERM 
 trap trapquit QUIT 
 if [[ -z "${tampdir:-}" ]] ; then
 	tampdir=""
@@ -638,9 +638,9 @@ stime="$oneda$stime"
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [~/|./|/absolute/path/]systemimage.tar.gz [WHERE]`.  
 ## EXPLAINATION: [HOW (aria2c|axel|curl|lftp|wget (default 1: available on system (default 2: wget)))]  [WHAT (install|manual|purge|refresh|sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied and can be omitted.  
 ## USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` shall use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual customdir` shall attempt to install the installation in customdir with wget in manual mode.  While `setupTermuxArch.sh wget refresh customdir` shall refresh this installation with wget. 
-## #################### 
-## Option[s] Expanation
-## #################### 
+## ##################### 
+## Option[s] Explanation
+## ##################### 
 ## []  Run default Arch Linux install. 
 if [[ -z "${1:-}" ]] ; then
 	preptermuxarch 

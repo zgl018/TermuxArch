@@ -140,7 +140,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id807913204171"
+versionid="gen.v1.6 id410302914978"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -189,7 +189,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id807913204171"
+versionid="gen.v1.6 id410302914978"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -206,7 +206,7 @@ makestartbin() {
 	################################################################################
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id807913204171"
+versionid="gen.v1.6 id410302914978"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -350,8 +350,8 @@ preproot() {
 	 		proot --link2symlink -0 "$PREFIX"/bin/applets/tar -xpf "$file" 
 		fi
 	else
-		printf "\\n\\n\\e[1;31m%s \\e[0;32m%s \\e[1;31m%s \\n" "Download Exception!  Execute" "bash setupTermuxArch.sh $args" "again…"
-		printf "\\e]2;%s\\007" "Execute `bash setupTermuxArch.sh $args` again…"
+		printf "\\n\\n\\e[1;31m%s \\e[0;32m%s \\e[1;31m%s\\n\\n\\e[0m" "Download Exception!  Execute" "bash setupTermuxArch.sh $args" "again…"
+		printf "\\e]2;%s\\007" "Execute \`bash setupTermuxArch.sh $args\` again…"
 		exit
 	fi
 }
