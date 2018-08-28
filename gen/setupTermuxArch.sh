@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id830874772713"
+versionid="gen.v1.6 id931104512110"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -434,7 +434,7 @@ printusage() {
 # 	echo hello | grep "asdf" # 1
 # 	format c: #127
 #  	. foo
-# 	 (false; echo one) | cat; echo two # 1 & 200
+# 	 (false; echo one) | cat; echo two # 1 & 201
 # 	cat
 }
 

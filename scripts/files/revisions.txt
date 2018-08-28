@@ -1,1 +1,3 @@
-Help expanded.  Verbose help added.
+Traps set.
+Error codes added.
+Help expanded; Verbose help added.
