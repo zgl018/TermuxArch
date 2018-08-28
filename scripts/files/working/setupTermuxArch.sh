@@ -4,10 +4,10 @@
 # https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
 ################################################################################
 IFS=$'\n\t'
-set -Eeuo pipefail
+set -Eeuxo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id0216"
+versionid="gen.v1.6 id958757347509"
 ## Init Functions ##############################################################
 
 aria2cif() { 

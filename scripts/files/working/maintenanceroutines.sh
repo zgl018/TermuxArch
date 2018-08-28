@@ -5,11 +5,26 @@
 # https://sdrausty.github.io/TermuxArch/README has information about this project. 
 ################################################################################
 
+which getprop
+getprop gsm.sim.operator.iso-country
+
+	getpropcommandsa=("getprop gsm.sim.operator.iso-country" "getprop net.bt.name" "getprop persist.sys.locale" "getprop ro.build.target_country" "getprop ro.build.version.release" "getprop ro.build.version.sdk" "getprop ro.product.device" "getprop ro.product.first_api_level" "getprop ro.product.locale" "getprop ro.product.manufacturer" "getprop ro.product.model")
+	for i in "${!getpropcommandsa[@]}"; do
+# 		getpropcommandst+="\\e[1;32m[${getpropcommandsa[$i]}]: [${getpropcommandsa[$i]}]\\e[0;32m\\n"
+# 		getpropcommandst+="\\e[1;32m[${getpropcommandsa[$i]}]: ["$(${getpropcommandsa[$i]})"]\\e[0;32m\\n"
+which getprop
+getprop gsm.sim.operator.iso-country
+$(${getpropcommandsa[$i]})
+	done
+	getprop gsm.sim.operator.iso-country
+	printf  "$getpropcommandst" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf  "$getpropcommandst" 
+	exit
 sysinfo() {
 	spaceinfo
 	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
-	set +Ee
-	systeminfo & spinner "Generating" "System Information…" 
+# 	set +Ee
+	systeminfo # & spinner "Generating" "System Information…" 
 	set -Ee
 # 	printf "\\n\\e[1;33m"
 	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`""${wdir}setupTermuxArchSysInfo$stime.log\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
@@ -23,6 +38,7 @@ systeminfo () {
 	printf "Begin TermuxArch system information.\\n" > "${wdir}setupTermuxArchSysInfo$stime".log
  	printf "\\n\`termux-info\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
  	termux-info >> "${wdir}setupTermuxArchSysInfo$stime".log
+ 	printf "\\n\`getprop\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "\\nDisk report $usrspace on /data $(date)\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log 
 	for n in 0 1 2 3 4 5 
 	do 

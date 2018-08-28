@@ -1,0 +1,7 @@
+#!/bin/env bash
+## Declare getprops
+getpropcommandsa=("getprop gsm.sim.operator.iso-country" "getprop net.bt.name" "getprop persist.sys.locale" "getprop ro.build.target_country" "getprop ro.build.version.release" "getprop ro.build.version.sdk" "getprop ro.product.device" "getprop ro.product.first_api_level" "getprop ro.product.locale" "getprop ro.product.manufacturer" "getprop ro.product.model")
+for i in "${!getpropcommandsa[@]}"; do
+	getpropcommandst+="\\e[1;32m[${getpropcommandsa[$i]}]: [$("${getpropcommandsa[$i]}")]\\e[0;32m\\n"
+done
+printf  "$getpropcommandst"
