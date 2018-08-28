@@ -427,8 +427,9 @@ printusage() {
 		echo "$startbin" help 
 		"$startbin" help 
 	fi
-	((1/0))
-	. foo
+#	# Used to generate signals.
+# 	((1/0))
+# 	. foo
 }
 
 prootif() {
@@ -526,14 +527,14 @@ standardid() {
 }
 
 traperror() { # Run on script signal.
-	local rv="$1"
+	local rv="$?"
 	printf "\\n\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Script signal $rv generated!\\e[0m\\n"
 	rm -rf "$tampdir"
 	exit 
 }
 
 trapexit() { # Run on exit.
-	local rv="$1"
+	local rv="$?"
   	printf "\\a\\a\\a\\a"
 	sleep 0.4
 	rm -rf "$tampdir"
@@ -546,6 +547,7 @@ trapexit() { # Run on exit.
 	fi
 	printf "\\e[?25h\\e[0m"
 	set +Eeuo pipefail 
+	exit
 }
 
 trapsignal() { # Run on signal.
