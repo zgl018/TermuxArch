@@ -159,7 +159,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="v1.6 id0504"
+versionid="gen.v1.6 id033228074194"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -423,7 +423,7 @@ addkeys() {
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
 	declare -a keyrings
-versionid="v1.6 id0504"
+versionid="gen.v1.6 id033228074194"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -523,7 +523,7 @@ addpc() { # pacman install packages shortcut
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
 	declare -g args="\$@"
-versionid="v1.6 id0504"
+versionid="gen.v1.6 id033228074194"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -584,7 +584,7 @@ addpci() { # system update with pacman install packages shortcut
 	set -Eeuo pipefail 
 	shopt -s nullglob globstar
 	declare args="\$@"
-versionid="v1.6 id0504"
+versionid="gen.v1.6 id033228074194"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -716,7 +716,7 @@ addtour() {
 	sleep 4
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mcat \$HOME/bin/pci\e[1;37m\n\n"
 	cat \$HOME/bin/pci
-	printf "\n\e[1;32m==> \e[1;37mShort tour is complete; Run this script again at a later time, and it might be surprising at how this environment changes over time.  If you are new to *nix, see http://tldp.org for documentation.  \e[1;34mIRC:  \e[0mhttps://wiki.archlinux.org/index.php/IRC_channel\n\n"
+	printf "\\e[1;32m\\n%s \\e[38;5;121m%s \\n\\n\\e[4;38;5;129m%s\\e[0m\\n\\n\\e[1;34m%s \\e[38;5;135m%s\\e[0m\\n\\n" "==>" "Short tour is complete; Scroll up if you wish to study the output.  Run this script again at a later time, and it might be surprising at how this environment changes over time. " "If you are new to *nix, http://tldp.org has documentation." "IRC: " "https://wiki.archlinux.org/index.php/IRC_channel"
 	EOM
 	chmod 770 root/bin/tour 
 }
