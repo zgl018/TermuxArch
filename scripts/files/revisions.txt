@@ -1,3 +1,4 @@
 Traps set.
 Error codes added.
 Help expanded; Verbose help added.
+sysinfo () enchanced to accept custom directores.
