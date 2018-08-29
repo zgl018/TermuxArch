@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id293467485716"
+versionid="gen.v1.6 id831221044952"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -779,7 +779,7 @@ elif [[ "${1//-}" = [Rr][Ee]* ]] ; then
 elif [[ "${1//-}" = [Rr]* ]] ; then
 	lcr="1"
 	echo 
-	echo Setting mode to minimal refresh.
+	echo "Setting mode to minimal refresh.  Use re[fresh] for full refresh."
 	arg2dir "$@" 
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.

@@ -142,7 +142,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	printf $fileheader2 >> root/bin/ch 
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="gen.v1.6 id293467485716"
+versionid="gen.v1.6 id831221044952"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -406,7 +406,7 @@ addkeys() {
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
 	declare -a keyrings
-versionid="gen.v1.6 id293467485716"
+versionid="gen.v1.6 id831221044952"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -503,7 +503,7 @@ addpc() {
 	printf $fileheader2 >> root/bin/pc 
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="gen.v1.6 id293467485716"
+versionid="gen.v1.6 id831221044952"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -561,7 +561,7 @@ addpci() {
 	printf $fileheader2 >> root/bin/pci 
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="gen.v1.6 id293467485716"
+versionid="gen.v1.6 id831221044952"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -670,17 +670,14 @@ addtour() {
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mls -R --color=always \$HOME \e[1;37m\n\n"
 	sleep 1
 	ls -R --color=always \$HOME
-	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32msleep 4 \e[1;37m\n\n"
 	sleep 4
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mcat \$HOME/.bash_profile\e[1;37m\n\n"
 	sleep 1
 	cat \$HOME/.bash_profile
-	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32msleep 4 \e[1;37m\n\n"
 	sleep 4
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mcat \$HOME/.bashrc\e[1;37m\n\n"
 	sleep 1
 	cat \$HOME/.bashrc
-	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32msleep 4 \e[1;37m\n\n"
 	sleep 4
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mcat \$HOME/bin/pci\e[1;37m\n\n"
 	sleep 1
