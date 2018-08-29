@@ -81,6 +81,8 @@ if [[ -f /proc/stat ]] ; then
 	if [[ ! "$(head /proc/stat)" ]] ; then
 		prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
 	fi
+else
+	prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
 fi
 if [ -n "$(ls -A "$installdir"/var/binds/*.prs)" ]; then
     for f in "$installdir"/var/binds/*.prs ; do
