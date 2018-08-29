@@ -5,40 +5,35 @@
 # https://sdrausty.github.io/TermuxArch/README has information about this project. 
 ################################################################################
 
-which getprop
-getprop gsm.sim.operator.iso-country
-
-	getpropcommandsa=("getprop gsm.sim.operator.iso-country" "getprop net.bt.name" "getprop persist.sys.locale" "getprop ro.build.target_country" "getprop ro.build.version.release" "getprop ro.build.version.sdk" "getprop ro.product.device" "getprop ro.product.first_api_level" "getprop ro.product.locale" "getprop ro.product.manufacturer" "getprop ro.product.model")
-	for i in "${!getpropcommandsa[@]}"; do
-# 		getpropcommandst+="\\e[1;32m[${getpropcommandsa[$i]}]: [${getpropcommandsa[$i]}]\\e[0;32m\\n"
-# 		getpropcommandst+="\\e[1;32m[${getpropcommandsa[$i]}]: ["$(${getpropcommandsa[$i]})"]\\e[0;32m\\n"
-which getprop
-getprop gsm.sim.operator.iso-country
-$(${getpropcommandsa[$i]})
-	done
-	getprop gsm.sim.operator.iso-country
-	printf  "$getpropcommandst" >> "${wdir}setupTermuxArchSysInfo$stime".log
-	printf  "$getpropcommandst" 
-	exit
 sysinfo() {
 	spaceinfo
-	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
-# 	set +Ee
-	systeminfo # & spinner "Generating" "System Information…" 
+	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n\\n" 
+	set +Ee
+	systeminfo & spinner "Generating" "System Information…" 
 	set -Ee
-# 	printf "\\n\\e[1;33m"
-	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`""${wdir}setupTermuxArchSysInfo$stime.log\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "\\e[38;5;76m"
 	cat "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "\\n\\e[1mSubmit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve \`setupTermuxArch.sh\` along with a screenshot of the topic.  Include information about input and output.  \\n\\n"
 	exit
 }
 
 systeminfo () {
-	printf "\\n\\e[1;32m"
 	printf "Begin TermuxArch system information.\\n" > "${wdir}setupTermuxArchSysInfo$stime".log
  	printf "\\n\`termux-info\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
  	termux-info >> "${wdir}setupTermuxArchSysInfo$stime".log
  	printf "\\n\`getprop\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop gsm.sim.operator.iso-country]:" "[$(getprop gsm.sim.operator.iso-country)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop net.bt.name]:" "[$(getprop net.bt.name)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop persist.sys.locale]:" "[$(getprop persist.sys.locale)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.build.target_country]:" "[$(getprop ro.build.target_country)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.build.version.release]:" "[$(getprop ro.build.version.release)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.build.version.preview_sdk]:" "[$(getprop ro.build.version.preview_sdk)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.build.version.sdk]:" "[$(getprop ro.build.version.sdk)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.product.device]:" "[$(getprop ro.product.device)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.product.first_api_level]:" "[$(getprop ro.product.first_api_level)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.product.locale]:" "[$(getprop ro.product.locale)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.product.manufacturer]:" "[$(getprop ro.product.manufacturer)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.product.model]:" "[$(getprop ro.product.model)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "\\nDisk report $usrspace on /data $(date)\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log 
 	for n in 0 1 2 3 4 5 
 	do 
@@ -67,6 +62,7 @@ systeminfo () {
 	ls -al "$installdir" >> "${wdir}setupTermuxArchSysInfo$stime".log 2>/dev/null ||:
 	printf "\\nuname -a results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	uname -a >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`""${wdir}setupTermuxArchSysInfo$stime.log\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
 }
 
 copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`
@@ -98,9 +94,7 @@ loadimage() {
 	wakelock
 	prepinstalldir 
 	set +Ee
- 	copyimage "$@" 
-#  	copyimage "$@" & spinner "Copying" "…" 
-# 	echo $file
+  	copyimage "$@" & spinner "Copying" "…" 
 	set -Ee
 	printmd5check
 	md5check
