@@ -142,7 +142,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	printf $fileheader2 >> root/bin/ch 
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id5214"
+versionid="v1.6 id6732"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -406,7 +406,7 @@ addkeys() {
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
 	declare -a keyrings
-versionid="v1.6 id5214"
+versionid="v1.6 id6732"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -503,7 +503,7 @@ addpc() {
 	printf $fileheader2 >> root/bin/pc 
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id5214"
+versionid="v1.6 id6732"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -561,7 +561,7 @@ addpci() {
 	printf $fileheader2 >> root/bin/pci 
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id5214"
+versionid="v1.6 id6732"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -668,18 +668,19 @@ addtour() {
 	printf $fileheader2 >> root/bin/tour 
 	cat >> root/bin/tour <<- EOM
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mls -R --color=always \$HOME \e[1;37m\n\n"
+	sleep 1
 	ls -R --color=always \$HOME
-	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32msleep 4 \$HOME \e[1;37m\n\n"
 	sleep 4
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mcat \$HOME/.bash_profile\e[1;37m\n\n"
+	sleep 1
 	cat \$HOME/.bash_profile
-	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32msleep 8 \$HOME \e[1;37m\n\n"
-	sleep 8
+	sleep 4
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mcat \$HOME/.bashrc\e[1;37m\n\n"
+	sleep 1
 	cat \$HOME/.bashrc
-	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32msleep 4 \$HOME \e[1;37m\n\n"
 	sleep 4
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mcat \$HOME/bin/pci\e[1;37m\n\n"
+	sleep 1
 	cat \$HOME/bin/pci
 	printf "\\e[1;32m\\n%s \\e[38;5;121m%s \\n\\n\\e[4;38;5;129m%s\\e[0m\\n\\n\\e[1;34m%s \\e[38;5;135m%s\\e[0m\\n\\n" "==>" "Short tour is complete; Scroll up if you wish to study the output.  Run this script again at a later time, and it might be surprising at how this environment changes over time. " "If you are new to *nix, http://tldp.org has documentation." "IRC: " "https://wiki.archlinux.org/index.php/IRC_channel"
 	EOM
