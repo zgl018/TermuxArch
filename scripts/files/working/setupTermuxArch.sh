@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id031892407588"
+versionid="v1.6 id3991"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -597,7 +597,7 @@ declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
-declare dfl="/gen" # Used for development 
+declare dfl="/gen"	## Used for development 
 declare dm="wget"	## download manager
 declare dmverbose="-q"	## -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
@@ -771,9 +771,15 @@ elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	arg2dir "$@" 
 	rmarchq
 ## [refresh|refresh installdir]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
-elif [[ "${1//-}" = [Rr]* ]] ; then
+elif [[ "${1//-}" = [Rr][Ee]* ]] ; then
 	echo 
 	echo Setting mode to refresh.
+	arg2dir "$@" 
+	introrefresh "$@"  
+elif [[ "${1//-}" = [Rr]* ]] ; then
+	lcr="1"
+	echo 
+	echo Setting mode to minimal refresh.
 	arg2dir "$@" 
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.

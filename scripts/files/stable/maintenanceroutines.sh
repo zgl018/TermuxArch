@@ -7,40 +7,58 @@
 
 sysinfo() {
 	spaceinfo
-	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n" 
+	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n\\n" 
 	set +Ee
 	systeminfo & spinner "Generating" "System Information…" 
 	set -Ee
-# 	printf "\\n\\e[1;33m"
-	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`""${wdir}setupTermuxArchSysInfo$stime.log\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "\\e[38;5;76m"
 	cat "${wdir}setupTermuxArchSysInfo$stime".log
-	printf "\\n\\e[1mSubmit this information if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve \`setupTermuxArch.sh\` along with a screenshot of the topic.  Include information about input and output.  \\n\\n"
+	printf "\\n\\e[1mThis information is important if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve \`setupTermuxArch.sh\`.  Include is along with a screenshot of the topic.  Also include information about input and output.  \\n\\n"
 	exit
 }
 
 systeminfo () {
-	printf "\\n\\e[1;32m"
 	printf "Begin TermuxArch system information.\\n" > "${wdir}setupTermuxArchSysInfo$stime".log
  	printf "\\n\`termux-info\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
  	termux-info >> "${wdir}setupTermuxArchSysInfo$stime".log
-	printf "\\nDisk report $usrspace on /data $(date)\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log 
+	printf "\\ndpkg --print-architecture result:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	dpkg --print-architecture >> "${wdir}setupTermuxArchSysInfo$stime".log
+ 	printf "\\ngetprop results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop gsm.sim.operator.iso-country]:" "[$(getprop gsm.sim.operator.iso-country)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop net.bt.name]:" "[$(getprop net.bt.name)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop persist.sys.locale]:" "[$(getprop persist.sys.locale)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.build.target_country]:" "[$(getprop ro.build.target_country)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.build.version.release]:" "[$(getprop ro.build.version.release)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.build.version.preview_sdk]:" "[$(getprop ro.build.version.preview_sdk)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.build.version.sdk]:" "[$(getprop ro.build.version.sdk)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.product.device]:" "[$(getprop ro.product.device)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.product.cpu.abi]:" "[$(getprop ro.product.cpu.abi)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.product.first_api_level]:" "[$(getprop ro.product.first_api_level)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.product.locale]:" "[$(getprop ro.product.locale)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.product.manufacturer]:" "[$(getprop ro.product.manufacturer)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.product.model]:" "[$(getprop ro.product.model)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "\\nuname -a results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	uname -a >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	for n in 0 1 2 3 4 5 
 	do 
 		echo "BASH_VERSINFO[$n] = ${BASH_VERSINFO[$n]}"  >> "${wdir}setupTermuxArchSysInfo$stime".log
 	done
 	printf "\\ncat /proc/cpuinfo results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	cat /proc/cpuinfo >> "${wdir}setupTermuxArchSysInfo$stime".log
-	printf "\\ndpkg --print-architecture result:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
-	dpkg --print-architecture >> "${wdir}setupTermuxArchSysInfo$stime".log
-	printf "\\ngetprop ro.product.cpu.abi result:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
-	getprop ro.product.cpu.abi >> "${wdir}setupTermuxArchSysInfo$stime".log
-	printf "\\ngetprop ro.product.device result:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
-	getprop ro.product.device >> "${wdir}setupTermuxArchSysInfo$stime".log
-	printf "\\nDownload directory information results.\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "\\nDownload directory information results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	if [[ -d /sdcard/Download ]]; then echo "/sdcard/Download exists"; else echo "/sdcard/Download not found"; fi >> "${wdir}setupTermuxArchSysInfo$stime".log 
 	if [[ -d /storage/emulated/0/Download ]]; then echo "/storage/emulated/0/Download exists"; else echo "/storage/emulated/0/Download not found"; fi >> "${wdir}setupTermuxArchSysInfo$stime".log
 	if [[ -d "$HOME"/downloads ]]; then echo "$HOME/downloads exists"; else echo "~/downloads not found"; fi >> "${wdir}setupTermuxArchSysInfo$stime".log 
 	if [[ -d "$HOME"/storage/downloads ]]; then echo "$HOME/storage/downloads exists"; else echo "$HOME/storage/downloads not found"; fi >> "${wdir}setupTermuxArchSysInfo$stime".log 
+	printf "\\nDevice information results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	if [[ -e /dev/ashmem ]]; then echo "/dev/ashmem exists"; else echo "/dev/ashmem does not exist"; fi >> "${wdir}setupTermuxArchSysInfo$stime".log 
+	if [[ -r /dev/ashmem ]]; then echo "/dev/ashmem is readable"; else echo "/dev/ashmem is not readable"; fi >> "${wdir}setupTermuxArchSysInfo$stime".log 
+	if [[ -e /dev/shm ]]; then echo "/dev/shm exists"; else echo "/dev/shm does not exist"; fi >> "${wdir}setupTermuxArchSysInfo$stime".log 
+	if [[ -r /dev/shm ]]; then echo "/dev/shm is readable"; else echo "/dev/shm is not readable"; fi >> "${wdir}setupTermuxArchSysInfo$stime".log 
+	if [[ -e /proc/stat ]]; then echo "/proc/stat exits"; else echo "/proc/stat does not exit"; fi >> "${wdir}setupTermuxArchSysInfo$stime".log 
+	if [[ -r /proc/stat ]]; then echo "/proc/stat is readable"; else echo "/proc/stat is not readable"; fi >> "${wdir}setupTermuxArchSysInfo$stime".log 
+	printf "\\nDisk report $usrspace on /data $(date)\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log 
 	printf "\\ndf $installdir results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	df "$installdir" >> "${wdir}setupTermuxArchSysInfo$stime".log 2>/dev/null ||:
 	printf "\\ndf results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
@@ -49,8 +67,7 @@ systeminfo () {
 	du -hs "$installdir" >> "${wdir}setupTermuxArchSysInfo$stime".log 2>/dev/null ||:
 	printf "\\nls -al $installdir results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	ls -al "$installdir" >> "${wdir}setupTermuxArchSysInfo$stime".log 2>/dev/null ||:
-	printf "\\nuname -a results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
-	uname -a >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "\\nEnd \`setupTermuxArchSysInfo$stime.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`""${wdir}setupTermuxArchSysInfo$stime.log\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo$stime".log
 }
 
 copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`
@@ -82,9 +99,7 @@ loadimage() {
 	wakelock
 	prepinstalldir 
 	set +Ee
- 	copyimage "$@" 
-#  	copyimage "$@" & spinner "Copying" "…" 
-# 	echo $file
+  	copyimage "$@" & spinner "Copying" "…" 
 	set -Ee
 	printmd5check
 	md5check
@@ -110,6 +125,7 @@ refreshsys() { # Refreshes
 		printf "\\n\\e[0;33m%s\\e[1;33m%s\\e[0;33m.\\e[0m\\n" "The root directory structure is incorrect; Cannot continue " "setupTermuxArch.sh refresh"
 		exit $?
 	fi
+	cd "$installdir"
 	preprootdir
 	addREADME
 	addae
@@ -122,7 +138,7 @@ refreshsys() { # Refreshes
 	addch 
 	adddfa
 	addfbindexample
-	addfbinds
+	addbinds
 	addexd
 	addfibs
 	addga

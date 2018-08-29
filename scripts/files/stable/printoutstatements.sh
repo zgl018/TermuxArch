@@ -6,6 +6,9 @@
 # Printout statement subroutines for `setupTermuxArch.sh`.
 ################################################################################
 
+fileheader1="#!/bin/env bash\\n# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺\\n# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com\\n# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.\\n# https://sdrausty.github.io/TermuxArch/README has information about this project.\\n"
+fileheader2="################################################################################\\nIFS=$'\\\\n\\\\t'\\nset -Eeuo pipefail\\nshopt -s nullglob globstar\\n"
+
 printcontacting() {
  	printf '\033]2;  🕛 > 🕞 Contacting worldwide mirror…\007'"\033[0;34m 🕛 > 🕞 \033[1;34mContacting worldwide mirror \033[0;32m$cmirror\033[1;34m: "
 }

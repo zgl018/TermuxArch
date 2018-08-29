@@ -5,20 +5,6 @@
 # https://sdrausty.github.io/TermuxArch/README has information about this project. 
 ################################################################################
 
-addfbinds() { ## Checks if system files exist and makes adjustments.
-#	# Checks if files exist and are zero size.
- 	if [[ -f /proc/ashmem ]] ; then
- 		if [[ ! "$(head /proc/ashmem)" ]] ; then
-	 		: # addfbindashmem 
-	 	fi
-	fi
- 	if [[ -f /proc/stat ]] ; then
- 		if [[ ! "$(head /proc/stat)" ]] ; then
-	 		addfbindprocstat
-		fi
-	fi
-}
-
 callsystem() {
 	declare COUNTER=""
 	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
@@ -140,7 +126,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id0216"
+versionid="v1.6 id3991"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -152,6 +138,7 @@ versionid="v1.6 id0216"
 	if [[ -e "$HOME"/.profile ]];then
 		grep "proxy" "$HOME"/.profile | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
 	fi
+	if [[ -z "${lcr:-}" ]] ; then
  	if [[ "$cpuabi" = "$cpuabi5" ]];then
  		printf "pacman -Rc linux-armv5 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
  	elif [[ "$cpuabi" = "$cpuabi7" ]];then
@@ -171,6 +158,7 @@ versionid="v1.6 id0216"
 	else
  		printf "./root/bin/pci \\n" >> root/bin/"$binfnstp"
 	fi
+	fi
 	cat >> root/bin/"$binfnstp" <<- EOM
 	printf "\\n\\e[1;32m==> \\e[0;32m"
    	locale-gen ||:
@@ -189,7 +177,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id0216"
+versionid="v1.6 id3991"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -206,7 +194,7 @@ makestartbin() {
 	################################################################################
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="v1.6 id0216"
+versionid="v1.6 id3991"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -317,7 +305,7 @@ prepinstalldir() {
 	addch 
 	adddfa
 	addfbindexample
-	addfbinds
+	addbinds
 	addexd
 	addga
 	addgcl

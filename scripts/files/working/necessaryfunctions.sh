@@ -126,7 +126,7 @@ makefinishsetup() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id031892407588"
+versionid="v1.6 id3991"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -138,25 +138,27 @@ versionid="gen.v1.6 id031892407588"
 	if [[ -e "$HOME"/.profile ]];then
 		grep "proxy" "$HOME"/.profile | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
 	fi
-#  	if [[ "$cpuabi" = "$cpuabi5" ]];then
-#  		printf "pacman -Rc linux-armv5 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
-#  	elif [[ "$cpuabi" = "$cpuabi7" ]];then
-#  		printf "pacman -Rc linux-armv7 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
-#  	elif [[ "$cpuabi" = "$cpuabi8" ]];then
-#  		printf "pacman -Rc linux-aarch64 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
-#  	fi
-# 	if [[ "$cpuabi" = "$cpuabix86" ]];then
-# 		printf "./root/bin/keys x86\\n" >> root/bin/"$binfnstp"
-# 	elif [[ "$cpuabi" = "$cpuabix86_64" ]];then
-# 		printf "./root/bin/keys x86_64\\n" >> root/bin/"$binfnstp"
-# 	else
-#  		printf "./root/bin/keys\\n" >> root/bin/"$binfnstp"
-# 	fi
-# 	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
-# 		printf "./root/bin/pci gzip sed \\n" >> root/bin/"$binfnstp"
-# 	else
-#  		printf "./root/bin/pci \\n" >> root/bin/"$binfnstp"
-# 	fi
+	if [[ -z "${lcr:-}" ]] ; then
+ 	if [[ "$cpuabi" = "$cpuabi5" ]];then
+ 		printf "pacman -Rc linux-armv5 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+ 	elif [[ "$cpuabi" = "$cpuabi7" ]];then
+ 		printf "pacman -Rc linux-armv7 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+ 	elif [[ "$cpuabi" = "$cpuabi8" ]];then
+ 		printf "pacman -Rc linux-aarch64 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+ 	fi
+	if [[ "$cpuabi" = "$cpuabix86" ]];then
+		printf "./root/bin/keys x86\\n" >> root/bin/"$binfnstp"
+	elif [[ "$cpuabi" = "$cpuabix86_64" ]];then
+		printf "./root/bin/keys x86_64\\n" >> root/bin/"$binfnstp"
+	else
+ 		printf "./root/bin/keys\\n" >> root/bin/"$binfnstp"
+	fi
+	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
+		printf "./root/bin/pci gzip sed \\n" >> root/bin/"$binfnstp"
+	else
+ 		printf "./root/bin/pci \\n" >> root/bin/"$binfnstp"
+	fi
+	fi
 	cat >> root/bin/"$binfnstp" <<- EOM
 	printf "\\n\\e[1;32m==> \\e[0;32m"
    	locale-gen ||:
@@ -175,7 +177,7 @@ makesetupbin() {
 	################################################################################
  	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id031892407588"
+versionid="v1.6 id3991"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -192,7 +194,7 @@ makestartbin() {
 	################################################################################
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
-versionid="gen.v1.6 id031892407588"
+versionid="v1.6 id3991"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"

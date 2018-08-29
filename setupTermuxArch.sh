@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id0216"
+versionid="v1.6 id3991"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -771,9 +771,15 @@ elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	arg2dir "$@" 
 	rmarchq
 ## [refresh|refresh installdir]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
-elif [[ "${1//-}" = [Rr]* ]] ; then
+elif [[ "${1//-}" = [Rr][Ee]* ]] ; then
 	echo 
 	echo Setting mode to refresh.
+	arg2dir "$@" 
+	introrefresh "$@"  
+elif [[ "${1//-}" = [Rr]* ]] ; then
+	lcr="1"
+	echo 
+	echo Setting mode to minimal refresh.
 	arg2dir "$@" 
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.

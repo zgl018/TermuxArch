@@ -18,27 +18,21 @@ addREADME() {
 }
 
 addae() {
-	cat > root/bin/ae <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
+	printf $fileheader1 > root/bin/ae 
+	cat >> root/bin/ae <<- EOM
 	# Contributed by https://github.com/cb125
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	EOM
+	printf $fileheader2 >> root/bin/ae 
+	cat >> root/bin/ae <<- EOM
 	watch cat /proc/sys/kernel/random/entropy_avail
 	EOM
 	chmod 770 root/bin/ae 
 }
 
 addauser() { # Add Arch Linux user.
-	cat > root/bin/addauser <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > root/bin/addauser 
+	printf $fileheader2 >> root/bin/addauser 
+	cat >> root/bin/addauser <<- EOM
 	useradd \$1
 	cp -r /root /home/\$1
 	su - \$1
@@ -108,58 +102,47 @@ addbashrc() {
 }
 
 addcdtd() {
-	cat > root/bin/cdtd <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+	printf $fileheader1 > root/bin/cdtd 
+	cat >> root/bin/cdtd <<- EOM
 	# Usage: \`. cdtd\`  The dot sources \`cdtd\` which makes this shortcut script work.
-	################################################################################
+	EOM
+	printf $fileheader2 >> root/bin/cdtd 
+	cat >> root/bin/cdtd <<- EOM
 	cd \$PREFIX/home/storage/downloads && pwd
 	EOM
 	chmod 770 root/bin/cdtd 
 }
 
 addcdth() {
-	cat > root/bin/cdth <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+	printf $fileheader1 > root/bin/cdth 
+	cat >> root/bin/cdth <<- EOM
 	# Usage: \`. cdth\`  The dot sources \`cdth\` which makes this shortcut script work. 
-	################################################################################
+	EOM
+	printf $fileheader2 >> root/bin/cdth 
+	cat >> root/bin/cdth <<- EOM
 	cd \$PREFIX/home && pwd
 	EOM
 	chmod 770 root/bin/cdth 
 }
 
 addcdtmp() {
-	cat > root/bin/cdtmp <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+	printf $fileheader1 > root/bin/cdtmp 
+	cat >> root/bin/cdtmp <<- EOM
 	# Usage: \`. cdtmp\`  The dot sources \`cdtmp\` which makes this shortcut script work. 
-	################################################################################
+	EOM
+	printf $fileheader2 >> root/bin/cdtmp 
+	cat >> root/bin/cdtmp <<- EOM
 	cd \$PREFIX/usr/tmp && pwd
 	EOM
 	chmod 770 root/bin/cdtmp 
 }
 
 addch() { # Creates .hushlogin and .hushlogout file
-	cat > root/bin/ch <<- EOM
-	#!/bin/env bash
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	set -Eeou pipefail 
+	printf $fileheader1 > root/bin/ch 
+	printf $fileheader2 >> root/bin/ch 
+	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id0216"
+versionid="v1.6 id3991"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -206,26 +189,18 @@ versionid="v1.6 id0216"
 }
 
 addexd() {
-	cat > root/bin/exd <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > root/bin/exd 
+	printf $fileheader2 >> root/bin/exd 
+	cat >> root/bin/exd <<- EOM
 	export DISPLAY=:0 PULSE_SERVER=tcp:127.0.0.1:4712
 	EOM
 	chmod 770 root/bin/exd 
 }
 
 adddfa() {
-	cat > root/bin/dfa <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > root/bin/dfa
+	printf $fileheader2 >> root/bin/dfa
+	cat >> root/bin/dfa <<- EOM
 	units=\`df 2>/dev/null | awk 'FNR == 1 {print \$2}'\`
 	usrspace=\`df 2>/dev/null | grep "/data" | awk {'print \$4'}\`
 	printf "\e[0;33m\$usrspace \$units of free user space is available on this device.\n\e[0m"
@@ -249,12 +224,9 @@ addfbindprocshmem() {
 	EOM
 }
 
-addfbindprocstat() {
-	cat > var/binds/fbindprocstat.prs <<- EOM
-	prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
-	EOM
+addfbindprocstat() { # Chooses the appropriate four or eight processor stat file. 
 	nessor="$(grep cessor /proc/cpuinfo)"
-	ncessor="${t: -1}"
+	ncessor="${nessor: -1}"
 	if [[ "$ncessor" -le 3 ]];then
 		addfbindprocstat4
 	else
@@ -301,11 +273,22 @@ addfbindprocstat8() {
 }
 
 addfbindexample() {
-	cat > var/binds/fbindexample.prs <<- EOM
-	# To regenerate the start script use setupTermuxArch.sh refresh.
-	# Add as many proot statements as you want to...
+	printf $fileheader1 > var/binds/fbindexample.prs
+	printf $fileheader2 >> var/binds/fbindexample.prs
+	cat >> var/binds/fbindexample.prs <<- EOM
+	# To regenerate the start script use \`setupTermuxArch.sh refresh\`.  Add as many proot statements as you want; The init script will parse this file at startup.  Examples are included for your convenience.  Usage: -b host_path:guest_path
 	# prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
 	EOM
+}
+
+addbinds() { # Checks if /proc/stat is usable. 
+	if [[ -f /proc/stat ]] ; then
+		if [[ ! "$(head /proc/stat)" ]] ; then
+			addfbindprocstat
+		fi
+	else
+		addfbindprocstat
+	fi
 }
 
 addfibs() {
@@ -423,7 +406,7 @@ addkeys() {
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
 	declare -a keyrings
-versionid="v1.6 id0216"
+versionid="v1.6 id3991"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -512,18 +495,15 @@ addmoto() {
 	EOM
 }
 
-addpc() { # pacman install packages shortcut
-	cat > root/bin/pc  <<- EOM
-	#!/bin/env bash 
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	set -Eeou pipefail 
-	shopt -s nullglob globstar
+addpc() { 
+	printf $fileheader1 > root/bin/pc 
+	cat >> root/bin/pc  <<- EOM
+	# pacman install packages shortcut
+	EOM
+	printf $fileheader2 >> root/bin/pc 
+	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id0216"
+versionid="v1.6 id3991"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -573,18 +553,15 @@ versionid="v1.6 id0216"
 	chmod 700 root/bin/pc 
 }
 
-addpci() { # system update with pacman install packages shortcut 
-	cat > root/bin/pci  <<- EOM
-	#!/bin/env bash 
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	set -Eeuo pipefail 
-	shopt -s nullglob globstar
+addpci() { 
+	printf $fileheader1 > root/bin/pci 
+	cat >> root/bin/pci  <<- EOM
+	# System update with pacman install packages shortcut. 
+	EOM
+	printf $fileheader2 >> root/bin/pci 
+	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id0216"
+versionid="v1.6 id3991"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -651,31 +628,23 @@ addresolvconf() {
 }
 
 addt() {
-	cat > root/bin/t  <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > root/bin/t
+	printf $fileheader2 >> root/bin/t
+	cat >> root/bin/t  <<- EOM
 	if [ ! -e /usr/bin/tree ] ; then
 		pacman --noconfirm --color=always -S tree 
-		tree \$@
+		tree "\$@"
 	else
-		tree \$@
+		tree "\$@"
 	fi
 	EOM
 	chmod 770 root/bin/t 
 }
 
 addthstartarch() {
-	cat > root/bin/th"$startbin" <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > root/bin/th"$startbin" 
+	printf $fileheader2 >> root/bin/th"$startbin" 
+	cat >> root/bin/th"$startbin" <<- EOM
 	echo $startbin help
 	$startbin help
 	sleep 1
@@ -695,13 +664,9 @@ addthstartarch() {
 }
 
 addtour() {
-	cat > root/bin/tour <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > root/bin/tour 
+	printf $fileheader2 >> root/bin/tour 
+	cat >> root/bin/tour <<- EOM
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mls -R --color=always \$HOME \e[1;37m\n\n"
 	ls -R --color=always \$HOME
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32msleep 4 \$HOME \e[1;37m\n\n"
@@ -722,13 +687,9 @@ addtour() {
 }
 
 addtrim() {
-	cat > root/bin/trim <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > root/bin/trim 
+	printf $fileheader2 >> root/bin/trim 
+	cat >> root/bin/trim <<- EOM
 	printf "\\\\n\\\\e[1;32m==> \\\\e[1;0mRunning \$0 … \\\\e[0m\\\\n\\\\n" 
 	echo [1/5] rm -rf /boot/
 	rm -rf /boot/
@@ -746,41 +707,32 @@ addtrim() {
 }
 
 addv() {
-	cat > root/bin/v  <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	set -Eeou pipefail 
-	shopt -s nullglob globstar
-
-	if [[ -z "\${1:-}" ]];then
+	printf $fileheader1 > root/bin/v 
+	printf $fileheader2 >> root/bin/v 
+	cat >> root/bin/v  <<- EOM
+	if [[ -z "\${1:-}" ]] ; then
 		args="."
 	else
 		args="\$@"
 	fi
 	if [ ! -e /usr/bin/vim ] ; then
 		pacman --noconfirm --color=always -S vim 
-		vim \$args
+		vim "\$args"
 	else
-		vim \$args
+		vim "\$args"
 	fi
 	EOM
 	chmod 770 root/bin/v 
 }
 
-addwe() {
-	cat > usr/bin/we <<- EOM
-	#!/bin/bash -e
-	# Watch available entropy on device.
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+addwe() { 
+	printf $fileheader1 > root/bin/we 
+	cat >> usr/bin/we <<- EOM
+	# Watch available entropy on device. 
 	# cat /proc/sys/kernel/random/entropy_avail contributed by https://github.com/cb125
-	################################################################################
+	EOM
+	printf $fileheader2 >> root/bin/we 
+	cat >> usr/bin/we <<- EOM
 
 	i=1
 	multi=16
@@ -921,19 +873,15 @@ addwe() {
 }
 
 addyt() {
-	cat > root/bin/yt  <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > root/bin/yt  
+	printf $fileheader2 >> root/bin/yt  
+	cat >> root/bin/yt  <<- EOM
 	if [ ! -e /usr/bin/youtube-dl ] ; then
 		pacman --noconfirm --color=always -S python-pip
 		pip install youtube-dl
-		youtube-dl \$@
+		youtube-dl "\$@"
 	else
-		youtube-dl \$@
+		youtube-dl "\$@"
 	fi
 	EOM
 	chmod 770 root/bin/yt 
