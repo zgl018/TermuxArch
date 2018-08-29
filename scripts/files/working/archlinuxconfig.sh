@@ -142,7 +142,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	printf $fileheader2 >> root/bin/ch 
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="gen.v1.6 id162777804625"
+versionid="v1.6 id5214"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -283,7 +283,7 @@ addfbindexample() {
 
 addbinds() { # Checks if /proc/stat is usable. 
 	if [[ -f /proc/stat ]] ; then
-		if [[ ! "$(head /proc/stat)" ]] ; then
+		if [[ ! "$(head /proc/stat 2>/dev/null)" ]] ; then
 			addfbindprocstat
 		fi
 	else
@@ -406,7 +406,7 @@ addkeys() {
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
 	declare -a keyrings
-versionid="gen.v1.6 id162777804625"
+versionid="v1.6 id5214"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -503,7 +503,7 @@ addpc() {
 	printf $fileheader2 >> root/bin/pc 
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="gen.v1.6 id162777804625"
+versionid="v1.6 id5214"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -561,7 +561,7 @@ addpci() {
 	printf $fileheader2 >> root/bin/pci 
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="gen.v1.6 id162777804625"
+versionid="v1.6 id5214"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
