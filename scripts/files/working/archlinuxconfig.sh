@@ -159,7 +159,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	################################################################################
 	set -Eeou pipefail 
 	declare -a args
-versionid="gen.v1.6 id395925346580"
+versionid="gen.v1.6 id803367942839"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -250,11 +250,8 @@ addfbindprocshmem() {
 }
 
 addfbindprocstat() {
-	cat > var/binds/fbindprocstat.prs <<- EOM
-	prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
-	EOM
 	nessor="$(grep cessor /proc/cpuinfo)"
-	ncessor="${t: -1}"
+	ncessor="${nessor: -1}"
 	if [[ "$ncessor" -le 3 ]];then
 		addfbindprocstat4
 	else
@@ -302,8 +299,7 @@ addfbindprocstat8() {
 
 addfbindexample() {
 	cat > var/binds/fbindexample.prs <<- EOM
-	# To regenerate the start script use setupTermuxArch.sh refresh.
-	# Add as many proot statements as you want to...
+	# To regenerate the start script use \`setupTermuxArch.sh refresh\`.  Add as many proot statements as you want; The init script will parse this file at startup.  Examples are included for your convenience.  Usage: -b host_path:guest_path
 	# prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
 	EOM
 }
@@ -423,7 +419,7 @@ addkeys() {
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
 	declare -a keyrings
-versionid="gen.v1.6 id395925346580"
+versionid="gen.v1.6 id803367942839"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -523,7 +519,7 @@ addpc() { # pacman install packages shortcut
 	set -Eeou pipefail 
 	shopt -s nullglob globstar
 	declare -g args="\$@"
-versionid="gen.v1.6 id395925346580"
+versionid="gen.v1.6 id803367942839"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -584,7 +580,7 @@ addpci() { # system update with pacman install packages shortcut
 	set -Eeuo pipefail 
 	shopt -s nullglob globstar
 	declare args="\$@"
-versionid="gen.v1.6 id395925346580"
+versionid="gen.v1.6 id803367942839"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
