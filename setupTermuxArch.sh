@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id6408"
+versionid="v1.6 id1631"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -494,7 +494,7 @@ rmarchrm() {
 
 rmarchq() {
 	if [[ -d "$installdir" ]] ; then
-		printf "\\n\\e[0;33m%s \\e[1;33m%s \\e[0;33m%s\\n\\n\\e[1;30m%s\\n" "TermuxArch:" "DIRECTORY WARNING!  $installdir/" "directory detected." "Purge $installdir as requested?"
+		printf "\\n\\e[0;33m %s \\e[1;33m%s \\e[0;33m%s\\n\\n\\e[1;30m%s\\n" "TermuxArch:" "DIRECTORY WARNING!  $installdir/" "directory detected." "Purge $installdir as requested?"
 		rmarch
 	fi
 }
@@ -537,7 +537,7 @@ standardid() {
 
 traperror() { # Run on script signal.
 	local rv="$?"
-	printf "\\e[?25h\\n\\e[1;48;5;138m%s\\e[0m\\n\\n" "TermuxArch WARNING:  Generated script signal ${rv:-unknown} near or at line number ${1:-unknown} by \`${2:-command}\`!"
+	printf "\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING:  Generated script signal ${rv:-unknown} near or at line number ${1:-unknown} by \`${2:-command}\`!"
 	exit 201
 }
 
@@ -621,7 +621,7 @@ fi
 setrootdir
 commandif="$(command -v getprop)" ||:
 if [[ "$commandif" = "" ]] ; then
-	printf "\\n\\e[1;48;5;138m%s\\e[0m\\n\\n" "WARNING: Run \`bash setupTermuxArch.sh\` from the OS system in Termux, i.e. Amazon Fire, Android and Chromebook."
+	printf "\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING: Run \`bash ${0##*/}\` or \`./${0##*/}\` from the BASH shell in the OS system in Termux, i.e. Amazon Fire, Android and Chromebook."
 	exit
 fi
 ## Gets information about device cpu using getprop.
@@ -642,9 +642,9 @@ stime="$oneda$stime"
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [~/|./|/absolute/path/]systemimage.tar.gz [WHERE]`.  
 ## EXPLAINATION: [HOW (aria2c|axel|curl|lftp|wget (default 1: available on system (default 2: wget)))]  [WHAT (install|manual|purge|refresh|sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied and can be omitted.  
 ## USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual customdir` will attempt to install the installation in customdir with wget in manual mode.  While `setupTermuxArch.sh wget refresh customdir` shall refresh this installation with wget. 
-## ##################### 
-## Option[s] Explanation
-## ##################### 
+## <<<<<<<<<<<<>>>>>>>>>>>>
+## << Enumerated Options >>
+## <<<<<<<<<<<<>>>>>>>>>>>>
 ## []  Run default Arch Linux install. 
 if [[ -z "${1:-}" ]] ; then
 	preptermuxarch 
@@ -779,7 +779,7 @@ elif [[ "${1//-}" = [Rr][Ee]* ]] ; then
 elif [[ "${1//-}" = [Rr]* ]] ; then
 	lcr="1"
 	echo 
-	echo "Setting mode to minimal refresh.  Use re[fresh] for full refresh."
+	echo "Setting mode to minimal refresh.  Use refresh for full refresh."
 	arg2dir "$@" 
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.
