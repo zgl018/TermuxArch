@@ -142,7 +142,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	printf $fileheader2 >> root/bin/ch 
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id6732"
+versionid="v1.6 id6408"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -292,26 +292,18 @@ addbinds() { # Checks if /proc/stat is usable.
 }
 
 addfibs() {
-	cat > root/bin/fibs  <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > var/binds/fibs 
+	printf $fileheader2 >> var/binds/fibs 
+	cat >> root/bin/fibs  <<- EOM
 	find /proc/ -name maps 2>/dev/null |xargs awk '{print i\$6}' 2>/dev/null| grep '\.so' | sort | uniq
 	EOM
 	chmod 770 root/bin/fibs 
 }
 
 addga() {
-	cat > root/bin/ga  <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > var/binds/ga 
+	printf $fileheader2 >> var/binds/ga 
+	cat >> root/bin/ga  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git
 		git add .
@@ -323,13 +315,9 @@ addga() {
 }
 
 addgcl() {
-	cat > root/bin/gcl  <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > var/binds/gcl 
+	printf $fileheader2 >> var/binds/gcl 
+	cat >> root/bin/gcl  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
 		git clone \$@
@@ -341,13 +329,9 @@ addgcl() {
 }
 
 addgcm() {
-	cat > root/bin/gcm  <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > var/binds/gcm 
+	printf $fileheader2 >> var/binds/gcm 
+	cat >> root/bin/gcm  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
 		git commit
@@ -359,13 +343,9 @@ addgcm() {
 }
 
 addgpl() {
-	cat > root/bin/gpl  <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
+	printf $fileheader1 > var/binds/gpl 
+	printf $fileheader2 >> var/binds/gpl 
+	cat >> root/bin/gpl  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
 		git pull
@@ -377,14 +357,12 @@ addgpl() {
 }
 
 addgp() {
-	cat > root/bin/gp  <<- EOM
-	#!/bin/bash -e
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+	printf $fileheader1 > var/binds/gp 
+	cat >> root/bin/gp  <<- EOM
 	# git push https://username:password@github.com/username/repository.git master
-	################################################################################
+	EOM
+	printf $fileheader2 >> var/binds/gp 
+	cat >> root/bin/gp  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
 		git push
@@ -396,17 +374,11 @@ addgp() {
 }
 
 addkeys() {
-	cat > root/bin/keys <<- EOM
-	#!/bin/env bash 
-	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
-	################################################################################
-	set -Eeou pipefail 
-	shopt -s nullglob globstar
+	printf $fileheader1 > var/binds/keys 
+	printf $fileheader2 >> var/binds/keys 
+	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="v1.6 id6732"
+versionid="v1.6 id6408"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -503,7 +475,7 @@ addpc() {
 	printf $fileheader2 >> root/bin/pc 
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id6732"
+versionid="v1.6 id6408"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -561,7 +533,7 @@ addpci() {
 	printf $fileheader2 >> root/bin/pci 
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id6732"
+versionid="v1.6 id6408"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
