@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id3114"
+versionid="v1.6 id1636"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -641,7 +641,7 @@ stime="$oneda$stime"
 ## OPTIONS STATUS: UNDERGOING TESTING;  Image file and compound options are still under development.  USE WITH CAUTION!  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT yet fully implemented.   
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [~/|./|/absolute/path/]systemimage.tar.gz [WHERE]`.  
 ## EXPLAINATION: [HOW (aria2c|axel|curl|lftp|wget (default 1: available on system (default 2: wget)))]  [WHAT (install|manual|purge|refresh|sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied and can be omitted.  
-## USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. `setupTermuxArch.sh wget manual customdir` will attempt to install the installation in customdir with wget in manual mode.  While `setupTermuxArch.sh wget refresh customdir` shall refresh this installation with wget. 
+## USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. Similarly, `setupTermuxArch.sh wget manual customdir` will attempt to install the installation in customdir with wget and use manual mode during instalation.  Also, `setupTermuxArch.sh wget refresh customdir` shall refresh this installation using wget as the download manager. 
 ## <<<<<<<<<<<<>>>>>>>>>>>>
 ## << Enumerated Options >>
 ## <<<<<<<<<<<<>>>>>>>>>>>>
@@ -649,7 +649,7 @@ stime="$oneda$stime"
 if [[ -z "${1:-}" ]] ; then
 	preptermuxarch 
 	intro "$@" 
-## [./path/systemimage.tar.gz [installdir]]  Use path to system image file; install directory argument is optional. A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`. 
+## [./path/systemimage.tar.gz [customdir]]  Use path to system image file; install directory argument is optional. A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`. 
 elif [[ "${args:0:1}" = . ]] ; then
  	echo
  	echo Setting mode to copy system image.
@@ -657,7 +657,7 @@ elif [[ "${args:0:1}" = . ]] ; then
  	lcp="1"
  	arg2dir "$@"  
  	intro "$@" 
-## [systemimage.tar.gz [installdir]]  Install directory argument is optional.  A systemimage.tar.gz file can substituted for network install.  
+## [systemimage.tar.gz [customdir]]  Install directory argument is optional.  A systemimage.tar.gz file can substituted for network install.  
 # elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
 elif [[ "$args" = *.tar.gz* ]] ; then
 	echo
@@ -674,7 +674,7 @@ elif [[ "${1//-}" = [Aa][Xx][Dd]* ]] || [[ "${1//-}" = [Aa][Xx][Ss]* ]] ; then
 	shift
 	arg2dir "$@" 
 	introsysinfo "$@" 
-## [axel installdir|axi installdir]  Install Arch Linux with `axel`.
+## [axel [customdir]|axi [customdir]]  Install Arch Linux with `axel`.
 elif [[ "${1//-}" = [Aa][Xx]* ]] || [[ "${1//-}" = [Aa][Xx][Ii]* ]] ; then
 	echo
 	echo Setting \`axel\` as download manager.
@@ -689,7 +689,7 @@ elif [[ "${1//-}" = [Aa][Dd]* ]] || [[ "${1//-}" = [Aa][Ss]* ]] ; then
 	shift
 	arg2dir "$@" 
 	introsysinfo "$@" 
-## [aria2c installdir|ai installdir]  Install Arch Linux with `aria2c`.
+## [aria2c [customdir]|ai [customdir]]  Install Arch Linux with `aria2c`.
 elif [[ "${1//-}" = [Aa]* ]] ; then
 	echo
 	echo Setting \`aria2c\` as download manager.
@@ -709,7 +709,7 @@ elif [[ "${1//-}" = [Cc][Dd]* ]] || [[ "${1//-}" = [Cc][Ss]* ]] ; then
 	shift
 	arg2dir "$@" 
 	introsysinfo "$@" 
-## [curl installdir|ci installdir]  Install Arch Linux with `curl`.
+## [curl [customdir]|ci [customdir]]  Install Arch Linux with `curl`.
 elif [[ "${1//-}" = [Cc][Ii]* ]] || [[ "${1//-}" = [Cc]* ]] ; then
 	echo
 	echo Setting \`curl\` as download manager.
@@ -732,7 +732,7 @@ elif [[ "${1//-}" = [Hh]* ]] || [[ "${1//-}" = [?]* ]] ; then
 	lcc="1"
 	arg2dir "$@" 
 	printusage "$@"  
-## [install installdir|rootdir installdir]  Install Arch Linux in a custom directory.  Instructions: Install in userspace. $HOME is appended to installation directory. To install Arch Linux in $HOME/installdir use `bash setupTermuxArch.sh install installdir`. In bash shell use `./setupTermuxArch.sh install installdir`.  All options can be abbreviated to one or two letters.  Hence `./setupTermuxArch.sh install installdir` can be run as `./setupTermuxArch.sh i installdir` in BASH.
+## [install [customdir]|rootdir [customdir]]  Install Arch Linux in a custom directory.  Instructions: Install in userspace. $HOME is appended to installation directory. To install Arch Linux in $HOME/customdir use `bash setupTermuxArch.sh install customdir`. In bash shell use `./setupTermuxArch.sh install customdir`.  All options can be abbreviated to one, two and three letters.  Hence `./setupTermuxArch.sh install customdir` can be run as `./setupTermuxArch.sh i customdir` in BASH.
 elif [[ "${1//-}" = [Ii]* ]] ||  [[ "${1//-}" = [Rr][Oo]* ]] ; then
 	echo
 	echo Setting mode to install.
@@ -746,7 +746,7 @@ elif [[ "${1//-}" = [Ll][Dd]* ]] || [[ "${1//-}" = [Ll][Ss]* ]] ; then
 	shift
 	arg2dir "$@" 
 	introsysinfo "$@" 
-## [lftp installdir|li installdir]  Install Arch Linux with `lftp`.
+## [lftp [customdir]|li [customdir]]  Install Arch Linux with `lftp`.
 elif [[ "${1//-}" = [Ll]* ]] ; then
 	echo
 	echo Setting \`lftp\` as download manager.
@@ -772,7 +772,7 @@ elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	echo Setting mode to purge.
 	arg2dir "$@" 
 	rmarchq
-## [refresh|refresh installdir]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
+## [refresh|refresh [customdir]]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
 elif [[ "${1//-}" = [Rr][Ee]* ]] ; then
 	echo 
 	echo Setting mode to refresh.
@@ -792,7 +792,7 @@ elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
 	shift
 	arg2dir "$@" 
 	introsysinfo "$@" 
-## [wget installdir|wi installdir]  Install Arch Linux with `wget`.
+## [wget [customdir]|wi [customdir]]  Install Arch Linux with `wget`.
 elif [[ "${1//-}" = [Ww]* ]] ; then
 	echo
 	echo Setting \`wget\` as download manager.

@@ -142,7 +142,7 @@ addch() { # Creates .hushlogin and .hushlogout file
 	printf $fileheader2 >> root/bin/ch 
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id3114"
+versionid="v1.6 id1636"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -378,7 +378,7 @@ addkeys() {
 	printf $fileheader2 >> var/binds/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="v1.6 id3114"
+versionid="v1.6 id1636"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -475,7 +475,7 @@ addpc() {
 	printf $fileheader2 >> root/bin/pc 
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id3114"
+versionid="v1.6 id1636"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -533,7 +533,7 @@ addpci() {
 	printf $fileheader2 >> root/bin/pci 
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id3114"
+versionid="v1.6 id1636"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
