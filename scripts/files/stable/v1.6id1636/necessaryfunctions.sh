@@ -111,17 +111,22 @@ mainblock() {
 	wakeunlock 
 	printfooter
 	"$installdir/$startbin" ||:
-# 	"$startbin" help
-	printstarthelp
+	"$startbin" help
 	printfooter2
 }
 
 makefinishsetup() {
 	binfnstp=finishsetup.sh  
-	printf $fileheader1 > root/bin/$binfnstp
-	printf $fileheader2 >> root/bin/$binfnstp
-	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="gen.v1.6 id158953476699"
+	cat > root/bin/"$binfnstp" <<- EOM
+	#!/bin/env bash
+	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
+	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
+	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+	################################################################################
+ 	set -Eeou pipefail 
+	shopt -s nullglob globstar
+versionid="v1.6 id1636"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -134,25 +139,25 @@ versionid="gen.v1.6 id158953476699"
 		grep "proxy" "$HOME"/.profile | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
 	fi
 	if [[ -z "${lcr:-}" ]] ; then
-	 	if [[ "$cpuabi" = "$cpuabi5" ]];then
-	 		printf "pacman -Rc linux-armv5 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
-	 	elif [[ "$cpuabi" = "$cpuabi7" ]];then
-	 		printf "pacman -Rc linux-armv7 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
-	 	elif [[ "$cpuabi" = "$cpuabi8" ]];then
-	 		printf "pacman -Rc linux-aarch64 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
-	 	fi
-		if [[ "$cpuabi" = "$cpuabix86" ]];then
-			printf "./root/bin/keys x86\\n" >> root/bin/"$binfnstp"
-		elif [[ "$cpuabi" = "$cpuabix86_64" ]];then
-			printf "./root/bin/keys x86_64\\n" >> root/bin/"$binfnstp"
-		else
-	 		printf "./root/bin/keys\\n" >> root/bin/"$binfnstp"
-		fi
-		if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
-			printf "./root/bin/pci gzip sed \\n" >> root/bin/"$binfnstp"
-		else
-	 		printf "./root/bin/pci \\n" >> root/bin/"$binfnstp"
-		fi
+ 	if [[ "$cpuabi" = "$cpuabi5" ]];then
+ 		printf "pacman -Rc linux-armv5 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+ 	elif [[ "$cpuabi" = "$cpuabi7" ]];then
+ 		printf "pacman -Rc linux-armv7 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+ 	elif [[ "$cpuabi" = "$cpuabi8" ]];then
+ 		printf "pacman -Rc linux-aarch64 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+ 	fi
+	if [[ "$cpuabi" = "$cpuabix86" ]];then
+		printf "./root/bin/keys x86\\n" >> root/bin/"$binfnstp"
+	elif [[ "$cpuabi" = "$cpuabix86_64" ]];then
+		printf "./root/bin/keys x86_64\\n" >> root/bin/"$binfnstp"
+	else
+ 		printf "./root/bin/keys\\n" >> root/bin/"$binfnstp"
+	fi
+	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
+		printf "./root/bin/pci gzip sed \\n" >> root/bin/"$binfnstp"
+	else
+ 		printf "./root/bin/pci \\n" >> root/bin/"$binfnstp"
+	fi
 	fi
 	cat >> root/bin/"$binfnstp" <<- EOM
 	printf "\\n\\e[1;32m==> \\e[0;32m"
@@ -163,21 +168,33 @@ versionid="gen.v1.6 id158953476699"
 }
 
 makesetupbin() {
-	printf $fileheader1 > root/bin/setupbin.sh 
-	printf $fileheader2 >> root/bin/setupbin.sh 
-	cat >> root/bin/setupbin.sh <<- EOM
+	cat > root/bin/setupbin.sh <<- EOM
+	#!/bin/env bash
+	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
+	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
+	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+	################################################################################
+ 	set -Eeou pipefail 
+	shopt -s nullglob globstar
+versionid="v1.6 id1636"
 	unset LD_PRELOAD
-versionid="gen.v1.6 id158953476699"
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
 	chmod 700 root/bin/setupbin.sh
 }
 
 makestartbin() {
-	printf $fileheader1 > root/bin/$startbin
-	printf $fileheader2 >> root/bin/$startbin 
-	cat >> "$startbin" <<- EOM
-versionid="gen.v1.6 id158953476699"
+	cat > "$startbin" <<- EOM
+	#!/bin/env bash
+	# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
+	# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+	# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
+	# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+	################################################################################
+	set -Eeou pipefail 
+	shopt -s nullglob globstar
+versionid="v1.6 id1636"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
