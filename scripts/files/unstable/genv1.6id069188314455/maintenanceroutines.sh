@@ -112,7 +112,8 @@ loadimage() {
 	wakeunlock 
 	printfooter
 	"$installdir/$startbin" ||:
-	"$startbin" help
+# 	"$startbin" help
+	printstarthelp
 	printfooter2
 }
 
@@ -180,7 +181,8 @@ refreshsys() { # Refreshes
 	printfooter 
 	printf "\\a"
 	"$installdir/$startbin" ||:
-	"$startbin" help
+# 	"$startbin" help
+	printstarthelp
 	printfooter2
 	exit
 }

@@ -71,18 +71,17 @@ if [[ "$koe" ]]; then
 fi
 prootstmnt+="--link2symlink -0 -r $installdir "
 if [[ ! -r /dev/shm ]] ; then 
-	if [[ -r /dev/ashmem ]] ; then 
-	 	prootstmnt+="-b /dev/ashmem:/dev/shm " 
-	else
-		prootstmnt+="-b $installdir/tmp:/dev/shm " 
-	fi
+	prootstmnt+="-b $installdir/tmp:/dev/shm " 
+fi
+if [[ ! -r /dev/ashmem ]] ; then 
+ 	prootstmnt+="-b $installdir:/dev/ashmem " 
 fi
 if [[ -f /proc/stat ]] ; then
-	if [[ ! "$(head /proc/stat)" ]] ; then
+	if [[ ! "$(head /proc/stat 2>/dev/null)" ]] ; then
 		prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
 	fi
 else
-	prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
+		prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
 fi
 if [ -n "$(ls -A "$installdir"/var/binds/*.prs)" ]; then
     for f in "$installdir"/var/binds/*.prs ; do
@@ -90,6 +89,7 @@ if [ -n "$(ls -A "$installdir"/var/binds/*.prs)" ]; then
     done
 fi
 prootstmnt+="-b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ -w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
+# prootstmnt2+="-w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM"
 }
 prs 
 
