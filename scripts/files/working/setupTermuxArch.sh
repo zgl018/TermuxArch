@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id1636"
+versionid="gen.v1.6 id494205653499"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -423,14 +423,14 @@ printusage() {
 	printf "\\e[0;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 	if [[ "$lcc" = 1 ]] ; then
 	awk 'NR>=636 && NR<=776'  "${0##*/}" | awk '$1 == "##"' | awk '{ $1 = ""; print }' | awk '1;{print ""}'
+	fi
+ 	namestartarch 
 	printf "\\e[1;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-	fi
- 	namestartarch "$@"  
-	if [[ -x "$(command -v "$startbin")" ]] ; then
+ 	if [[ -x "$(command -v "$startbin")" ]] ; then
 		echo "$startbin" help 
-		"$startbin" help 
-	fi
-	printf "\\e[0;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+		$startbin help 
+ 	fi
+	printf "\\e[1;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 #	## Used to generate signals.
 #  	((1/0)) # 1
 # 	echo hello | grep "asdf" # 1
@@ -439,6 +439,15 @@ printusage() {
 #  	. 35e493e
 # 	 (false; echo one) | cat; echo two # 1 & 201
 # 	cat
+}
+
+printstarthelp() {
+	printf "\\e[1;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+ 	if [[ -x "$(command -v "$startbin")" ]] ; then
+		echo "$startbin" help 
+		$startbin help 
+ 	fi
+	printf "\\e[1;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 }
 
 prootif() {
@@ -537,7 +546,7 @@ standardid() {
 
 traperror() { # Run on script signal.
 	local rv="$?"
-	printf "\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING:  Generated script signal ${rv:-unknown} near or at line number ${1:-unknown} by \`${2:-command}\`!"
+	printf "\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING:  Generated script signal ${rv:-unknown} near or at line number ${1:-unknown} by \"${2:-command}\"!"
 	exit 201
 }
 

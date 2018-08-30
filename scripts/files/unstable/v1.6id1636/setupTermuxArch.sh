@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id494205653499"
+versionid="v1.6 id1636"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -425,12 +425,7 @@ printusage() {
 	awk 'NR>=636 && NR<=776'  "${0##*/}" | awk '$1 == "##"' | awk '{ $1 = ""; print }' | awk '1;{print ""}'
 	fi
  	namestartarch 
-	printf "\\e[1;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
- 	if [[ -x "$(command -v "$startbin")" ]] ; then
-		echo "$startbin" help 
-		$startbin help 
- 	fi
-	printf "\\e[1;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	printstarthelp "$@"
 #	## Used to generate signals.
 #  	((1/0)) # 1
 # 	echo hello | grep "asdf" # 1
