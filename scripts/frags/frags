@@ -8,3 +8,14 @@ for i in "${!getpropcommandsa[@]}"; do
 	getpropcommandst+="\\e[1;32m[${getpropcommandsa[$i]}]: [`${getpropcommandsa[$i]}`]\\e[0;32m\\n"
 done
 printf  "$getpropcommandst"
+#	## Used to generate signals.
+#  	((1/0)) # 1
+# 	echo hello | grep "asdf" # 1
+# 	format c: #127
+#  	. foo
+#  	. 35e493e
+# 	 (false; echo one) | cat; echo two # 1 & 201
+# 	cat
+##
+#		apt update && apt -o APT::Keep-Downloaded-Packages="true" upgrade -y
+#		apt -o APT::Keep-Downloaded-Packages="true" install "$aptin" -y
