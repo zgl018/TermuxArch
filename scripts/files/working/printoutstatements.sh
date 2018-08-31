@@ -15,6 +15,7 @@ fileheader[5]="#################################################################
 fileheader[6]="IFS=$'\\n\\t'"
 fileheader[7]="set -Eeuo pipefail"
 fileheader[8]="shopt -s nullglob globstar"
+fileheader[9]="versionid="v1.6id9909""
 
 callfileheader() {
 	if [[ -z "${2:-}" ]] ; then
@@ -28,7 +29,7 @@ callfileheader() {
 	else
 		printf "%s\n" "${fileheader[0]}" > "$1"
 		printf "%s\n" "$2" >> "$1"
- 		for i in {1..8} ; do
+ 		for i in {1..9} ; do
  			printf "%s\n" "${fileheader[i]}" >> "$1"
  		done
 	fi
@@ -109,13 +110,13 @@ printmismatch() {
 printfooter() {
 	printf "\033[0;34m 🕛 > 🕥 \033[1;34mUse \033[1;32m$startbin \033[1;34mto launch Arch Linux in Termux PRoot.  Alternatively, run \033[1;32m~$printrootdir/$startbin \033[1;34min a BASH shell to start Arch Linux in Termux PRoot for future sessions.  See \033[1;32m$startbin help \033[1;34mfor usage information.\033[0m\n\n"'\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'
 	copystartbin2path
-	printf "\033[0;32m 🕛 = 🕛 \033[1;34mInformation about \033[0;36m\"Starting Arch Linux from Termux?\"\033[1;34m at \033[1;34mhttps://github.com/sdrausty/TermuxArch/issues/25\033[1;34m.  Use \033[1;32mtour\033[1;34m to run a very short tour to get to know the new Arch Linux in Termux PRoot environment you just set up a little bit better.  If there was more than one error during the update procedure and you would like to refresh the installation, use \033[1;32msetupTermuxArch.sh refresh\033[1;34m.  This will update and recreate the configuration provided.  The TermuxArch command \033[1;32mkeys \033[1;34mhelps install and generate Arch Linux keyring keys.\n"
+	printf "\033[0;32m 🕛 = 🕛 \033[1;34mInformation about \033[0;36m\"Starting Arch Linux from Termux?\"\033[1;34m at \033[1;34mhttps://github.com/sdrausty/TermuxArch/issues/25\033[1;34m.  Use \033[1;32mtour\033[1;34m to run a very short tour to get to know the new Arch Linux in Termux PRoot environment you just set up a little bit better.  If there was more than one error during the update procedure and you would like to refresh the installation, use \033[1;32msetupTermuxArch.sh refresh\033[1;34m.  This will update and recreate the configuration provided.  The TermuxArch command \033[1;32mkeys \033[1;34mhelps install and generate Arch Linux keyring keys.\n\n"
 	printfooter2
 	printf "\n"
 }
 
 printfooter2() {
-	printf "\n\033[1;34mArch Linux in Termux PRoot is installed in $installdir.  This project is in active development.  Contributions to this project are welcome; See https://sdrausty.github.io/TermuxArch/CONTRIBUTORS for information.  The documentation repository for TermuxArch https://sdrausty.github.io/TermuxArch/docs/ is a Termux Arch submodule that is located at https://github.com/sdrausty/docsTermuxArch.  Pull requests and contributions through the issues pages are open to improve the ux (user experience) and this Termux PRoot installation script.\n\nUse \033[1;32m~$printrootdir/$startbin \033[1;34mand \033[1;32m$startbin \033[1;34min a BASH shell to launch Arch Linux in Termux PRoot for future sessions.  If you are new to *nix, http://tldp.org has *nix documentation.  See https://wiki.archlinux.org/index.php/IRC_channel for available Arch Linux IRC channels.\n\n\033[0m"
+	printf "\033[1;34mArch Linux in Termux PRoot is installed in $installdir.  This project is in active development.  Contributions to this project are welcome; See https://sdrausty.github.io/TermuxArch/CONTRIBUTORS for information.  The documentation repository for TermuxArch https://sdrausty.github.io/TermuxArch/docs/ is a Termux Arch submodule that is located at https://github.com/sdrausty/docsTermuxArch.  Pull requests and contributions through the issues pages are open to improve the ux (user experience) and this Termux PRoot installation script.\n\nUse \033[1;32m~$printrootdir/$startbin \033[1;34mand \033[1;32m$startbin \033[1;34min a BASH shell to launch Arch Linux in Termux PRoot for future sessions.  If you are new to *nix, http://tldp.org has *nix documentation.  See https://wiki.archlinux.org/index.php/IRC_channel for available Arch Linux IRC channels.\n\n\033[0m"
 }
 
 printrootdirfunction() {

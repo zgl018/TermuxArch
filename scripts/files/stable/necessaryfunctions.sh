@@ -111,7 +111,8 @@ mainblock() {
 	wakeunlock 
 	printfooter
 	"$installdir/$startbin" ||:
-	"$startbin" help
+# 	"$startbin" help
+	printstartbinusage
 	printfooter2
 }
 
@@ -162,7 +163,7 @@ versionid="v1.6 id9909"
 
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
-	cat > root/bin/setupbin.sh <<- EOM
+	cat >> root/bin/setupbin.sh <<- EOM
 versionid="v1.6 id9909"
 	unset LD_PRELOAD
 	EOM
@@ -172,7 +173,7 @@ versionid="v1.6 id9909"
 
 makestartbin() {
 	callfileheader "$startbin" 
-	cat > "$startbin" <<- EOM
+	cat >> "$startbin" <<- EOM
 versionid="v1.6 id9909"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
