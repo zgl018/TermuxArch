@@ -18,20 +18,15 @@ addREADME() {
 }
 
 addae() {
-	printf $fileheader1 > root/bin/ae 
-	cat >> root/bin/ae <<- EOM
-	# Contributed by https://github.com/cb125
-	EOM
-	printf $fileheader2 >> root/bin/ae 
+	callfileheader root/bin/ae "# Contributed by https://github.com/cb125" 
 	cat >> root/bin/ae <<- EOM
 	watch cat /proc/sys/kernel/random/entropy_avail
 	EOM
 	chmod 770 root/bin/ae 
 }
 
-addauser() { # Add Arch Linux user.
-	printf $fileheader1 > root/bin/addauser 
-	printf $fileheader2 >> root/bin/addauser 
+addauser() { 
+	callfileheader root/bin/addauser "# Add Arch Linux user."
 	cat >> root/bin/addauser <<- EOM
 	useradd \$1
 	cp -r /root /home/\$1
@@ -42,7 +37,7 @@ addauser() { # Add Arch Linux user.
 
 addbash_logout() {
 	cat > root/.bash_logout <<- EOM
-	if [ ! -e \$HOME/.hushlogout ] && [ ! -e \$HOME/.chushlogout ];then
+	if [ ! -e "\$HOME"/.hushlogout ] && [ ! -e "\$HOME"/.chushlogout ];then
 		. /etc/moto
 	fi
 	EOM
@@ -50,14 +45,14 @@ addbash_logout() {
 
 addbash_profile() {
 	cat > root/.bash_profile <<- EOM
-	if [ ! -e \$HOME/.hushlogin ] && [ ! -e \$HOME/.chushlogin ];then
+	if [ ! -e "\$HOME"/.hushlogin ] && [ ! -e "\$HOME"/.chushlogin ];then
 		. /etc/motd
 	fi
-	if [ -e \$HOME/.chushlogin ];then
-		rm \$HOME/.chushlogin 
+	if [ -e "\$HOME"/.chushlogin ];then
+		rm "\$HOME"/.chushlogin 
 	fi
-	PATH=\$HOME/bin:\$PATH
-	. \$HOME/.bashrc
+	PATH="\$HOME/bin:\$PATH"
+	. "\$HOME"/.bashrc
 	PS1="[\A\[\033[0;32m\] \W \[\033[0m\]]\\$ "
 	export TZ="$(getprop persist.sys.timezone)"
 	export LANG="$_LANGUAGE.UTF-8"
@@ -70,10 +65,10 @@ addbash_profile() {
 addbashrc() {
 	cat > root/.bashrc <<- EOM
 	alias c='cd .. && pwd'
-	alias ..="cd ../.. && pwd"
-	alias ...="cd ../../.. && pwd"
-	alias ....="cd ../../../.. && pwd"
-	alias .....="cd ../../../../.. && pwd"
+	alias ..='cd ../.. && pwd'
+	alias ...='cd ../../.. && pwd'
+	alias ....='cd ../../../.. && pwd'
+	alias .....='cd ../../../../.. && pwd'
 	alias d='du -hs'
 	alias e='logout'
 	alias egrep='egrep --color=always'
@@ -102,11 +97,7 @@ addbashrc() {
 }
 
 addcdtd() {
-	printf $fileheader1 > root/bin/cdtd 
-	cat >> root/bin/cdtd <<- EOM
-	# Usage: \`. cdtd\`  The dot sources \`cdtd\` which makes this shortcut script work.
-	EOM
-	printf $fileheader2 >> root/bin/cdtd 
+	callfileheader root/bin/cdtd "# Usage: \`. cdtd\`  The dot sources \`cdtd\` which makes this shortcut script work."
 	cat >> root/bin/cdtd <<- EOM
 	cd \$PREFIX/home/storage/downloads && pwd
 	EOM
@@ -114,11 +105,7 @@ addcdtd() {
 }
 
 addcdth() {
-	printf $fileheader1 > root/bin/cdth 
-	cat >> root/bin/cdth <<- EOM
-	# Usage: \`. cdth\`  The dot sources \`cdth\` which makes this shortcut script work. 
-	EOM
-	printf $fileheader2 >> root/bin/cdth 
+	callfileheader root/bin/cdth "# Usage: \`. cdth\`  The dot sources \`cdth\` which makes this shortcut script work."
 	cat >> root/bin/cdth <<- EOM
 	cd \$PREFIX/home && pwd
 	EOM
@@ -126,23 +113,18 @@ addcdth() {
 }
 
 addcdtmp() {
-	printf $fileheader1 > root/bin/cdtmp 
-	cat >> root/bin/cdtmp <<- EOM
-	# Usage: \`. cdtmp\`  The dot sources \`cdtmp\` which makes this shortcut script work. 
-	EOM
-	printf $fileheader2 >> root/bin/cdtmp 
+	callfileheader root/bin/cdtmp "# Usage: \`. cdtmp\`  The dot sources \`cdtmp\` which makes this shortcut script work."
 	cat >> root/bin/cdtmp <<- EOM
 	cd \$PREFIX/usr/tmp && pwd
 	EOM
 	chmod 770 root/bin/cdtmp 
 }
 
-addch() { # Creates .hushlogin and .hushlogout file
-	printf $fileheader1 > root/bin/ch 
-	printf $fileheader2 >> root/bin/ch 
+addch() { 
+	callfileheader root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id1636"
+versionid="v1.6 id9909"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -189,8 +171,7 @@ versionid="v1.6 id1636"
 }
 
 addexd() {
-	printf $fileheader1 > root/bin/exd 
-	printf $fileheader2 >> root/bin/exd 
+	callfileheader root/bin/exd "# Usage: \`. exd\`  The dot sources \`exd\` which makes this shortcut script work."
 	cat >> root/bin/exd <<- EOM
 	export DISPLAY=:0 PULSE_SERVER=tcp:127.0.0.1:4712
 	EOM
@@ -198,8 +179,7 @@ addexd() {
 }
 
 adddfa() {
-	printf $fileheader1 > root/bin/dfa
-	printf $fileheader2 >> root/bin/dfa
+	callfileheader root/bin/dfa
 	cat >> root/bin/dfa <<- EOM
 	units=\`df 2>/dev/null | awk 'FNR == 1 {print \$2}'\`
 	usrspace=\`df 2>/dev/null | grep "/data" | awk {'print \$4'}\`
@@ -273,8 +253,7 @@ addfbindprocstat8() {
 }
 
 addfbindexample() {
-	printf $fileheader1 > var/binds/fbindexample.prs
-	printf $fileheader2 >> var/binds/fbindexample.prs
+	callfileheader var/binds/fbindexample.prs
 	cat >> var/binds/fbindexample.prs <<- EOM
 	# To regenerate the start script use \`setupTermuxArch.sh refresh\`.  Add as many proot statements as you want; The init script will parse this file at startup.  Examples are included for your convenience.  Usage: -b host_path:guest_path
 	# prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
@@ -292,8 +271,7 @@ addbinds() { # Checks if /proc/stat is usable.
 }
 
 addfibs() {
-	printf $fileheader1 > var/binds/fibs 
-	printf $fileheader2 >> var/binds/fibs 
+	callfileheader root/bin/fibs 
 	cat >> root/bin/fibs  <<- EOM
 	find /proc/ -name maps 2>/dev/null |xargs awk '{print i\$6}' 2>/dev/null| grep '\.so' | sort | uniq
 	EOM
@@ -301,8 +279,7 @@ addfibs() {
 }
 
 addga() {
-	printf $fileheader1 > var/binds/ga 
-	printf $fileheader2 >> var/binds/ga 
+	callfileheader root/bin/ga 
 	cat >> root/bin/ga  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git
@@ -315,8 +292,7 @@ addga() {
 }
 
 addgcl() {
-	printf $fileheader1 > var/binds/gcl 
-	printf $fileheader2 >> var/binds/gcl 
+	callfileheader root/bin/gcl 
 	cat >> root/bin/gcl  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -329,8 +305,7 @@ addgcl() {
 }
 
 addgcm() {
-	printf $fileheader1 > var/binds/gcm 
-	printf $fileheader2 >> var/binds/gcm 
+	callfileheader root/bin/gcm 
 	cat >> root/bin/gcm  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -343,8 +318,7 @@ addgcm() {
 }
 
 addgpl() {
-	printf $fileheader1 > var/binds/gpl 
-	printf $fileheader2 >> var/binds/gpl 
+	callfileheader root/bin/gpl 
 	cat >> root/bin/gpl  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -357,11 +331,7 @@ addgpl() {
 }
 
 addgp() {
-	printf $fileheader1 > var/binds/gp 
-	cat >> root/bin/gp  <<- EOM
-	# git push https://username:password@github.com/username/repository.git master
-	EOM
-	printf $fileheader2 >> var/binds/gp 
+	callfileheader root/bin/gp "# git push https://username:password@github.com/username/repository.git master"
 	cat >> root/bin/gp  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -374,11 +344,10 @@ addgp() {
 }
 
 addkeys() {
-	printf $fileheader1 > var/binds/keys 
-	printf $fileheader2 >> var/binds/keys 
+	callfileheader root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="v1.6 id1636"
+versionid="v1.6 id9909"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -468,14 +437,10 @@ addmoto() {
 }
 
 addpc() { 
-	printf $fileheader1 > root/bin/pc 
-	cat >> root/bin/pc  <<- EOM
-	# pacman install packages shortcut
-	EOM
-	printf $fileheader2 >> root/bin/pc 
+	callfileheader root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id1636"
+versionid="v1.6 id9909"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -526,14 +491,10 @@ versionid="v1.6 id1636"
 }
 
 addpci() { 
-	printf $fileheader1 > root/bin/pci 
-	cat >> root/bin/pci  <<- EOM
-	# System update with pacman install packages shortcut. 
-	EOM
-	printf $fileheader2 >> root/bin/pci 
+	callfileheader root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id1636"
+versionid="v1.6 id9909"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -584,7 +545,7 @@ versionid="v1.6 id1636"
 
 addprofile() {
 	cat > root/.profile <<- EOM
-	. \$HOME/.bash_profile
+	. "\$HOME"/.bash_profile
 	EOM
 	if [ -e "$HOME"/.profile ] ; then
 		grep "proxy" "$HOME"/.profile |grep "export" >>  root/.profile 2>/dev/null||:
@@ -600,8 +561,7 @@ addresolvconf() {
 }
 
 addt() {
-	printf $fileheader1 > root/bin/t
-	printf $fileheader2 >> root/bin/t
+	callfileheader root/bin/t
 	cat >> root/bin/t  <<- EOM
 	if [ ! -e /usr/bin/tree ] ; then
 		pacman --noconfirm --color=always -S tree 
@@ -614,8 +574,7 @@ addt() {
 }
 
 addthstartarch() {
-	printf $fileheader1 > root/bin/th"$startbin" 
-	printf $fileheader2 >> root/bin/th"$startbin" 
+	callfileheader root/bin/th"$startbin" 
 	cat >> root/bin/th"$startbin" <<- EOM
 	echo $startbin help
 	$startbin help
@@ -636,32 +595,30 @@ addthstartarch() {
 }
 
 addtour() {
-	printf $fileheader1 > root/bin/tour 
-	printf $fileheader2 >> root/bin/tour 
+	callfileheader root/bin/tour "# A short tour that shows a few of the new files in ths system." 
 	cat >> root/bin/tour <<- EOM
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mls -R --color=always \$HOME \e[1;37m\n\n"
 	sleep 1
-	ls -R --color=always \$HOME
+	ls -R --color=always "\$HOME"
 	sleep 4
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mcat \$HOME/.bash_profile\e[1;37m\n\n"
 	sleep 1
-	cat \$HOME/.bash_profile
+	cat "\$HOME"/.bash_profile
 	sleep 4
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mcat \$HOME/.bashrc\e[1;37m\n\n"
 	sleep 1
-	cat \$HOME/.bashrc
+	cat "\$HOME"/.bashrc
 	sleep 4
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mcat \$HOME/bin/pci\e[1;37m\n\n"
 	sleep 1
-	cat \$HOME/bin/pci
+	cat "\$HOME"/bin/pci
 	printf "\\e[1;32m\\n%s \\e[38;5;121m%s \\n\\n\\e[4;38;5;129m%s\\e[0m\\n\\n\\e[1;34m%s \\e[38;5;135m%s\\e[0m\\n\\n" "==>" "Short tour is complete; Scroll up if you wish to study the output.  Run this script again at a later time, and it might be surprising at how this environment changes over time. " "If you are new to *nix, http://tldp.org has documentation." "IRC: " "https://wiki.archlinux.org/index.php/IRC_channel"
 	EOM
 	chmod 770 root/bin/tour 
 }
 
 addtrim() {
-	printf $fileheader1 > root/bin/trim 
-	printf $fileheader2 >> root/bin/trim 
+	callfileheader root/bin/trim
 	cat >> root/bin/trim <<- EOM
 	printf "\\\\n\\\\e[1;32m==> \\\\e[1;0mRunning \$0 … \\\\e[0m\\\\n\\\\n" 
 	echo [1/5] rm -rf /boot/
@@ -680,8 +637,7 @@ addtrim() {
 }
 
 addv() {
-	printf $fileheader1 > root/bin/v 
-	printf $fileheader2 >> root/bin/v 
+	callfileheader root/bin/v
 	cat >> root/bin/v  <<- EOM
 	if [[ -z "\${1:-}" ]] ; then
 		args="."
@@ -699,12 +655,7 @@ addv() {
 }
 
 addwe() { 
-	printf $fileheader1 > root/bin/we 
-	cat >> usr/bin/we <<- EOM
-	# Watch available entropy on device. 
-	# cat /proc/sys/kernel/random/entropy_avail contributed by https://github.com/cb125
-	EOM
-	printf $fileheader2 >> root/bin/we 
+	callfileheader usr/bin/we "# Watch available entropy on device." "cat /proc/sys/kernel/random/entropy_avail contributed by https://github.com/cb125"
 	cat >> usr/bin/we <<- EOM
 
 	i=1
@@ -846,8 +797,7 @@ addwe() {
 }
 
 addyt() {
-	printf $fileheader1 > root/bin/yt  
-	printf $fileheader2 >> root/bin/yt  
+	callfileheader root/bin/yt
 	cat >> root/bin/yt  <<- EOM
 	if [ ! -e /usr/bin/youtube-dl ] ; then
 		pacman --noconfirm --color=always -S python-pip

@@ -6,8 +6,33 @@
 # Printout statement subroutines for `setupTermuxArch.sh`.
 ################################################################################
 
-fileheader1="#!/bin/env bash\\n# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺\\n# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com\\n# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.\\n# https://sdrausty.github.io/TermuxArch/README has information about this project.\\n"
-fileheader2="################################################################################\\nIFS=$'\\\\n\\\\t'\\nset -Eeuo pipefail\\nshopt -s nullglob globstar\\n"
+fileheader[0]="#!/bin/env bash" 
+fileheader[1]="# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺"
+fileheader[2]="# Hosting sdrausty.github.io/TermuxArch courtesy https://pages.github.com." 
+fileheader[3]="# https://sdrausty.github.io/TermuxArch/README has info about this project."
+fileheader[4]="# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help." 
+fileheader[5]="################################################################################"
+fileheader[6]="IFS=$'\\n\\t'"
+fileheader[7]="set -Eeuo pipefail"
+fileheader[8]="shopt -s nullglob globstar"
+
+callfileheader() {
+	if [[ -z "${2:-}" ]] ; then
+		for i in "${!fileheader[@]}"; do
+			if [[ $i = 0 ]] ; then
+				printf "%s\n" "${fileheader[i]}" > "$1"
+			else
+				printf "%s\n" "${fileheader[i]}" >> "$1"
+			fi
+		done
+	else
+		printf "%s\n" "${fileheader[0]}" > "$1"
+		printf "%s\n" "$2" >> "$1"
+ 		for i in {1..8} ; do
+ 			printf "%s\n" "${fileheader[i]}" >> "$1"
+ 		done
+	fi
+}
 
 printcontacting() {
  	printf '\033]2;  🕛 > 🕞 Contacting worldwide mirror…\007'"\033[0;34m 🕛 > 🕞 \033[1;34mContacting worldwide mirror \033[0;32m$cmirror\033[1;34m: "

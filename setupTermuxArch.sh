@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id866826944106"
+versionid="v1.6 id9909"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -344,8 +344,16 @@ opt2() {
 		echo Setting mode to manual.
 		opt=manual
  		opt3 "$@"  
-	elif [[ "$2" = [Rr]* ]] ; then
+	elif [[ "$2" = [Rr][Ee]* ]] ; then
+		echo 
 		echo Setting mode to refresh.
+		shift 
+		arg2dir "$@" 
+		introrefresh "$@"  
+	elif [[ "$2" = [Rr]* ]] ; then
+		lcr="1"
+		echo 
+		echo "Setting mode to minimal refresh.  Use refresh for full refresh."
 		shift
 		arg2dir "$@" 
 		introrefresh "$@"  
@@ -364,8 +372,16 @@ opt3() {
 		shift 2 
 		arg2dir "$@" 
 		intro "$@"  
-	elif [[ "$3" = [Rr]* ]] ; then
+	elif [[ "$3" = [Rr][Ee]* ]] ; then
+		echo 
 		echo Setting mode to refresh.
+		shift 2 
+		arg2dir "$@" 
+		introrefresh "$@"  
+	elif [[ "$3" = [Rr]* ]] ; then
+		lcr="1"
+		echo 
+		echo "Setting mode to minimal refresh.  Use refresh for full refresh."
 		shift 2 
 		arg2dir "$@" 
 		introrefresh "$@"  
@@ -412,6 +428,14 @@ printsha512syschker() {
 	exit 
 }
 
+printstartbinusage() {
+ 	namestartarch "$@"  
+	if [[ -x "$(command -v "$startbin")" ]] ; then
+		echo "$startbin" help 
+		"$startbin" help 
+	fi
+}
+
 printusage() {
 	printf "\\n\\e[1;33m %s     \\e[0;32m%s \\e[1;34m%s\\n" "HELP" "${0##*/} help" "shall output the help screen." 
 	printf "\\n\\e[1;33m %s    \\e[0;32m%s \\e[1;34m%s\\n" "TERSE" "${0##*/} he[lp]" "shall output the terse help screen." 
@@ -425,11 +449,7 @@ printusage() {
 	awk 'NR>=636 && NR<=776'  "${0##*/}" | awk '$1 == "##"' | awk '{ $1 = ""; print }' | awk '1;{print ""}'
 	printf "\\e[1;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 	fi
- 	namestartarch "$@"  
-	if [[ -x "$(command -v "$startbin")" ]] ; then
-		echo "$startbin" help 
-		"$startbin" help 
-	fi
+	printstartbinusage
 	printf "\\e[0;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 #	## Used to generate signals.
 #  	((1/0)) # 1
@@ -597,7 +617,7 @@ declare cpuabi7="armeabi-v7a"
 declare cpuabi8="arm64-v8a"
 declare cpuabix86="x86"
 declare cpuabix86_64="x86_64"
-declare dfl=/gen # Used for development 
+declare dfl=""	## Used for development.  
 declare dm="wget"	## download manager
 declare dmverbose="-q"	## -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
