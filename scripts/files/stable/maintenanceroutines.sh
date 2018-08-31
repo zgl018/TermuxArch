@@ -11,7 +11,7 @@ sysinfo() {
 	systeminfo ## & spinner "Generating" "System Information…" 
 	printf "\\e[38;5;76m"
 	cat "${wdir}setupTermuxArchSysInfo$stime".log
-	printf "\\n\\e[1mThis information is important if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve \`setupTermuxArch.sh\`.  Include is along with a screenshot of the topic.  Also include information about input and output.  \\n\\n"
+	printf "\\n\\e[1mThis information may be quite important when planning issue(s) at https://github.com/sdrausty/TermuxArch/issues with the hope of improving \`setupTermuxArch.sh\`;  Include input and output, along with screenshot(s) relavent to X, and similar.\\n\\n"
 	exit
 }
 

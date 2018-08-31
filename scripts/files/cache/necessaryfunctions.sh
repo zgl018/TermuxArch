@@ -120,7 +120,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	callfileheader root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="v1.6 id2314"
+versionid="gen.v1.6 id988700548420"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -164,7 +164,7 @@ versionid="v1.6 id2314"
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id2314"
+versionid="gen.v1.6 id988700548420"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -174,7 +174,7 @@ versionid="v1.6 id2314"
 makestartbin() {
 	callfileheader "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id2314"
+versionid="gen.v1.6 id988700548420"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -341,19 +341,11 @@ runfinishsetup() {
 	"$installdir"/root/bin/setupbin.sh 
 }
 
-_setlanguage() { 
- 	_LANG="$(getprop gsm.sim.operator.iso-country)"
+setlanguage() { 
+ 	_LANG="$(getprop persist.sys.locale)"
 	_LANGU="${_LANG:2:1}"
 	if [[ "$_LANGU" != "-" ]];then
 		_LANG="$(getprop ro.product.locale)"
-		_LANGU="${_LANG:2:1}"
-	fi
-	if [[ "$_LANGU" != "-" ]];then
-		_LANG="$(getprop persist.sys.locale)"
-		_LANGU="${_LANG:2:1}"
-	fi
-	if [[ "$_LANGU" != "-" ]];then
-		_LANG="$(ro.build.target_country)"
 		_LANGU="${_LANG:2:1}"
 	fi
 	if [[ "$_LANGU" != "-" ]];then
@@ -361,7 +353,7 @@ _setlanguage() {
 	fi
 	_LANGUAGE="${_LANG//-/_}"
 }
-_setlanguage
+setlanguage
 
 setlocale() {
 	setlanguage

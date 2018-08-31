@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id988700548420"
+versionid="v1.6 id2314"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -555,7 +555,7 @@ standardid() {
 	introstnd
 }
 
-traperror() { # Run on script signal.
+traperror() { # Run on script error.
 	local rv="$?"
 	printf "\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING:  Generated script signal ${rv:-unknown} near or at line number ${1:-unknown} by \`${2:-command}\`!"
 	exit 201
