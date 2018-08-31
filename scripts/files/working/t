@@ -1,2 +1,0 @@
-#!/bin/env bash
-	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in your preferred language, use " "Settings > Language & Keyboard > Language " "in Android, and then run " "\`${0##*/} r\`" "for a quick system refresh." "==> "
