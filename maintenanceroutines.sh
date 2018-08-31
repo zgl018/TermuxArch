@@ -8,9 +8,7 @@
 sysinfo() {
 	spaceinfo
 	printf "\\n\\e[1;32mGenerating TermuxArch system information; Please wait…\\n\\n" 
-	set +Ee
-	systeminfo & spinner "Generating" "System Information…" 
-	set -Ee
+	systeminfo ## & spinner "Generating" "System Information…" 
 	printf "\\e[38;5;76m"
 	cat "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "\\n\\e[1mThis information is important if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve \`setupTermuxArch.sh\`.  Include is along with a screenshot of the topic.  Also include information about input and output.  \\n\\n"
@@ -98,9 +96,7 @@ loadimage() {
 	printf "\\n" 
 	wakelock
 	prepinstalldir 
-	set +Ee
-  	copyimage "$@" & spinner "Copying" "…" 
-	set -Ee
+  	copyimage ## "$@" & spinner "Copying" "…" 
 	printmd5check
 	md5check
 	printcu 

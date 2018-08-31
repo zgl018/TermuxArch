@@ -120,7 +120,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	callfileheader root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="v1.6 id9448"
+versionid="v1.6 id8850"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -164,7 +164,7 @@ versionid="v1.6 id9448"
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id9448"
+versionid="v1.6 id8850"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -174,7 +174,7 @@ versionid="v1.6 id9448"
 makestartbin() {
 	callfileheader "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id9448"
+versionid="v1.6 id8850"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -254,9 +254,7 @@ md5check() {
 	if "$PREFIX"/bin/applets/md5sum -c "$file".md5 1>/dev/null ; then
 		printmd5success
 		printf "\\e[0;32m"
-		set +Ee	
-		preproot & spinner "Unpacking" "$file…" 
- 		set -Ee
+		preproot ## & spinner "Unpacking" "$file…" 
 	else
 		rm -f "$installdir"/*.tar.gz "$installdir"/*.tar.gz.md5
 		printmd5error

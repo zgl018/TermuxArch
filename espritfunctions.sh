@@ -199,7 +199,11 @@ runfinishsetupq() {
 	printf '\\n'
 }
 
-spinner() { # Based on https://github.com/ringohub/sh-spinner
+spinner() {
+	:
+}
+
+spinnerdepreciated() { # Based on https://github.com/ringohub/sh-spinner
  	printf "\\e[?25l\\e[1;32m"
 #  	SPINNER="⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
 #  	SPINNER="🌑🌒🌓🌔🌕🌖🌗🌘"
