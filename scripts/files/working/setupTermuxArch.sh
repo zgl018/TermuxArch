@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id648144164478"
+versionid="v1.6 id5659"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -429,6 +429,7 @@ printsha512syschker() {
 }
 
 printstartbinusage() {
+	printf "\\n\\e[1;32m" 
  	namestartarch "$@"  
 	if [[ -x "$(command -v "$startbin")" ]] ; then
 		echo "$startbin" help 
@@ -445,7 +446,8 @@ printusage() {
  	printf "\\n\\e[1;33m %s    \\e[0;32m%s \\e[1;34m%s\\n" "PURGE" "${0##*/} purge" "shall uninstall Arch Linux from Termux." 
 	printf "\\n\\e[1;33m %s  \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\n\\n" "SYSINFO" "${0##*/} sysinfo" "shall create" "setupTermuxArchSysInfo$stime.log" "and populate it with system information.  Post this file along with detailed information at" "https://github.com/sdrausty/TermuxArch/issues" ".  If screenshots will help in resolving an issue better, include these along with information from the system information log file in a post as well." 
 	if [[ "$lcc" = 1 ]] ; then
-	awk 'NR>=636 && NR<=776'  "${0##*/}" | awk '$1 == "##"' | awk '{ $1 = ""; print }' | awk '1;{print ""}'
+	printf "\\n\\e[1;32m" 
+	awk 'NR>=639 && NR<=776'  "${0##*/}" | awk '$1 == "##"' | awk '{ $1 = ""; print }' | awk '1;{print ""}'
 	fi
 	printstartbinusage
 }

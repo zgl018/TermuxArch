@@ -120,7 +120,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	callfileheader root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="v1.6 id2314"
+versionid="v1.6 id5659"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -164,7 +164,7 @@ versionid="v1.6 id2314"
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id2314"
+versionid="v1.6 id5659"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -174,7 +174,7 @@ versionid="v1.6 id2314"
 makestartbin() {
 	callfileheader "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id2314"
+versionid="v1.6 id5659"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"

@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id2314"
+versionid="v1.6 id5659"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -429,12 +429,11 @@ printsha512syschker() {
 }
 
 printstartbinusage() {
+	printf "\\n\\e[1;32m" 
  	namestartarch "$@"  
 	if [[ -x "$(command -v "$startbin")" ]] ; then
-	printf "\\e[0;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 		echo "$startbin" help 
 		"$startbin" help 
-	printf "\\e[0;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 	fi
 }
 
@@ -447,18 +446,10 @@ printusage() {
  	printf "\\n\\e[1;33m %s    \\e[0;32m%s \\e[1;34m%s\\n" "PURGE" "${0##*/} purge" "shall uninstall Arch Linux from Termux." 
 	printf "\\n\\e[1;33m %s  \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\n\\n" "SYSINFO" "${0##*/} sysinfo" "shall create" "setupTermuxArchSysInfo$stime.log" "and populate it with system information.  Post this file along with detailed information at" "https://github.com/sdrausty/TermuxArch/issues" ".  If screenshots will help in resolving an issue better, include these along with information from the system information log file in a post as well." 
 	if [[ "$lcc" = 1 ]] ; then
-	printf "\\e[0;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-	awk 'NR>=636 && NR<=776'  "${0##*/}" | awk '$1 == "##"' | awk '{ $1 = ""; print }' | awk '1;{print ""}'
+	printf "\\n\\e[1;32m" 
+	awk 'NR>=639 && NR<=776'  "${0##*/}" | awk '$1 == "##"' | awk '{ $1 = ""; print }' | awk '1;{print ""}'
 	fi
 	printstartbinusage
-#	## Used to generate signals.
-#  	((1/0)) # 1
-# 	echo hello | grep "asdf" # 1
-# 	format c: #127
-#  	. foo
-#  	. 35e493e
-# 	 (false; echo one) | cat; echo two # 1 & 201
-# 	cat
 }
 
 prootif() {
@@ -522,8 +513,6 @@ rmarchq() {
 tapin() {
 	if [[ "$aptin" != "" ]] ; then
 		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\b\\e[1;34m…\\n\\n\\e[1;32m" "$aptin"
-#		apt update && apt -o APT::Keep-Downloaded-Packages="true" upgrade -y
-#		apt -o APT::Keep-Downloaded-Packages="true" install "$aptin" -y
 		pkg install "$aptin" -o APT::Keep-Downloaded-Packages="true" --yes 
 		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\b\\e[1;34m: \\e[1;32mDONE\\n\\e[0m" "$aptin"
 	fi
