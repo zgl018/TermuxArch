@@ -28,9 +28,9 @@ addae() {
 addauser() { 
 	callfileheader root/bin/addauser "# Add Arch Linux user."
 	cat >> root/bin/addauser <<- EOM
-	useradd \$1
-	cp -r /root /home/\$1
-	su - \$1
+	useradd "\$1"
+	cp -r /root /home/"\$1"
+	su - "\$1"
 	EOM
 	chmod 770 root/bin/addauser 
 }
@@ -99,7 +99,7 @@ addbashrc() {
 addcdtd() {
 	callfileheader root/bin/cdtd "# Usage: \`. cdtd\`  The dot sources \`cdtd\` which makes this shortcut script work."
 	cat >> root/bin/cdtd <<- EOM
-	cd \$PREFIX/home/storage/downloads && pwd
+	cd "\$PREFIX"/home/storage/downloads && pwd
 	EOM
 	chmod 770 root/bin/cdtd 
 }
@@ -107,7 +107,7 @@ addcdtd() {
 addcdth() {
 	callfileheader root/bin/cdth "# Usage: \`. cdth\`  The dot sources \`cdth\` which makes this shortcut script work."
 	cat >> root/bin/cdth <<- EOM
-	cd \$PREFIX/home && pwd
+	cd "\$PREFIX/home" && pwd
 	EOM
 	chmod 770 root/bin/cdth 
 }
@@ -115,7 +115,7 @@ addcdth() {
 addcdtmp() {
 	callfileheader root/bin/cdtmp "# Usage: \`. cdtmp\`  The dot sources \`cdtmp\` which makes this shortcut script work."
 	cat >> root/bin/cdtmp <<- EOM
-	cd \$PREFIX/usr/tmp && pwd
+	cd "\$PREFIX"/usr/tmp && pwd
 	EOM
 	chmod 770 root/bin/cdtmp 
 }
@@ -124,7 +124,7 @@ addch() {
 	callfileheader root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="gen.v1.6 id010077470900"
+versionid="v1.6 id0324"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -164,8 +164,8 @@ versionid="gen.v1.6 id010077470900"
 
 	printf "\\\\n\\\\e[1;32m==> \\\\e[1;37m%s \\\\e[1;32m%s %s %s\\\e[0m%s\\\\b…\\\\n\\\\n" "Running" "TermuxArch \$(basename "\$0")" "\$args" "\$versionid"  
 
-	touch \$HOME/.hushlogin \$HOME/.hushlogout
-	ls \$HOME/.hushlogin \$HOME/.hushlogout
+	touch "\$HOME"/.hushlogin "\$HOME"/.hushlogout
+	ls "\$HOME"/.hushlogin "\$HOME"/.hushlogout
 	EOM
 	chmod 770 root/bin/ch 
 }
@@ -181,9 +181,9 @@ addexd() {
 adddfa() {
 	callfileheader root/bin/dfa
 	cat >> root/bin/dfa <<- EOM
-	units=\`df 2>/dev/null | awk 'FNR == 1 {print \$2}'\`
-	usrspace=\`df 2>/dev/null | grep "/data" | awk {'print \$4'}\`
-	printf "\e[0;33m\$usrspace \$units of free user space is available on this device.\n\e[0m"
+	units="\$(df 2>/dev/null | awk 'FNR == 1 {print \$2}')"
+	usrspace="\$(df 2>/dev/null | grep "/data" | awk {'print \$4'})"
+	printf "\e[0;33m%s\n\e[0m" "\$usrspace \$units of free user space is available on this device."
 	EOM
 	chmod 770 root/bin/dfa 
 }
@@ -296,9 +296,9 @@ addgcl() {
 	cat >> root/bin/gcl  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
-		git clone \$@
+		git clone "\$@"
 	else
-		git clone \$@
+		git clone "\$@"
 	fi
 	EOM
 	chmod 770 root/bin/gcl 
@@ -347,7 +347,7 @@ addkeys() {
 	callfileheader root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="gen.v1.6 id010077470900"
+versionid="v1.6 id0324"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -440,7 +440,7 @@ addpc() {
 	callfileheader root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="gen.v1.6 id010077470900"
+versionid="v1.6 id0324"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -494,7 +494,7 @@ addpci() {
 	callfileheader root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="gen.v1.6 id010077470900"
+versionid="v1.6 id0324"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -530,11 +530,11 @@ versionid="gen.v1.6 id010077470900"
 	printf "\\\\n\\\\e[1;32m==> \\\\e[1;37m%s \\\\e[1;32m%s %s %s \\\e[0m%s…\\\\n\\\\n" "Running" "TermuxArch \$(basename "\$0")" "\$args" "\$versionid"  
 	if [[ -z "\${1:-}" ]];then
 	pacman --noconfirm --color=always -Syu
-	elif [[ \$1 = "e" ]];then
+	elif [[ "\$1" = "e" ]];then
 	pacman --noconfirm --color=always -Syu base base-devel emacs "\${@:2}" 
-	elif [[ \$1 = "e8" ]];then
+	elif [[ "\$1" = "e8" ]];then
 	pacman --noconfirm --color=always -Syu base base-devel emacs jdk8-openjdk "\${@:2}" 
-	elif [[ \$1 = "e10" ]];then
+	elif [[ "\$1" = "e10" ]];then
 	pacman --noconfirm --color=always -Syu base base-devel emacs jdk10-openjdk "\${@:2}" 
 	else
 	pacman --noconfirm --color=always -Syu "\$@" 
