@@ -129,7 +129,7 @@ addch() {
 	callfileheader root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id9564"
+versionid="gen.v1.6 id728547147672"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -258,9 +258,8 @@ addfbindprocstat8() {
 }
 
 addfbindexample() {
-	callfileheader var/binds/fbindexample.prs
+	callfileheader var/binds/fbindexample.prs "# To regenerate the start script use \`setupTermuxArch.sh re[fresh[\`.  Add as many proot statements as you want; The init script will parse this file at refresh.  An example is included for convenience.  Usage: prootstmnt+=\"-b host_path:guest_path \" The space before the last double quote is necessary."
 	cat >> var/binds/fbindexample.prs <<- EOM
-	# To regenerate the start script use \`setupTermuxArch.sh refresh\`.  Add as many proot statements as you want; The init script will parse this file at startup.  Examples are included for your convenience.  Usage: -b host_path:guest_path
 	# prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
 	EOM
 }
@@ -352,7 +351,7 @@ addkeys() {
 	callfileheader root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="v1.6 id9564"
+versionid="gen.v1.6 id728547147672"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -445,7 +444,7 @@ addpc() {
 	callfileheader root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id9564"
+versionid="gen.v1.6 id728547147672"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -499,7 +498,7 @@ addpci() {
 	callfileheader root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id9564"
+versionid="gen.v1.6 id728547147672"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
