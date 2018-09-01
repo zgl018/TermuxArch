@@ -160,7 +160,7 @@ refreshsys() { # Refreshes
 	makefinishsetup
 	makesetupbin 
 	makestartbin 
-	setlocale
+	_setlocale
 	printf "\\n" 
 	wakelock
 	printf '\033]2; setupTermuxArch.sh refresh 📲 \007'
