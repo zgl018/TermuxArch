@@ -342,7 +342,7 @@ runfinishsetup() {
 	"$installdir"/root/bin/setupbin.sh 
 }
 
-_setlocale() { # Uses system settings to set locale.
+_SETLANGUAGE() { # Uses system settings to set locale.
 	_LANGIN[0]="$(getprop user.language)"
 	_LANGIN[1]="$(getprop user.region)"
 	_LANGIN[2]="$(getprop persist.sys.country)"
@@ -358,20 +358,23 @@ _setlocale() { # Uses system settings to set locale.
 		fi
 	done
 	if [[ "$_LANGUAGE" != *_* ]];then
-	awk '/$_LANGIN[0]/ && /_LANGIN[1]/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
 	_LANGUAGE="${_LANGIN[0]}_${_LANGIN[1]}"
 	fi 
 	if [[ "$_LANGUAGE" != *_* ]];then
-	awk '/$_LANGIN[3]/ && /_LANGIN[2]/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
 	_LANGUAGE="${_LANGIN[3]}_${_LANGIN[2]}"
 	fi 
 	if [[ "$_LANGUAGE" != *_* ]];then
-	awk '/$_LANGIN[6]/ && /_LANGIN[7]/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
 	_LANGUAGE="${_LANGIN[6]}_${_LANGIN[7]}"
 	fi 
 	if [[ "$_LANGUAGE" != *_* ]];then
   		_LANGUAGE="$(en_US)"
-  	fi
+	fi 
+	}
+_SETLANGUAGE
+
+_SETLOCALE() { # Uses system settings to set locale.
+# 	cp  etc/locale.gen  etc/locale.gen.${stime}tabkp 
+# 	awk '/$_LANGUAGE/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
 	echo LANG="$_LANGUAGE".UTF-8 > etc/locale.conf 
 	echo LANGUAGE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	echo LC_ADDRESS="$_LANGUAGE".UTF-8 >> etc/locale.conf 
@@ -387,9 +390,9 @@ _setlocale() { # Uses system settings to set locale.
 	echo LC_TELEPHONE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	echo LC_TIME="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	if [[ -e etc/locale.gen ]]; then
-		#echo $_LANGUAGE
-		awk '/$_LANGUAGE/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
- 		sed -i "/\\#$_LANGUAGE.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 
+		echo $_LANGUAGE
+#		awk '/$_LANGUAGE/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
+  		sed -i "/\\#$_LANGUAGE.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 
 	else
 		cat >  etc/locale.gen <<- EOM
 		$_LANGUAGE.UTF-8 UTF-8 
@@ -399,7 +402,7 @@ _setlocale() { # Uses system settings to set locale.
 
 touchupsys() {
 	addmotd
-	_setlocale
+	_SETLOCALE
 	runfinishsetup
 	rm -f root/bin/finishsetup.sh
 	rm -f root/bin/setupbin.sh 
