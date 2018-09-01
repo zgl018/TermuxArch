@@ -127,6 +127,7 @@ refreshsys() { # Refreshes
 	fi
 	cd "$installdir"
 	preprootdir
+	_SETLANGUAGE
 	addREADME
 	addae
 	addauser
