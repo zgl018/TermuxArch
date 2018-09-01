@@ -120,7 +120,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	callfileheader root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="v1.6 id6775"
+versionid="v1.6 id8726"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -165,7 +165,7 @@ versionid="v1.6 id6775"
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id6775"
+versionid="v1.6 id8726"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -175,7 +175,7 @@ versionid="v1.6 id6775"
 makestartbin() {
 	callfileheader "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id6775"
+versionid="v1.6 id8726"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -370,7 +370,7 @@ _setlocale() { # Uses system settings to set locale.
 	_LANGUAGE="${_LANGIN[6]}_${_LANGIN[7]}"
 	fi 
 	if [[ "$_LANGUAGE" != *_* ]];then
-  		_LANGUAGE="$(en-US)"
+  		_LANGUAGE="$(en_US)"
   	fi
 	echo LANG="$_LANGUAGE".UTF-8 > etc/locale.conf 
 	echo LANGUAGE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
