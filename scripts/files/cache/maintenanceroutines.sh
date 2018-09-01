@@ -11,7 +11,7 @@ sysinfo() {
 	systeminfo ## & spinner "Generating" "System Information…" 
 	printf "\\e[38;5;76m"
 	cat "${wdir}setupTermuxArchSysInfo$stime".log
-	printf "\\n\\e[1mThis information is important if you plan to open up an issue at https://github.com/sdrausty/TermuxArch/issues to improve \`setupTermuxArch.sh\`.  Include is along with a screenshot of the topic.  Also include information about input and output.  \\n\\n"
+	printf "\\n\\e[1mThis information may be quite important when planning issue(s) at https://github.com/sdrausty/TermuxArch/issues with the hope of improving \`setupTermuxArch.sh\`;  Include input and output, along with screenshot(s) relavent to X, and similar.\\n\\n"
 	exit
 }
 
@@ -29,6 +29,9 @@ systeminfo () {
 	printf "%s %s\\n" "[getprop ro.build.version.release]:" "[$(getprop ro.build.version.release)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "%s %s\\n" "[getprop ro.build.version.preview_sdk]:" "[$(getprop ro.build.version.preview_sdk)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "%s %s\\n" "[getprop ro.build.version.sdk]:" "[$(getprop ro.build.version.sdk)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.com.google.clientidbase]:" "[$(getprop ro.com.google.clientidbase)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.com.google.clientidbase.am]:" "[$(getprop ro.com.google.clientidbase.am)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.com.google.clientidbase.ms]:" "[$(getprop ro.com.google.clientidbase.ms)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "%s %s\\n" "[getprop ro.product.device]:" "[$(getprop ro.product.device)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "%s %s\\n" "[getprop ro.product.cpu.abi]:" "[$(getprop ro.product.cpu.abi)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "%s %s\\n" "[getprop ro.product.first_api_level]:" "[$(getprop ro.product.first_api_level)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
@@ -160,7 +163,7 @@ refreshsys() { # Refreshes
 	makefinishsetup
 	makesetupbin 
 	makestartbin 
-	setlocale
+	_setlocale
 	printf "\\n" 
 	wakelock
 	printf '\033]2; setupTermuxArch.sh refresh 📲 \007'

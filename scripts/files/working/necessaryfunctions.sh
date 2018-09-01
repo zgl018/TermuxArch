@@ -120,7 +120,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	callfileheader root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="v1.6 id8370"
+versionid="gen.v1.6 id227346934989"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -166,7 +166,7 @@ versionid="v1.6 id8370"
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id8370"
+versionid="gen.v1.6 id227346934989"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -176,7 +176,7 @@ versionid="v1.6 id8370"
 makestartbin() {
 	callfileheader "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id8370"
+versionid="gen.v1.6 id227346934989"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -345,31 +345,44 @@ runfinishsetup() {
 
 _setlanguage() { 
  	_LANGIN[0]="gsm.sim.operator.iso-country"
- 	_LANGIN[0]="ro.product.locale"
-	_LANGIN[0]="ro.build.target_country"
-	_LANGIN[0]="persist.sys.locale"
- 	_LANG="$(getprop gsm.sim.operator.iso-country)"
-	_LANGU="${_LANG:2:1}"
-	if [[ "$_LANGU" != "-" ]];then
-		_LANG="$(getprop ro.product.locale)"
-		_LANGU="${_LANG:2:1}"
-	elif [[ "$_LANGU" != "-" ]];then
-		_LANG="$(getprop persist.sys.locale)"
-		_LANGU="${_LANG:2:1}"
-	elif [[ "$_LANGU" != "-" ]];then
-		_LANG="$(getprop ro.build.target_country)"
-		_LANGU="${_LANG:2:1}"
-	elif [[ "$_LANGU" != "-" ]];then
-		_LANG="$(en-US)"
-	fi
-	_LANGUAGE="${_LANG//-/_}"
+	_LANGIN[1]="persist.sys.language"
+	_LANGIN[2]="persist.sys.locale"
+	_LANGIN[3]="ro.build.target_country"
+ 	_LANGIN[4]="ro.product.locale"
+	_LANGIN[5]="ro.product.locale.language"
+	_LANGIN[6]="ro.product.locale.region"
+	_LANGIN[7]="user.language"
+	_LANGIN[8]="user.region"
+	for i in "${!_LANGIN[@]}"; do
+	 	_LANG="$(getprop "${_LANGIN[i]}")"
+		if [[ "$_LANG" = *-* ]];then
+			_LANGUAGE="$_LANG"
+			break
+		fi
+	done
+  	if [[ "$_LANGUAGE" != *-* ]];then
+  		_LANGUAGE="$(en-US)"
+  	fi
+	_LANGUAGE="${_LANGUAGE//-/_}"
 }
 _setlanguage
 
 _setlocale() { # Uses system settings to set locale.
 	_setlanguage
-	echo LANG="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LANG="$_LANGUAGE".UTF-8 > etc/locale.conf 
 	echo LANGUAGE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_ADDRESS="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_COLLATE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_CTYPE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_IDENTIFICATION="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_MEASUREMENT="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_MESSAGES="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_MONETARY="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_NAME="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_NUMERIC="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_PAPER="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_TELEPHONE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	echo LC_TIME="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	if [[ -e etc/locale.gen ]]; then
 		sed -i "/\\#$_LANGUAGE.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 
 	else

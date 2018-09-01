@@ -120,7 +120,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	callfileheader root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="gen.v1.6 id988700548420"
+versionid="v1.6 id8370"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -154,9 +154,11 @@ versionid="gen.v1.6 id988700548420"
 	fi
 	fi
 	cat >> root/bin/"$binfnstp" <<- EOM
-	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in your preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
+	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
+	sleep 4
    	locale-gen ||:
-	printf "\\n\\e[1;34m 🕛 > 🕤 Arch Linux in Termux is installed and configured 📲  \\e[0m" '\033]2; 🕛 > 🕤 Arch Linux in Termux is installed and configured 📲 \007'
+	printf "\\n\\e[1;34m%s  \\e[0m" "🕛 > 🕤 Arch Linux in Termux is installed and configured 📲 " 
+	printf "\\e]2;%s\\007" " 🕛 > 🕤 Arch Linux in Termux is installed and configured 📲 "
 	EOM
 	chmod 770 root/bin/"$binfnstp" 
 }
@@ -164,7 +166,7 @@ versionid="gen.v1.6 id988700548420"
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="gen.v1.6 id988700548420"
+versionid="v1.6 id8370"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -174,7 +176,7 @@ versionid="gen.v1.6 id988700548420"
 makestartbin() {
 	callfileheader "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="gen.v1.6 id988700548420"
+versionid="v1.6 id8370"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -341,22 +343,31 @@ runfinishsetup() {
 	"$installdir"/root/bin/setupbin.sh 
 }
 
-setlanguage() { 
- 	_LANG="$(getprop persist.sys.locale)"
+_setlanguage() { 
+ 	_LANGIN[0]="gsm.sim.operator.iso-country"
+ 	_LANGIN[0]="ro.product.locale"
+	_LANGIN[0]="ro.build.target_country"
+	_LANGIN[0]="persist.sys.locale"
+ 	_LANG="$(getprop gsm.sim.operator.iso-country)"
 	_LANGU="${_LANG:2:1}"
 	if [[ "$_LANGU" != "-" ]];then
 		_LANG="$(getprop ro.product.locale)"
 		_LANGU="${_LANG:2:1}"
-	fi
-	if [[ "$_LANGU" != "-" ]];then
+	elif [[ "$_LANGU" != "-" ]];then
+		_LANG="$(getprop persist.sys.locale)"
+		_LANGU="${_LANG:2:1}"
+	elif [[ "$_LANGU" != "-" ]];then
+		_LANG="$(getprop ro.build.target_country)"
+		_LANGU="${_LANG:2:1}"
+	elif [[ "$_LANGU" != "-" ]];then
 		_LANG="$(en-US)"
 	fi
 	_LANGUAGE="${_LANG//-/_}"
 }
-setlanguage
+_setlanguage
 
-setlocale() {
-	setlanguage
+_setlocale() { # Uses system settings to set locale.
+	_setlanguage
 	echo LANG="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	echo LANGUAGE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	if [[ -e etc/locale.gen ]]; then
@@ -370,7 +381,7 @@ setlocale() {
 
 touchupsys() {
 	addmotd
-	setlocale
+	_setlocale
 	runfinishsetup
 	rm -f root/bin/finishsetup.sh
 	rm -f root/bin/setupbin.sh 

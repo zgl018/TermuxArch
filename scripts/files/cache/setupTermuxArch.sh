@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id988700548420"
+versionid="v1.6 id8370"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -429,12 +429,11 @@ printsha512syschker() {
 }
 
 printstartbinusage() {
+	printf "\\n\\e[1;32m" 
  	namestartarch "$@"  
 	if [[ -x "$(command -v "$startbin")" ]] ; then
-	printf "\\e[0;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 		echo "$startbin" help 
 		"$startbin" help 
-	printf "\\e[0;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 	fi
 }
 
@@ -447,18 +446,10 @@ printusage() {
  	printf "\\n\\e[1;33m %s    \\e[0;32m%s \\e[1;34m%s\\n" "PURGE" "${0##*/} purge" "shall uninstall Arch Linux from Termux." 
 	printf "\\n\\e[1;33m %s  \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\n\\n" "SYSINFO" "${0##*/} sysinfo" "shall create" "setupTermuxArchSysInfo$stime.log" "and populate it with system information.  Post this file along with detailed information at" "https://github.com/sdrausty/TermuxArch/issues" ".  If screenshots will help in resolving an issue better, include these along with information from the system information log file in a post as well." 
 	if [[ "$lcc" = 1 ]] ; then
-	printf "\\e[0;33m%s\\e[1;32m\\n\\n" "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-	awk 'NR>=636 && NR<=776'  "${0##*/}" | awk '$1 == "##"' | awk '{ $1 = ""; print }' | awk '1;{print ""}'
+	printf "\\n\\e[1;32m" 
+	awk 'NR>=639 && NR<=776'  "${0##*/}" | awk '$1 == "##"' | awk '{ $1 = ""; print }' | awk '1;{print ""}'
 	fi
 	printstartbinusage
-#	## Used to generate signals.
-#  	((1/0)) # 1
-# 	echo hello | grep "asdf" # 1
-# 	format c: #127
-#  	. foo
-#  	. 35e493e
-# 	 (false; echo one) | cat; echo two # 1 & 201
-# 	cat
 }
 
 prootif() {
@@ -522,8 +513,6 @@ rmarchq() {
 tapin() {
 	if [[ "$aptin" != "" ]] ; then
 		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\b\\e[1;34m…\\n\\n\\e[1;32m" "$aptin"
-#		apt update && apt -o APT::Keep-Downloaded-Packages="true" upgrade -y
-#		apt -o APT::Keep-Downloaded-Packages="true" install "$aptin" -y
 		pkg install "$aptin" -o APT::Keep-Downloaded-Packages="true" --yes 
 		printf "\\n\\e[1;34mInstalling \\e[0;32m%s\\b\\e[1;34m: \\e[1;32mDONE\\n\\e[0m" "$aptin"
 	fi
@@ -555,7 +544,7 @@ standardid() {
 	introstnd
 }
 
-traperror() { # Run on script signal.
+traperror() { # Run on script error.
 	local rv="$?"
 	printf "\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING:  Generated script signal ${rv:-unknown} near or at line number ${1:-unknown} by \`${2:-command}\`!"
 	exit 201
@@ -644,8 +633,6 @@ if [[ "$commandif" = "" ]] ; then
 	printf "\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING: Run \`bash ${0##*/}\` or \`./${0##*/}\` from the BASH shell in the OS system in Termux, i.e. Amazon Fire, Android and Chromebook."
 	exit
 fi
-## Gets information about device cpu using getprop.
-cpuabi="$(getprop ro.product.cpu.abi)" 
 ## Generates pseudo random number to create uniq strings.
 if [[ -f  /proc/sys/kernel/random/uuid ]] ; then
 	sti="$(cat /proc/sys/kernel/random/uuid)"
@@ -658,6 +645,8 @@ fi
 oned="$(date +%s)" 
 oneda="${oned: -1}" 
 stime="$oneda$stime"
+## Gets information with `getprop` about device.
+cpuabi="$(getprop ro.product.cpu.abi)" 
 ## OPTIONS STATUS: UNDERGOING TESTING;  Image file and compound options are still under development.  USE WITH CAUTION!  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT yet fully implemented.   
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [~/|./|/absolute/path/]systemimage.tar.gz [WHERE]`.  
 ## EXPLAINATION: [HOW (aria2c|axel|curl|lftp|wget (default 1: available on system (default 2: wget)))]  [WHAT (install|manual|purge|refresh|sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied and can be omitted.  

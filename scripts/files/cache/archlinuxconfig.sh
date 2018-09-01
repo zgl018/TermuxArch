@@ -22,17 +22,22 @@ addae() {
 	cat >> root/bin/ae <<- EOM
 	watch cat /proc/sys/kernel/random/entropy_avail
 	EOM
-	chmod 770 root/bin/ae 
+	chmod 700 root/bin/ae 
 }
 
 addauser() { 
 	callfileheader root/bin/addauser "# Add Arch Linux user."
 	cat >> root/bin/addauser <<- EOM
-	useradd "\$1"
-	cp -r /root /home/"\$1"
-	su - "\$1"
+	if [[ -z "\${1:-}" ]] ; then
+		echo "Use: addauser username"
+		exit 201
+	else
+		useradd "\$1"
+		cp -r /root /home/"\$1"
+		su - "\$1"
+	fi
 	EOM
-	chmod 770 root/bin/addauser 
+	chmod 700 root/bin/addauser 
 }
 
 addbash_logout() {
@@ -101,7 +106,7 @@ addcdtd() {
 	cat >> root/bin/cdtd <<- EOM
 	cd "\$PREFIX"/home/storage/downloads && pwd
 	EOM
-	chmod 770 root/bin/cdtd 
+	chmod 700 root/bin/cdtd 
 }
 
 addcdth() {
@@ -109,7 +114,7 @@ addcdth() {
 	cat >> root/bin/cdth <<- EOM
 	cd "\$PREFIX/home" && pwd
 	EOM
-	chmod 770 root/bin/cdth 
+	chmod 700 root/bin/cdth 
 }
 
 addcdtmp() {
@@ -117,14 +122,14 @@ addcdtmp() {
 	cat >> root/bin/cdtmp <<- EOM
 	cd "\$PREFIX"/usr/tmp && pwd
 	EOM
-	chmod 770 root/bin/cdtmp 
+	chmod 700 root/bin/cdtmp 
 }
 
 addch() { 
 	callfileheader root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="gen.v1.6 id988700548420"
+versionid="v1.6 id8370"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -167,7 +172,7 @@ versionid="gen.v1.6 id988700548420"
 	touch "\$HOME"/.hushlogin "\$HOME"/.hushlogout
 	ls "\$HOME"/.hushlogin "\$HOME"/.hushlogout
 	EOM
-	chmod 770 root/bin/ch 
+	chmod 700 root/bin/ch 
 }
 
 addexd() {
@@ -175,7 +180,7 @@ addexd() {
 	cat >> root/bin/exd <<- EOM
 	export DISPLAY=:0 PULSE_SERVER=tcp:127.0.0.1:4712
 	EOM
-	chmod 770 root/bin/exd 
+	chmod 700 root/bin/exd 
 }
 
 adddfa() {
@@ -185,7 +190,7 @@ adddfa() {
 	usrspace="\$(df 2>/dev/null | grep "/data" | awk {'print \$4'})"
 	printf "\e[0;33m%s\n\e[0m" "\$usrspace \$units of free user space is available on this device."
 	EOM
-	chmod 770 root/bin/dfa 
+	chmod 700 root/bin/dfa 
 }
 
 addfbindprocshmem() {
@@ -253,9 +258,8 @@ addfbindprocstat8() {
 }
 
 addfbindexample() {
-	callfileheader var/binds/fbindexample.prs
+	callfileheader var/binds/fbindexample.prs "# To regenerate the start script use \`setupTermuxArch.sh re[fresh[\`.  Add as many proot statements as you want; The init script will parse this file at refresh.  An example is included for convenience.  Usage: prootstmnt+=\"-b host_path:guest_path \" The space before the last double quote is necessary."
 	cat >> var/binds/fbindexample.prs <<- EOM
-	# To regenerate the start script use \`setupTermuxArch.sh refresh\`.  Add as many proot statements as you want; The init script will parse this file at startup.  Examples are included for your convenience.  Usage: -b host_path:guest_path
 	# prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
 	EOM
 }
@@ -275,7 +279,7 @@ addfibs() {
 	cat >> root/bin/fibs  <<- EOM
 	find /proc/ -name maps 2>/dev/null |xargs awk '{print i\$6}' 2>/dev/null| grep '\.so' | sort | uniq
 	EOM
-	chmod 770 root/bin/fibs 
+	chmod 700 root/bin/fibs 
 }
 
 addga() {
@@ -288,7 +292,7 @@ addga() {
 		git add .
 	fi
 	EOM
-	chmod 770 root/bin/ga 
+	chmod 700 root/bin/ga 
 }
 
 addgcl() {
@@ -301,7 +305,7 @@ addgcl() {
 		git clone "\$@"
 	fi
 	EOM
-	chmod 770 root/bin/gcl 
+	chmod 700 root/bin/gcl 
 }
 
 addgcm() {
@@ -314,7 +318,7 @@ addgcm() {
 		git commit
 	fi
 	EOM
-	chmod 770 root/bin/gcm 
+	chmod 700 root/bin/gcm 
 }
 
 addgpl() {
@@ -327,7 +331,7 @@ addgpl() {
 		git pull
 	fi
 	EOM
-	chmod 770 root/bin/gpl 
+	chmod 700 root/bin/gpl 
 }
 
 addgp() {
@@ -347,7 +351,7 @@ addkeys() {
 	callfileheader root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="gen.v1.6 id988700548420"
+versionid="v1.6 id8370"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -421,7 +425,7 @@ versionid="gen.v1.6 id988700548420"
 	printf "\n\e[1;32m==>\e[0m Running \e[1mpacman -Ss keyring --color=always\e[0m…\n"
 	pacman -Ss keyring --color=always ||: 
 	EOM
-	chmod 770 root/bin/keys 
+	chmod 700 root/bin/keys 
 }
 
 addmotd() {
@@ -432,7 +436,7 @@ addmotd() {
 
 addmoto() {
 	cat > etc/moto  <<- EOM
-	printf "\n\e[1;34mShare Your Arch Linux in Termux Experience!\n\n\e[1;34mChat: \e[0mwebchat.freenode.net/ #termux\n\e[1;34mHelp: \e[0;34minfo query \e[1;34mand \e[0;34mman query\n\e[1;34mIRC:  \e[0mwiki.archlinux.org/index.php/IRC_channel\n\n\e[0m"
+	printf "\n\e[1;34mChat: \e[0mwebchat.freenode.net/ #termux\n\e[1;34mHelp: \e[0;34minfo query \e[1;34mand \e[0;34mman query\n\e[1;34mIRC:  \e[0mwiki.archlinux.org/index.php/IRC_channel\n\n\e[0m"
 	EOM
 }
 
@@ -440,7 +444,7 @@ addpc() {
 	callfileheader root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="gen.v1.6 id988700548420"
+versionid="v1.6 id8370"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -494,7 +498,7 @@ addpci() {
 	callfileheader root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="gen.v1.6 id988700548420"
+versionid="v1.6 id8370"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -570,7 +574,7 @@ addt() {
 		tree "\$@"
 	fi
 	EOM
-	chmod 770 root/bin/t 
+	chmod 700 root/bin/t 
 }
 
 addthstartarch() {
@@ -591,7 +595,7 @@ addthstartarch() {
 	$startbin su user "pwd && whoami"
 	echo th$startbin done
 	EOM
-	chmod 770 root/bin/th"$startbin"
+	chmod 700 root/bin/th"$startbin"
 }
 
 addtour() {
@@ -614,7 +618,7 @@ addtour() {
 	cat "\$HOME"/bin/pci
 	printf "\\e[1;32m\\n%s \\e[38;5;121m%s \\n\\n\\e[4;38;5;129m%s\\e[0m\\n\\n\\e[1;34m%s \\e[38;5;135m%s\\e[0m\\n\\n" "==>" "Short tour is complete; Scroll up if you wish to study the output.  Run this script again at a later time, and it might be surprising at how this environment changes over time. " "If you are new to *nix, http://tldp.org has documentation." "IRC: " "https://wiki.archlinux.org/index.php/IRC_channel"
 	EOM
-	chmod 770 root/bin/tour 
+	chmod 700 root/bin/tour 
 }
 
 addtrim() {
@@ -633,7 +637,7 @@ addtrim() {
 	rm /var/cache/pacman/pkg/*xz ||: 
 	printf "\\\\n\\\\e[1;32mtrim: Done \\\\e[0m\\\\n\\\\n" 
 	EOM
-	chmod 770 root/bin/trim 
+	chmod 700 root/bin/trim 
 }
 
 addv() {
@@ -651,7 +655,7 @@ addv() {
 		vim "\$args"
 	fi
 	EOM
-	chmod 770 root/bin/v 
+	chmod 700 root/bin/v 
 }
 
 addwe() { 
@@ -793,7 +797,7 @@ addwe() {
 	fi
 	printtail 
 	EOM
-	chmod 770 usr/bin/we 
+	chmod 700 usr/bin/we 
 }
 
 addyt() {
@@ -807,7 +811,7 @@ addyt() {
 		youtube-dl "\$@"
 	fi
 	EOM
-	chmod 770 root/bin/yt 
+	chmod 700 root/bin/yt 
 }
 
 ## EOF
