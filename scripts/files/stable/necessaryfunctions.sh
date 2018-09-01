@@ -120,7 +120,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	callfileheader root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="v1.6 id5334"
+versionid="v1.6 id6775"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -155,7 +155,6 @@ versionid="v1.6 id5334"
 	fi
 	cat >> root/bin/"$binfnstp" <<- EOM
 	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
-	sleep 2
    	locale-gen ||:
 	printf "\\n\\e[1;34m%s  \\e[0m" "🕛 > 🕤 Arch Linux in Termux is installed and configured 📲 " 
 	printf "\\e]2;%s\\007" " 🕛 > 🕤 Arch Linux in Termux is installed and configured 📲 "
@@ -166,7 +165,7 @@ versionid="v1.6 id5334"
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id5334"
+versionid="v1.6 id6775"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -176,7 +175,7 @@ versionid="v1.6 id5334"
 makestartbin() {
 	callfileheader "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id5334"
+versionid="v1.6 id6775"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -344,32 +343,35 @@ runfinishsetup() {
 }
 
 _setlocale() { # Uses system settings to set locale.
-	_LANGIN[0]="user.language"
-	_LANGIN[1]="user.region"
-	_LANGIN[2]="persist.sys.locale"
-	_LANGIN[3]="persist.sys.language"
- 	_LANGIN[4]="ro.product.locale"
-	_LANGIN[5]="ro.product.locale.language"
-	_LANGIN[6]="ro.product.locale.region"
+	_LANGIN[0]="$(getprop user.language)"
+	_LANGIN[1]="$(getprop user.region)"
+	_LANGIN[2]="$(getprop persist.sys.country)"
+	_LANGIN[3]="$(getprop persist.sys.language)"
+	_LANGIN[4]="$(getprop persist.sys.locale)"
+ 	_LANGIN[5]="$(getprop ro.product.locale)"
+	_LANGIN[6]="$(getprop ro.product.locale.language)"
+	_LANGIN[7]="$(getprop ro.product.locale.region)"
 	for i in "${!_LANGIN[@]}"; do
-	 	_LANG="$(getprop "${_LANGIN[i]}")"
-		if [[ "$_LANG" = *-* ]];then
-			_LANGUAGE="$_LANG"
+	 	_LANGUAGE="${_LANGIN[i]//-/_}"
+		if [[ "$_LANGUAGE" = *_* ]];then
 			break
 		fi
 	done
-	if [[ "$_LANGUAGE" != *-* ]];then
-		awkin1="$(getprop user.language)"
-		awkin2="$(getprop user.region)"
-	awk '/${awkin1:-}/ && /${awkin2:-}/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
+	if [[ "$_LANGUAGE" != *_* ]];then
+	awk '/$_LANGIN[0]/ && /_LANGIN[1]/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
+	_LANGUAGE="${_LANGIN[0]}_${_LANGIN[1]}"
 	fi 
-	if [[ "$_LANGUAGE" != *-* ]];then
-	awk '/$(getprop ro.product.locale.language)/ && /$(getprop ro.product.locale.region)/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
+	if [[ "$_LANGUAGE" != *_* ]];then
+	awk '/$_LANGIN[3]/ && /_LANGIN[2]/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
+	_LANGUAGE="${_LANGIN[3]}_${_LANGIN[2]}"
 	fi 
-   	if [[ "$_LANGUAGE" != *-* ]];then
+	if [[ "$_LANGUAGE" != *_* ]];then
+	awk '/$_LANGIN[6]/ && /_LANGIN[7]/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
+	_LANGUAGE="${_LANGIN[6]}_${_LANGIN[7]}"
+	fi 
+	if [[ "$_LANGUAGE" != *_* ]];then
   		_LANGUAGE="$(en-US)"
   	fi
-	_LANGUAGE="${_LANGUAGE//-/_}"
 	echo LANG="$_LANGUAGE".UTF-8 > etc/locale.conf 
 	echo LANGUAGE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	echo LC_ADDRESS="$_LANGUAGE".UTF-8 >> etc/locale.conf 
@@ -385,7 +387,9 @@ _setlocale() { # Uses system settings to set locale.
 	echo LC_TELEPHONE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	echo LC_TIME="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	if [[ -e etc/locale.gen ]]; then
-		sed -i "/\\#$_LANGUAGE.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 
+		#echo $_LANGUAGE
+		awk '/$_LANGUAGE/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.tmp && mv "$tampdir"/locale.tmp etc/locale.gen 
+ 		sed -i "/\\#$_LANGUAGE.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 
 	else
 		cat >  etc/locale.gen <<- EOM
 		$_LANGUAGE.UTF-8 UTF-8 
