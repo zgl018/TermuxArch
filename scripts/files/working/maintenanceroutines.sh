@@ -29,6 +29,9 @@ systeminfo () {
 	printf "%s %s\\n" "[getprop ro.build.version.release]:" "[$(getprop ro.build.version.release)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "%s %s\\n" "[getprop ro.build.version.preview_sdk]:" "[$(getprop ro.build.version.preview_sdk)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "%s %s\\n" "[getprop ro.build.version.sdk]:" "[$(getprop ro.build.version.sdk)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.com.google.clientidbase]:" "[$(getprop ro.com.google.clientidbase)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.com.google.clientidbase.am]:" "[$(getprop ro.com.google.clientidbase.am)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
+	printf "%s %s\\n" "[getprop ro.com.google.clientidbase.ms]:" "[$(getprop ro.com.google.clientidbase.ms)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "%s %s\\n" "[getprop ro.product.device]:" "[$(getprop ro.product.device)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "%s %s\\n" "[getprop ro.product.cpu.abi]:" "[$(getprop ro.product.cpu.abi)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
 	printf "%s %s\\n" "[getprop ro.product.first_api_level]:" "[$(getprop ro.product.first_api_level)]" >> "${wdir}setupTermuxArchSysInfo$stime".log
