@@ -120,7 +120,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	callfileheader root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="v1.6 id0472"
+versionid="v1.6 id4476"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -165,7 +165,7 @@ versionid="v1.6 id0472"
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id0472"
+versionid="v1.6 id4476"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -175,7 +175,7 @@ versionid="v1.6 id0472"
 makestartbin() {
 	callfileheader "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id0472"
+versionid="v1.6 id4476"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -339,7 +339,7 @@ runfinishsetup() {
 		"$ed" "$installdir"/etc/pacman.d/mirrorlist
 	fi
 	printf "\\n"
-	"$installdir"/root/bin/setupbin.sh 
+	"$installdir"/root/bin/setupbin.sh ||:
 }
 
 _SETLANGUAGE() { # Uses system settings to set locale.
@@ -388,7 +388,7 @@ _SETLOCALE() { # Uses system settings to set locale.
 	echo LC_TELEPHONE="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	echo LC_TIME="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	if [[ -e etc/locale.gen ]]; then
-		printf "\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n" "	Setting: " "Language " ">> $_LANGUAGE << " "Region"
+		printf "\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n" "	Setting locales to: " "Language " ">> $_LANGUAGE << " "Region"
 #		# awk '/$_LANGUAGE/ && /UTF/ { print substr($1,2);}' etc/locale.gen 2>/dev/null > "$tampdir"/locale.${stime}tmp 
 #		# mv "$tampdir"/locale.${stime}tmp etc/locale.gen 
 		sed -i "/\\#$_LANGUAGE.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 

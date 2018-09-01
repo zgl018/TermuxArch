@@ -130,7 +130,7 @@ addch() {
 	callfileheader root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id0472"
+versionid="v1.6 id4476"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -352,7 +352,7 @@ addkeys() {
 	callfileheader root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="v1.6 id0472"
+versionid="v1.6 id4476"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -445,7 +445,7 @@ addpc() {
 	callfileheader root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id0472"
+versionid="v1.6 id4476"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -499,7 +499,7 @@ addpci() {
 	callfileheader root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id0472"
+versionid="v1.6 id4476"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
