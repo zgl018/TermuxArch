@@ -5,10 +5,11 @@
 # https://sdrausty.github.io/TermuxArch/README has information about this project. 
 ################################################################################
 
-fstnd=""
-ftchit() {
-	getmsg
-	_PRINTDOWNLOADINGFTCHIT_ 
+declare FSTND=""
+
+_FTCHIT_() {
+	_GETMSG_
+	_PRINT_DOWNLOADING_FTCHIT_ 
 	if [[ "$dm" = aria2c ]];then
 		aria2c http://"$CMIRROR$path$file".md5 
 		aria2c -c http://"$CMIRROR$path$file"
@@ -23,36 +24,36 @@ ftchit() {
 	fi
 }
 
-ftchstnd() {
-	fstnd=1
-	getmsg
+_FTCHSTND_() {
+	FSTND=1
+	_GETMSG_
 	_PRINTCONTACTING_ 
 	if [[ "$dm" = aria2c ]];then
-		aria2c "$CMIRROR" | tee /dev/fd/1 > "$TAMPDIR/global2localCMIRROR"
-		nCMIRROR="$(grep Redir "$TAMPDIR/global2localCMIRROR" | awk {'print $8'})" 
+		aria2c "$CMIRROR" | tee /dev/fd/1 > "$TAMPDIR/global2localmirror"
+		NLCMIRROR="$(grep Redir "$TAMPDIR/global2localmirror" | awk {'print $8'})" 
 		_PRINTDONE_ 
 		_PRINTDOWNLOADINGFTCH_ 
 		aria2c http://"$CMIRROR$path$file".md5 
 		aria2c -c -m 4 http://"$CMIRROR$path$file"
 	elif [[ "$dm" = wget ]];then 
-		wget -v -O/dev/null "$CMIRROR" 2>"$TAMPDIR/global2localCMIRROR"
-		nCMIRROR="$(grep Location "$TAMPDIR/global2localCMIRROR" | awk {'print $2'})" 
+		wget -v -O/dev/null "$CMIRROR" 2>"$TAMPDIR/global2localmirror"
+		NLCMIRROR="$(grep Location "$TAMPDIR/global2localmirror" | awk {'print $2'})" 
 		_PRINTDONE_ 
 		_PRINTDOWNLOADINGFTCH_ 
-		wget "$dmverbose" -N --show-progress "$nCMIRROR$path$file".md5 
-		wget "$dmverbose" -c --show-progress "$nCMIRROR$path$file" 
+		wget "$dmverbose" -N --show-progress "$NLCMIRROR$path$file".md5 
+		wget "$dmverbose" -c --show-progress "$NLCMIRROR$path$file" 
 	else
-		curl -v "$CMIRROR" 2>"$TAMPDIR/global2localCMIRROR"
-		nCMIRROR="$(grep Location "$TAMPDIR/global2localCMIRROR" | awk {'print $3'})" 
+		curl -v "$CMIRROR" 2>"$TAMPDIR/global2localmirror"
+		NLCMIRROR="$(grep Location "$TAMPDIR/global2localmirror" | awk {'print $3'})" 
 		_PRINTDONE_ 
 		_PRINTDOWNLOADINGFTCH_ 
-		curl "$dmverbose" -C - --fail --retry 4 -OL "$nCMIRROR$path$file".md5 -O "$nCMIRROR$path$file"
+		curl "$dmverbose" -C - --fail --retry 4 -OL "$NLCMIRROR$path$file".md5 -O "$NLCMIRROR$path$file"
 	fi
 }
 
-getimage() {
+_GETIMAGE_() {
 	_PRINTDOWNLOADINGX86_ 
-	getmsg
+	_GETMSG_
 	if [[ "$dm" = aria2c ]];then
 		aria2c http://"$CMIRROR$path$file".md5 
 		if [[ "$CPUABI" = "$CPUABIX86" ]];then
@@ -74,7 +75,7 @@ getimage() {
 		rm md5sums.txt
 		axel http://"$CMIRROR$path$file"
 	elif [[ "$dm" = wget ]];then 
-		wget "$dmverbose" -N --show-progress http://"$CMIRROR${path}"md5sums.txt
+		wget "$dmverbose" -N --show-progress http://"$CMIRROR$path"md5sums.txt
 		if [[ "$CPUABI" = "$CPUABIX86" ]];then
 			file="$(grep i686 md5sums.txt | awk {'print $2'})"
 		else
@@ -85,7 +86,7 @@ getimage() {
 		_PRINTDOWNLOADINGX86TWO_ 
 		wget "$dmverbose" -c --show-progress http://"$CMIRROR$path$file" 
 	else
-		curl "$dmverbose" --fail --retry 4 -OL http://"$CMIRROR${path}"md5sums.txt
+		curl "$dmverbose" --fail --retry 4 -OL http://"$CMIRROR$path"md5sums.txt
 		if [[ "$CPUABI" = "$CPUABIX86" ]];then
 			file="$(grep i686 md5sums.txt | awk {'print $2'})"
 		else
@@ -98,7 +99,7 @@ getimage() {
 	fi
 }
 
-getmsg() {
+_GETMSG_() {
  	if [[ "$dm" = axel ]] || [[ "$dm" = lftp ]];then
  		printf "\\n\\e[1;32m%s\\n\\n""The chosen download manager \`$dm\` is being implemented: curl (command line tool and library for transferring data with URLs) alternative https://github.com/curl/curl chosen:  DONE"
 	fi

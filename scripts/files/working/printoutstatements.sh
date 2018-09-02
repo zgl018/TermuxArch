@@ -42,7 +42,8 @@ _CFLHDR() { ##	Call File Header
 }
 
 _PRINTCONTACTING_() {
- 	printf '\033]2;  🕛 > 🕞 Contacting worldwide $CMIRROR…\007'"\033[0;34m 🕛 > 🕞 \033[1;34mContacting worldwide mirror \033[0;32m$CMIRROR\033[1;34m: "
+ 	printf "\033]2;  🕛 > 🕞 Contacting https://%s…\007" "$CMIRROR"
+	printf "\033[0;34m 🕛 > 🕞 \033[1;34mContacting worldwide mirror https://\033[0;32m%s\033[1;34m: " "$CMIRROR"
 }
 
 _PRINTCU_() {
@@ -79,10 +80,10 @@ _PRINTDOWNLOADINGX86TWO_() {
 }
 
 _PRINTDOWNLOADINGFTCH_() {
-	printf "\033[0;34m 🕛 > 🕓 \033[1;34mDownloading the checksum file and \033[1;34m$file \033[1;34mfrom the geographically local CMIRROR \033[1;32m$nCMIRROR\033[1;34m.  If contact with the local CMIRROR is not successful, run \033[1;32mbash \033[0;32msetupTermuxArch.sh\033[1;34m again.  Should the worldwide CMIRROR not provide another geographically nearby server after a couple of attempts, use \033[1;32mbash \033[0;32msetupTermuxArch.sh manual \033[1;34mafter locating a local CMIRROR from the Internet; See \033[1;32mbash \033[0;32msetupTermuxArch.sh help \033[1;34mfor additional options.  \033[1;37mDownload of $file pending Internet connection:\n\n\033[0;32m"'\033]2; 🕛 > 🕓 Downloading the checksum and Arch Linux system image file…  \007'
+	printf "\033[0;34m 🕛 > 🕓 \033[1;34mDownloading the checksum file and \033[1;34m$file \033[1;34mfrom the geographically local CMIRROR \033[1;32m$NLCMIRROR\033[1;34m.  If contact with the local CMIRROR is not successful, run \033[1;32mbash \033[0;32msetupTermuxArch.sh\033[1;34m again.  Should the worldwide CMIRROR not provide another geographically nearby server after a couple of attempts, use \033[1;32mbash \033[0;32msetupTermuxArch.sh manual \033[1;34mafter locating a local CMIRROR from the Internet; See \033[1;32mbash \033[0;32msetupTermuxArch.sh help \033[1;34mfor additional options.  \033[1;37mDownload of $file pending Internet connection:\n\n\033[0;32m"'\033]2; 🕛 > 🕓 Downloading the checksum and Arch Linux system image file…  \007'
 }
 
-_PRINTDOWNLOADINGFTCHIT_() {
+_PRINT_DOWNLOADING_FTCHIT_() {
 	printf "\033[0;34m 🕛 > 🕓 \033[0;34mDownloading the checksum file and \033[0;32m$file \033[0;34m from \033[0;32mhttp://$CMIRROR\033[0;34m…  \033[1;37mThis may take a long time pending connection.\n\n\033[0;32m"'\033]2; 🕛 > 🕓 Downloading the checksum and Arch Linux system image file…  \007'
 }
 

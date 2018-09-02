@@ -131,7 +131,7 @@ addch() {
 	_CFLHDR root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="gen.v1.6 id654395340198"
+versionid="gen.v1.6 id974470139417"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -353,7 +353,7 @@ addkeys() {
 	_CFLHDR root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="gen.v1.6 id654395340198"
+versionid="gen.v1.6 id974470139417"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -446,7 +446,7 @@ addpc() {
 	_CFLHDR root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="gen.v1.6 id654395340198"
+versionid="gen.v1.6 id974470139417"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -500,7 +500,7 @@ addpci() {
 	_CFLHDR root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="gen.v1.6 id654395340198"
+versionid="gen.v1.6 id974470139417"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"

@@ -10,11 +10,11 @@ LC_TYPE=( "LANG" "LANGUAGE" "LC_ADDRESS" "LC_COLLATE" "LC_CTYPE" "LC_IDENTIFICAT
 _CALLSYSTEM() {
 	declare COUNTER=""
 	if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
-		getimage
+		_GETIMAGE_
 	else
 		if [[ "$CMIRROR" = "os.archlinuxarm.org" ]] || [[ "$CMIRROR" = "CMIRROR.archlinuxarm.org" ]]; then
-			until ftchstnd;do
-				ftchstnd ||: 
+			until _FTCHSTND_;do
+				_FTCHSTND_ ||: 
 				sleep 2
 				printf "\\n"
 				COUNTER=$((COUNTER + 1))
@@ -24,7 +24,7 @@ _CALLSYSTEM() {
 				fi
 			done
 		else
-			ftchit
+			_FTCHIT_
 		fi
 	fi
 }
@@ -104,7 +104,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	_CFLHDR root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="gen.v1.6 id654395340198"
+versionid="gen.v1.6 id974470139417"
 	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
    	locale-gen ||:
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
@@ -149,7 +149,7 @@ versionid="gen.v1.6 id654395340198"
 makesetupbin() {
 	_CFLHDR root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="gen.v1.6 id654395340198"
+versionid="gen.v1.6 id974470139417"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -159,7 +159,7 @@ versionid="gen.v1.6 id654395340198"
 makestartbin() {
 	_CFLHDR "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="gen.v1.6 id654395340198"
+versionid="gen.v1.6 id974470139417"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -310,7 +310,7 @@ preproot() {
 
 runfinishsetup() {
 	printf "\\e[0m"
-	if [[ "$fstnd" ]]; then
+	if [[ "$FSTND" ]]; then
 		nmir="$(echo "$nCMIRROR" |awk -F'/' '{print $3}')"
 		sed -e '/http\:\/\/mir/ s/^#*/# /' -i "$INSTALLDIR"/etc/pacman.d/CMIRRORlist
 		sed -e "/$nmir/ s/^# *//" -i "$INSTALLDIR"/etc/pacman.d/CMIRRORlist

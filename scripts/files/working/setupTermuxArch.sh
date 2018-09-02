@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id654395340198"
+versionid="gen.v1.6 id974470139417"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -568,13 +568,12 @@ _TRPEXIT_() { # Run on exit.
   	printf "\\a\\a\\a\\a"
 	CDIRS=( bin boot dev etc home lib mnt opt proc root run sbin srv sys tmp usr var )
 	CDIRSR="0"
- 	for i in "${CDIRS[@]}"; do
-		if [ "$(ls -A $INSTALLDIR/$i 2>/dev/null)" ]; then
+ 	for i in "${CDIRS[@]}" ; do
+		if [ "$(ls -A $INSTALLDIR/$i 2>/dev/null)" ] ; then
 			CDIRSR="1"
 		fi
 	done
-	echo $CDIRSR
-	if [[ "$CDIRSR" = 0 ]]  ; then
+	if [[ "$CDIRSR" = 0 ]] ; then
 		rmdir $TAMPDIR
 		rmdir $INSTALLDIR
 	fi
@@ -588,11 +587,6 @@ _TRPEXIT_() { # Run on exit.
 	fi
 	printf "\\e[?25h\\e[0m"
 	rm -rf "$TAMPDIR"
-# 	if [ "$(ls -A $TAMPDIR)" ]; then
-# 	: #	echo "Take action $DIR is not Empty"
-# 	else
-# 	: #	echo "$DIR is Empty"
-# 	fi
 	set +Eeuo pipefail 
 	exit
 }
