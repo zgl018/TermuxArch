@@ -17,7 +17,7 @@ FLHDR[7]="set -Eeuo pipefail"
 FLHDR[8]="shopt -s nullglob globstar"
 FLHDR[9]="versionid=\"v1.6 id9909\""
 
-TRPERROR[0]="_TRPERROR() {  ##	Run on script error.  "
+TRPERROR[0]="_TRPERROR_() {  ##	Run on script error.  "
 TRPERROR[1]="	local rv=\"\$?\""
 TRPERROR[2]="	printf \"\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n\" \"TermuxArch WARNING:  Generated script signal \${rv:-unknown} near or at line number \${1:-unknown} by \`\${2:-command}\`!\""
 TRPERROR[3]="	exit 201"

@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id7746"
+versionid="v1.6 id5594"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -249,6 +249,10 @@ introsysinfo() {
 introrefresh() {
 	printf '\033]2;  bash setupTermuxArch.sh refresh 📲 \007'
 	_SETROOTDIREXCEPTION 
+	if [[ ! -d "$installdir" ]] || [[ ! -f "$installdir"/bin/env ]] || [[ ! -f "$installdir"/bin/we ]] || [[ ! -d "$installdir"/root/bin ]];then
+		printf "\\n\\e[0;33m%s\\e[1;33m%s\\e[0;33m.\\e[0m\\n\\n" "The root directory structure is incorrect; Cannot continue " "setupTermuxArch.sh refresh"
+		exit $?
+	fi
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid shall refresh your TermuxArch files in \\e[0;32m$installdir\\e[1;34m.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
 	refreshsys "$@"
@@ -325,7 +329,7 @@ namestartarch() { # ${@%/} removes trailing slash
 	declare -g startbin=start"$startbi2$aarch"
 }
 
-_OPT2() { 
+_OPT2_() { 
 	if [[ -z "${2:-}" ]] ; then
 		_ARG2DIR "$@" 
 	elif [[ "$2" = [Bb]* ]] ; then
@@ -343,7 +347,7 @@ _OPT2() {
 	elif [[ "$2" = [Mm]* ]] ; then
 		echo Setting mode to manual.
 		opt=manual
- 		_OPT3 "$@"  
+ 		_OPT3_ "$@"  
 	elif [[ "$2" = [Rr][Ee]* ]] ; then
 		echo 
 		echo Setting mode to refresh.
@@ -362,7 +366,7 @@ _OPT2() {
 	fi
 }
 
-_OPT3() { 
+_OPT3_() { 
 	if [[ -z "${3:-}" ]] ; then
 		shift
 		_ARG2DIR "$@" 
@@ -544,13 +548,13 @@ standardid() {
 	introstnd
 }
 
-_TRPERROR() { # Run on script error.
+_TRPERROR_() { # Run on script error.
 	local rv="$?"
 	printf "\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING:  Generated script signal ${rv:-unknown} near or at line number ${1:-unknown} by \`${2:-command}\`!"
 	exit 201
 }
 
-_TRPEXIT() { # Run on exit.
+_TRPEXIT_() { # Run on exit.
 	local rv="$?"
   	printf "\\a\\a\\a\\a"
 	sleep 0.4
@@ -567,13 +571,13 @@ _TRPEXIT() { # Run on exit.
 	exit
 }
 
-_TRPSIGNAL() { # Run on signal.
+_TRPSIGNAL_() { # Run on signal.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Signal $? received!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 211 
 }
 
-_TRPQUIT() { # Run on quit.
+_TRPQUIT_() { # Run on quit.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Quit signal $? received!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 221 
@@ -621,10 +625,10 @@ declare wdir="$PWD/"
 declare sti=""		## Generates pseudo random number.
 declare STIME=""	## Generates pseudo random number.
 declare tm=""		## tar manager
-trap '_TRPERROR $LINENO $BASH_COMMAND $?' ERR 
-trap _TRPEXIT EXIT
-trap _TRPSIGNAL HUP INT TERM 
-trap _TRPQUIT QUIT 
+trap '_TRPERROR_ $LINENO $BASH_COMMAND $?' ERR 
+trap _TRPEXIT_ EXIT
+trap _TRPSIGNAL_ HUP INT TERM 
+trap _TRPQUIT_ QUIT 
 if [[ -z "${tampdir:-}" ]] ; then
 	tampdir=""
 fi
@@ -689,7 +693,7 @@ elif [[ "${1//-}" = [Aa][Xx]* ]] || [[ "${1//-}" = [Aa][Xx][Ii]* ]] ; then
 	echo
 	echo Setting \`axel\` as download manager.
 	dm=axel
-	_OPT2 "$@" 
+	_OPT2_ "$@" 
 	intro "$@" 
 ## [ad|as]  Get device system information with `aria2c`.
 elif [[ "${1//-}" = [Aa][Dd]* ]] || [[ "${1//-}" = [Aa][Ss]* ]] ; then
@@ -704,7 +708,7 @@ elif [[ "${1//-}" = [Aa]* ]] ; then
 	echo
 	echo Setting \`aria2c\` as download manager.
 	dm=aria2c
-	_OPT2 "$@" 
+	_OPT2_ "$@" 
 	intro "$@" 
 ## [b[loom]]  Create and run a local copy of TermuxArch in TermuxArchBloom.  Useful for running a customized setupTermuxArch.sh locally, for developing and hacking TermuxArch.  
 elif [[ "${1//-}" = [Bb]* ]] ; then
@@ -724,7 +728,7 @@ elif [[ "${1//-}" = [Cc][Ii]* ]] || [[ "${1//-}" = [Cc]* ]] ; then
 	echo
 	echo Setting \`curl\` as download manager.
 	dm=curl
-	_OPT2 "$@" 
+	_OPT2_ "$@" 
 	intro "$@" 
 ## [d[ebug]|s[ysinfo]]  Generate system information.
 elif [[ "${1//-}" = [Dd]* ]] || [[ "${1//-}" = [Ss]* ]] ; then
@@ -746,7 +750,7 @@ elif [[ "${1//-}" = [Hh]* ]] ; then
 elif [[ "${1//-}" = [Ii]* ]] ; then
 	echo
 	echo Setting mode to install.
-	_OPT2 "$@" 
+	_OPT2_ "$@" 
 	intro "$@"  
 ## [ld|ls]  Get device system information with `lftp`.
 elif [[ "${1//-}" = [Ll][Dd]* ]] || [[ "${1//-}" = [Ll][Ss]* ]] ; then
@@ -761,21 +765,21 @@ elif [[ "${1//-}" = [Ll]* ]] ; then
 	echo
 	echo Setting \`lftp\` as download manager.
 	dm=lftp
-	_OPT2 "$@" 
+	_OPT2_ "$@" 
 	intro "$@" 
 ## [m[anual]]  Manual Arch Linux install, useful for resolving download issues.
 elif [[ "${1//-}" = [Mm]* ]] ; then
 	echo
 	echo Setting mode to manual.
 	opt=manual
-	_OPT2 "$@" 
+	_OPT2_ "$@" 
 	intro "$@"  
 ## [o[ption]]  Option currently under development.
 elif [[ "${1//-}" = [Oo]* ]] ; then
 	echo
 	echo Setting mode to option.
 	printusage
-	_OPT2 "$@" 
+	_OPT2_ "$@" 
 ## [p[urge] [customdir]|u[ninstall] [customdir]]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	echo 
@@ -807,7 +811,7 @@ elif [[ "${1//-}" = [Ww]* ]] ; then
 	echo
 	echo Setting \`wget\` as download manager.
 	dm=wget
-	_OPT2 "$@" 
+	_OPT2_ "$@" 
 	intro "$@"  
 else
 	printusage

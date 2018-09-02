@@ -116,17 +116,16 @@ loadimage() {
 	printfooter2
 }
 
+# 	namestartarch 
+# 	spaceinfo
+# 	_PREPINSTALLDIR
+# 	detectsystem 
+
 refreshsys() { # Refreshes
 	printf '\033]2; setupTermuxArch.sh refresh 📲 \007'
-	nameinstalldir 
-	namestartarch  
-	_SETROOTDIR  
-	if [[ ! -d "$installdir" ]] || [[ ! -f "$installdir"/bin/env ]] || [[ ! -f "$installdir"/bin/we ]] || [[ ! -d "$installdir"/root/bin ]];then
-		printf "\\n\\e[0;33m%s\\e[1;33m%s\\e[0;33m.\\e[0m\\n" "The root directory structure is incorrect; Cannot continue " "setupTermuxArch.sh refresh"
-		exit $?
-	fi
+ 	namestartarch  
+ 	spaceinfo
 	cd "$installdir"
-	_PREPROOTDIR
 	_SETLANGUAGE
 	addREADME
 	addae
@@ -180,8 +179,9 @@ refreshsys() { # Refreshes
 	wakeunlock 
 	printfooter 
 	printf "\\a"
+	sleep 0.015
+	printf "\\a"
 	"$installdir/$startbin" ||:
-# 	"$startbin" help
 	printstartbinusage
 	printfooter2
 	exit

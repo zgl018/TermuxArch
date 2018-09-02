@@ -131,22 +131,22 @@ addch() {
 	_CFLHDR root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="gen.v1.6 id080973147780"
+versionid="v1.6 id5594"
 
-	_TRPEXIT() { # on exit
+	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	printtail "\$args[@]"  
 	}
 	
-	_TRPERROR() { # on script signal
+	_TRPERROR_() { # on script signal
 		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING." 
 	 	set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
 	}
 	
-	_TRPSIGNAL() { # on signal
+	_TRPSIGNAL_() { # on signal
 		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING.  Signal caught!"
 		set +Eeuo pipefail 
 	 	echo "\$?" 
@@ -158,9 +158,9 @@ versionid="gen.v1.6 id080973147780"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0")"':DONE 📱 \007'
 	}
 
-	trap _TRPERROR ERR
-	trap _TRPEXIT EXIT
-	trap _TRPSIGNAL INT TERM 
+	trap _TRPERROR_ ERR
+	trap _TRPEXIT_ EXIT
+	trap _TRPSIGNAL_ INT TERM 
 	## ch begin ####################################################################
 
 	if [[ -z "\${1:-}" ]];then
@@ -353,23 +353,23 @@ addkeys() {
 	_CFLHDR root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="gen.v1.6 id080973147780"
+versionid="v1.6 id5594"
 
-	_TRPEXIT() { # on exit
+	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	printtail "\$keyrings[@]"  
 #  	 	echo "[ \$0 done (\$?) ]" 
 	}
 	
-	_TRPERROR() { # on script signal
+	_TRPERROR_() { # on script signal
 		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING." 
 	 	set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
 	}
 	
-	_TRPSIGNAL() { # on signal
+	_TRPSIGNAL_() { # on signal
 		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING.  Signal caught!"
 		set +Eeuo pipefail 
 	 	echo "\$?" 
@@ -396,9 +396,9 @@ versionid="gen.v1.6 id080973147780"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"': DONE 📱 \007'
 	}
 
-	trap _TRPERROR ERR
-	trap _TRPEXIT EXIT
-	trap _TRPSIGNAL INT TERM 
+	trap _TRPERROR_ ERR
+	trap _TRPEXIT_ EXIT
+	trap _TRPSIGNAL_ INT TERM 
 	## keys begin ##################################################################
 
 	if [[ -z "\${1:-}" ]];then
@@ -446,23 +446,23 @@ addpc() {
 	_CFLHDR root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="gen.v1.6 id080973147780"
+versionid="v1.6 id5594"
 
-	_TRPEXIT() { # on exit
+	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	printtail "\$args"  
 #  	 	echo "[ \$0 done (\$?) ]" 
 	}
 	
-	_TRPERROR() { # on script signal
+	_TRPERROR_() { # on script signal
 		printf "\\n\\e[?25h\\e[0mTermuxArch pc WARNING.  \\n"
 	 	set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
 	}
 	
-	_TRPSIGNAL() { # on signal
+	_TRPSIGNAL_() { # on signal
 		printf "\\n\\e[?25h\\e[0mTermuxArch pc WARNING.  Signal caught!\\n"
 		set +Eeuo pipefail 
 	 	echo "\$?" 
@@ -474,9 +474,9 @@ versionid="gen.v1.6 id080973147780"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"' 📱 \007'
 	}
 
-	trap _TRPERROR ERR
-	trap _TRPEXIT EXIT
-	trap _TRPSIGNAL INT TERM 
+	trap _TRPERROR_ ERR
+	trap _TRPEXIT_ EXIT
+	trap _TRPSIGNAL_ INT TERM 
 	## pc begin ####################################################################
 
 	printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"' 📲 \007'
@@ -500,22 +500,22 @@ addpci() {
 	_CFLHDR root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="gen.v1.6 id080973147780"
+versionid="v1.6 id5594"
 
-	_TRPEXIT() { # on exit
+	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	printtail "\$args"  
 	}
 	
-	_TRPERROR() { # on script signal
+	_TRPERROR_() { # on script signal
 		printf "\\n\\e[?25h\\e[0mTermuxArch pci WARNING.  \\n"
 	 	set +Eeuo pipefail 
 	 	printf "[ \$(basename "\$0") done ("\$?") ]\n" 
 	 	exit \$? 
 	}
 	
-	_TRPSIGNAL() { # on signal
+	_TRPSIGNAL_() { # on signal
 		printf "\\n\\e[?25h\\e[0mTermuxArch pci WARNING.  Signal caught!\\n"
 		set +Eeuo pipefail 
 	 	printf "[ \$(basename "\$0") done ("\$?") ]\n" 
@@ -527,10 +527,10 @@ versionid="gen.v1.6 id080973147780"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"' 📱 \007'
 	}
 
-	trap _TRPEXIT EXIT
-	trap _TRPERROR ERR
-	trap _TRPERROR QUIT
-	trap _TRPSIGNAL INT TERM 
+	trap _TRPEXIT_ EXIT
+	trap _TRPERROR_ ERR
+	trap _TRPERROR_ QUIT
+	trap _TRPSIGNAL_ INT TERM 
 	## pci begin ###################################################################
 
 	printf "\\\\n\\\\e[1;32m==> \\\\e[1;37m%s \\\\e[1;32m%s %s %s \\\e[0m%s…\\\\n\\\\n" "Running" "TermuxArch \$(basename "\$0")" "\$args" "\$versionid"  
