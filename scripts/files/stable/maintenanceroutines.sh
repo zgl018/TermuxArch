@@ -126,7 +126,7 @@ refreshsys() { # Refreshes
  	namestartarch  
  	spaceinfo
 	cd "$installdir"
-	_SETLANGUAGE
+	_SETLANGUAGE_
 	addREADME
 	addae
 	addauser
@@ -163,7 +163,7 @@ refreshsys() { # Refreshes
 	makefinishsetup
 	makesetupbin 
 	makestartbin 
-	_SETLOCALE
+	_SETLOCALE_
 	printf "\\n" 
 	wakelock
 	printf '\033]2; setupTermuxArch.sh refresh 📲 \007'
@@ -184,7 +184,6 @@ refreshsys() { # Refreshes
 	"$installdir/$startbin" ||:
 	printstartbinusage
 	printfooter2
-	exit
 }
 
 spaceinfo() {

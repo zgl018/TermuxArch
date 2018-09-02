@@ -2,12 +2,13 @@
 # Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
 # Hosted https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
 # https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
+# _STANDARD_="function name" && STANDARD="variable name" are under construction.
 ################################################################################
 IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id5594"
+versionid="v1.6 id3521"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -27,14 +28,14 @@ aria2cifdm() {
 	fi
 }
 
-_ARG2DIR() {  # Argument as rootdir.
+_ARG2DIR_() {  # Argument as rootdir.
 	arg2="${@:2:1}"
 	if [[ -z "${arg2:-}" ]] ; then
 		rootdir=/arch
-		_PREPTERMUXARCH
+		_PREPTERMUXARCH_
 	else
 		rootdir=/"$arg2" 
-		_PREPTERMUXARCH
+		_PREPTERMUXARCH_
 	fi
 }
 
@@ -220,7 +221,7 @@ dwnl() {
 
 intro() {
 	printf '\033]2;  bash setupTermuxArch.sh $@ 📲 \007'
-	_SETROOTDIREXCEPTION 
+	_SETROOT_EXCEPTION_ 
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34mTermuxArch $versionid shall attempt to install Linux in \\e[0;32m$installdir\\e[1;34m.  Arch Linux in Termux PRoot shall be available upon successful completion.  To run this BASH script again, use \`!!\`.  Ensure background data is not restricted.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
 	if [[ "$lcc" = "1" ]] ; then
@@ -241,14 +242,14 @@ introbloom() { # Bloom = `setupTermuxArch.sh manual verbose`
 introsysinfo() {
 	printf '\033]2;  bash setupTermuxArch.sh sysinfo 📲 \007'
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid shall create a system information file.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
-	_PREPTERMUXARCH
+	_PREPTERMUXARCH_
 	dependsblock "$@" 
 	sysinfo 
 }
 
 introrefresh() {
 	printf '\033]2;  bash setupTermuxArch.sh refresh 📲 \007'
-	_SETROOTDIREXCEPTION 
+	_SETROOT_EXCEPTION_ 
 	if [[ ! -d "$installdir" ]] || [[ ! -f "$installdir"/bin/env ]] || [[ ! -f "$installdir"/bin/we ]] || [[ ! -d "$installdir"/root/bin ]];then
 		printf "\\n\\e[0;33m%s\\e[1;33m%s\\e[0;33m.\\e[0m\\n\\n" "The root directory structure is incorrect; Cannot continue " "setupTermuxArch.sh refresh"
 		exit $?
@@ -260,7 +261,7 @@ introrefresh() {
 
 introstnd() {
 	printf '\033]2; %s\007' " bash setupTermuxArch.sh $args 📲 "
-	_SETROOTDIREXCEPTION 
+	_SETROOT_EXCEPTION_ 
 	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s" " 🕛 > 🕛" "setupTermuxArch $versionid shall $introstndidstmt your TermuxArch files in" "$installdir" ".  Ensure background data is not restricted.  Run " "bash setupTermuxArch.sh help" "for additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 }
 
@@ -331,19 +332,19 @@ namestartarch() { # ${@%/} removes trailing slash
 
 _OPT2_() { 
 	if [[ -z "${2:-}" ]] ; then
-		_ARG2DIR "$@" 
+		_ARG2DIR_ "$@" 
 	elif [[ "$2" = [Bb]* ]] ; then
 		echo Setting mode to bloom. 
 		introbloom "$@"  
 	elif [[ "$2" = [Dd]* ]] || [[ "$2" = [Ss]* ]] ; then
 		echo Setting mode to sysinfo.
 		shift
-		_ARG2DIR "$@" 
+		_ARG2DIR_ "$@" 
 		introsysinfo "$@"  
 	elif [[ "$2" = [Ii]* ]] ; then
 		echo Setting mode to install.
 		shift
-		_ARG2DIR "$@" 
+		_ARG2DIR_ "$@" 
 	elif [[ "$2" = [Mm]* ]] ; then
 		echo Setting mode to manual.
 		opt=manual
@@ -352,46 +353,44 @@ _OPT2_() {
 		echo 
 		echo Setting mode to refresh.
 		shift 
-		_ARG2DIR "$@" 
+		_ARG2DIR_ "$@" 
 		introrefresh "$@"  
 	elif [[ "$2" = [Rr]* ]] ; then
 		lcr="1"
-		echo 
-		echo "Setting mode to minimal refresh.  Use refresh for full refresh."
+		printf "\\n\\e[1;32m%s\\e[1;34m: \\e[0;32m%s \`%s\` %s\\n\\e[0m" "Setting mode" "minimal refresh;  Use" "${0##*/} re[fresh]" "for full refresh."
 		shift
-		_ARG2DIR "$@" 
+		_ARG2DIR_ "$@" 
 		introrefresh "$@"  
 	else
-		_ARG2DIR "$@" 
+		_ARG2DIR_ "$@" 
 	fi
 }
 
 _OPT3_() { 
 	if [[ -z "${3:-}" ]] ; then
 		shift
-		_ARG2DIR "$@" 
+		_ARG2DIR_ "$@" 
 		intro "$@"  
 	elif [[ "$3" = [Ii]* ]] ; then
 		echo Setting mode to install.
 		shift 2 
-		_ARG2DIR "$@" 
+		_ARG2DIR_ "$@" 
 		intro "$@"  
 	elif [[ "$3" = [Rr][Ee]* ]] ; then
 		echo 
 		echo Setting mode to refresh.
 		shift 2 
-		_ARG2DIR "$@" 
+		_ARG2DIR_ "$@" 
 		introrefresh "$@"  
 	elif [[ "$3" = [Rr]* ]] ; then
 		lcr="1"
-		echo 
-		echo "Setting mode to minimal refresh.  Use refresh for full refresh."
+		printf "\\n\\e[1;32m%s\\e[1;34m: \\e[0;32m%s \`%s\` %s\\n\\e[0m" "Setting mode" "minimal refresh;  Use" "${0##*/} re[fresh]" "for full refresh."
 		shift 2 
-		_ARG2DIR "$@" 
+		_ARG2DIR_ "$@" 
 		introrefresh "$@"  
 	else
 		shift 
-		_ARG2DIR "$@" 
+		_ARG2DIR_ "$@" 
 		intro "$@"  
 	fi
 }
@@ -416,7 +415,7 @@ preptmpdir() {
 	mkdir -p "$tampdir" 
 }
 
-_PREPTERMUXARCH() { 
+_PREPTERMUXARCH_() { 
 	nameinstalldir 
 	namestartarch  
 	preptmpdir
@@ -501,7 +500,7 @@ rmarch() {
 }
 
 rmarchrm() {
-	_SETROOTDIREXCEPTION 
+	_SETROOT_EXCEPTION_ 
 	rm -rf "${installdir:?}"/* 2>/dev/null ||:
 	find  "$installdir" -type d -exec chmod 700 {} \; 2>/dev/null ||:
 	rm -rf "$installdir" 2>/dev/null ||:
@@ -522,7 +521,7 @@ tapin() {
 	fi
 }
 
-_SETROOTDIREXCEPTION() {
+_SETROOT_EXCEPTION_() {
 	if [[ "$installdir" = "$HOME" ]] || [[ "$installdir" = "$HOME"/ ]] || [[ "$installdir" = "$HOME"/.. ]] || [[ "$installdir" = "$HOME"/../ ]] || [[ "$installdir" = "$HOME"/../.. ]] || [[ "$installdir" = "$HOME"/../../ ]] ; then
 		printf  '\033]2;%s\007' "Rootdir exception.  Run bash setupTermuxArch.sh $args again with different options…"	
 		printf "\\n\\e[1;31m%s\\n\\n\\e[0m" "Rootdir exception.  Run the script $args again with different options…"
@@ -530,7 +529,7 @@ _SETROOTDIREXCEPTION() {
 	fi
 }
 
-_SETROOTDIR() {
+_SETROOT_() {
 	if [[ "$CPUABI" = "$CPUABIX86" ]] ; then
 	#	rootdir=/root.i686
 		rootdir=/arch
@@ -546,6 +545,16 @@ standardid() {
 	introstndid="$1" 
 	introstndidstmt="$(printf "%s \\e[0;32m%s" "$1 the TermuxArch files in" "$installdir")" 
 	introstnd
+}
+
+_STANDARDIF_() {
+	if [[ -x "$(command -v proot)" ]] &&  [[ -x "$PREFIX"/bin/proot ]] ; then
+		:
+	else
+		aptin+="proot "
+		maptin+=("proot")
+		apton+=("proot")
+	fi
 }
 
 _TRPERROR_() { # Run on script error.
@@ -632,7 +641,7 @@ trap _TRPQUIT_ QUIT
 if [[ -z "${tampdir:-}" ]] ; then
 	tampdir=""
 fi
-_SETROOTDIR
+_SETROOT_
 commandif="$(command -v getprop)" ||:
 if [[ "$commandif" = "" ]] ; then
 	printf "\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING: Run \`bash ${0##*/}\` or \`./${0##*/}\` from the BASH shell in the OS system in Termux, i.e. Amazon Fire, Android and Chromebook."
@@ -661,7 +670,7 @@ CPUABI="$(getprop ro.product.cpu.abi)"
 ## <<<<<<<<<<<<>>>>>>>>>>>>
 ## []  Run default Arch Linux install. 
 if [[ -z "${1:-}" ]] ; then
-	_PREPTERMUXARCH 
+	_PREPTERMUXARCH_ 
 	intro "$@" 
 ## [./path/systemimage.tar.gz [customdir]]  Use path to system image file; install directory argument is optional. A systemimage.tar.gz file can be substituted for network install: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`. 
 elif [[ "${args:0:1}" = . ]] ; then
@@ -669,7 +678,7 @@ elif [[ "${args:0:1}" = . ]] ; then
  	echo Setting mode to copy system image.
  	lcc="1"
  	lcp="1"
- 	_ARG2DIR "$@"  
+ 	_ARG2DIR_ "$@"  
  	intro "$@" 
 ## [systemimage.tar.gz [customdir]]  Install directory argument is optional.  A systemimage.tar.gz file can substituted for network install.  
 # elif [[ "${wdir}${args}" = *.tar.gz* ]] ; then
@@ -678,7 +687,7 @@ elif [[ "$args" = *.tar.gz* ]] ; then
 	echo Setting mode to copy system image.
 	lcc="1"
 	lcp="0"
-	_ARG2DIR "$@"  
+	_ARG2DIR_ "$@"  
 	intro "$@" 
 ## [axd|axs]  Get device system information with `axel`.
 elif [[ "${1//-}" = [Aa][Xx][Dd]* ]] || [[ "${1//-}" = [Aa][Xx][Ss]* ]] ; then
@@ -686,7 +695,7 @@ elif [[ "${1//-}" = [Aa][Xx][Dd]* ]] || [[ "${1//-}" = [Aa][Xx][Ss]* ]] ; then
 	echo Getting device system information with \`axel\`.
 	dm=axel
 	shift
-	_ARG2DIR "$@" 
+	_ARG2DIR_ "$@" 
 	introsysinfo "$@" 
 ## [ax[el] [customdir]|axi [customdir]]  Install Arch Linux with `axel`.
 elif [[ "${1//-}" = [Aa][Xx]* ]] || [[ "${1//-}" = [Aa][Xx][Ii]* ]] ; then
@@ -701,7 +710,7 @@ elif [[ "${1//-}" = [Aa][Dd]* ]] || [[ "${1//-}" = [Aa][Ss]* ]] ; then
 	echo Getting device system information with \`aria2c\`.
 	dm=aria2c
 	shift
-	_ARG2DIR "$@" 
+	_ARG2DIR_ "$@" 
 	introsysinfo "$@" 
 ## [a[ria2c] [customdir]|ai [customdir]]  Install Arch Linux with `aria2c`.
 elif [[ "${1//-}" = [Aa]* ]] ; then
@@ -721,7 +730,7 @@ elif [[ "${1//-}" = [Cc][Dd]* ]] || [[ "${1//-}" = [Cc][Ss]* ]] ; then
 	echo Getting device system information with \`curl\`.
 	dm=curl
 	shift
-	_ARG2DIR "$@" 
+	_ARG2DIR_ "$@" 
 	introsysinfo "$@" 
 ## [c[url] [customdir]|ci [customdir]]  Install Arch Linux with `curl`.
 elif [[ "${1//-}" = [Cc][Ii]* ]] || [[ "${1//-}" = [Cc]* ]] ; then
@@ -735,16 +744,16 @@ elif [[ "${1//-}" = [Dd]* ]] || [[ "${1//-}" = [Ss]* ]] ; then
 	echo 
 	echo Setting mode to sysinfo.
 	shift
-	_ARG2DIR "$@" 
+	_ARG2DIR_ "$@" 
 	introsysinfo "$@" 
 ## [he[lp]|?]  Display terse builtin help.
 elif [[ "${1//-}" = [Hh][Ee]* ]] || [[ "${1//-}" = [?]* ]] ; then
-	_ARG2DIR "$@" 
+	_ARG2DIR_ "$@" 
 	printusage "$@"  
 ## [h|?]  Display verbose builtin help.
 elif [[ "${1//-}" = [Hh]* ]] ; then
 	lcc="1"
-	_ARG2DIR "$@" 
+	_ARG2DIR_ "$@" 
 	printusage "$@"  
 ## [i[nstall] [customdir]]  Install Arch Linux in a custom directory.  Instructions: Install in userspace. $HOME is appended to installation directory. To install Arch Linux in $HOME/customdir use `bash setupTermuxArch.sh install customdir`. In bash shell use `./setupTermuxArch.sh install customdir`.  All options can be abbreviated to one, two and three letters.  Hence `./setupTermuxArch.sh install customdir` can be run as `./setupTermuxArch.sh i customdir` in BASH.
 elif [[ "${1//-}" = [Ii]* ]] ; then
@@ -758,7 +767,7 @@ elif [[ "${1//-}" = [Ll][Dd]* ]] || [[ "${1//-}" = [Ll][Ss]* ]] ; then
 	echo Getting device system information with \`lftp\`.
 	dm=lftp
 	shift
-	_ARG2DIR "$@" 
+	_ARG2DIR_ "$@" 
 	introsysinfo "$@" 
 ## [l[ftp] [customdir]]  Install Arch Linux with `lftp`.
 elif [[ "${1//-}" = [Ll]* ]] ; then
@@ -784,19 +793,18 @@ elif [[ "${1//-}" = [Oo]* ]] ; then
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	echo 
 	echo Setting mode to purge.
-	_ARG2DIR "$@" 
+	_ARG2DIR_ "$@" 
 	rmarchq
 ## [r[e[fresh]] [customdir]]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation, locales and the TermuxArch generated scripts to their newest versions.  
 elif [[ "${1//-}" = [Rr][Ee]* ]] ; then
 	echo 
 	echo Setting mode to refresh.
-	_ARG2DIR "$@" 
+	_ARG2DIR_ "$@" 
 	introrefresh "$@"  
 elif [[ "${1//-}" = [Rr]* ]] ; then
 	lcr="1"
-	echo 
-	echo "Setting mode to minimal refresh.  Use refresh for full refresh."
-	_ARG2DIR "$@" 
+	printf "\\n\\e[1;32m%s\\e[1;34m: \\e[0;32m%s \`%s\` %s\\n\\e[0m" "Setting mode" "minimal refresh;  Use" "${0##*/} re[fresh]" "for full refresh."
+	_ARG2DIR_ "$@" 
 	introrefresh "$@"  
 ## [wd|ws]  Get device system information with `wget`.
 elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
@@ -804,7 +812,7 @@ elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
 	echo Getting device system information with \`wget\`.
 	dm=wget
 	shift
-	_ARG2DIR "$@" 
+	_ARG2DIR_ "$@" 
 	introsysinfo "$@" 
 ## [w[get] [customdir]]  Install Arch Linux with `wget`.
 elif [[ "${1//-}" = [Ww]* ]] ; then
