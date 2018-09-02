@@ -102,9 +102,11 @@ mainblock() {
 
 makefinishsetup() {
 	binfnstp=finishsetup.sh  
-	callfileheader root/bin/"$binfnstp"
+	_CFLHDR root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="gen.v1.6 id961970034008"
+versionid="v1.6 id7746"
+	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
+   	locale-gen ||:
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -117,29 +119,27 @@ versionid="gen.v1.6 id961970034008"
 		grep "proxy" "$HOME"/.profile | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
 	fi
 	if [[ -z "${lcr:-}" ]] ; then
- 	if [[ "$CPUABI" = "$CPUABI5" ]];then
- 		printf "pacman -Rc linux-armv5 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
- 	elif [[ "$CPUABI" = "$CPUABI7" ]];then
- 		printf "pacman -Rc linux-armv7 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
- 	elif [[ "$CPUABI" = "$CPUABI8" ]];then
- 		printf "pacman -Rc linux-aarch64 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
- 	fi
-	if [[ "$CPUABI" = "$CPUABIX86" ]];then
-		printf "./root/bin/keys x86\\n" >> root/bin/"$binfnstp"
-	elif [[ "$CPUABI" = "$CPUABIX86_64" ]];then
-		printf "./root/bin/keys x86_64\\n" >> root/bin/"$binfnstp"
-	else
- 		printf "./root/bin/keys\\n" >> root/bin/"$binfnstp"
-	fi
-	if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
-		printf "./root/bin/pci gzip sed \\n" >> root/bin/"$binfnstp"
-	else
- 		printf "./root/bin/pci \\n" >> root/bin/"$binfnstp"
-	fi
+	 	if [[ "$CPUABI" = "$CPUABI5" ]];then
+	 		printf "pacman -Rc linux-armv5 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+	 	elif [[ "$CPUABI" = "$CPUABI7" ]];then
+	 		printf "pacman -Rc linux-armv7 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+	 	elif [[ "$CPUABI" = "$CPUABI8" ]];then
+	 		printf "pacman -Rc linux-aarch64 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+	 	fi
+		if [[ "$CPUABI" = "$CPUABIX86" ]];then
+			printf "./root/bin/keys x86\\n" >> root/bin/"$binfnstp"
+		elif [[ "$CPUABI" = "$CPUABIX86_64" ]];then
+			printf "./root/bin/keys x86_64\\n" >> root/bin/"$binfnstp"
+		else
+	 		printf "./root/bin/keys\\n" >> root/bin/"$binfnstp"
+		fi
+		if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
+			printf "./root/bin/pci gzip sed \\n" >> root/bin/"$binfnstp"
+		else
+	 		printf "./root/bin/pci \\n" >> root/bin/"$binfnstp"
+		fi
 	fi
 	cat >> root/bin/"$binfnstp" <<- EOM
-	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
-   	locale-gen ||:
 	printf "\\n\\e[1;34m%s  \\e[0m" "🕛 > 🕤 Arch Linux in Termux is installed and configured 📲 " 
 	printf "\\e]2;%s\\007" " 🕛 > 🕤 Arch Linux in Termux is installed and configured 📲 "
 	EOM
@@ -147,9 +147,9 @@ versionid="gen.v1.6 id961970034008"
 }
 
 makesetupbin() {
-	callfileheader root/bin/setupbin.sh 
+	_CFLHDR root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="gen.v1.6 id961970034008"
+versionid="v1.6 id7746"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -157,9 +157,9 @@ versionid="gen.v1.6 id961970034008"
 }
 
 makestartbin() {
-	callfileheader "$startbin" 
+	_CFLHDR "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="gen.v1.6 id961970034008"
+versionid="v1.6 id7746"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -327,54 +327,52 @@ runfinishsetup() {
 	"$installdir"/root/bin/setupbin.sh ||:
 }
 
-_SETLANGUAGE() { # Uses system settings to set locale.
-	_LANGUAGE="unkown"
-	_LANGIN[0]="$(getprop user.language)"
-	_LANGIN[1]="$(getprop user.region)"
-	_LANGIN[2]="$(getprop persist.sys.country)"
-	_LANGIN[3]="$(getprop persist.sys.language)"
-	_LANGIN[4]="$(getprop persist.sys.locale)"
- 	_LANGIN[5]="$(getprop ro.product.locale)"
-	_LANGIN[6]="$(getprop ro.product.locale.language)"
-	_LANGIN[7]="$(getprop ro.product.locale.region)"
+_SETLANGUAGE() { # This function uses device system settings to set locale.  To generate locales in a preferred language, you can use "Settings > Language & Keyboard > Language" in Android; Then run `setupTermuxArch.sh r for a quick system refresh.
+	ULANGUAGE="unkown"
+	LANGIN[0]="$(getprop user.language)"
+	LANGIN[1]="$(getprop user.region)"
+	LANGIN[2]="$(getprop persist.sys.country)"
+	LANGIN[3]="$(getprop persist.sys.language)"
+	LANGIN[4]="$(getprop persist.sys.locale)"
+ 	LANGIN[5]="$(getprop ro.product.locale)"
+	LANGIN[6]="$(getprop ro.product.locale.language)"
+	LANGIN[7]="$(getprop ro.product.locale.region)"
 	touch "$installdir"/etc/locale.gen 
-	if [[ "$_LANGUAGE" != *_* ]];then
-		_LANGUAGE="${_LANGIN[0]:-unknown}_${_LANGIN[1]:-unknown}"
-	       	if ! grep "$_LANGUAGE" "$installdir"/etc/locale.gen 1>/dev/null ; then 
-			_LANGUAGE="unknown"
-	       	fi 
-	fi 
- 	if [[ "$_LANGUAGE" != *_* ]];then
- 		_LANGUAGE="${_LANGIN[3]:-unknown}_${_LANGIN[2]:-unknown}"
- 	       	if ! grep "$_LANGUAGE" "$installdir"/etc/locale.gen 1>/dev/null ; then 
- 			_LANGUAGE="unknown"
+	ULANGUAGE="${LANGIN[0]:-unknown}_${LANGIN[1]:-unknown}"
+       	if ! grep "$ULANGUAGE" "$installdir"/etc/locale.gen 1>/dev/null ; then 
+		ULANGUAGE="unknown"
+       	fi 
+ 	if [[ "$ULANGUAGE" != *_* ]];then
+ 		ULANGUAGE="${LANGIN[3]:-unknown}_${LANGIN[2]:-unknown}"
+ 	       	if ! grep "$ULANGUAGE" "$installdir"/etc/locale.gen 1>/dev/null ; then 
+ 			ULANGUAGE="unknown"
  	       	fi 
  	fi 
-	for i in "${!_LANGIN[@]}"; do
-		if [[ "${_LANGIN[i]}" = *-* ]];then
- 	 		_LANGUAGE="${_LANGIN[i]//-/_}"
+	for i in "${!LANGIN[@]}"; do
+		if [[ "${LANGIN[i]}" = *-* ]];then
+ 	 		ULANGUAGE="${LANGIN[i]//-/_}"
 			break
 		fi
 	done
- 	if [[ "$_LANGUAGE" != *_* ]];then
- 		_LANGUAGE="${_LANGIN[6]:-unknown}_${_LANGIN[7]:-unknown}"
- 	       	if ! grep "$_LANGUAGE" "$installdir"/etc/locale.gen 1>/dev/null ; then 
- 			_LANGUAGE="unknown"
+ 	if [[ "$ULANGUAGE" != *_* ]];then
+ 		ULANGUAGE="${LANGIN[6]:-unknown}_${LANGIN[7]:-unknown}"
+ 	       	if ! grep "$ULANGUAGE" "$installdir"/etc/locale.gen 1>/dev/null ; then 
+ 			ULANGUAGE="unknown"
  	       	fi 
  	fi 
- 	if [[ "$_LANGUAGE" != *_* ]];then
-   		_LANGUAGE="en_US"
+ 	if [[ "$ULANGUAGE" != *_* ]];then
+   		ULANGUAGE="en_US"
  	fi 
-	printf "\\n\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n" "Setting locales to: " "Language " ">> $_LANGUAGE << " "Region"
+	printf "\\n\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n" "Setting locales to: " "Language " ">> $ULANGUAGE << " "Region"
 }
 
-_SETLOCALE() { # Uses system settings to set locale.
+_SETLOCALE() { # This function uses device system settings to set locale.  To generate locales in a preferred language, you can use "Settings > Language & Keyboard > Language" in Android; Then run `setupTermuxArch.sh r for a quick system refresh.
 	FTIME="$(date +%F%H%M%S)"
-	echo "## File locale.conf generated by setupTermuxArch.sh at" ${FTIME//-}. > etc/locale.conf 
+	echo "##  File locale.conf generated by setupTermuxArch.sh at" ${FTIME//-}. > etc/locale.conf 
 	for i in "${!LC_TYPE[@]}"; do
-	 	echo "${LC_TYPE[i]}"="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	 	echo "${LC_TYPE[i]}"="$ULANGUAGE".UTF-8 >> etc/locale.conf 
 	done
-	sed -i "/\\#$_LANGUAGE.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 
+	sed -i "/\\#$ULANGUAGE.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 
 }
 
 touchupsys() {

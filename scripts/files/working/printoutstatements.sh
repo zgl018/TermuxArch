@@ -6,31 +6,37 @@
 # Printout statement subroutines for `setupTermuxArch.sh`.
 ################################################################################
 
-fileheader[0]="#!/bin/env bash" 
-fileheader[1]="# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺"
-fileheader[2]="# Hosting sdrausty.github.io/TermuxArch courtesy https://pages.github.com." 
-fileheader[3]="# https://sdrausty.github.io/TermuxArch/README has info about this project."
-fileheader[4]="# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help." 
-fileheader[5]="################################################################################"
-fileheader[6]="IFS=$'\\n\\t'"
-fileheader[7]="set -Eeuo pipefail"
-fileheader[8]="shopt -s nullglob globstar"
-fileheader[9]="versionid="v1.6id9909""
+FLHDR[0]="#!/bin/env bash" 
+FLHDR[1]="# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺"
+FLHDR[2]="# Hosting sdrausty.github.io/TermuxArch courtesy https://pages.github.com." 
+FLHDR[3]="# https://sdrausty.github.io/TermuxArch/README has info about this project."
+FLHDR[4]="# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help." 
+FLHDR[5]="################################################################################"
+FLHDR[6]="IFS=$'\\n\\t'"
+FLHDR[7]="set -Eeuo pipefail"
+FLHDR[8]="shopt -s nullglob globstar"
+FLHDR[9]="versionid=\"v1.6 id9909\""
 
-callfileheader() {
+TRPERROR[0]="_TRPERROR() {  ##	Run on script error.  "
+TRPERROR[1]="	local rv=\"\$?\""
+TRPERROR[2]="	printf \"\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n\" \"TermuxArch WARNING:  Generated script signal \${rv:-unknown} near or at line number \${1:-unknown} by \`\${2:-command}\`!\""
+TRPERROR[3]="	exit 201"
+TRPERROR[4]="}"
+
+_CFLHDR() { ##	Call File Header
 	if [[ -z "${2:-}" ]] ; then
-		for i in "${!fileheader[@]}"; do
+		for i in "${!FLHDR[@]}"; do
 			if [[ $i = 0 ]] ; then
-				printf "%s\n" "${fileheader[i]}" > "$1"
+				printf "%s\n" "${FLHDR[i]}" > "$1"
 			else
-				printf "%s\n" "${fileheader[i]}" >> "$1"
+				printf "%s\n" "${FLHDR[i]}" >> "$1"
 			fi
 		done
 	else
-		printf "%s\n" "${fileheader[0]}" > "$1"
+		printf "%s\n" "${FLHDR[0]}" > "$1"
 		printf "%s\n" "$2" >> "$1"
  		for i in {1..9} ; do
- 			printf "%s\n" "${fileheader[i]}" >> "$1"
+ 			printf "%s\n" "${FLHDR[i]}" >> "$1"
  		done
 	fi
 }
