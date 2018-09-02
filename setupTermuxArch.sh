@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id4500"
+versionid="v1.6 id3407"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -130,7 +130,7 @@ curlifdm() {
 }
 
 dependbp() {
-	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]] ; then
+	if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]] ; then
 		bsdtarif 
 		prootif 
 	else
@@ -299,7 +299,7 @@ manual() {
 		printconfloaded 
 	else
 		cp knownconfigurations.sh "${wdir}setupTermuxArchConfigs.sh"
- 		sed -i "7s/.*/\# The architecture of this device is $cpuabi; Adjust configurations in the appropriate section.  Change mirror (https:\/\/wiki.archlinux.org\/index.php\/Mirrors and https:\/\/archlinuxarm.org\/about\/mirrors) to desired geographic location to resolve 404 and checksum issues.  /" "${wdir}setupTermuxArchConfigs.sh" 
+ 		sed -i "7s/.*/\# The architecture of this device is $CPUABI; Adjust configurations in the appropriate section.  Change mirror (https:\/\/wiki.archlinux.org\/index.php\/Mirrors and https:\/\/archlinuxarm.org\/about\/mirrors) to desired geographic location to resolve 404 and checksum issues.  /" "${wdir}setupTermuxArchConfigs.sh" 
 		"$ed" "${wdir}setupTermuxArchConfigs.sh"
 		. "${wdir}setupTermuxArchConfigs.sh"
 		printconfloaded 
@@ -527,10 +527,10 @@ rootdirexception() {
 }
 
 setrootdir() {
-	if [[ "$cpuabi" = "$cpuabix86" ]] ; then
+	if [[ "$CPUABI" = "$CPUABIX86" ]] ; then
 	#	rootdir=/root.i686
 		rootdir=/arch
-	elif [[ "$cpuabi" = "$cpuabix86_64" ]] ; then
+	elif [[ "$CPUABI" = "$CPUABIX86_64" ]] ; then
 	#	rootdir=/root.x86_64
 		rootdir=/arch
 	else
@@ -600,12 +600,12 @@ declare -a args="$@"
 declare aptin=""	## apt string
 declare apton=""	## exception string
 declare commandif=""
-declare cpuabi=""
-declare cpuabi5="armeabi"
-declare cpuabi7="armeabi-v7a"
-declare cpuabi8="arm64-v8a"
-declare cpuabix86="x86"
-declare cpuabix86_64="x86_64"
+declare CPUABI=""
+declare CPUABI5="armeabi"
+declare CPUABI7="armeabi-v7a"
+declare CPUABI8="arm64-v8a"
+declare CPUABIX86="x86"
+declare CPUABIX86_64="x86_64"
 declare dfl=""	## Used for development.  
 declare dm="wget"	## download manager
 declare dmverbose="-q"	## -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
@@ -646,7 +646,7 @@ oned="$(date +%s)"
 oneda="${oned: -1}" 
 STIME="$oneda$STIME"
 ## Gets information with `getprop` about device.
-cpuabi="$(getprop ro.product.cpu.abi)" 
+CPUABI="$(getprop ro.product.cpu.abi)" 
 ## OPTIONS STATUS: UNDERGOING TESTING;  Image file and compound options are still under development.  USE WITH CAUTION!  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT yet fully implemented.   
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [~/|./|/absolute/path/]systemimage.tar.gz [WHERE]`.  
 ## EXPLAINATION: [HOW (aria2c|axel|curl|lftp|wget (default 1: available on system (default 2: wget)))]  [WHAT (install|manual|purge|refresh|sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied and can be omitted.  

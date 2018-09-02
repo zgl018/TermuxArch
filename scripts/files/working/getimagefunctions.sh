@@ -55,7 +55,7 @@ getimage() {
 	getmsg
 	if [[ "$dm" = aria2c ]];then
 		aria2c http://"$mirror$path$file".md5 
-		if [[ "$cpuabi" = "$cpuabix86" ]];then
+		if [[ "$CPUABI" = "$CPUABIX86" ]];then
 			file="$(grep i686 md5sums.txt | awk {'print $2'})"
 		else
 			file="$(grep boot md5sums.txt | awk {'print $2'})"
@@ -65,7 +65,7 @@ getimage() {
 		aria2c -c http://"$mirror$path$file"
 	elif [[ "$dm" = axel ]];then
 		axel http://"$mirror$path$file".md5 
-		if [[ "$cpuabi" = "$cpuabix86" ]];then
+		if [[ "$CPUABI" = "$CPUABIX86" ]];then
 			file="$(grep i686 md5sums.txt | awk {'print $2'})"
 		else
 			file="$(grep boot md5sums.txt | awk {'print $2'})"
@@ -75,7 +75,7 @@ getimage() {
 		axel http://"$mirror$path$file"
 	elif [[ "$dm" = wget ]];then 
 		wget "$dmverbose" -N --show-progress http://"$mirror${path}"md5sums.txt
-		if [[ "$cpuabi" = "$cpuabix86" ]];then
+		if [[ "$CPUABI" = "$CPUABIX86" ]];then
 			file="$(grep i686 md5sums.txt | awk {'print $2'})"
 		else
 			file="$(grep boot md5sums.txt | awk {'print $2'})"
@@ -86,7 +86,7 @@ getimage() {
 		wget "$dmverbose" -c --show-progress http://"$mirror$path$file" 
 	else
 		curl "$dmverbose" --fail --retry 4 -OL http://"$mirror${path}"md5sums.txt
-		if [[ "$cpuabi" = "$cpuabix86" ]];then
+		if [[ "$CPUABI" = "$CPUABIX86" ]];then
 			file="$(grep i686 md5sums.txt | awk {'print $2'})"
 		else
 			file="$(grep boot md5sums.txt | awk {'print $2'})"

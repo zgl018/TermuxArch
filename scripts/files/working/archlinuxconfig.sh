@@ -61,8 +61,8 @@ addbash_profile() {
 	PS1="[\A\[\033[0;32m\] \W \[\033[0m\]]\\$ "
 	export TZ="$(getprop persist.sys.timezone)"
 	EOM
-	for i in "${!_LC_TYPE[@]}"; do
-	 	printf "%s=\"%s\"\\n" "export ${_LC_TYPE[i]}" "$_LANGUAGE.UTF-8" >> root/.bash_profile 
+	for i in "${!LC_TYPE[@]}"; do
+	 	printf "%s=\"%s\"\\n" "export ${LC_TYPE[i]}" "$_LANGUAGE.UTF-8" >> root/.bash_profile 
 	done
 	if [ -e "$HOME"/.bash_profile ] ; then
 		grep proxy "$HOME"/.bash_profile |grep "export" >>  root/.bash_profile 2>/dev/null ||:
@@ -131,7 +131,7 @@ addch() {
 	callfileheader root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="gen.v1.6 id138144041812"
+versionid="v1.6 id3407"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -353,7 +353,7 @@ addkeys() {
 	callfileheader root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="gen.v1.6 id138144041812"
+versionid="v1.6 id3407"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -446,7 +446,7 @@ addpc() {
 	callfileheader root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="gen.v1.6 id138144041812"
+versionid="v1.6 id3407"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -500,7 +500,7 @@ addpci() {
 	callfileheader root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="gen.v1.6 id138144041812"
+versionid="v1.6 id3407"
 
 	finishe() { # on exit
 		printf "\\e[?25h\\e[0m"

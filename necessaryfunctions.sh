@@ -5,12 +5,11 @@
 # https://sdrausty.github.io/TermuxArch/README has information about this project. 
 ################################################################################
 
-_LC_TYPE=( "LANG" "LANGUAGE" "LC_ADDRESS" "LC_COLLATE" "LC_CTYPE" "LC_IDENTIFICATION" "LC_MEASUREMENT" "LC_MESSAGES" "LC_MONETARY" "LC_NAME" "LC_NUMERIC" "LC_PAPER" "LC_TELEPHONE" "LC_TIME" )
-_FTIME="$(date +%F%H%M%S)"
+LC_TYPE=( "LANG" "LANGUAGE" "LC_ADDRESS" "LC_COLLATE" "LC_CTYPE" "LC_IDENTIFICATION" "LC_MEASUREMENT" "LC_MESSAGES" "LC_MONETARY" "LC_NAME" "LC_NUMERIC" "LC_PAPER" "LC_TELEPHONE" "LC_TIME" )
 
-callsystem() {
+_CALLSYSTEM() {
 	declare COUNTER=""
-	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
+	if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
 		getimage
 	else
 		if [[ "$mirror" = "os.archlinuxarm.org" ]] || [[ "$mirror" = "mirror.archlinuxarm.org" ]]; then
@@ -59,15 +58,15 @@ copystartbin2pathq() {
 
 detectsystem() {
 	printdetectedsystem
-	if [[ "$cpuabi" = "$cpuabi5" ]];then
+	if [[ "$CPUABI" = "$CPUABI5" ]];then
 		armv5l
-	elif [[ "$cpuabi" = "$cpuabi7" ]];then
+	elif [[ "$CPUABI" = "$CPUABI7" ]];then
 		detectsystem2 
-	elif [[ "$cpuabi" = "$cpuabi8" ]];then
+	elif [[ "$CPUABI" = "$CPUABI8" ]];then
 		aarch64
-	elif [[ "$cpuabi" = "$cpuabix86" ]];then
+	elif [[ "$CPUABI" = "$CPUABIX86" ]];then
 		i686 
-	elif [[ "$cpuabi" = "$cpuabix86_64" ]];then
+	elif [[ "$CPUABI" = "$CPUABIX86_64" ]];then
 		x86_64
 	else
 		printmismatch 
@@ -122,7 +121,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	callfileheader root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="v1.6 id4500"
+versionid="v1.6 id3407"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -135,21 +134,21 @@ versionid="v1.6 id4500"
 		grep "proxy" "$HOME"/.profile | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
 	fi
 	if [[ -z "${lcr:-}" ]] ; then
- 	if [[ "$cpuabi" = "$cpuabi5" ]];then
+ 	if [[ "$CPUABI" = "$CPUABI5" ]];then
  		printf "pacman -Rc linux-armv5 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
- 	elif [[ "$cpuabi" = "$cpuabi7" ]];then
+ 	elif [[ "$CPUABI" = "$CPUABI7" ]];then
  		printf "pacman -Rc linux-armv7 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
- 	elif [[ "$cpuabi" = "$cpuabi8" ]];then
+ 	elif [[ "$CPUABI" = "$CPUABI8" ]];then
  		printf "pacman -Rc linux-aarch64 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
  	fi
-	if [[ "$cpuabi" = "$cpuabix86" ]];then
+	if [[ "$CPUABI" = "$CPUABIX86" ]];then
 		printf "./root/bin/keys x86\\n" >> root/bin/"$binfnstp"
-	elif [[ "$cpuabi" = "$cpuabix86_64" ]];then
+	elif [[ "$CPUABI" = "$CPUABIX86_64" ]];then
 		printf "./root/bin/keys x86_64\\n" >> root/bin/"$binfnstp"
 	else
  		printf "./root/bin/keys\\n" >> root/bin/"$binfnstp"
 	fi
-	if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
+	if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
 		printf "./root/bin/pci gzip sed \\n" >> root/bin/"$binfnstp"
 	else
  		printf "./root/bin/pci \\n" >> root/bin/"$binfnstp"
@@ -167,7 +166,7 @@ versionid="v1.6 id4500"
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id4500"
+versionid="v1.6 id3407"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -177,7 +176,7 @@ versionid="v1.6 id4500"
 makestartbin() {
 	callfileheader "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id4500"
+versionid="v1.6 id3407"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -243,7 +242,7 @@ versionid="v1.6 id4500"
 
 makesystem() {
 	wakelock
-	callsystem
+	_CALLSYSTEM
 	printmd5check
 	md5check
 	printcu 
@@ -314,7 +313,7 @@ prepinstalldir() {
 
 preproot() {
 	if [[ "$(ls -al "$installdir"/*z | awk '{ print $5 }')" -gt 557799 ]] ; then
-		if [[ "$cpuabi" = "$cpuabix86" ]] || [[ "$cpuabi" = "$cpuabix86_64" ]];then
+		if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
 	 		proot --link2symlink -0 bsdtar -xpf "$file" --strip-components 1  
 		else
 	 		proot --link2symlink -0 "$PREFIX"/bin/applets/tar -xpf "$file" 
@@ -357,23 +356,23 @@ _SETLANGUAGE() { # Uses system settings to set locale.
 	_LANGIN[7]="$(getprop ro.product.locale.region)"
 	touch "$installdir"/etc/locale.gen 
 	if [[ "$_LANGUAGE" != *_* ]];then
-		_LANGUAGE="${_LANGIN[0]:-unknown}-${_LANGIN[1]:-unknown}"
+		_LANGUAGE="${_LANGIN[0]:-unknown}_${_LANGIN[1]:-unknown}"
 	       	if ! grep "$_LANGUAGE" "$installdir"/etc/locale.gen 1>/dev/null ; then 
 			_LANGUAGE="unknown"
 	       	fi 
 	fi 
-	for i in "${!_LANGIN[@]}"; do
-		if [[ "${_LANGIN[i]}" = *-* ]];then
- 	 		_LANGUAGE="${_LANGIN[i]//-/_}"
-			break
-		fi
-	done
  	if [[ "$_LANGUAGE" != *_* ]];then
  		_LANGUAGE="${_LANGIN[3]:-unknown}_${_LANGIN[2]:-unknown}"
  	       	if ! grep "$_LANGUAGE" "$installdir"/etc/locale.gen 1>/dev/null ; then 
  			_LANGUAGE="unknown"
  	       	fi 
  	fi 
+	for i in "${!_LANGIN[@]}"; do
+		if [[ "${_LANGIN[i]}" = *-* ]];then
+ 	 		_LANGUAGE="${_LANGIN[i]//-/_}"
+			break
+		fi
+	done
  	if [[ "$_LANGUAGE" != *_* ]];then
  		_LANGUAGE="${_LANGIN[6]:-unknown}_${_LANGIN[7]:-unknown}"
  	       	if ! grep "$_LANGUAGE" "$installdir"/etc/locale.gen 1>/dev/null ; then 
@@ -387,9 +386,10 @@ _SETLANGUAGE() { # Uses system settings to set locale.
 }
 
 _SETLOCALE() { # Uses system settings to set locale.
-	echo "## File locale.conf generated by setupTermuxArch.sh at" ${_FTIME//-}. > etc/locale.conf 
-	for i in "${!_LC_TYPE[@]}"; do
-	 	echo "${_LC_TYPE[i]}"="$_LANGUAGE".UTF-8 >> etc/locale.conf 
+	FTIME="$(date +%F%H%M%S)"
+	echo "## File locale.conf generated by setupTermuxArch.sh at" ${FTIME//-}. > etc/locale.conf 
+	for i in "${!LC_TYPE[@]}"; do
+	 	echo "${LC_TYPE[i]}"="$_LANGUAGE".UTF-8 >> etc/locale.conf 
 	done
 	sed -i "/\\#$_LANGUAGE.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 
 }
