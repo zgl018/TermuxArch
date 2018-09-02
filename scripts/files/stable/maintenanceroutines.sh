@@ -68,7 +68,7 @@ systeminfo () {
 	du -hs "$installdir" >> "${wdir}setupTermuxArchSysInfo$STIME".log 2>/dev/null ||:
 	printf "\\nls -al $installdir results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
 	ls -al "$installdir" >> "${wdir}setupTermuxArchSysInfo$STIME".log 2>/dev/null ||:
-	printf "\\nEnd \`setupTermuxArchSysInfo$STIME.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`""${wdir}setupTermuxArchSysInfo$STIME.log\`.  If you think screenshots will help in a quicker resolution, include them in your post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
+	printf "\\nEnd \`setupTermuxArchSysInfo$STIME.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`""${wdir}setupTermuxArchSysInfo$STIME.log\`.  If you think screenshots will help in a quicker resolution, include them in the post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
 }
 
 copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[path/]systemimage.tar.gz` and `setupTermuxArch.sh /absolutepath/systemimage.tar.gz`
@@ -98,7 +98,7 @@ loadimage() {
  	spaceinfo
 	printf "\\n" 
 	wakelock
-	prepinstalldir 
+	_PREPINSTALLDIR 
   	copyimage ## "$@" & spinner "Copying" "…" 
 	printmd5check
 	md5check
@@ -126,7 +126,7 @@ refreshsys() { # Refreshes
 		exit $?
 	fi
 	cd "$installdir"
-	preprootdir
+	_PREPROOTDIR
 	_SETLANGUAGE
 	addREADME
 	addae
