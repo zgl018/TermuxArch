@@ -69,23 +69,23 @@ fi
 if [[ "$koe" ]]; then
 	prootstmnt+="--kill-on-exit "
 fi
-prootstmnt+="--link2symlink -0 -r $installdir "
+prootstmnt+="--link2symlink -0 -r $INSTALLDIR "
 if [[ ! -r /dev/shm ]] ; then 
 	if [[ -r /dev/ashmem ]] ; then 
 	 	prootstmnt+="-b /dev/ashmem:/dev/shm " 
 	else
-		prootstmnt+="-b $installdir/tmp:/dev/shm " 
+		prootstmnt+="-b $INSTALLDIR/tmp:/dev/shm " 
 	fi
 fi
 if [[ -f /proc/stat ]] ; then
 	if [[ ! "$(head /proc/stat)" ]] ; then
-		prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
+		prootstmnt+="-b $INSTALLDIR/var/binds/fbindprocstat:/proc/stat " 
 	fi
 else
-	prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
+	prootstmnt+="-b $INSTALLDIR/var/binds/fbindprocstat:/proc/stat " 
 fi
-if [ -n "$(ls -A "$installdir"/var/binds/*.prs)" ]; then
-    for f in "$installdir"/var/binds/*.prs ; do
+if [ -n "$(ls -A "$INSTALLDIR"/var/binds/*.prs)" ]; then
+    for f in "$INSTALLDIR"/var/binds/*.prs ; do
       . "$f"
     done
 fi

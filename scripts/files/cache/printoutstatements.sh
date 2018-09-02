@@ -6,31 +6,37 @@
 # Printout statement subroutines for `setupTermuxArch.sh`.
 ################################################################################
 
-fileheader[0]="#!/bin/env bash" 
-fileheader[1]="# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺"
-fileheader[2]="# Hosting sdrausty.github.io/TermuxArch courtesy https://pages.github.com." 
-fileheader[3]="# https://sdrausty.github.io/TermuxArch/README has info about this project."
-fileheader[4]="# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help." 
-fileheader[5]="################################################################################"
-fileheader[6]="IFS=$'\\n\\t'"
-fileheader[7]="set -Eeuo pipefail"
-fileheader[8]="shopt -s nullglob globstar"
-fileheader[9]="versionid="v1.6id9909""
+FLHDR[0]="#!/bin/env bash" 
+FLHDR[1]="# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺"
+FLHDR[2]="# Hosting sdrausty.github.io/TermuxArch courtesy https://pages.github.com." 
+FLHDR[3]="# https://sdrausty.github.io/TermuxArch/README has info about this project."
+FLHDR[4]="# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help." 
+FLHDR[5]="################################################################################"
+FLHDR[6]="IFS=$'\\n\\t'"
+FLHDR[7]="set -Eeuo pipefail"
+FLHDR[8]="shopt -s nullglob globstar"
+FLHDR[9]="versionid=\"v1.6 id9909\""
 
-callfileheader() {
+TRPERROR[0]="_TRPERROR_() {  ##	Run on script error.  "
+TRPERROR[1]="	local rv=\"\$?\""
+TRPERROR[2]="	printf \"\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n\" \"TermuxArch WARNING:  Generated script signal \${rv:-unknown} near or at line number \${1:-unknown} by \`\${2:-command}\`!\""
+TRPERROR[3]="	exit 201"
+TRPERROR[4]="}"
+
+_CFLHDR() { ##	Call File Header
 	if [[ -z "${2:-}" ]] ; then
-		for i in "${!fileheader[@]}"; do
+		for i in "${!FLHDR[@]}"; do
 			if [[ $i = 0 ]] ; then
-				printf "%s\n" "${fileheader[i]}" > "$1"
+				printf "%s\n" "${FLHDR[i]}" > "$1"
 			else
-				printf "%s\n" "${fileheader[i]}" >> "$1"
+				printf "%s\n" "${FLHDR[i]}" >> "$1"
 			fi
 		done
 	else
-		printf "%s\n" "${fileheader[0]}" > "$1"
+		printf "%s\n" "${FLHDR[0]}" > "$1"
 		printf "%s\n" "$2" >> "$1"
  		for i in {1..9} ; do
- 			printf "%s\n" "${fileheader[i]}" >> "$1"
+ 			printf "%s\n" "${FLHDR[i]}" >> "$1"
  		done
 	fi
 }
@@ -99,7 +105,7 @@ printmd5error() {
 
 printmd5success() {
  	printf "\\e]2;%s\\007" " 🕛 > 🕡 Unpacking $file…"
-	printf "\033[0;34m 🕛 > 🕕 \033[1;34mSystem image file download integrity: \033[1;32mOK\n\n\033[0;34m 🕛 > 🕡 \033[1;34mUnpacking $file into $installdir.  The option to create Arch Linux system users is available through \033[1;32maddauser.  Arch Linux user login from Termux with \033[1;32m$startbin \033[1;34mis now implemented.  See \033[0;36mAbility for Scripts to Launch Commands for Arch Linux in Termux PRoot on Device\033[1;34m https://github.com/sdrausty/TermuxArch/issues/54 for more information about these brand new options.  Additional features of TermuxArch are also listed at https://github.com/sdrausty/TermuxArch/releases.\n\nWhile waiting, you can use \033[0;36mdf\033[1;34m, \033[0;36mdu -hs\033[1;34m, \033[0;36mhtop\033[1;34m, \033[0;36mps\033[1;34m, \033[0;36mtop\033[1;34m and \033[0;36mwatch\033[1;34m in a new Termux session to watch the unpacking while the session completes.  Use \033[0;36minfo query \033[1;34mand \033[0;36mman query \033[1;34mto learn more about your Linux system in the palm of your hand.  See The Linux Documentation Project http://tldp.org to learn more about Linux and CLI commands.  \033[1;37mUnpacking \033[37m$file\033[1;37m will take a long time; Be patient…\n\n\033[0m"
+	printf "\033[0;34m 🕛 > 🕕 \033[1;34mSystem image file download integrity: \033[1;32mOK\n\n\033[0;34m 🕛 > 🕡 \033[1;34mUnpacking $file into $INSTALLDIR.  The option to create Arch Linux system users is available through \033[1;32maddauser.  Arch Linux user login from Termux with \033[1;32m$startbin \033[1;34mis now implemented.  See \033[0;36mAbility for Scripts to Launch Commands for Arch Linux in Termux PRoot on Device\033[1;34m https://github.com/sdrausty/TermuxArch/issues/54 for more information about these brand new options.  Additional features of TermuxArch are also listed at https://github.com/sdrausty/TermuxArch/releases.\n\nWhile waiting, you can use \033[0;36mdf\033[1;34m, \033[0;36mdu -hs\033[1;34m, \033[0;36mhtop\033[1;34m, \033[0;36mps\033[1;34m, \033[0;36mtop\033[1;34m and \033[0;36mwatch\033[1;34m in a new Termux session to watch the unpacking while the session completes.  Use \033[0;36minfo query \033[1;34mand \033[0;36mman query \033[1;34mto learn more about your Linux system in the palm of your hand.  See The Linux Documentation Project http://tldp.org to learn more about Linux and CLI commands.  \033[1;37mUnpacking \033[37m$file\033[1;37m will take a long time; Be patient…\n\n\033[0m"
 }
 
 printmismatch() {
@@ -117,7 +123,7 @@ printfooter() {
 }
 
 printfooter2() {
-	printf "\033[1;34mArch Linux in Termux PRoot is installed in $installdir.  This project is in active development.  Contributions to this project are welcome; See https://sdrausty.github.io/TermuxArch/CONTRIBUTORS for information.  The documentation repository for TermuxArch https://sdrausty.github.io/TermuxArch/docs/ is a Termux Arch submodule that is located at https://github.com/sdrausty/docsTermuxArch.  Pull requests and contributions through the issues pages are open to improve the ux (user experience) and this Termux PRoot installation script.\n\nUse \033[1;32m~$printrootdir/$startbin \033[1;34mand \033[1;32m$startbin \033[1;34min a BASH shell to launch Arch Linux in Termux PRoot for future sessions.  If you are new to *nix, http://tldp.org has *nix documentation.  See https://wiki.archlinux.org/index.php/IRC_channel for available Arch Linux IRC channels.\n\n\033[0m"
+	printf "\033[1;34mArch Linux in Termux PRoot is installed in $INSTALLDIR.  This project is in active development.  Contributions to this project are welcome; See https://sdrausty.github.io/TermuxArch/CONTRIBUTORS for information.  The documentation repository for TermuxArch https://sdrausty.github.io/TermuxArch/docs/ is a Termux Arch submodule that is located at https://github.com/sdrausty/docsTermuxArch.  Pull requests and contributions through the issues pages are open to improve the ux (user experience) and this Termux PRoot installation script.\n\nUse \033[1;32m~$printrootdir/$startbin \033[1;34mand \033[1;32m$startbin \033[1;34min a BASH shell to launch Arch Linux in Termux PRoot for future sessions.  If you are new to *nix, http://tldp.org has *nix documentation.  See https://wiki.archlinux.org/index.php/IRC_channel for available Arch Linux IRC channels.\n\n\033[0m"
 }
 
 printrootdirfunction() {

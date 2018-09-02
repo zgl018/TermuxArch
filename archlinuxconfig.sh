@@ -131,12 +131,12 @@ addch() {
 	_CFLHDR root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id3521"
+versionid="v1.6 id4188"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
-	 	printtail "\$args[@]"  
+	 	_PRINTTAIL_ "\$args[@]"  
 	}
 	
 	_TRPERROR_() { # on script signal
@@ -153,7 +153,7 @@ versionid="v1.6 id3521"
 	 	exit "\$?" 
 	}
 	
-	printtail() {
+	_PRINTTAIL_() {
 		printf "\\\\a\\\\n\\\\e[0m%s \\\\e[0;32m%s %s %s\\\\a\\\\e[1;34m: \\\\a\\\\e[1;32m%s\\\\e[0m 🏁  \\\\n\\\\n\\\\a\\\\e[0m" "TermuxArch" "\$(basename "\$0")" "\$args"  "\$versionid" "DONE"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0")"':DONE 📱 \007'
 	}
@@ -197,7 +197,7 @@ adddfa() {
 
 addfbindprocshmem() {
 	cat > var/binds/fbindprocshmem.prs  <<- EOM
-	prootstmnt+="-b $installdir/var/binds/fbindprocshmem:/proc/shmem " 
+	prootstmnt+="-b $INSTALLDIR/var/binds/fbindprocshmem:/proc/shmem " 
 	EOM
 	cat > var/binds/fbindprocshmem <<- EOM
 	------ Message Queues --------
@@ -262,7 +262,7 @@ addfbindprocstat8() {
 addfbindexample() {
 	_CFLHDR var/binds/fbindexample.prs "# To regenerate the start script use \`setupTermuxArch.sh re[fresh[\`.  Add as many proot statements as you want; The init script will parse this file at refresh.  An example is included for convenience.  Usage: prootstmnt+=\"-b host_path:guest_path \" The space before the last double quote is necessary."
 	cat >> var/binds/fbindexample.prs <<- EOM
-	# prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
+	# prootstmnt+="-b $INSTALLDIR/var/binds/fbindprocstat:/proc/stat " 
 	EOM
 }
 
@@ -353,12 +353,12 @@ addkeys() {
 	_CFLHDR root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="v1.6 id3521"
+versionid="v1.6 id4188"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
-	 	printtail "\$keyrings[@]"  
+	 	_PRINTTAIL_ "\$keyrings[@]"  
 #  	 	echo "[ \$0 done (\$?) ]" 
 	}
 	
@@ -391,7 +391,7 @@ versionid="v1.6 id3521"
 		done
 	}
 
-	printtail() {
+	_PRINTTAIL_() {
 		printf "\\\\a\\\\n\\\\e[0;32m%s %s %s\\\\a\\\\e[1;34m: \\\\a\\\\e[1;32m%s\\\\e[0m 🏁  \\\\n\\\\n\\\\a\\\\e[0m" "TermuxArch \$(basename "\$0")" "\$args" "\$versionid" "DONE"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"': DONE 📱 \007'
 	}
@@ -446,12 +446,12 @@ addpc() {
 	_CFLHDR root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id3521"
+versionid="v1.6 id4188"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
-	 	printtail "\$args"  
+	 	_PRINTTAIL_ "\$args"  
 #  	 	echo "[ \$0 done (\$?) ]" 
 	}
 	
@@ -469,7 +469,7 @@ versionid="v1.6 id3521"
 	 	exit "\$?" 
 	}
 	
-	printtail() {
+	_PRINTTAIL_() {
 		printf "\\\\a\\\\n\\\\e[0;32m%s %s %s\\\\a\\\\e[1;34m: \\\\a\\\\e[1;32m%s\\\\e[0m 🏁  \\\\n\\\\n\\\\a\\\\e[0m" "TermuxArch \$(basename "\$0")" "\$args" "\$versionid" "DONE"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"' 📱 \007'
 	}
@@ -500,12 +500,12 @@ addpci() {
 	_CFLHDR root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id3521"
+versionid="v1.6 id4188"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
-	 	printtail "\$args"  
+	 	_PRINTTAIL_ "\$args"  
 	}
 	
 	_TRPERROR_() { # on script signal
@@ -522,7 +522,7 @@ versionid="v1.6 id3521"
 	 	exit \$? 
 	}
 	
-	printtail() { 
+	_PRINTTAIL_() { 
 		printf "\\\\a\\\\n\\\\e[0;32m%s %s %s\\\\a\\\\e[1;34m: \\\\a\\\\e[1;32m%s\\\\e[0m 🏁  \\\\n\\\\n\\\\a\\\\e[0m" "TermuxArch \$(basename "\$0")" "\$args" "\$versionid" "DONE"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"' 📱 \007'
 	}
@@ -673,12 +673,12 @@ addwe() {
 		printf "\n\e[1;32mTermuxArch Watch Entropy:\n"'\033]2; TermuxArch Watch Entropy 📲  \007'
 	}
 
-	printtail()
+	_PRINTTAIL_()
 	{
 		printf "\n\n\e[1;32mTermuxArch Watch Entropy 🏁 \n\n"'\033]2; TermuxArch Watch Entropy 🏁 \007'
 	}
 
-	printusage()
+	_PRINTUSAGE_()
 	{
 		printf "\n\e[0;32mUsage:  \e[1;32mwe \e[0;32m Watch Entropy simple.\n\n	\e[1;32mwe sequential\e[0;32m Watch Entropy sequential.\n\n	\e[1;32mwe simple\e[0;32m Watch Entropy simple.\n\n	\e[1;32mwe verbose\e[0;32m Watch Entropy verbose.\n\n"'\033]2; TermuxArch Watch Entropy 📲  \007'
 	}
@@ -795,9 +795,9 @@ addwe() {
 		printintro 
 		entropysequential 
 	else
-		printusage
+		_PRINTUSAGE_
 	fi
-	printtail 
+	_PRINTTAIL_ 
 	EOM
 	chmod 700 usr/bin/we 
 }

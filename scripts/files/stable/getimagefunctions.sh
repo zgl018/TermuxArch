@@ -8,7 +8,7 @@
 fstnd=""
 ftchit() {
 	getmsg
-	printdownloadingftchit 
+	_PRINTDOWNLOADINGFTCHIT_ 
 	if [[ "$dm" = aria2c ]];then
 		aria2c http://"$mirror$path$file".md5 
 		aria2c -c http://"$mirror$path$file"
@@ -26,32 +26,32 @@ ftchit() {
 ftchstnd() {
 	fstnd=1
 	getmsg
-	printcontacting 
+	_PRINTCONTACTING_ 
 	if [[ "$dm" = aria2c ]];then
 		aria2c "$cmirror" | tee /dev/fd/1 > "$tampdir/global2localmirror"
 		nmirror="$(grep Redir "$tampdir/global2localmirror" | awk {'print $8'})" 
-		printdone 
-		printdownloadingftch 
+		_PRINTDONE_ 
+		_PRINTDOWNLOADINGFTCH_ 
 		aria2c http://"$mirror$path$file".md5 
 		aria2c -c -m 4 http://"$mirror$path$file"
 	elif [[ "$dm" = wget ]];then 
 		wget -v -O/dev/null "$cmirror" 2>"$tampdir/global2localmirror"
 		nmirror="$(grep Location "$tampdir/global2localmirror" | awk {'print $2'})" 
-		printdone 
-		printdownloadingftch 
+		_PRINTDONE_ 
+		_PRINTDOWNLOADINGFTCH_ 
 		wget "$dmverbose" -N --show-progress "$nmirror$path$file".md5 
 		wget "$dmverbose" -c --show-progress "$nmirror$path$file" 
 	else
 		curl -v "$cmirror" 2>"$tampdir/global2localmirror"
 		nmirror="$(grep Location "$tampdir/global2localmirror" | awk {'print $3'})" 
-		printdone 
-		printdownloadingftch 
+		_PRINTDONE_ 
+		_PRINTDOWNLOADINGFTCH_ 
 		curl "$dmverbose" -C - --fail --retry 4 -OL "$nmirror$path$file".md5 -O "$nmirror$path$file"
 	fi
 }
 
 getimage() {
-	printdownloadingx86 
+	_PRINTDOWNLOADINGX86_ 
 	getmsg
 	if [[ "$dm" = aria2c ]];then
 		aria2c http://"$mirror$path$file".md5 
@@ -82,7 +82,7 @@ getimage() {
 		fi
 		sed '2q;d' md5sums.txt > "$file".md5
 		rm md5sums.txt
-		printdownloadingx86two 
+		_PRINTDOWNLOADINGX86TWO_ 
 		wget "$dmverbose" -c --show-progress http://"$mirror$path$file" 
 	else
 		curl "$dmverbose" --fail --retry 4 -OL http://"$mirror${path}"md5sums.txt
@@ -93,7 +93,7 @@ getimage() {
 		fi
 		sed '2q;d' md5sums.txt > "$file".md5
 		rm md5sums.txt
-		printdownloadingx86two 
+		_PRINTDOWNLOADINGX86TWO_ 
 		curl "$dmverbose" -C - --fail --retry 4 -OL http://"$mirror$path$file" 
 	fi
 }

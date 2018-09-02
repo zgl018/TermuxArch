@@ -18,7 +18,7 @@ addREADME() {
 }
 
 addae() {
-	callfileheader root/bin/ae "# Contributed by https://github.com/cb125" 
+	_CFLHDR root/bin/ae "# Contributed by https://github.com/cb125" 
 	cat >> root/bin/ae <<- EOM
 	watch cat /proc/sys/kernel/random/entropy_avail
 	EOM
@@ -26,7 +26,7 @@ addae() {
 }
 
 addauser() { 
-	callfileheader root/bin/addauser "# Add Arch Linux user."
+	_CFLHDR root/bin/addauser "# Add Arch Linux user."
 	cat >> root/bin/addauser <<- EOM
 	if [[ -z "\${1:-}" ]] ; then
 		echo "Use: addauser username"
@@ -60,9 +60,10 @@ addbash_profile() {
 	. "\$HOME"/.bashrc
 	PS1="[\A\[\033[0;32m\] \W \[\033[0m\]]\\$ "
 	export TZ="$(getprop persist.sys.timezone)"
-	export LANG="$_LANGUAGE" 
-	export LANGUAGE="$_LANGUAGE" 
 	EOM
+	for i in "${!LC_TYPE[@]}"; do
+	 	printf "%s=\"%s\"\\n" "export ${LC_TYPE[i]}" "$ULANGUAGE.UTF-8" >> root/.bash_profile 
+	done
 	if [ -e "$HOME"/.bash_profile ] ; then
 		grep proxy "$HOME"/.bash_profile |grep "export" >>  root/.bash_profile 2>/dev/null ||:
 	fi
@@ -103,7 +104,7 @@ addbashrc() {
 }
 
 addcdtd() {
-	callfileheader root/bin/cdtd "# Usage: \`. cdtd\`  The dot sources \`cdtd\` which makes this shortcut script work."
+	_CFLHDR root/bin/cdtd "# Usage: \`. cdtd\`  The dot sources \`cdtd\` which makes this shortcut script work."
 	cat >> root/bin/cdtd <<- EOM
 	cd "\$PREFIX"/home/storage/downloads && pwd
 	EOM
@@ -111,7 +112,7 @@ addcdtd() {
 }
 
 addcdth() {
-	callfileheader root/bin/cdth "# Usage: \`. cdth\`  The dot sources \`cdth\` which makes this shortcut script work."
+	_CFLHDR root/bin/cdth "# Usage: \`. cdth\`  The dot sources \`cdth\` which makes this shortcut script work."
 	cat >> root/bin/cdth <<- EOM
 	cd "\$PREFIX/home" && pwd
 	EOM
@@ -119,7 +120,7 @@ addcdth() {
 }
 
 addcdtmp() {
-	callfileheader root/bin/cdtmp "# Usage: \`. cdtmp\`  The dot sources \`cdtmp\` which makes this shortcut script work."
+	_CFLHDR root/bin/cdtmp "# Usage: \`. cdtmp\`  The dot sources \`cdtmp\` which makes this shortcut script work."
 	cat >> root/bin/cdtmp <<- EOM
 	cd "\$PREFIX"/usr/tmp && pwd
 	EOM
@@ -127,25 +128,25 @@ addcdtmp() {
 }
 
 addch() { 
-	callfileheader root/bin/ch "# Creates .hushlogin and .hushlogout file"
+	_CFLHDR root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id4476"
+versionid="v1.6 id3521"
 
-	finishe() { # on exit
+	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	printtail "\$args[@]"  
 	}
 	
-	finisher() { # on script signal
+	_TRPERROR_() { # on script signal
 		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING." 
 	 	set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
 	}
 	
-	finishs() { # on signal
+	_TRPSIGNAL_() { # on signal
 		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING.  Signal caught!"
 		set +Eeuo pipefail 
 	 	echo "\$?" 
@@ -157,9 +158,9 @@ versionid="v1.6 id4476"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0")"':DONE 📱 \007'
 	}
 
-	trap finisher ERR
-	trap finishe EXIT
-	trap finishs INT TERM 
+	trap _TRPERROR_ ERR
+	trap _TRPEXIT_ EXIT
+	trap _TRPSIGNAL_ INT TERM 
 	## ch begin ####################################################################
 
 	if [[ -z "\${1:-}" ]];then
@@ -177,7 +178,7 @@ versionid="v1.6 id4476"
 }
 
 addexd() {
-	callfileheader root/bin/exd "# Usage: \`. exd\`  The dot sources \`exd\` which makes this shortcut script work."
+	_CFLHDR root/bin/exd "# Usage: \`. exd\`  The dot sources \`exd\` which makes this shortcut script work."
 	cat >> root/bin/exd <<- EOM
 	export DISPLAY=:0 PULSE_SERVER=tcp:127.0.0.1:4712
 	EOM
@@ -185,7 +186,7 @@ addexd() {
 }
 
 adddfa() {
-	callfileheader root/bin/dfa
+	_CFLHDR root/bin/dfa
 	cat >> root/bin/dfa <<- EOM
 	units="\$(df 2>/dev/null | awk 'FNR == 1 {print \$2}')"
 	usrspace="\$(df 2>/dev/null | grep "/data" | awk {'print \$4'})"
@@ -196,7 +197,7 @@ adddfa() {
 
 addfbindprocshmem() {
 	cat > var/binds/fbindprocshmem.prs  <<- EOM
-	prootstmnt+="-b $installdir/var/binds/fbindprocshmem:/proc/shmem " 
+	prootstmnt+="-b $INSTALLDIR/var/binds/fbindprocshmem:/proc/shmem " 
 	EOM
 	cat > var/binds/fbindprocshmem <<- EOM
 	------ Message Queues --------
@@ -259,9 +260,9 @@ addfbindprocstat8() {
 }
 
 addfbindexample() {
-	callfileheader var/binds/fbindexample.prs "# To regenerate the start script use \`setupTermuxArch.sh re[fresh[\`.  Add as many proot statements as you want; The init script will parse this file at refresh.  An example is included for convenience.  Usage: prootstmnt+=\"-b host_path:guest_path \" The space before the last double quote is necessary."
+	_CFLHDR var/binds/fbindexample.prs "# To regenerate the start script use \`setupTermuxArch.sh re[fresh[\`.  Add as many proot statements as you want; The init script will parse this file at refresh.  An example is included for convenience.  Usage: prootstmnt+=\"-b host_path:guest_path \" The space before the last double quote is necessary."
 	cat >> var/binds/fbindexample.prs <<- EOM
-	# prootstmnt+="-b $installdir/var/binds/fbindprocstat:/proc/stat " 
+	# prootstmnt+="-b $INSTALLDIR/var/binds/fbindprocstat:/proc/stat " 
 	EOM
 }
 
@@ -276,7 +277,7 @@ addbinds() { # Checks if /proc/stat is usable.
 }
 
 addfibs() {
-	callfileheader root/bin/fibs 
+	_CFLHDR root/bin/fibs 
 	cat >> root/bin/fibs  <<- EOM
 	find /proc/ -name maps 2>/dev/null |xargs awk '{print i\$6}' 2>/dev/null| grep '\.so' | sort | uniq
 	EOM
@@ -284,7 +285,7 @@ addfibs() {
 }
 
 addga() {
-	callfileheader root/bin/ga 
+	_CFLHDR root/bin/ga 
 	cat >> root/bin/ga  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git
@@ -297,7 +298,7 @@ addga() {
 }
 
 addgcl() {
-	callfileheader root/bin/gcl 
+	_CFLHDR root/bin/gcl 
 	cat >> root/bin/gcl  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -310,7 +311,7 @@ addgcl() {
 }
 
 addgcm() {
-	callfileheader root/bin/gcm 
+	_CFLHDR root/bin/gcm 
 	cat >> root/bin/gcm  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -323,7 +324,7 @@ addgcm() {
 }
 
 addgpl() {
-	callfileheader root/bin/gpl 
+	_CFLHDR root/bin/gpl 
 	cat >> root/bin/gpl  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -336,7 +337,7 @@ addgpl() {
 }
 
 addgp() {
-	callfileheader root/bin/gp "# git push https://username:password@github.com/username/repository.git master"
+	_CFLHDR root/bin/gp "# git push https://username:password@github.com/username/repository.git master"
 	cat >> root/bin/gp  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -349,26 +350,26 @@ addgp() {
 }
 
 addkeys() {
-	callfileheader root/bin/keys 
+	_CFLHDR root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="v1.6 id4476"
+versionid="v1.6 id3521"
 
-	finishe() { # on exit
+	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	printtail "\$keyrings[@]"  
 #  	 	echo "[ \$0 done (\$?) ]" 
 	}
 	
-	finisher() { # on script signal
+	_TRPERROR_() { # on script signal
 		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING." 
 	 	set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
 	}
 	
-	finishs() { # on signal
+	_TRPSIGNAL_() { # on signal
 		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING.  Signal caught!"
 		set +Eeuo pipefail 
 	 	echo "\$?" 
@@ -395,9 +396,9 @@ versionid="v1.6 id4476"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"': DONE 📱 \007'
 	}
 
-	trap finisher ERR
-	trap finishe EXIT
-	trap finishs INT TERM 
+	trap _TRPERROR_ ERR
+	trap _TRPEXIT_ EXIT
+	trap _TRPSIGNAL_ INT TERM 
 	## keys begin ##################################################################
 
 	if [[ -z "\${1:-}" ]];then
@@ -442,26 +443,26 @@ addmoto() {
 }
 
 addpc() { 
-	callfileheader root/bin/pc "# Pacman install packages wrapper without system update."
+	_CFLHDR root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id4476"
+versionid="v1.6 id3521"
 
-	finishe() { # on exit
+	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	printtail "\$args"  
 #  	 	echo "[ \$0 done (\$?) ]" 
 	}
 	
-	finisher() { # on script signal
+	_TRPERROR_() { # on script signal
 		printf "\\n\\e[?25h\\e[0mTermuxArch pc WARNING.  \\n"
 	 	set +Eeuo pipefail 
 	 	echo "\$?" 
 	 	exit "\$?" 
 	}
 	
-	finishs() { # on signal
+	_TRPSIGNAL_() { # on signal
 		printf "\\n\\e[?25h\\e[0mTermuxArch pc WARNING.  Signal caught!\\n"
 		set +Eeuo pipefail 
 	 	echo "\$?" 
@@ -473,9 +474,9 @@ versionid="v1.6 id4476"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"' 📱 \007'
 	}
 
-	trap finisher ERR
-	trap finishe EXIT
-	trap finishs INT TERM 
+	trap _TRPERROR_ ERR
+	trap _TRPEXIT_ EXIT
+	trap _TRPSIGNAL_ INT TERM 
 	## pc begin ####################################################################
 
 	printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"' 📲 \007'
@@ -496,25 +497,25 @@ versionid="v1.6 id4476"
 }
 
 addpci() { 
-	callfileheader root/bin/pci "# Pacman install packages wrapper with system update."
+	_CFLHDR root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id4476"
+versionid="v1.6 id3521"
 
-	finishe() { # on exit
+	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	printtail "\$args"  
 	}
 	
-	finisher() { # on script signal
+	_TRPERROR_() { # on script signal
 		printf "\\n\\e[?25h\\e[0mTermuxArch pci WARNING.  \\n"
 	 	set +Eeuo pipefail 
 	 	printf "[ \$(basename "\$0") done ("\$?") ]\n" 
 	 	exit \$? 
 	}
 	
-	finishs() { # on signal
+	_TRPSIGNAL_() { # on signal
 		printf "\\n\\e[?25h\\e[0mTermuxArch pci WARNING.  Signal caught!\\n"
 		set +Eeuo pipefail 
 	 	printf "[ \$(basename "\$0") done ("\$?") ]\n" 
@@ -526,10 +527,10 @@ versionid="v1.6 id4476"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"' 📱 \007'
 	}
 
-	trap finishe EXIT
-	trap finisher ERR
-	trap finisher QUIT
-	trap finishs INT TERM 
+	trap _TRPEXIT_ EXIT
+	trap _TRPERROR_ ERR
+	trap _TRPERROR_ QUIT
+	trap _TRPSIGNAL_ INT TERM 
 	## pci begin ###################################################################
 
 	printf "\\\\n\\\\e[1;32m==> \\\\e[1;37m%s \\\\e[1;32m%s %s %s \\\e[0m%s…\\\\n\\\\n" "Running" "TermuxArch \$(basename "\$0")" "\$args" "\$versionid"  
@@ -566,7 +567,7 @@ addresolvconf() {
 }
 
 addt() {
-	callfileheader root/bin/t
+	_CFLHDR root/bin/t
 	cat >> root/bin/t  <<- EOM
 	if [ ! -e /usr/bin/tree ] ; then
 		pacman --noconfirm --color=always -S tree 
@@ -579,7 +580,7 @@ addt() {
 }
 
 addthstartarch() {
-	callfileheader root/bin/th"$startbin" 
+	_CFLHDR root/bin/th"$startbin" 
 	cat >> root/bin/th"$startbin" <<- EOM
 	echo $startbin help
 	$startbin help
@@ -600,7 +601,7 @@ addthstartarch() {
 }
 
 addtour() {
-	callfileheader root/bin/tour "# A short tour that shows a few of the new files in ths system." 
+	_CFLHDR root/bin/tour "# A short tour that shows a few of the new files in ths system." 
 	cat >> root/bin/tour <<- EOM
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mls -R --color=always \$HOME \e[1;37m\n\n"
 	sleep 1
@@ -623,7 +624,7 @@ addtour() {
 }
 
 addtrim() {
-	callfileheader root/bin/trim
+	_CFLHDR root/bin/trim
 	cat >> root/bin/trim <<- EOM
 	printf "\\\\n\\\\e[1;32m==> \\\\e[1;0mRunning \$0 … \\\\e[0m\\\\n\\\\n" 
 	echo [1/5] rm -rf /boot/
@@ -642,7 +643,7 @@ addtrim() {
 }
 
 addv() {
-	callfileheader root/bin/v
+	_CFLHDR root/bin/v
 	cat >> root/bin/v  <<- EOM
 	if [[ -z "\${1:-}" ]] ; then
 		args="."
@@ -660,7 +661,7 @@ addv() {
 }
 
 addwe() { 
-	callfileheader usr/bin/we "# Watch available entropy on device." "cat /proc/sys/kernel/random/entropy_avail contributed by https://github.com/cb125"
+	_CFLHDR usr/bin/we "# Watch available entropy on device." "cat /proc/sys/kernel/random/entropy_avail contributed by https://github.com/cb125"
 	cat >> usr/bin/we <<- EOM
 
 	i=1
@@ -802,7 +803,7 @@ addwe() {
 }
 
 addyt() {
-	callfileheader root/bin/yt
+	_CFLHDR root/bin/yt
 	cat >> root/bin/yt  <<- EOM
 	if [ ! -e /usr/bin/youtube-dl ] ; then
 		pacman --noconfirm --color=always -S python-pip

@@ -60,14 +60,14 @@ systeminfo () {
 	if [[ -e /proc/stat ]]; then echo "/proc/stat exits"; else echo "/proc/stat does not exit"; fi >> "${wdir}setupTermuxArchSysInfo$STIME".log 
 	if [[ -r /proc/stat ]]; then echo "/proc/stat is readable"; else echo "/proc/stat is not readable"; fi >> "${wdir}setupTermuxArchSysInfo$STIME".log 
 	printf "\\nDisk report $usrspace on /data $(date)\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log 
-	printf "\\ndf $installdir results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
-	df "$installdir" >> "${wdir}setupTermuxArchSysInfo$STIME".log 2>/dev/null ||:
+	printf "\\ndf $INSTALLDIR results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
+	df "$INSTALLDIR" >> "${wdir}setupTermuxArchSysInfo$STIME".log 2>/dev/null ||:
 	printf "\\ndf results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
 	df >> "${wdir}setupTermuxArchSysInfo$STIME".log 2>/dev/null ||:
-	printf "\\ndu -hs $installdir results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
-	du -hs "$installdir" >> "${wdir}setupTermuxArchSysInfo$STIME".log 2>/dev/null ||:
-	printf "\\nls -al $installdir results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
-	ls -al "$installdir" >> "${wdir}setupTermuxArchSysInfo$STIME".log 2>/dev/null ||:
+	printf "\\ndu -hs $INSTALLDIR results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
+	du -hs "$INSTALLDIR" >> "${wdir}setupTermuxArchSysInfo$STIME".log 2>/dev/null ||:
+	printf "\\nls -al $INSTALLDIR results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
+	ls -al "$INSTALLDIR" >> "${wdir}setupTermuxArchSysInfo$STIME".log 2>/dev/null ||:
 	printf "\\nEnd \`setupTermuxArchSysInfo$STIME.log\` system information.\\n\\n\\e[0mShare this information along with your issue at https://github.com/sdrausty/TermuxArch/issues; include input and output.  This file is found in \`""${wdir}setupTermuxArchSysInfo$STIME.log\`.  If you think screenshots will help in a quicker resolution, include them in the post as well.  \\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
 }
 
@@ -80,17 +80,17 @@ copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[pa
 # 	pwd
 # 	echo pwd
  	if [[ "$lcp" = "0" ]];then
-		echo "Copying $1.md5 to $installdir…" 
-		cp "$1".md5  "$installdir"
-		echo "Copying $1 to $installdir…" 
-		cp "$1" "$installdir"
+		echo "Copying $1.md5 to $INSTALLDIR…" 
+		cp "$1".md5  "$INSTALLDIR"
+		echo "Copying $1 to $INSTALLDIR…" 
+		cp "$1" "$INSTALLDIR"
  	elif [[ "$lcp" = "1" ]];then
-		echo "Copying $1.md5 to $installdir…" 
-		cp "$wdir$1".md5  "$installdir"
-		echo "Copying $1 to $installdir…" 
-		cp "$wdir$1" "$installdir"
+		echo "Copying $1.md5 to $INSTALLDIR…" 
+		cp "$wdir$1".md5  "$INSTALLDIR"
+		echo "Copying $1 to $INSTALLDIR…" 
+		cp "$wdir$1" "$INSTALLDIR"
  	fi
-# 	ls  "$installdir"
+# 	ls  "$INSTALLDIR"
 }
 
 loadimage() { 
@@ -100,20 +100,20 @@ loadimage() {
 	wakelock
 	_PREPINSTALLDIR 
   	copyimage ## "$@" & spinner "Copying" "…" 
-	printmd5check
+	_PRINTMD5CHECK_
 	md5check
-	printcu 
-	rm -f "$installdir"/*.tar.gz "$installdir"/*.tar.gz.md5
-	printdone 
-	printconfigup 
+	_PRINTCU_ 
+	rm -f "$INSTALLDIR"/*.tar.gz "$INSTALLDIR"/*.tar.gz.md5
+	_PRINTDONE_ 
+	_PRINTCONFIGUP_ 
 	touchupsys 
 	printf "\\n" 
 	wakeunlock 
-	printfooter
-	"$installdir/$startbin" ||:
+	_PRINTFOOTER_
+	"$INSTALLDIR/$startbin" ||:
 # 	"$startbin" help
 	printstartbinusage
-	printfooter2
+	_PRINTFOOTER2_
 }
 
 # 	namestartarch 
@@ -125,7 +125,7 @@ refreshsys() { # Refreshes
 	printf '\033]2; setupTermuxArch.sh refresh 📲 \007'
  	namestartarch  
  	spaceinfo
-	cd "$installdir"
+	cd "$INSTALLDIR"
 	_SETLANGUAGE_
 	addREADME
 	addae
@@ -168,27 +168,27 @@ refreshsys() { # Refreshes
 	wakelock
 	printf '\033]2; setupTermuxArch.sh refresh 📲 \007'
 	printf "\\n\\e[1;32m==> \\e[1;37m%s \\e[1;32m%s %s 📲 \\a\\n" "Running" "$(basename "$0")" "$args" 
-	"$installdir"/root/bin/setupbin.sh ||: 
+	"$INSTALLDIR"/root/bin/setupbin.sh ||: 
  	rm -f root/bin/finishsetup.sh
  	rm -f root/bin/setupbin.sh 
 	printf "\\e[1;34mThe following files have been updated to the newest version.\\n\\n\\e[0;32m"
-	ls "$installdir/$startbin" |cut -f7- -d /
-	ls "$installdir"/bin/we |cut -f7- -d /
-	ls "$installdir"/root/bin/* |cut -f7- -d /
+	ls "$INSTALLDIR/$startbin" |cut -f7- -d /
+	ls "$INSTALLDIR"/bin/we |cut -f7- -d /
+	ls "$INSTALLDIR"/root/bin/* |cut -f7- -d /
 	printf "\\n" 
 	wakeunlock 
-	printfooter 
+	_PRINTFOOTER_ 
 	printf "\\a"
 	sleep 0.015
 	printf "\\a"
-	"$installdir/$startbin" ||:
+	"$INSTALLDIR/$startbin" ||:
 	printstartbinusage
-	printfooter2
+	_PRINTFOOTER2_
 }
 
 spaceinfo() {
 	declare spaceMessage=""
-	units="$(df "$installdir" 2>/dev/null | awk 'FNR == 1 {print $2}')" 
+	units="$(df "$INSTALLDIR" 2>/dev/null | awk 'FNR == 1 {print $2}')" 
 	if [[ "$units" = Size ]] ; then
 		spaceinfogsize 
 		printf "$spaceMessage"
@@ -277,9 +277,9 @@ spaceinfoksize() {
 }
 
 userspace() {
-	usrspace="$(df "$installdir" 2>/dev/null | awk 'FNR == 2 {print $4}')"
+	usrspace="$(df "$INSTALLDIR" 2>/dev/null | awk 'FNR == 2 {print $4}')"
 	if [[ "$usrspace" = "" ]] ; then
-		usrspace="$(df "$installdir" 2>/dev/null | awk 'FNR == 3 {print $3}')"
+		usrspace="$(df "$INSTALLDIR" 2>/dev/null | awk 'FNR == 3 {print $3}')"
 	fi
 }
 
