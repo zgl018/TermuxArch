@@ -7,7 +7,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id961970034008"
+versionid="gen.v1.6 id080973147780"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -220,7 +220,7 @@ dwnl() {
 
 intro() {
 	printf '\033]2;  bash setupTermuxArch.sh $@ 📲 \007'
-	rootdirexception 
+	_SETROOTDIREXCEPTION 
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34mTermuxArch $versionid shall attempt to install Linux in \\e[0;32m$installdir\\e[1;34m.  Arch Linux in Termux PRoot shall be available upon successful completion.  To run this BASH script again, use \`!!\`.  Ensure background data is not restricted.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
 	if [[ "$lcc" = "1" ]] ; then
@@ -248,7 +248,7 @@ introsysinfo() {
 
 introrefresh() {
 	printf '\033]2;  bash setupTermuxArch.sh refresh 📲 \007'
-	rootdirexception 
+	_SETROOTDIREXCEPTION 
 	printf "\\n\\e[0;34m 🕛 > 🕛 \\e[1;34msetupTermuxArch $versionid shall refresh your TermuxArch files in \\e[0;32m$installdir\\e[1;34m.  Ensure background data is not restricted.  Run \\e[0;32mbash setupTermuxArch.sh help \\e[1;34mfor additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 	dependsblock "$@" 
 	refreshsys "$@"
@@ -256,7 +256,7 @@ introrefresh() {
 
 introstnd() {
 	printf '\033]2; %s\007' " bash setupTermuxArch.sh $args 📲 "
-	rootdirexception 
+	_SETROOTDIREXCEPTION 
 	printf "\\n\\e[0;34m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s" " 🕛 > 🕛" "setupTermuxArch $versionid shall $introstndidstmt your TermuxArch files in" "$installdir" ".  Ensure background data is not restricted.  Run " "bash setupTermuxArch.sh help" "for additional information.  Check the wireless connection if you do not see one o'clock 🕐 below.  "
 }
 
@@ -497,7 +497,7 @@ rmarch() {
 }
 
 rmarchrm() {
-	rootdirexception 
+	_SETROOTDIREXCEPTION 
 	rm -rf "${installdir:?}"/* 2>/dev/null ||:
 	find  "$installdir" -type d -exec chmod 700 {} \; 2>/dev/null ||:
 	rm -rf "$installdir" 2>/dev/null ||:
@@ -518,7 +518,7 @@ tapin() {
 	fi
 }
 
-rootdirexception() {
+_SETROOTDIREXCEPTION() {
 	if [[ "$installdir" = "$HOME" ]] || [[ "$installdir" = "$HOME"/ ]] || [[ "$installdir" = "$HOME"/.. ]] || [[ "$installdir" = "$HOME"/../ ]] || [[ "$installdir" = "$HOME"/../.. ]] || [[ "$installdir" = "$HOME"/../../ ]] ; then
 		printf  '\033]2;%s\007' "Rootdir exception.  Run bash setupTermuxArch.sh $args again with different options…"	
 		printf "\\n\\e[1;31m%s\\n\\n\\e[0m" "Rootdir exception.  Run the script $args again with different options…"
@@ -526,7 +526,7 @@ rootdirexception() {
 	fi
 }
 
-setrootdir() {
+_SETROOTDIR() {
 	if [[ "$CPUABI" = "$CPUABIX86" ]] ; then
 	#	rootdir=/root.i686
 		rootdir=/arch
@@ -544,13 +544,13 @@ standardid() {
 	introstnd
 }
 
-traperror() { # Run on script error.
+_TRPERROR() { # Run on script error.
 	local rv="$?"
 	printf "\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING:  Generated script signal ${rv:-unknown} near or at line number ${1:-unknown} by \`${2:-command}\`!"
 	exit 201
 }
 
-trapexit() { # Run on exit.
+_TRPEXIT() { # Run on exit.
 	local rv="$?"
   	printf "\\a\\a\\a\\a"
 	sleep 0.4
@@ -567,13 +567,13 @@ trapexit() { # Run on exit.
 	exit
 }
 
-trapsignal() { # Run on signal.
+_TRPSIGNAL() { # Run on signal.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Signal $? received!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 211 
 }
 
-trapquit() { # Run on quit.
+_TRPQUIT() { # Run on quit.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Quit signal $? received!\\e[0m\\n"
 	rm -rf "$tampdir"
  	exit 221 
@@ -596,6 +596,8 @@ wgetifdm() {
 
 ## User Information: 
 ## Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is simple.  `bash setupTermuxArch.sh manual` shall create `setupTermuxArchConfigs.sh` in the working directory for editing; See `setupTermuxArch.sh help` for more information.  
+declare -a ADM=("aria2" "axel" "curl" "lftp" "wget")
+declare -a ATM=("wget" "$PREFIX/applets/tar" "tar")
 declare -a args="$@"
 declare aptin=""	## apt string
 declare apton=""	## exception string
@@ -619,15 +621,14 @@ declare wdir="$PWD/"
 declare sti=""		## Generates pseudo random number.
 declare STIME=""	## Generates pseudo random number.
 declare tm=""		## tar manager
-# trap traperror ERR 
-trap 'traperror $LINENO $BASH_COMMAND $?' ERR 
-trap trapexit EXIT
-trap trapsignal HUP INT TERM 
-trap trapquit QUIT 
+trap '_TRPERROR $LINENO $BASH_COMMAND $?' ERR 
+trap _TRPEXIT EXIT
+trap _TRPSIGNAL HUP INT TERM 
+trap _TRPQUIT QUIT 
 if [[ -z "${tampdir:-}" ]] ; then
 	tampdir=""
 fi
-setrootdir
+_SETROOTDIR
 commandif="$(command -v getprop)" ||:
 if [[ "$commandif" = "" ]] ; then
 	printf "\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING: Run \`bash ${0##*/}\` or \`./${0##*/}\` from the BASH shell in the OS system in Termux, i.e. Amazon Fire, Android and Chromebook."
@@ -649,7 +650,7 @@ STIME="$oneda$STIME"
 CPUABI="$(getprop ro.product.cpu.abi)" 
 ## OPTIONS STATUS: UNDERGOING TESTING;  Image file and compound options are still under development.  USE WITH CAUTION!  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT yet fully implemented.   
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [~/|./|/absolute/path/]systemimage.tar.gz [WHERE]`.  
-## EXPLAINATION: [HOW (aria2c|axel|curl|lftp|wget (default 1: available on system (default 2: wget)))]  [WHAT (install|manual|purge|refresh|sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied and can be omitted.  
+## SYNTAX: [HOW (aria2c|axel|curl|lftp|wget (default 1: available on system (default 2: wget)))]  [WHAT (install|manual|purge|refresh|sysinfo (default: install))] [WHERE (default: arch)]  Defaults are implied and can be omitted.  
 ## USAGE EXAMPLES: `setupTermuxArch.sh wget sysinfo` will use wget as the download manager and produce a system information file in the working directory.  This can be abbreviated to `setupTermuxArch.sh ws` and `setupTermuxArch.sh w s`. Similarly, `setupTermuxArch.sh wget manual customdir` will attempt to install the installation in customdir with wget and use manual mode during instalation.  Also, `setupTermuxArch.sh wget refresh customdir` shall refresh this installation using wget as the download manager. 
 ## <<<<<<<<<<<<>>>>>>>>>>>>
 ## << Enumerated Options >>
@@ -683,7 +684,7 @@ elif [[ "${1//-}" = [Aa][Xx][Dd]* ]] || [[ "${1//-}" = [Aa][Xx][Ss]* ]] ; then
 	shift
 	_ARG2DIR "$@" 
 	introsysinfo "$@" 
-## [axel [customdir]|axi [customdir]]  Install Arch Linux with `axel`.
+## [ax[el] [customdir]|axi [customdir]]  Install Arch Linux with `axel`.
 elif [[ "${1//-}" = [Aa][Xx]* ]] || [[ "${1//-}" = [Aa][Xx][Ii]* ]] ; then
 	echo
 	echo Setting \`axel\` as download manager.
@@ -698,14 +699,14 @@ elif [[ "${1//-}" = [Aa][Dd]* ]] || [[ "${1//-}" = [Aa][Ss]* ]] ; then
 	shift
 	_ARG2DIR "$@" 
 	introsysinfo "$@" 
-## [aria2c [customdir]|ai [customdir]]  Install Arch Linux with `aria2c`.
+## [a[ria2c] [customdir]|ai [customdir]]  Install Arch Linux with `aria2c`.
 elif [[ "${1//-}" = [Aa]* ]] ; then
 	echo
 	echo Setting \`aria2c\` as download manager.
 	dm=aria2c
 	_OPT2 "$@" 
 	intro "$@" 
-## [bloom]  Create and run a local copy of TermuxArch in TermuxArchBloom.  Useful for running a customized setupTermuxArch.sh locally, for developing and hacking TermuxArch.  
+## [b[loom]]  Create and run a local copy of TermuxArch in TermuxArchBloom.  Useful for running a customized setupTermuxArch.sh locally, for developing and hacking TermuxArch.  
 elif [[ "${1//-}" = [Bb]* ]] ; then
 	echo
 	echo Setting mode to bloom. 
@@ -718,31 +719,31 @@ elif [[ "${1//-}" = [Cc][Dd]* ]] || [[ "${1//-}" = [Cc][Ss]* ]] ; then
 	shift
 	_ARG2DIR "$@" 
 	introsysinfo "$@" 
-## [curl [customdir]|ci [customdir]]  Install Arch Linux with `curl`.
+## [c[url] [customdir]|ci [customdir]]  Install Arch Linux with `curl`.
 elif [[ "${1//-}" = [Cc][Ii]* ]] || [[ "${1//-}" = [Cc]* ]] ; then
 	echo
 	echo Setting \`curl\` as download manager.
 	dm=curl
 	_OPT2 "$@" 
 	intro "$@" 
-## [debug|sysinfo]  Generate system information.
+## [d[ebug]|s[ysinfo]]  Generate system information.
 elif [[ "${1//-}" = [Dd]* ]] || [[ "${1//-}" = [Ss]* ]] ; then
 	echo 
 	echo Setting mode to sysinfo.
 	shift
 	_ARG2DIR "$@" 
 	introsysinfo "$@" 
-## [help|??]  Display terse builtin help.
-elif [[ "${1//-}" = [Hh][Ee]* ]] || [[ "${1//-}" = [??]* ]] ; then
+## [he[lp]|?]  Display terse builtin help.
+elif [[ "${1//-}" = [Hh][Ee]* ]] || [[ "${1//-}" = [?]* ]] ; then
 	_ARG2DIR "$@" 
 	printusage "$@"  
 ## [h|?]  Display verbose builtin help.
-elif [[ "${1//-}" = [Hh]* ]] || [[ "${1//-}" = [?]* ]] ; then
+elif [[ "${1//-}" = [Hh]* ]] ; then
 	lcc="1"
 	_ARG2DIR "$@" 
 	printusage "$@"  
-## [install [customdir]|rootdir [customdir]]  Install Arch Linux in a custom directory.  Instructions: Install in userspace. $HOME is appended to installation directory. To install Arch Linux in $HOME/customdir use `bash setupTermuxArch.sh install customdir`. In bash shell use `./setupTermuxArch.sh install customdir`.  All options can be abbreviated to one, two and three letters.  Hence `./setupTermuxArch.sh install customdir` can be run as `./setupTermuxArch.sh i customdir` in BASH.
-elif [[ "${1//-}" = [Ii]* ]] ||  [[ "${1//-}" = [Rr][Oo]* ]] ; then
+## [i[nstall] [customdir]]  Install Arch Linux in a custom directory.  Instructions: Install in userspace. $HOME is appended to installation directory. To install Arch Linux in $HOME/customdir use `bash setupTermuxArch.sh install customdir`. In bash shell use `./setupTermuxArch.sh install customdir`.  All options can be abbreviated to one, two and three letters.  Hence `./setupTermuxArch.sh install customdir` can be run as `./setupTermuxArch.sh i customdir` in BASH.
+elif [[ "${1//-}" = [Ii]* ]] ; then
 	echo
 	echo Setting mode to install.
 	_OPT2 "$@" 
@@ -755,33 +756,33 @@ elif [[ "${1//-}" = [Ll][Dd]* ]] || [[ "${1//-}" = [Ll][Ss]* ]] ; then
 	shift
 	_ARG2DIR "$@" 
 	introsysinfo "$@" 
-## [lftp [customdir]|li [customdir]]  Install Arch Linux with `lftp`.
+## [l[ftp] [customdir]]  Install Arch Linux with `lftp`.
 elif [[ "${1//-}" = [Ll]* ]] ; then
 	echo
 	echo Setting \`lftp\` as download manager.
 	dm=lftp
 	_OPT2 "$@" 
 	intro "$@" 
-## [manual]  Manual Arch Linux install, useful for resolving download issues.
+## [m[anual]]  Manual Arch Linux install, useful for resolving download issues.
 elif [[ "${1//-}" = [Mm]* ]] ; then
 	echo
 	echo Setting mode to manual.
 	opt=manual
 	_OPT2 "$@" 
 	intro "$@"  
-## [option]  Option under development.
+## [o[ption]]  Option currently under development.
 elif [[ "${1//-}" = [Oo]* ]] ; then
 	echo
 	echo Setting mode to option.
 	printusage
 	_OPT2 "$@" 
-## [purge|uninstall]  Remove Arch Linux.
+## [p[urge] [customdir]|u[ninstall] [customdir]]  Remove Arch Linux.
 elif [[ "${1//-}" = [Pp]* ]] || [[ "${1//-}" = [Uu]* ]] ; then
 	echo 
 	echo Setting mode to purge.
 	_ARG2DIR "$@" 
 	rmarchq
-## [refresh|refresh [customdir]]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation and the TermuxArch generated scripts to their newest versions.  
+## [r[e[fresh]] [customdir]]  Refresh the Arch Linux in Termux PRoot scripts created by TermuxArch and the installation itself.  Useful for refreshing the installation, locales and the TermuxArch generated scripts to their newest versions.  
 elif [[ "${1//-}" = [Rr][Ee]* ]] ; then
 	echo 
 	echo Setting mode to refresh.
@@ -801,7 +802,7 @@ elif [[ "${1//-}" = [Ww][Dd]* ]] || [[ "${1//-}" = [Ww][Ss]* ]] ; then
 	shift
 	_ARG2DIR "$@" 
 	introsysinfo "$@" 
-## [wget [customdir]|wi [customdir]]  Install Arch Linux with `wget`.
+## [w[get] [customdir]]  Install Arch Linux with `wget`.
 elif [[ "${1//-}" = [Ww]* ]] ; then
 	echo
 	echo Setting \`wget\` as download manager.
