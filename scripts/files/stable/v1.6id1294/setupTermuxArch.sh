@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id731869449223"
+versionid="v1.6 id1294"
 ## Init Functions ##############################################################
 
 aria2cif() { 
@@ -190,7 +190,7 @@ dependsblock() {
 			manual
 		fi 
 	else
-		cd "$TAMPDIR" 
+		cd "$tampdir" 
 		dwnl
 		if [[ -f "${wdir}setupTermuxArch.sh" ]] ; then
 			cp "${wdir}setupTermuxArch.sh" setupTermuxArch.tmp
@@ -304,7 +304,7 @@ manual() {
 		_PRINTCONFLOADED_ 
 	else
 		cp knownconfigurations.sh "${wdir}setupTermuxArchConfigs.sh"
- 		sed -i "7s/.*/\# The architecture of this device is $CPUABI; Adjust configurations in the appropriate section.  Change CMIRROR (https:\/\/wiki.archlinux.org\/index.php\/Mirrors and https:\/\/archlinuxarm.org\/about\/CMIRRORs) to desired geographic location to resolve 404 and checksum issues.  /" "${wdir}setupTermuxArchConfigs.sh" 
+ 		sed -i "7s/.*/\# The architecture of this device is $CPUABI; Adjust configurations in the appropriate section.  Change mirror (https:\/\/wiki.archlinux.org\/index.php\/Mirrors and https:\/\/archlinuxarm.org\/about\/mirrors) to desired geographic location to resolve 404 and checksum issues.  /" "${wdir}setupTermuxArchConfigs.sh" 
 		"$ed" "${wdir}setupTermuxArchConfigs.sh"
 		. "${wdir}setupTermuxArchConfigs.sh"
 		_PRINTCONFLOADED_ 
@@ -411,8 +411,8 @@ preptmpdir() {
 	mkdir -p "$INSTALLDIR/tmp"
 	chmod 777 "$INSTALLDIR/tmp"
 	chmod +t "$INSTALLDIR/tmp"
- 	TAMPDIR="$INSTALLDIR/tmp/setupTermuxArch$$"
-	mkdir -p "$TAMPDIR" 
+ 	tampdir="$INSTALLDIR/tmp/setupTermuxArch$$"
+	mkdir -p "$tampdir" 
 }
 
 _PREPTERMUXARCH_() { 
@@ -445,7 +445,7 @@ _PRINTUSAGE_() {
 	printf "\\n\\e[1;33m %s    \\e[0;32m%s \\e[1;34m%s\\n" "TERSE" "${0##*/} he[lp]" "shall output the terse help screen." 
 	printf "\\n\\e[1;33m %s  \\e[0;32m%s \\e[1;34m%s\\n" "VERBOSE" "${0##*/} h" "shall output the verbose help screen." 
 	printf "\\n\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\n\\n%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s\\n" "Usage information for" "${0##*/}" "$versionid.  Arguments can abbreviated to one, two and three letters each; Two and three letter arguments are acceptable.  For example," "bash ${0##*/} cs" "shall use" "curl" "to download TermuxArch and produce a" "setupTermuxArchSysInfo$STIME.log" "system information file." "User configurable variables are in" "setupTermuxArchConfigs.sh" ".  To create this file from" "kownconfigurations.sh" "in the working directory, run" "bash ${0##*/} manual" "to create and edit" "setupTermuxArchConfigs.sh" "." 
-	printf "\\n\\e[1;33m %s\\e[1;34m  %s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s\\n" "INSTALL" "Run" "./${0##*/}" "without arguments in a bash shell to install Arch Linux in Termux.  " "bash ${0##*/} curl" "shall envoke" "curl" "as the download manager.  Copy" "knownconfigurations.sh" "to" "setupTermuxArchConfigs.sh" "with" "bash ${0##*/} manual" "to edit preferred CMIRROR site and to access more options.  After editing" "setupTermuxArchConfigs.sh" ", run" "bash ${0##*/}" "and" "setupTermuxArchConfigs.sh" "loads automatically from the working directory.  Change CMIRROR to desired geographic location to resolve download errors." 
+	printf "\\n\\e[1;33m %s\\e[1;34m  %s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s\\n" "INSTALL" "Run" "./${0##*/}" "without arguments in a bash shell to install Arch Linux in Termux.  " "bash ${0##*/} curl" "shall envoke" "curl" "as the download manager.  Copy" "knownconfigurations.sh" "to" "setupTermuxArchConfigs.sh" "with" "bash ${0##*/} manual" "to edit preferred mirror site and to access more options.  After editing" "setupTermuxArchConfigs.sh" ", run" "bash ${0##*/}" "and" "setupTermuxArchConfigs.sh" "loads automatically from the working directory.  Change mirror to desired geographic location to resolve download errors." 
  	printf "\\n\\e[1;33m %s    \\e[0;32m%s \\e[1;34m%s\\n" "PURGE" "${0##*/} purge" "shall uninstall Arch Linux from Termux." 
 	printf "\\n\\e[1;33m %s  \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s \\e[1;34m%s \\e[0;32m%s\\e[1;34m%s \\n\\n" "SYSINFO" "${0##*/} sysinfo" "shall create" "setupTermuxArchSysInfo$STIME.log" "and populate it with system information.  Post this file along with detailed information at" "https://github.com/sdrausty/TermuxArch/issues" ".  If screenshots will help in resolving an issue better, include these along with information from the system information log file in a post as well." 
 	if [[ "$lcc" = 1 ]] ; then
@@ -566,18 +566,6 @@ _TRPERROR_() { # Run on script error.
 _TRPEXIT_() { # Run on exit.
 	local rv="$?"
   	printf "\\a\\a\\a\\a"
-	CDIRS=( bin boot dev etc home lib mnt opt proc root run sbin srv sys tmp usr var )
-	CDIRSR="0"
- 	for i in "${CDIRS[@]}"; do
-		if [ "$(ls -A $INSTALLDIR/$i 2>/dev/null)" ]; then
-			CDIRSR="1"
-		fi
-	done
-	echo $CDIRSR
-	if [[ "$CDIRSR" = 0 ]]  ; then
-		rmdir $TAMPDIR
-		rmdir $INSTALLDIR
-	fi
 	sleep 0.4
 	if [[ "$rv" = 0 ]] ; then
 		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
@@ -587,25 +575,20 @@ _TRPEXIT_() { # Run on exit.
 		printf "\033]2; %s: %s %s \007" "${0##*/} $args" "(Exit Signal $rv)" "DONE 🏁"
 	fi
 	printf "\\e[?25h\\e[0m"
-	rm -rf "$TAMPDIR"
-# 	if [ "$(ls -A $TAMPDIR)" ]; then
-# 	: #	echo "Take action $DIR is not Empty"
-# 	else
-# 	: #	echo "$DIR is Empty"
-# 	fi
+	rm -rf "$tampdir"
 	set +Eeuo pipefail 
 	exit
 }
 
 _TRPSIGNAL_() { # Run on signal.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Signal $? received!\\e[0m\\n"
-	rm -rf "$TAMPDIR"
+	rm -rf "$tampdir"
  	exit 211 
 }
 
 _TRPQUIT_() { # Run on quit.
 	printf "\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Quit signal $? received!\\e[0m\\n"
-	rm -rf "$TAMPDIR"
+	rm -rf "$tampdir"
  	exit 221 
 }
 
@@ -625,10 +608,8 @@ wgetifdm() {
 }
 
 ## User Information: 
-## Configurable variables such as CMIRRORs and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is simple.  `bash setupTermuxArch.sh manual` shall create `setupTermuxArchConfigs.sh` in the working directory for editing; See `setupTermuxArch.sh help` for more information.  
+## Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is simple.  `bash setupTermuxArch.sh manual` shall create `setupTermuxArchConfigs.sh` in the working directory for editing; See `setupTermuxArch.sh help` for more information.  
 declare -a ADM=("aria2" "axel" "curl" "lftp" "wget")
-# declare -p $ADM
-# exit
 declare -a ATM=("wget" "$PREFIX/applets/tar" "tar")
 declare -a args="$@"
 declare aptin=""	## apt string
@@ -640,7 +621,7 @@ declare CPUABI7="armeabi-v7a"
 declare CPUABI8="arm64-v8a"
 declare CPUABIX86="x86"
 declare CPUABIX86_64="x86_64"
-declare dfl="/gen" # Used for development 
+declare dfl=""	## Used for development.  
 declare dm="wget"	## download manager
 declare dmverbose="-q"	## -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
@@ -657,8 +638,8 @@ trap '_TRPERROR_ $LINENO $BASH_COMMAND $?' ERR
 trap _TRPEXIT_ EXIT
 trap _TRPSIGNAL_ HUP INT TERM 
 trap _TRPQUIT_ QUIT 
-if [[ -z "${TAMPDIR:-}" ]] ; then
-	TAMPDIR=""
+if [[ -z "${tampdir:-}" ]] ; then
+	tampdir=""
 fi
 _SETROOT_
 commandif="$(command -v getprop)" ||:

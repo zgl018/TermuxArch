@@ -12,7 +12,7 @@ _CALLSYSTEM() {
 	if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
 		getimage
 	else
-		if [[ "$CMIRROR" = "os.archlinuxarm.org" ]] || [[ "$CMIRROR" = "CMIRROR.archlinuxarm.org" ]]; then
+		if [[ "$mirror" = "os.archlinuxarm.org" ]] || [[ "$mirror" = "mirror.archlinuxarm.org" ]]; then
 			until ftchstnd;do
 				ftchstnd ||: 
 				sleep 2
@@ -104,7 +104,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	_CFLHDR root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="gen.v1.6 id731869449223"
+versionid="v1.6 id1294"
 	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
    	locale-gen ||:
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
@@ -149,7 +149,7 @@ versionid="gen.v1.6 id731869449223"
 makesetupbin() {
 	_CFLHDR root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="gen.v1.6 id731869449223"
+versionid="v1.6 id1294"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -159,7 +159,7 @@ versionid="gen.v1.6 id731869449223"
 makestartbin() {
 	_CFLHDR "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="gen.v1.6 id731869449223"
+versionid="v1.6 id1294"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -311,17 +311,17 @@ preproot() {
 runfinishsetup() {
 	printf "\\e[0m"
 	if [[ "$fstnd" ]]; then
-		nmir="$(echo "$nCMIRROR" |awk -F'/' '{print $3}')"
-		sed -e '/http\:\/\/mir/ s/^#*/# /' -i "$INSTALLDIR"/etc/pacman.d/CMIRRORlist
-		sed -e "/$nmir/ s/^# *//" -i "$INSTALLDIR"/etc/pacman.d/CMIRRORlist
+		nmir="$(echo "$nmirror" |awk -F'/' '{print $3}')"
+		sed -e '/http\:\/\/mir/ s/^#*/# /' -i "$INSTALLDIR"/etc/pacman.d/mirrorlist
+		sed -e "/$nmir/ s/^# *//" -i "$INSTALLDIR"/etc/pacman.d/mirrorlist
 	else
 	if [[ "$ed" = "" ]];then
 		editors 
 	fi
-	if [[ ! "$(sed 1q  "$INSTALLDIR"/etc/pacman.d/CMIRRORlist)" = "# # # # # # # # # # # # # # # # # # # # # # # # # # #" ]];then
+	if [[ ! "$(sed 1q  "$INSTALLDIR"/etc/pacman.d/mirrorlist)" = "# # # # # # # # # # # # # # # # # # # # # # # # # # #" ]];then
 		editfiles
 	fi
-		"$ed" "$INSTALLDIR"/etc/pacman.d/CMIRRORlist
+		"$ed" "$INSTALLDIR"/etc/pacman.d/mirrorlist
 	fi
 	printf "\\n"
 	"$INSTALLDIR"/root/bin/setupbin.sh ||:

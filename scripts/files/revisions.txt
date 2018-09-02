@@ -1,4 +1,5 @@
-Traps set.
 Error codes added.
 Help expanded; Verbose help added.
+Traps implemented.
+set -Eeou pipefail added.
 sysinfo () enchanced to accept custom directores.

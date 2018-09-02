@@ -4,9 +4,9 @@
 # https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.
 # https://sdrausty.github.io/TermuxArch/README has information about this project.
 ################################################################################
-# `bash setupTermuxArch.sh manual` shall create `setupTermuxArchConfigs.sh` from this file in your working directory.  Run `bash setupTermuxArch.sh` and `setupTermuxArchConfigs.sh` loads automaticaly.  `bash setupTermuxArch.sh help` has more information.  Change CMIRROR (https://wiki.archlinux.org/index.php/Mirrors and https://archlinuxarm.org/about/CMIRRORs) to desired geographic location in `setupTermuxArchConfigs.sh` to resolve 404 and checksum issues.  The following user configurable variables are available in this file:   
-# CMIRROR="http://mirror.archlinuxarm.org/"
-CMIRROR="http://os.archlinuxarm.org/"
+# `bash setupTermuxArch.sh manual` shall create `setupTermuxArchConfigs.sh` from this file in your working directory.  Run `bash setupTermuxArch.sh` and `setupTermuxArchConfigs.sh` loads automaticaly.  `bash setupTermuxArch.sh help` has more information.  Change mirror (https://wiki.archlinux.org/index.php/Mirrors and https://archlinuxarm.org/about/mirrors) to desired geographic location in `setupTermuxArchConfigs.sh` to resolve 404 and checksum issues.  The following user configurable variables are available in this file:   
+# cmirror="http://mirror.archlinuxarm.org/"
+cmirror="http://os.archlinuxarm.org/"
 # dm=aria2c	# Works wants improvement 
 # dm=axel tba	# Not fully implemented
 # dm=lftp 	# Works wants improvement 
@@ -17,28 +17,28 @@ koe=1
 
 aarch64() {
 	file=ArchLinuxARM-aarch64-latest.tar.gz
-	CMIRROR=os.archlinuxarm.org
+	mirror=os.archlinuxarm.org
 	path=/os/
 	makesystem 
 }
 
 armv5l() {
 	file=ArchLinuxARM-armv5-latest.tar.gz
-	CMIRROR=os.archlinuxarm.org
+	mirror=os.archlinuxarm.org
 	path=/os/
 	makesystem 
 }
 
 armv7lAndroid () {
 	file=ArchLinuxARM-armv7-latest.tar.gz 
-	CMIRROR=os.archlinuxarm.org
+	mirror=os.archlinuxarm.org
 	path=/os/
 	makesystem 
 }
 
 armv7lChrome() {
 	file=ArchLinuxARM-armv7-chromebook-latest.tar.gz
-	CMIRROR=os.archlinuxarm.org
+	mirror=os.archlinuxarm.org
 	path=/os/
 	makesystem 
 }
@@ -46,13 +46,13 @@ armv7lChrome() {
 # Information at https://www.archlinux.org/news/phasing-out-i686-support/ and https://archlinux32.org/ regarding why i686 is currently frozen at release 2017.03.01-i686.  $file is read from md5sums.txt
 
 i686() { 
-	CMIRROR=archive.archlinux.org
+	mirror=archive.archlinux.org
 	path=/iso/2017.03.01/
 	makesystem 
 }
 
 x86_64() { # $file is read from md5sums.txt
-	CMIRROR=CMIRROR.rackspace.com
+	mirror=mirror.rackspace.com
 	path=/archlinux/iso/latest/
 	makesystem 
 }
