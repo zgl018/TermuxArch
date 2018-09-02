@@ -122,7 +122,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	callfileheader root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="gen.v1.6 id450267561243"
+versionid="v1.6 id4500"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -167,7 +167,7 @@ versionid="gen.v1.6 id450267561243"
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="gen.v1.6 id450267561243"
+versionid="v1.6 id4500"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -177,7 +177,7 @@ versionid="gen.v1.6 id450267561243"
 makestartbin() {
 	callfileheader "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="gen.v1.6 id450267561243"
+versionid="v1.6 id4500"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -346,6 +346,7 @@ runfinishsetup() {
 }
 
 _SETLANGUAGE() { # Uses system settings to set locale.
+	_LANGUAGE="unkown"
 	_LANGIN[0]="$(getprop user.language)"
 	_LANGIN[1]="$(getprop user.region)"
 	_LANGIN[2]="$(getprop persist.sys.country)"
@@ -355,18 +356,18 @@ _SETLANGUAGE() { # Uses system settings to set locale.
 	_LANGIN[6]="$(getprop ro.product.locale.language)"
 	_LANGIN[7]="$(getprop ro.product.locale.region)"
 	touch "$installdir"/etc/locale.gen 
-	for i in "${!_LANGIN[@]}"; do
-		if [[ "${_LANGIN[i]}" = *-* ]];then
- 	 		_LANGUAGE="${_LANGIN[i]//-/_}"
-			break
-		fi
-	done
 	if [[ "$_LANGUAGE" != *_* ]];then
 		_LANGUAGE="${_LANGIN[0]:-unknown}-${_LANGIN[1]:-unknown}"
 	       	if ! grep "$_LANGUAGE" "$installdir"/etc/locale.gen 1>/dev/null ; then 
 			_LANGUAGE="unknown"
 	       	fi 
 	fi 
+	for i in "${!_LANGIN[@]}"; do
+		if [[ "${_LANGIN[i]}" = *-* ]];then
+ 	 		_LANGUAGE="${_LANGIN[i]//-/_}"
+			break
+		fi
+	done
  	if [[ "$_LANGUAGE" != *_* ]];then
  		_LANGUAGE="${_LANGIN[3]:-unknown}_${_LANGIN[2]:-unknown}"
  	       	if ! grep "$_LANGUAGE" "$installdir"/etc/locale.gen 1>/dev/null ; then 
