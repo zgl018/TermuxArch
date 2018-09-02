@@ -39,23 +39,6 @@ copystartbin2path() {
 	printf "\\e[0;34m 🕛 > 🕦 \\e[1;32m$startbin \\e[0mcopied to \\e[1m$BPATH\\e[0m.\\n\\n"
 }
 
-copystartbin2pathq() {
-	while true; do
-	printf "\\e[0;34m 🕛 > 🕚 \\e[0mCopy \\e[1m$startbin\\e[0m to \\e[1m$BPATH\\e[0m?  "'\033]2; 🕛 > 🕚 Copy to $PATH [Y|n]?\007'
-	read -n 1 -p "Answer yes or no [Y|n] " answer
-	if [[ "$answer" = [Yy]* ]] || [[ "$answer" = "" ]];then
-		cp "$installdir/$startbin" "$BPATH"
-		printf "\\n\\e[0;34m 🕛 > 🕦 \\e[0mCopied \\e[1m$startbin\\e[0m to \\e[1m$BPATH\\e[0m.\\n\\n"
-		break
-	elif [[ "$answer" = [Nn]* ]] || [[ "$answer" = [Qq]* ]];then
-		printf "\\n"
-		break
-	else
-		printf "\\n\\e[0;34m 🕛 > 🕚 \\e[0mYou answered \\e[33;1m$answer\\e[0m.\\n\\n\\e[0;34m 🕛 > 🕚 \\e[0mAnswer yes or no [Y|n]\\n\\n"
-	fi
-	done
-}
-
 detectsystem() {
 	printdetectedsystem
 	if [[ "$CPUABI" = "$CPUABI5" ]];then
@@ -108,7 +91,7 @@ lkernid
 mainblock() { 
 	namestartarch 
 	spaceinfo
-	prepinstalldir
+	_PREPINSTALLDIR
 	detectsystem 
 	wakeunlock 
 	printfooter
@@ -121,7 +104,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	callfileheader root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="gen.v1.6 id912691845982"
+versionid="gen.v1.6 id253640784958"
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -e "$HOME"/.bash_profile ]];then
@@ -166,7 +149,7 @@ versionid="gen.v1.6 id912691845982"
 makesetupbin() {
 	callfileheader root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="gen.v1.6 id912691845982"
+versionid="gen.v1.6 id253640784958"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -176,7 +159,7 @@ versionid="gen.v1.6 id912691845982"
 makestartbin() {
 	callfileheader "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="gen.v1.6 id912691845982"
+versionid="gen.v1.6 id253640784958"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -263,7 +246,7 @@ md5check() {
 	fi
 }
 
-preprootdir() {
+_PREPROOTDIR() {
 	cd "$installdir"
 	mkdir -p etc 
 	mkdir -p var/binds 
@@ -271,8 +254,8 @@ preprootdir() {
 	mkdir -p usr/bin
 }
 
-prepinstalldir() {
-	preprootdir
+_PREPINSTALLDIR() {
+	_PREPROOTDIR
 	_SETLANGUAGE
 	addREADME
 	addae
