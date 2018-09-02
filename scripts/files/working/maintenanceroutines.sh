@@ -17,8 +17,6 @@ sysinfo() {
 
 systeminfo () {
 	printf "Begin TermuxArch system information.\\n" > "${wdir}setupTermuxArchSysInfo$STIME".log
- 	printf "\\n\`termux-info\` results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
- 	termux-info >> "${wdir}setupTermuxArchSysInfo$STIME".log
 	printf "\\ndpkg --print-architecture result:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
 	dpkg --print-architecture >> "${wdir}setupTermuxArchSysInfo$STIME".log
  	printf "\\ngetprop results:\\n\\n" >> "${wdir}setupTermuxArchSysInfo$STIME".log
