@@ -57,7 +57,7 @@ copystartbin2pathq() {
 	done
 }
 
-editfiles() {
+_EDITFILES_() {
 	if [[ "${ceds[$i]}" = "applets/vi" ]];then
 		sed -i -e 1,4d "$INSTALLDIR"/etc/pacman.d/CMIRRORlist
 		sed -i '1i# # # # # # # # # # # # # # # # # # # # # # # # # # #\n# TermuxArch vi instructions:	CTR+r is redo.\n# Use the hjkl keys to navigate. <h down j up k l>\n# Numbers are multipliers.  The u is undelete/undo.\n# 17j then i opens edit mode for the Geo-IP CMIRROR.\n# Enter the # hash/num/pounds symbol to comment it out: \n# Server = http://CMIRROR.archlinuxarm.org/$arch/$repo.\n# Long tap KEYBOARD in the side pane to see ESC, CTR...\n# Tap ESC to return to command mode in vi.\n# CTRL+d and CTRL+b to find your local CMIRROR.\n# / for search, N and n for next match.\n# Tap x to delete # to uncomment your local CMIRROR.\n# Choose only one CMIRROR.  Use :x to save your work.\n# Comment out the Geo-IP CMIRROR	end G	top gg\n# # # # # # # # # # # # # # # # # # # # # # # # # # #' "$INSTALLDIR"/etc/pacman.d/CMIRRORlist
@@ -75,7 +75,7 @@ editfiles() {
 	fi
 }
 
-editors() {
+_EDITORS_() {
 	aeds=("zile" "nano" "nvim" "vi" "emacs" "joe" "jupp" "micro" "ne" "applets/vi")
 	for i in "${!aeds[@]}"; do
 		if [[ -e "$PREFIX/bin/${aeds[$i]}" ]];then
@@ -197,12 +197,12 @@ rmbloomq() {
 	fi
 }
 
-runfinishsetupq() {
+_RUNFINISHSETUPQ_() {
 	while true; do
 		printf "\\n\\e[0;32mWould you like to run \\e[1;32mfinishsetup.sh\\e[0;32m to complete the Arch Linux configuration and update now, or at a later time?  \\e[1;32mNow is recommended.  \\e[0;32m"
 		read -n 1 -p "Answer yes to complete the Arch Linux configuration and update now; Or answer no for later [Y|n] " nl
 	if [[ "$nl" = [Yy]* ]] || [[ "$nl" = "" ]];then
-		runfinishsetup 
+		_RUNFINISHSETUP_ 
 		break
 	elif [[ "$nl" = [Nn]* ]];then
 		printf "\\n\\e[0;32mSet the geographically nearby CMIRROR in \\e[1;32m/etc/pacman.d/CMIRRORlist\\e[0;32m first.  Then use \\e[1;32m$INSTALLDIR/root/bin/setupbin.sh\\e[0;32m in Termux to run \\e[1;32mfinishsetup.sh\\e[0;32m or simply \\e[1;32mfinishsetup.sh\\e[0;32m in Arch Linux Termux PRoot to complete the Arch Linux configuration and update."

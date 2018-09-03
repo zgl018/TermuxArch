@@ -115,6 +115,7 @@ loadimage() {
 	shopt -s nullglob globstar
 	_PRINT_STARTBIN_USAGE_
 	_PRINTFOOTER2_
+	exit
 }
 
 refreshsys() { # Refreshes
