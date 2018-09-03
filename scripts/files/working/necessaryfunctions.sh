@@ -1,8 +1,9 @@
 #!/bin/env bash
 # Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+# Hosted sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+# https://sdrausty.github.io/TermuxArch/README has info about this project. 
 # https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+# _STANDARD_="function name" && STANDARD="variable name" are under construction.
 ################################################################################
 
 LC_TYPE=( "LANG" "LANGUAGE" "LC_ADDRESS" "LC_COLLATE" "LC_CTYPE" "LC_IDENTIFICATION" "LC_MEASUREMENT" "LC_MESSAGES" "LC_MONETARY" "LC_NAME" "LC_NUMERIC" "LC_PAPER" "LC_TELEPHONE" "LC_TIME" )
@@ -39,12 +40,12 @@ copystartbin2path() {
 	printf "\\e[0;34m 🕛 > 🕦 \\e[1;32m$startbin \\e[0mcopied to \\e[1m$BPATH\\e[0m.\\n\\n"
 }
 
-detectsystem() {
+_DETECTSYSTEM_() {
 	printdetectedsystem
 	if [[ "$CPUABI" = "$CPUABI5" ]];then
 		armv5l
 	elif [[ "$CPUABI" = "$CPUABI7" ]];then
-		detectsystem2 
+		_DETECTSYSTEM2_ 
 	elif [[ "$CPUABI" = "$CPUABI8" ]];then
 		aarch64
 	elif [[ "$CPUABI" = "$CPUABIX86" ]];then
@@ -56,7 +57,7 @@ detectsystem() {
 	fi
 }
 
-detectsystem2() {
+_DETECTSYSTEM2_() {
 	if [[ "$(getprop ro.product.device)" == *_cheets ]];then
 		armv7lChrome 
 	else
@@ -64,95 +65,96 @@ detectsystem2() {
 	fi
 }
 
-lkernid() {
-	declare kid=""
+_KERNID_() {
+	declare KID=""
 	ur="$("$PREFIX"/bin/applets/uname -r)"
 	declare -i KERNEL_VERSION="$(echo "$ur" |awk -F'.' '{print $1}')"
 	declare -i MAJOR_REVISION="$(echo "$ur" |awk -F'.' '{print $2}')"
 	declare -- tmp="$(echo "$ur" |awk -F'.' '{print $3}')"
 	declare -- MINOR_REVISION="$(echo "${tmp:0:3}" |sed 's/[^0-9]*//g')"
 	if [[ "$KERNEL_VERSION" -le 2 ]]; then
-		kid=1
+		KID=1
 	else
 		if [[ "$KERNEL_VERSION" -eq 3 ]]; then
 			if [[ "$MAJOR_REVISION" -lt 2 ]]; then
-				kid=1
+				KID=1
 			else
 				if [[ "$MAJOR_REVISION" -eq 2 ]] && [[ "$MINOR_REVISION" -eq 0 ]]; then
-					kid=1
+					KID=1
 				fi
 			fi
 		fi
 	fi
 }
 
-lkernid 
+_KERNID_ 
 
-mainblock() { 
-	namestartarch 
+_MAINBLOCK_() { 
+	_NAMESTARTARCH_ 
 	spaceinfo
 	_PREPINSTALLDIR_
-	detectsystem 
-	wakeunlock 
+	_DETECTSYSTEM_ 
+	_WAKEUNLOCK_ 
 	_PRINTFOOTER_
+	set -Eeuo pipefail
 	"$INSTALLDIR/$startbin" ||:
-	_PRINT_STARTBIN_USAGE_
+	set -Eeuo pipefail
+	_PRINTSTARTBIN_USAGE_
 	_PRINTFOOTER2_
 }
 
-makefinishsetup() {
-	binfnstp=finishsetup.sh  
-	_CFLHDR_ root/bin/"$binfnstp"
-	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="gen.v1.6 id879420905633"
+_MAKEFINISHSETUP_() {
+	BINFNSTP=finishsetup.sh  
+	_CFLHDR_ root/bin/"$BINFNSTP"
+	cat >> root/bin/"$BINFNSTP" <<- EOM
+versionid="gen.v1.6 id334903891468"
 	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
    	locale-gen ||:
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
 	if [[ -z "${lcr:-}" ]] ; then
 	 	if [[ "$CPUABI" = "$CPUABI5" ]];then
-	 		printf "pacman -Rc linux-armv5 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+	 		printf "pacman -Rc linux-armv5 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$BINFNSTP"
 	 	elif [[ "$CPUABI" = "$CPUABI7" ]];then
-	 		printf "pacman -Rc linux-armv7 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+	 		printf "pacman -Rc linux-armv7 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$BINFNSTP"
 	 	elif [[ "$CPUABI" = "$CPUABI8" ]];then
-	 		printf "pacman -Rc linux-aarch64 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
+	 		printf "pacman -Rc linux-aarch64 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$BINFNSTP"
 	 	fi
 		if [[ "$CPUABI" = "$CPUABIX86" ]];then
-			printf "./root/bin/keys x86\\n" >> root/bin/"$binfnstp"
+			printf "./root/bin/keys x86\\n" >> root/bin/"$BINFNSTP"
 		elif [[ "$CPUABI" = "$CPUABIX86_64" ]];then
-			printf "./root/bin/keys x86_64\\n" >> root/bin/"$binfnstp"
+			printf "./root/bin/keys x86_64\\n" >> root/bin/"$BINFNSTP"
 		else
-	 		printf "./root/bin/keys\\n" >> root/bin/"$binfnstp"
+	 		printf "./root/bin/keys\\n" >> root/bin/"$BINFNSTP"
 		fi
 		if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
-			printf "./root/bin/pci gzip sed \\n" >> root/bin/"$binfnstp"
+			printf "./root/bin/pci gzip sed \\n" >> root/bin/"$BINFNSTP"
 		else
-	 		printf "./root/bin/pci \\n" >> root/bin/"$binfnstp"
+	 		printf "./root/bin/pci \\n" >> root/bin/"$BINFNSTP"
 		fi
 	fi
 	if [[ -e "$HOME"/.bash_profile ]];then
-		grep "proxy" "$HOME"/.bash_profile | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
+		grep "proxy" "$HOME"/.bash_profile | grep "export" >> root/bin/"$BINFNSTP" 2>/dev/null ||:
 	fi
 	if [[ -e "$HOME"/.bashrc ]];then
-		grep "proxy" "$HOME"/.bashrc  | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
+		grep "proxy" "$HOME"/.bashrc  | grep "export" >> root/bin/"$BINFNSTP" 2>/dev/null ||:
 	fi
 	if [[ -e "$HOME"/.profile ]];then
-		grep "proxy" "$HOME"/.profile | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
+		grep "proxy" "$HOME"/.profile | grep "export" >> root/bin/"$BINFNSTP" 2>/dev/null ||:
 	fi
-	cat >> root/bin/"$binfnstp" <<- EOM
+	cat >> root/bin/"$BINFNSTP" <<- EOM
 	printf "\\n\\e[1;34m%s  \\e[0m" "🕛 > 🕤 Arch Linux in Termux is installed and configured 📲 " 
 	printf "\\e]2;%s\\007" " 🕛 > 🕤 Arch Linux in Termux is installed and configured 📲 "
 	EOM
-	chmod 700 root/bin/"$binfnstp" 
+	chmod 700 root/bin/"$BINFNSTP" 
 }
 
 makesetupbin() {
 	_CFLHDR_ root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="gen.v1.6 id879420905633"
-	unset LD_PRELOAD
+versionid="gen.v1.6 id334903891468"
 	EOM
-	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
+	echo "$PROOTSTMNT /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
 	chmod 700 root/bin/setupbin.sh
 }
 
@@ -160,8 +162,7 @@ makestartbin() {
 	_CFLHDR_ "$startbin" 
 	printf "%s\\n" "${FLHDRP[@]}" >> "$startbin"
 	cat >> "$startbin" <<- EOM
-versionid="gen.v1.6 id879420905633"
-# 	unset LD_PRELOAD
+versionid="gen.v1.6 id334903891468"
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
 	_PRINTUSAGE_() { 
@@ -171,7 +172,7 @@ versionid="gen.v1.6 id879420905633"
 	# [] Default Arch Linux in Termux PRoot root login.
 	if [[ -z "\${1:-}" ]];then
 	EOM
-		echo "$prootstmnt /bin/bash -l  " >> "$startbin"
+		echo "$PROOTSTMNT /bin/bash -l  " >> "$startbin"
 	cat >> "$startbin" <<- EOM
 		printf '\033]2; TermuxArch $startbin 📲  \007'
 	# [?|help] Displays usage information.
@@ -182,7 +183,7 @@ versionid="gen.v1.6 id879420905633"
 		printf '\033]2; $startbin command args 📲  \007'
 		touch $INSTALLDIR/root/.chushlogin
 	EOM
-		echo "$prootstmnt /bin/bash -lc \"\$ar2ar\" " >> "$startbin"
+		echo "$PROOTSTMNT /bin/bash -lc \"\$ar2ar\" " >> "$startbin"
 	cat >> "$startbin" <<- EOM
 		printf '\033]2; $startbin command args 📲  \007'
 		rm -f $INSTALLDIR/root/.chushlogin
@@ -190,14 +191,14 @@ versionid="gen.v1.6 id879420905633"
 	elif [[ "\$1" = [Ll]* ]] || [[ "\$1" = -[Ll]* ]] || [[ "\$1" = --[Ll]* ]] || [[ "\$1" = [Uu]* ]] || [[ "\$1" = -[Uu]* ]] || [[ "\$1" = --[Uu]* ]] ;then
 		printf '\033]2; $startbin login user [options] 📲  \007'
 	EOM
-		echo "$prootstmnt /bin/su - \"\$ar2ar\" " >> "$startbin"
+		echo "$PROOTSTMNT /bin/su - \"\$ar2ar\" " >> "$startbin"
 	cat >> "$startbin" <<- EOM
 		printf '\033]2; $startbin login user [options] 📲  \007'
 	# [raw args] Construct the \`startarch\` proot statement.  For example \`startarch r su - archuser\` will login as user archuser.  Use \`addauser user\` first to create this user and the user home directory.
 	elif [[ "\$1" = [Rr]* ]] || [[ "\$1" = -[Rr]* ]] || [[ "\$1" = --[Rr]* ]];then
 		printf '\033]2; $startbin raw args 📲  \007'
 	EOM
-		echo "$prootstmnt /bin/\"\$ar2ar\" " >> "$startbin"
+		echo "$PROOTSTMNT /bin/\"\$ar2ar\" " >> "$startbin"
 	cat >> "$startbin" <<- EOM
 		printf '\033]2; $startbin raw args 📲  \007'
 	# [su user command] Login as user and execute command.  Use \`addauser user\` first to create this user and the user's home directory.
@@ -209,7 +210,7 @@ versionid="gen.v1.6 id879420905633"
 			touch $INSTALLDIR/home/"\$2"/.chushlogin
 		fi
 	EOM
-		echo "$prootstmnt /bin/su - \"\$2\" -c \"\$ar3ar\" " >> "$startbin"
+		echo "$PROOTSTMNT /bin/su - \"\$2\" -c \"\$ar3ar\" " >> "$startbin"
 	cat >> "$startbin" <<- EOM
 		printf '\033]2; $startbin su user command 📲  \007'
 		if [[ "\$2" = root ]];then
@@ -225,7 +226,7 @@ versionid="gen.v1.6 id879420905633"
 }
 
 makesystem() {
-	wakelock
+	_WAKELOCK_
 	_CALLSYSTEM_
 	_PRINTMD5CHECK_
 	md5check
@@ -290,7 +291,7 @@ _PREPINSTALLDIR_() {
 	addyt
 	addwe  
 	addv 
-	makefinishsetup
+	_MAKEFINISHSETUP_
 	makesetupbin 
 	makestartbin 
 }
@@ -385,13 +386,13 @@ touchupsys() {
 	rm -f root/bin/setupbin.sh 
 }
 
-wakelock() {
+_WAKELOCK_() {
 	_PRINTWLA_ 
 	am startservice --user 0 -a com.termux.service_wake_lock com.termux/com.termux.app.TermuxService > /dev/null
 	_PRINTDONE_ 
 }
 
-wakeunlock() {
+_WAKEUNLOCK_() {
 	_PRINTWLD_ 
 	am startservice --user 0 -a com.termux.service_wake_unlock com.termux/com.termux.app.TermuxService > /dev/null
 	_PRINTDONE_ 
