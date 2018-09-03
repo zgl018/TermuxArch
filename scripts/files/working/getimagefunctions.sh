@@ -9,7 +9,7 @@ declare FSTND=""
 
 _FTCHIT_() {
 	_GETMSG_
-	_PRINT_DOWNLOADING_FTCHIT_ 
+ 	_PRINT_DOWNLOADING_FTCHIT_ 
 	if [[ "$dm" = aria2c ]];then
 		aria2c http://"$CMIRROR$path$file".md5 
 		aria2c -c http://"$CMIRROR$path$file"

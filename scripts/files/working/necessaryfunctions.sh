@@ -7,7 +7,7 @@
 
 LC_TYPE=( "LANG" "LANGUAGE" "LC_ADDRESS" "LC_COLLATE" "LC_CTYPE" "LC_IDENTIFICATION" "LC_MEASUREMENT" "LC_MESSAGES" "LC_MONETARY" "LC_NAME" "LC_NUMERIC" "LC_PAPER" "LC_TELEPHONE" "LC_TIME" )
 
-_CALLSYSTEM() {
+_CALLSYSTEM_() {
 	declare COUNTER=""
 	if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
 		_GETIMAGE_
@@ -96,15 +96,15 @@ mainblock() {
 	wakeunlock 
 	_PRINTFOOTER_
 	"$INSTALLDIR/$startbin" ||:
-	printstartbinusage
+	_PRINT_STARTBIN_USAGE_
 	_PRINTFOOTER2_
 }
 
 makefinishsetup() {
 	binfnstp=finishsetup.sh  
-	_CFLHDR root/bin/"$binfnstp"
+	_CFLHDR_ root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="gen.v1.6 id209197041030"
+versionid="gen.v1.6 id345494614073"
 	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
    	locale-gen ||:
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
@@ -147,9 +147,9 @@ versionid="gen.v1.6 id209197041030"
 }
 
 makesetupbin() {
-	_CFLHDR root/bin/setupbin.sh 
+	_CFLHDR_ root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="gen.v1.6 id209197041030"
+versionid="gen.v1.6 id345494614073"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -157,9 +157,9 @@ versionid="gen.v1.6 id209197041030"
 }
 
 makestartbin() {
-	_CFLHDR "$startbin" 
+	_CFLHDR_ "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="gen.v1.6 id209197041030"
+versionid="gen.v1.6 id345494614073"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -225,7 +225,7 @@ versionid="gen.v1.6 id209197041030"
 
 makesystem() {
 	wakelock
-	_CALLSYSTEM
+	_CALLSYSTEM_
 	_PRINTMD5CHECK_
 	md5check
 	_PRINTCU_ 

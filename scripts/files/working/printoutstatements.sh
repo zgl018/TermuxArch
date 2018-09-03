@@ -6,39 +6,90 @@
 # Printout statement subroutines for `setupTermuxArch.sh`.
 ################################################################################
 
-FLHDR[0]="#!/bin/env bash" 
-FLHDR[1]="# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺"
-FLHDR[2]="# Hosting sdrausty.github.io/TermuxArch courtesy https://pages.github.com." 
-FLHDR[3]="# https://sdrausty.github.io/TermuxArch/README has info about this project."
-FLHDR[4]="# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help." 
-FLHDR[5]="################################################################################"
-FLHDR[6]="IFS=$'\\n\\t'"
-FLHDR[7]="set -Eeuo pipefail"
-FLHDR[8]="shopt -s nullglob globstar"
-FLHDR[9]="versionid=\"v1.6 id9909\""
-
-TRPERROR[0]="_TRPERROR_() {  ##	Run on script error.  "
+# FLHDR[0]="#!/bin/env bash" 
+# FLHDR[1]="# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺"
+# FLHDR[2]="# Hosting sdrausty.github.io/TermuxArch courtesy https://pages.github.com." 
+# FLHDR[3]="# https://sdrausty.github.io/TermuxArch/README has info about this project."
+# FLHDR[4]="# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help." 
+# FLHDR[5]="################################################################################"
+# FLHDR[7]="IFS=$'\\n\\t'"
+# FLHDR[8]="set -Eeuo pipefail"
+# FLHDR[9]="shopt -s nullglob globstar"
+# FLHDR[10]="versionid=\"v1.6 id9909\""
+# FLHDR[11]=" "
+# TRPERROR[0]="_TRPERROR_() {  #	Run on script error."
+FLHDR0[0]="#!/bin/env bash" 
+FLHDR0[1]="# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺"
+FLHDR0[2]="# Hosting sdrausty.github.io/TermuxArch courtesy https://pages.github.com." 
+FLHDR0[3]="# https://sdrausty.github.io/TermuxArch/README has info about this project."
+FLHDR0[4]="# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help." 
+FLHDR1[5]="################################################################################"
+FLHDR1[7]="IFS=$'\\n\\t'"
+FLHDR1[8]="set -Eeuo pipefail"
+FLHDR1[9]="shopt -s nullglob globstar"
+FLHDR1[10]="versionid=\"v1.6 id9909\""
+FLHDR1[11]=" "
+TRPERROR[0]="_TRPERROR_() {  #	Run on script error."
 TRPERROR[1]="	local rv=\"\$?\""
 TRPERROR[2]="	printf \"\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n\" \"TermuxArch WARNING:  Generated script signal \${rv:-unknown} near or at line number \${1:-unknown} by \`\${2:-command}\`!\""
 TRPERROR[3]="	exit 201"
 TRPERROR[4]="}"
+TRPERROR[5]=" "
+TRPEXIT[0]="_TRPEXIT_() {  #	Run on exit."
+TRPEXIT[1]="	local RV=\"\$?\" "
+TRPEXIT[2]="  	printf \"\\a\\a\\a\\a\" "
+TRPEXIT[3]="	sleep 0.4 "
+TRPEXIT[4]="	if [[ \"\$RV\" = 0 ]] ; then"
+TRPEXIT[5]="		printf \"\\a\\e[0;32m%s %s \\a\\e[0m\$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m\" \"\${0##*/}\" \"\$@\" \"DONE\""
+TRPEXIT[6]="		printf \"\\e]2; %s: %s \007\" \"\${0##*/} \$@\" \"DONE\""
+TRPEXIT[7]="	else "
+TRPEXIT[8]="		printf \"\\a\\e[0;32m%s %s \\a\\e[0m\$versionid\\e[1;34m: \\a\\e[1;32m%s %s\\e[0m\\n\\n\\a\\e[0m\" \"\${0##*/}\" \"\$@\" \"(Exit Signal \$RV)\" \"DONE\""
+TRPEXIT[9]="		printf \"\033]2; %s: %s %s \007\" \"\${0##*/} \$@\" \"(Exit Signal \$RV)\" \"done П��\""
+TRPEXIT[10]="	fi"
+TRPEXIT[11]="	printf \"\\e[?25h\\e[0m\""
+TRPEXIT[12]="	set +Eeuo pipefail"
+TRPEXIT[13]="	exit"
+TRPEXIT[14]="}"
+TRPEXIT[15]=" "
+TRPSIGNAL[0]="_TRPSIGNAL_() {  #	Run on signal."
+TRPSIGNAL[1]="	printf \"\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Signal \$? received!\\e[0m\\n\""
+TRPSIGNAL[2]="	rm -rf \"\$TAMPDIR\""
+TRPSIGNAL[3]=" 	exit 211"
+TRPSIGNAL[4]="}"
+TRPSIGNAL[5]=" "
+TRPQUIT[0]="_TRPQUIT_() {  #	Run on quit."
+TRPQUIT[1]="	printf \"\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Quit signal \$? received!\\e[0m\\n\""
+TRPQUIT[2]="	rm -rf \"\$TAMPDIR\""
+TRPQUIT[3]=" 	exit 221"
+TRPQUIT[4]="}"
+TRPQUIT[5]=" "
+TRAPS[0]="trap \"_TRPERROR_ \$LINENO \$BASH_COMMAND \$?\" ERR"
+# TRAPS[1]="trap \"_TRPEXIT_ \$LINENO \$BASH_COMMAND \$?\" EXIT"
+TRAPS[1]="trap _TRPEXIT_ EXIT"
+TRAPS[2]="trap _TRPSIGNAL_ HUP INT TERM"
+TRAPS[3]="trap _TRPQUIT_ QUIT"
+TRAPS[4]=" "
 
-_CFLHDR() { ##	Call File Header
-	if [[ -z "${2:-}" ]] ; then
-		for i in "${!FLHDR[@]}"; do
-			if [[ $i = 0 ]] ; then
-				printf "%s\n" "${FLHDR[i]}" > "$1"
-			else
-				printf "%s\n" "${FLHDR[i]}" >> "$1"
-			fi
-		done
-	else
-		printf "%s\n" "${FLHDR[0]}" > "$1"
-		printf "%s\n" "$2" >> "$1"
- 		for i in {1..9} ; do
- 			printf "%s\n" "${FLHDR[i]}" >> "$1"
- 		done
-	fi
+_CFLHDR_() { #	Create file headers, and interests comments.  
+ 	if [[ -z "${2:-}" ]] ; then
+ 			printf "%s\\n" "${FLHDR0[@]}" > "$1"
+ 	else
+   		for i in {0..3} ; do
+  			if [[ $i = 0 ]] ; then
+  				printf "%s\\n" "${FLHDR0[i]}" > "$1"
+  			else
+  	 			printf "%s\\n" "${FLHDR0[i]}" >> "$1"
+  			fi
+   		done
+  		printf "%s\\n"  "${@:2}" >> "$1"
+		printf "%s\\n" "${FLHDR0[4]}" >> "$1"
+ 	fi
+	printf "%s\\n" "${FLHDR1[@]}" >> "$1"
+	printf "%s\\n" "${TRPERROR[@]}" >> "$1"
+ 	printf "%s\\n" "${TRPEXIT[@]}" >> "$1"
+	printf "%s\\n" "${TRPSIGNAL[@]}" >> "$1"
+	printf "%s\\n" "${TRPQUIT[@]}" >> "$1"
+ 	printf "%s\\n" "${TRAPS[@]}" >> "$1"
 }
 
 _PRINTCONTACTING_() {
@@ -84,7 +135,8 @@ _PRINTDOWNLOADINGFTCH_() {
 }
 
 _PRINT_DOWNLOADING_FTCHIT_() {
-	printf "\033[0;34m 🕛 > 🕓 \033[0;34mDownloading the checksum file and \033[0;32m$file \033[0;34m from \033[0;32mhttp://$NLCMIRROR\033[0;34m…  \033[1;37mThis may take a long time pending connection.\n\n\033[0;32m"'\033]2; 🕛 > 🕓 Downloading the checksum and Arch Linux system image file…  \007'
+	printf "\033[0;34m 🕛 > 🕓 \033[0;34mDownloading the checksum file and \033[0;32m$file \033[0;34m from \033[0;32mhttp://$CMIRROR\033[0;34m…  \033[1;37mThis may take a long time pending connection.\n\n\033[0;32m"'\033]2; 🕛 > 🕓 Downloading the checksum and Arch Linux system image file…  \007'
+	printf "\033]2;%s\007" " 🕛 > 🕓 Downloading $file…"
 }
 
 _PRINTCONFIGUP_() {
@@ -119,7 +171,7 @@ _PRINTFOOTER_() {
 	copystartbin2path
 	printf "\033[0;32m 🕛 = 🕛 \033[1;34mInformation about \033[0;36m\"Starting Arch Linux from Termux?\"\033[1;34m at \033[1;34mhttps://github.com/sdrausty/TermuxArch/issues/25\033[1;34m.  Use \033[1;32mtour\033[1;34m to run a very short tour to get to know the new Arch Linux in Termux PRoot environment you just set up a little bit better.  If there was more than one error during the update procedure and you would like to refresh the installation, use \033[1;32msetupTermuxArch.sh refresh\033[1;34m.  This will update and recreate the configuration provided.  The TermuxArch command \033[1;32mkeys \033[1;34mhelps install and generate Arch Linux keyring keys.\n\n"
 	_PRINTFOOTER2_
-	printstartbinusage
+	_PRINT_STARTBIN_USAGE_
 # 	printf "\n"
 }
 

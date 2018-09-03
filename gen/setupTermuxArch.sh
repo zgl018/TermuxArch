@@ -8,8 +8,8 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id209197041030"
-## Init Functions ##############################################################
+versionid="gen.v1.6 id345494614073"
+## INIT FUNCTIONS ##############################################################
 
 aria2cif() { 
 	dm=aria2c
@@ -202,19 +202,19 @@ dependsblock() {
 
 dwnl() {
 	if [[ "$dm" = aria2c ]] ; then
-		aria2c https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.sha512 
-		aria2c https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.tar.gz 
+		aria2c https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$DFL"/setupTermuxArch.sha512 
+		aria2c https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$DFL"/setupTermuxArch.tar.gz 
 	elif [[ "$dm" = axel ]] ; then
-		axel https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.sha512 
-		axel https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.tar.gz 
+		axel https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$DFL"/setupTermuxArch.sha512 
+		axel https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$DFL"/setupTermuxArch.tar.gz 
 	elif [[ "$dm" = lftp ]] ; then
-		lftpget -v https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.sha512 
-		lftpget -v https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.tar.gz 
+		lftpget -v https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$DFL"/setupTermuxArch.sha512 
+		lftpget -v https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$DFL"/setupTermuxArch.tar.gz 
 	elif [[ "$dm" = wget ]] ; then
-		wget "$DMVERBOSE" -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.sha512 
-		wget "$DMVERBOSE" -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.tar.gz 
+		wget "$DMVERBOSE" -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$DFL"/setupTermuxArch.sha512 
+		wget "$DMVERBOSE" -N --show-progress https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$DFL"/setupTermuxArch.tar.gz 
 	else
-		curl "$DMVERBOSE" -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.sha512 -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$dfl"/setupTermuxArch.tar.gz
+		curl "$DMVERBOSE" -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$DFL"/setupTermuxArch.sha512 -OL https://raw.githubusercontent.com/sdrausty/TermuxArch/master"$DFL"/setupTermuxArch.tar.gz
 	fi
 	printf "\\n\\e[1;32m"
 }
@@ -431,7 +431,7 @@ printsha512syschker() {
 	exit 
 }
 
-printstartbinusage() {
+_PRINT_STARTBIN_USAGE_() {
 	printf "\\n\\e[1;32m" 
  	namestartarch "$@"  
 	if [[ -x "$(command -v "$startbin")" ]] ; then
@@ -452,7 +452,7 @@ _PRINTUSAGE_() {
 	printf "\\n\\e[1;32m" 
 	awk 'NR>=639 && NR<=776'  "${0##*/}" | awk '$1 == "##"' | awk '{ $1 = ""; print }' | awk '1;{print ""}'
 	fi
-	printstartbinusage
+	_PRINT_STARTBIN_USAGE_
 }
 
 prootif() {
@@ -634,7 +634,7 @@ declare CPUABI7="armeabi-v7a"
 declare CPUABI8="arm64-v8a"
 declare CPUABIX86="x86"
 declare CPUABIX86_64="x86_64"
-declare dfl="/gen" # Used for development 
+declare DFL="/gen" # Used for development 
 declare dm="wget"	## download manager
 declare DMVERBOSE="-q"	## -v for verbose download manager output from curl and wget;  for verbose output throughout runtime also change in `setupTermuxArchConfigs.sh` when using `setupTermuxArch.sh manual`. 
 declare	ed=""
@@ -647,10 +647,11 @@ declare wdir="$PWD/"
 declare sti=""		## Generates pseudo random number.
 declare STIME=""	## Generates pseudo random number.
 declare tm=""		## tar manager
-trap '_TRPERROR_ $LINENO $BASH_COMMAND $?' ERR 
+trap "_TRPERROR_ $LINENO $BASH_COMMAND $?" ERR 
 trap _TRPEXIT_ EXIT
-trap _TRPSIGNAL_ HUP INT TERM 
-trap _TRPQUIT_ QUIT 
+# trap "_TRPEXIT_ $LINENO $BASH_COMMAND $?" EXIT
+trap "_TRPSIGNAL_ $LINENO $BASH_COMMAND $?" HUP INT TERM 
+trap "_TRPQUIT_ $LINENO $BASH_COMMAND $?" QUIT 
 if [[ -z "${TAMPDIR:-}" ]] ; then
 	TAMPDIR=""
 fi

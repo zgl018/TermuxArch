@@ -108,16 +108,14 @@ loadimage() {
 	printf "\\n" 
 	wakeunlock 
 	_PRINTFOOTER_
+	unset set -Eeuo pipefail
+	unset shopt -s nullglob globstar
 	"$INSTALLDIR/$startbin" ||:
-# 	"$startbin" help
-	printstartbinusage
+	set -Eeuo pipefail
+	shopt -s nullglob globstar
+	_PRINT_STARTBIN_USAGE_
 	_PRINTFOOTER2_
 }
-
-# 	namestartarch 
-# 	spaceinfo
-# 	_PREPINSTALLDIR
-# 	detectsystem 
 
 refreshsys() { # Refreshes
 	printf '\033]2; setupTermuxArch.sh refresh 📲 \007'
@@ -180,7 +178,7 @@ refreshsys() { # Refreshes
 	sleep 0.015
 	printf "\\a"
 	"$INSTALLDIR/$startbin" ||:
-	printstartbinusage
+	_PRINT_STARTBIN_USAGE_
 	_PRINTFOOTER2_
 }
 

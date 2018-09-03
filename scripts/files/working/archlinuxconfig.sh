@@ -18,7 +18,7 @@ addREADME() {
 }
 
 addae() {
-	_CFLHDR root/bin/ae "# Contributed by https://github.com/cb125" 
+	_CFLHDR_ root/bin/ae "# Contributed by https://github.com/cb125" 
 	cat >> root/bin/ae <<- EOM
 	watch cat /proc/sys/kernel/random/entropy_avail
 	EOM
@@ -26,7 +26,7 @@ addae() {
 }
 
 addauser() { 
-	_CFLHDR root/bin/addauser "# Add Arch Linux user."
+	_CFLHDR_ root/bin/addauser "# Add Arch Linux user."
 	cat >> root/bin/addauser <<- EOM
 	if [[ -z "\${1:-}" ]] ; then
 		echo "Use: addauser username"
@@ -104,34 +104,34 @@ addbashrc() {
 }
 
 addcdtd() {
-	_CFLHDR root/bin/cdtd "# Usage: \`. cdtd\`  The dot sources \`cdtd\` which makes this shortcut script work."
+	_CFLHDR_ root/bin/cdtd "# Usage: \`. cdtd\`  The dot sources \`cdtd\` which makes this shortcut script work."
 	cat >> root/bin/cdtd <<- EOM
-	cd "\$PREFIX"/home/storage/downloads && pwd
+	cd "$PREFIX"/home/storage/downloads && pwd
 	EOM
 	chmod 700 root/bin/cdtd 
 }
 
 addcdth() {
-	_CFLHDR root/bin/cdth "# Usage: \`. cdth\`  The dot sources \`cdth\` which makes this shortcut script work."
+	_CFLHDR_ root/bin/cdth "# Usage: \`. cdth\`  The dot sources \`cdth\` which makes this shortcut script work."
 	cat >> root/bin/cdth <<- EOM
-	cd "\$PREFIX/home" && pwd
+	cd "$PREFIX/home" && pwd
 	EOM
 	chmod 700 root/bin/cdth 
 }
 
 addcdtmp() {
-	_CFLHDR root/bin/cdtmp "# Usage: \`. cdtmp\`  The dot sources \`cdtmp\` which makes this shortcut script work."
+	_CFLHDR_ root/bin/cdtmp "# Usage: \`. cdtmp\`  The dot sources \`cdtmp\` which makes this shortcut script work."
 	cat >> root/bin/cdtmp <<- EOM
-	cd "\$PREFIX"/usr/tmp && pwd
+	cd "$PREFIX"/usr/tmp && pwd
 	EOM
 	chmod 700 root/bin/cdtmp 
 }
 
 addch() { 
-	_CFLHDR root/bin/ch "# Creates .hushlogin and .hushlogout file"
+	_CFLHDR_ root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="gen.v1.6 id209197041030"
+versionid="gen.v1.6 id345494614073"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -178,7 +178,7 @@ versionid="gen.v1.6 id209197041030"
 }
 
 addexd() {
-	_CFLHDR root/bin/exd "# Usage: \`. exd\`  The dot sources \`exd\` which makes this shortcut script work."
+	_CFLHDR_ root/bin/exd "# Usage: \`. exd\`  The dot sources \`exd\` which makes this shortcut script work."
 	cat >> root/bin/exd <<- EOM
 	export DISPLAY=:0 PULSE_SERVER=tcp:127.0.0.1:4712
 	EOM
@@ -186,7 +186,7 @@ addexd() {
 }
 
 adddfa() {
-	_CFLHDR root/bin/dfa
+	_CFLHDR_ root/bin/dfa
 	cat >> root/bin/dfa <<- EOM
 	units="\$(df 2>/dev/null | awk 'FNR == 1 {print \$2}')"
 	usrspace="\$(df 2>/dev/null | grep "/data" | awk {'print \$4'})"
@@ -260,7 +260,7 @@ addfbindprocstat8() {
 }
 
 addfbindexample() {
-	_CFLHDR var/binds/fbindexample.prs "# To regenerate the start script use \`setupTermuxArch.sh re[fresh[\`.  Add as many proot statements as you want; The init script will parse this file at refresh.  An example is included for convenience.  Usage: prootstmnt+=\"-b host_path:guest_path \" The space before the last double quote is necessary."
+	_CFLHDR_ var/binds/fbindexample.prs "# To regenerate the start script use \`setupTermuxArch.sh re[fresh[\`.  Add as many proot statements as you want; The init script will parse this file at refresh.  An example is included for convenience.  Usage: prootstmnt+=\"-b host_path:guest_path \" The space before the last double quote is necessary."
 	cat >> var/binds/fbindexample.prs <<- EOM
 	# prootstmnt+="-b $INSTALLDIR/var/binds/fbindprocstat:/proc/stat " 
 	EOM
@@ -277,7 +277,7 @@ addbinds() { # Checks if /proc/stat is usable.
 }
 
 addfibs() {
-	_CFLHDR root/bin/fibs 
+	_CFLHDR_ root/bin/fibs 
 	cat >> root/bin/fibs  <<- EOM
 	find /proc/ -name maps 2>/dev/null |xargs awk '{print i\$6}' 2>/dev/null| grep '\.so' | sort | uniq
 	EOM
@@ -285,7 +285,7 @@ addfibs() {
 }
 
 addga() {
-	_CFLHDR root/bin/ga 
+	_CFLHDR_ root/bin/ga 
 	cat >> root/bin/ga  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git
@@ -298,7 +298,7 @@ addga() {
 }
 
 addgcl() {
-	_CFLHDR root/bin/gcl 
+	_CFLHDR_ root/bin/gcl 
 	cat >> root/bin/gcl  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -311,7 +311,7 @@ addgcl() {
 }
 
 addgcm() {
-	_CFLHDR root/bin/gcm 
+	_CFLHDR_ root/bin/gcm 
 	cat >> root/bin/gcm  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -324,7 +324,7 @@ addgcm() {
 }
 
 addgpl() {
-	_CFLHDR root/bin/gpl 
+	_CFLHDR_ root/bin/gpl 
 	cat >> root/bin/gpl  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -337,7 +337,7 @@ addgpl() {
 }
 
 addgp() {
-	_CFLHDR root/bin/gp "# git push https://username:password@github.com/username/repository.git master"
+	_CFLHDR_ root/bin/gp "# git push https://username:password@github.com/username/repository.git master"
 	cat >> root/bin/gp  <<- EOM
 	if [ ! -e /usr/bin/git ] ; then
 		pacman --noconfirm --color=always -S git 
@@ -350,10 +350,10 @@ addgp() {
 }
 
 addkeys() {
-	_CFLHDR root/bin/keys 
+	_CFLHDR_ root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="gen.v1.6 id209197041030"
+versionid="gen.v1.6 id345494614073"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -443,10 +443,10 @@ addmoto() {
 }
 
 addpc() { 
-	_CFLHDR root/bin/pc "# Pacman install packages wrapper without system update."
+	_CFLHDR_ root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="gen.v1.6 id209197041030"
+versionid="gen.v1.6 id345494614073"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -497,10 +497,10 @@ versionid="gen.v1.6 id209197041030"
 }
 
 addpci() { 
-	_CFLHDR root/bin/pci "# Pacman install packages wrapper with system update."
+	_CFLHDR_ root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="gen.v1.6 id209197041030"
+versionid="gen.v1.6 id345494614073"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -567,7 +567,7 @@ addresolvconf() {
 }
 
 addt() {
-	_CFLHDR root/bin/t
+	_CFLHDR_ root/bin/t
 	cat >> root/bin/t  <<- EOM
 	if [ ! -e /usr/bin/tree ] ; then
 		pacman --noconfirm --color=always -S tree 
@@ -580,7 +580,7 @@ addt() {
 }
 
 addthstartarch() {
-	_CFLHDR root/bin/th"$startbin" 
+	_CFLHDR_ root/bin/th"$startbin" 
 	cat >> root/bin/th"$startbin" <<- EOM
 	echo $startbin help
 	$startbin help
@@ -601,7 +601,7 @@ addthstartarch() {
 }
 
 addtour() {
-	_CFLHDR root/bin/tour "# A short tour that shows a few of the new files in ths system." 
+	_CFLHDR_ root/bin/tour "# A short tour that shows a few of the new files in ths system." 
 	cat >> root/bin/tour <<- EOM
 	printf "\n\e[1;32m==> \e[1;37mRunning \e[1;32mls -R --color=always \$HOME \e[1;37m\n\n"
 	sleep 1
@@ -624,7 +624,7 @@ addtour() {
 }
 
 addtrim() {
-	_CFLHDR root/bin/trim
+	_CFLHDR_ root/bin/trim
 	cat >> root/bin/trim <<- EOM
 	printf "\\\\n\\\\e[1;32m==> \\\\e[1;0mRunning \$0 … \\\\e[0m\\\\n\\\\n" 
 	echo [1/5] rm -rf /boot/
@@ -643,7 +643,7 @@ addtrim() {
 }
 
 addv() {
-	_CFLHDR root/bin/v
+	_CFLHDR_ root/bin/v
 	cat >> root/bin/v  <<- EOM
 	if [[ -z "\${1:-}" ]] ; then
 		args="."
@@ -661,7 +661,7 @@ addv() {
 }
 
 addwe() { 
-	_CFLHDR usr/bin/we "# Watch available entropy on device." "cat /proc/sys/kernel/random/entropy_avail contributed by https://github.com/cb125"
+	_CFLHDR_ usr/bin/we "# Watch available entropy on device." "cat /proc/sys/kernel/random/entropy_avail contributed by https://github.com/cb125"
 	cat >> usr/bin/we <<- EOM
 
 	i=1
@@ -803,7 +803,7 @@ addwe() {
 }
 
 addyt() {
-	_CFLHDR root/bin/yt
+	_CFLHDR_ root/bin/yt
 	cat >> root/bin/yt  <<- EOM
 	if [ ! -e /usr/bin/youtube-dl ] ; then
 		pacman --noconfirm --color=always -S python-pip
