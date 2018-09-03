@@ -1,4 +1,9 @@
 #!/bin/env bash
+# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
+# Hosted sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+# https://sdrausty.github.io/TermuxArch/README has info about this project. 
+# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
+# _STANDARD_="function name" && STANDARD="variable name" are under construction.
 # Printout statement subroutines for `setupTermuxArch.sh`.
 ################################################################################
 FLHDR0[1]="# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺"
@@ -149,7 +154,7 @@ _PRINTFOOTER_() {
 	copystartbin2path
 	printf "\033[0;32m 🕛 = 🕛 \033[1;34mInformation about \033[0;36m\"Starting Arch Linux from Termux?\"\033[1;34m at \033[1;34mhttps://github.com/sdrausty/TermuxArch/issues/25\033[1;34m.  Use \033[1;32mtour\033[1;34m to run a very short tour to get to know the new Arch Linux in Termux PRoot environment you just set up a little bit better.  If there was more than one error during the update procedure and you would like to refresh the installation, use \033[1;32msetupTermuxArch.sh refresh\033[1;34m.  This will update and recreate the configuration provided.  The TermuxArch command \033[1;32mkeys \033[1;34mhelps install and generate Arch Linux keyring keys.\n\n"
 	_PRINTFOOTER2_
-	_PRINT_STARTBIN_USAGE_
+	_PRINTSTARTBIN_USAGE_
 # 	printf "\n"
 }
 

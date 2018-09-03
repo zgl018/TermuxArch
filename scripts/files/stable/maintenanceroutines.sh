@@ -1,8 +1,9 @@
 #!/bin/env bash
 # Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+# Hosted sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+# https://sdrausty.github.io/TermuxArch/README has info about this project. 
 # https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+# _STANDARD_="function name" && STANDARD="variable name" are under construction.
 ################################################################################
 
 sysinfo() {
@@ -92,10 +93,10 @@ copyimage() { # A systemimage.tar.gz file can be used: `setupTermuxArch.sh ./[pa
 }
 
 loadimage() { 
-	namestartarch 
+	_NAMESTARTARCH_ 
  	spaceinfo
 	printf "\\n" 
-	wakelock
+	_WAKELOCK_
 	_PREPINSTALLDIR_ 
   	copyimage ## "$@" & spinner "Copying" "…" 
 	_PRINTMD5CHECK_
@@ -106,21 +107,19 @@ loadimage() {
 	_PRINTCONFIGUP_ 
 	touchupsys 
 	printf "\\n" 
-	wakeunlock 
+	_WAKEUNLOCK_ 
 	_PRINTFOOTER_
-	unset set -Eeuo pipefail
-	unset shopt -s nullglob globstar
+	set +Eeuo pipefail
 	"$INSTALLDIR/$startbin" ||:
 	set -Eeuo pipefail
-	shopt -s nullglob globstar
-	_PRINT_STARTBIN_USAGE_
+	_PRINTSTARTBIN_USAGE_
 	_PRINTFOOTER2_
 	exit
 }
 
 refreshsys() { # Refreshes
 	printf '\033]2; setupTermuxArch.sh refresh 📲 \007'
- 	namestartarch  
+ 	_NAMESTARTARCH_  
  	spaceinfo
 	cd "$INSTALLDIR"
 	_SETLANGUAGE_
@@ -157,12 +156,12 @@ refreshsys() { # Refreshes
 	addyt 
 	addwe  
 	addv 
-	makefinishsetup
+	_MAKEFINISHSETUP_
 	makesetupbin 
 	makestartbin 
 	_SETLOCALE_
 	printf "\\n" 
-	wakelock
+	_WAKELOCK_
 	printf '\033]2; setupTermuxArch.sh refresh 📲 \007'
 	printf "\\n\\e[1;32m==> \\e[1;37m%s \\e[1;32m%s %s 📲 \\a\\n" "Running" "$(basename "$0")" "$args" 
 	"$INSTALLDIR"/root/bin/setupbin.sh ||: 
@@ -173,13 +172,15 @@ refreshsys() { # Refreshes
 	ls "$INSTALLDIR"/bin/we |cut -f7- -d /
 	ls "$INSTALLDIR"/root/bin/* |cut -f7- -d /
 	printf "\\n" 
-	wakeunlock 
+	_WAKEUNLOCK_ 
 	_PRINTFOOTER_ 
 	printf "\\a"
 	sleep 0.015
 	printf "\\a"
+	set +Eeuo pipefail
 	"$INSTALLDIR/$startbin" ||:
-	_PRINT_STARTBIN_USAGE_
+	set -Eeuo pipefail
+	_PRINTSTARTBIN_USAGE_
 	_PRINTFOOTER2_
 }
 

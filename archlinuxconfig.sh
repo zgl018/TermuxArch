@@ -1,8 +1,9 @@
 #!/bin/env bash
 # Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+# Hosted sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+# https://sdrausty.github.io/TermuxArch/README has info about this project. 
 # https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-# https://sdrausty.github.io/TermuxArch/README has information about this project. 
+# _STANDARD_="function name" && STANDARD="variable name" are under construction.
 ################################################################################
 
 addREADME() {
@@ -131,26 +132,12 @@ addch() {
 	_CFLHDR_ root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id2361"
+versionid="v1.6 id7127"
 
-	_TRPEXIT_() { # on exit
+	_TRPET_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	_PRINTTAIL_ "\$args[@]"  
-	}
-	
-	_TRPERROR_() { # on script signal
-		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING." 
-	 	set +Eeuo pipefail 
-	 	echo "\$?" 
-	 	exit "\$?" 
-	}
-	
-	_TRPSIGNAL_() { # on signal
-		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING.  Signal caught!"
-		set +Eeuo pipefail 
-	 	echo "\$?" 
-	 	exit "\$?" 
 	}
 	
 	_PRINTTAIL_() {
@@ -158,9 +145,6 @@ versionid="v1.6 id2361"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0")"':DONE 📱 \007'
 	}
 
-	trap _TRPERROR_ ERR
-	trap _TRPEXIT_ EXIT
-	trap _TRPSIGNAL_ INT TERM 
 	## ch begin ####################################################################
 
 	if [[ -z "\${1:-}" ]];then
@@ -197,7 +181,7 @@ adddfa() {
 
 addfbindprocshmem() {
 	cat > var/binds/fbindprocshmem.prs  <<- EOM
-	prootstmnt+="-b $INSTALLDIR/var/binds/fbindprocshmem:/proc/shmem " 
+	PROOTSTMNT+="-b $INSTALLDIR/var/binds/fbindprocshmem:/proc/shmem " 
 	EOM
 	cat > var/binds/fbindprocshmem <<- EOM
 	------ Message Queues --------
@@ -260,9 +244,12 @@ addfbindprocstat8() {
 }
 
 addfbindexample() {
-	_CFLHDR_ var/binds/fbindexample.prs "# To regenerate the start script use \`setupTermuxArch.sh re[fresh[\`.  Add as many proot statements as you want; The init script will parse this file at refresh.  An example is included for convenience.  Usage: prootstmnt+=\"-b host_path:guest_path \" The space before the last double quote is necessary."
+	_CFLHDR_ var/binds/fbindexample.prs "# To regenerate the start script use \`setupTermuxArch.sh re[fresh[\`.  Add as many proot statements as you want; The init script will parse this file at refresh.  An example is included for convenience.  Usage: PROOTSTMNT+=\"-b host_path:guest_path \" The space before the last double quote is necessary."
 	cat >> var/binds/fbindexample.prs <<- EOM
-	# prootstmnt+="-b $INSTALLDIR/var/binds/fbindprocstat:/proc/stat " 
+	# PROOTSTMNT+="-b $INSTALLDIR/var/binds/fbindprocstat:/proc/stat " 
+	# if [[ ! -r /dev/shm ]] ; then 
+	# 		PROOTSTMNT+="-b $INSTALLDIR/tmp:/dev/shm " 
+	# fi
 	EOM
 }
 
@@ -353,7 +340,7 @@ addkeys() {
 	_CFLHDR_ root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="v1.6 id2361"
+versionid="v1.6 id7127"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -446,7 +433,7 @@ addpc() {
 	_CFLHDR_ root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id2361"
+versionid="v1.6 id7127"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -500,7 +487,7 @@ addpci() {
 	_CFLHDR_ root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id2361"
+versionid="v1.6 id7127"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"

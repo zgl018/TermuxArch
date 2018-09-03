@@ -1,6 +1,7 @@
 #!/bin/env bash
 # Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-# Hosted https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+# Hosted sdrausty.github.io/TermuxArch courtesy https://pages.github.com
+# https://sdrausty.github.io/TermuxArch/README has info about this project. 
 # https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
 # _STANDARD_="function name" && STANDARD="variable name" are under construction.
 ################################################################################
@@ -8,9 +9,8 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id2361"
+versionid="v1.6 id7127"
 ## INIT FUNCTIONS ##############################################################
-
 aria2cif() { 
 	dm=aria2c
 	if [[ -x "$(command -v aria2c)" ]] && [[ -x "$PREFIX"/bin/aria2c ]] ; then
@@ -228,7 +228,7 @@ intro() {
 	if [[ "$lcc" = "1" ]] ; then
 		loadimage "$@" 
 	else
-		mainblock
+		_MAINBLOCK_
 	fi
 }
 
@@ -328,7 +328,7 @@ _NAMEINSTALLDIR_() {
 	INSTALLDIR="$(echo "$HOME/${rootdir%/}" |sed 's#//*#/#g')"
 }
 
-namestartarch() { # ${@%/} removes trailing slash
+_NAMESTARTARCH_() { # ${@%/} removes trailing slash
  	darch="$(echo "${rootdir%/}" |sed 's#//*#/#g')"
 	if [[ "$darch" = "/arch" ]] ; then
 		aarch=""
@@ -427,7 +427,7 @@ preptmpdir() {
 
 _PREPTERMUXARCH_() { 
 	_NAMEINSTALLDIR_ 
-	namestartarch  
+	_NAMESTARTARCH_  
 	preptmpdir
 }
 
@@ -441,9 +441,9 @@ printsha512syschker() {
 	exit 
 }
 
-_PRINT_STARTBIN_USAGE_() {
+_PRINTSTARTBIN_USAGE_() {
 	printf "\\n\\e[1;32m" 
- 	namestartarch "$@"  
+ 	_NAMESTARTARCH_ 
 	if [[ -x "$(command -v "$startbin")" ]] ; then
 		echo "$startbin" help 
 		"$startbin" help 
@@ -462,7 +462,7 @@ _PRINTUSAGE_() {
 	printf "\\n\\e[1;32m" 
 	awk 'NR>=639 && NR<=776'  "${0##*/}" | awk '$1 == "##"' | awk '{ $1 = ""; print }' | awk '1;{print ""}'
 	fi
-	_PRINT_STARTBIN_USAGE_
+	_PRINTSTARTBIN_USAGE_
 }
 
 prootif() {
@@ -476,7 +476,7 @@ prootif() {
 }
 
 rmarch() {
-	namestartarch 
+	_NAMESTARTARCH_ 
 	_NAMEINSTALLDIR_
 	while true; do
 		printf "\\n\\e[1;30m"
@@ -579,20 +579,17 @@ _TRPEXIT_() { # Run on exit.
 	sleep 0.04
 	CDIRS=( bin boot dev etc home lib mnt opt proc root run sbin srv sys tmp usr var )
 	CDIRSV="0"
- 	for i in "${CDIRS[@]}" 
-	do
+ 	for i in "${CDIRS[@]}" ; do
 		if $(ls -A $INSTALLDIR/$i 2>/dev/null)
 	then
 			CDIRSV="1"
 		fi
 	done
-	if "$CDIRSV" = 0 
-	then
+	if [[ "$CDIRSV" = 0 ]] ; then
 		rmdir $TAMPDIR
 		rmdir $INSTALLDIR
 	fi
-	if "$RV" = 0
-	then
+	if [[ "$RV" = 0 ]] ; then
 		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁 "
 		printf "\\e]2; %s: %s \\007" "${0##*/} $args" "DONE 🏁 "
 	else
@@ -600,7 +597,7 @@ _TRPEXIT_() { # Run on exit.
 		printf "\033]2; %s: %s %s \\007" "${0##*/} $args" "(Exit Signal $RV)" "DONE 🏁 "
 	fi
 	printf "\\e[?25h\\e[0m"
-	unset set -Eeuo pipefail 
+	set +Eeuo pipefail 
 	exit
 }
 
@@ -632,13 +629,12 @@ wgetifdm() {
 }
 
 ## User Information: 
-## Configurable variables such as CMIRRORs and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is simple.  `bash setupTermuxArch.sh manual` shall create `setupTermuxArchConfigs.sh` in the working directory for editing; See `setupTermuxArch.sh help` for more information.  
-declare -a ADM=("aria2" "axel" "curl" "lftp" "wget")
+## Configurable variables such as mirrors and download manager options are in `setupTermuxArchConfigs.sh`.  Working with `kownconfigurations.sh` in the working directory is simple.  `bash setupTermuxArch.sh manual` shall create `setupTermuxArchConfigs.sh` in the working directory for editing; See `setupTermuxArch.sh help` for more information.  
+declare -a ADM=(aria2 axel curl lftp wget)
 # declare -p $ADM
 # exit
-declare -a ATM=("wget" "$PREFIX/applets/tar" "tar")
+declare -a ATM=("$PREFIX/applets/tar" "bsdtar" "tar")
 declare -a args="$@"
-
 declare aptin=""	## apt string
 declare apton=""	## exception string
 declare commandif=""
