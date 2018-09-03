@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id7431"
+versionid="gen.v1.6 id374990413571"
 ## INIT FUNCTIONS ##############################################################
 
 aria2cif() { 
