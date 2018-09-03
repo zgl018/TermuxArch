@@ -16,14 +16,14 @@ CMIRROR="http://os.archlinuxarm.org/"
 # DMVERBOSE="-v" # Uncomment for verbose download manager output with curl and wget;  for verbose output throughout runtime, change this setting setting in `setupTermuxArch.sh` also.  
 KOE=1
 
-aarch64() {
+_AARCH64_() {
 	file=ArchLinuxARM-aarch64-latest.tar.gz
 	CMIRROR=os.archlinuxarm.org
 	path=/os/
 	makesystem 
 }
 
-armv5l() {
+_ARMV5L_() {
 	file=ArchLinuxARM-armv5-latest.tar.gz
 	CMIRROR=os.archlinuxarm.org
 	path=/os/
@@ -46,13 +46,13 @@ armv7lChrome() {
 
 # Information at https://www.archlinux.org/news/phasing-out-i686-support/ and https://archlinux32.org/ regarding why i686 is currently frozen at release 2017.03.01-i686.  $file is read from md5sums.txt
 
-i686() { 
+_I686_() { 
 	CMIRROR=archive.archlinux.org
 	path=/iso/2017.03.01/
 	makesystem 
 }
 
-x86_64() { # $file is read from md5sums.txt
+_X86_64_() { # $file is read from md5sums.txt
 	CMIRROR=CMIRROR.rackspace.com
 	path=/archlinux/iso/latest/
 	makesystem 

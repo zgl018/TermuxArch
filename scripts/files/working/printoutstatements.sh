@@ -84,7 +84,7 @@ _PRINTCU_() {
 	printf "\n\033[0;34m 🕛 > 🕘 \033[1;34mCleaning up installation files: "'\033]2; 🕛 > 🕙 Cleaning up installation files: \007'
 }
 
-printdetectedsystem() {
+_PRINTDETECTEDSYSTEM_() {
 	printf "\n\033[0;34m 🕛 > 🕝 \033[1;34mDetected $(uname -m) " 
 	if [[ "$(getprop ro.product.device)" == *_cheets ]];then
 		printf "Chromebook.\n\n\033[0m"
@@ -151,7 +151,7 @@ _PRINTMISMATCH_() {
 
 _PRINTFOOTER_() {
 	printf "\033[0;34m 🕛 > 🕥 \033[1;34mUse \033[1;32m$startbin \033[1;34mto launch Arch Linux in Termux PRoot.  Alternatively, run \033[1;32m~$printrootdir/$startbin \033[1;34min a BASH shell to start Arch Linux in Termux PRoot for future sessions.  See \033[1;32m$startbin help \033[1;34mfor usage information.\033[0m\n\n"'\033]2;  Thank you for using `setupTermuxArch.sh` to install Arch Linux in Termux 📲  \007'
-	copystartbin2path
+	_COPYSTARTBIN2PATH_
 	printf "\033[0;32m 🕛 = 🕛 \033[1;34mInformation about \033[0;36m\"Starting Arch Linux from Termux?\"\033[1;34m at \033[1;34mhttps://github.com/sdrausty/TermuxArch/issues/25\033[1;34m.  Use \033[1;32mtour\033[1;34m to run a very short tour to get to know the new Arch Linux in Termux PRoot environment you just set up a little bit better.  If there was more than one error during the update procedure and you would like to refresh the installation, use \033[1;32msetupTermuxArch.sh refresh\033[1;34m.  This will update and recreate the configuration provided.  The TermuxArch command \033[1;32mkeys \033[1;34mhelps install and generate Arch Linux keyring keys.\n\n"
 	_PRINTFOOTER2_
 	_PRINTSTARTBIN_USAGE_

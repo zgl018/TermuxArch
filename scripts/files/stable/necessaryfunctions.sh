@@ -13,7 +13,7 @@ _CALLSYSTEM_() {
 	if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
 		_GETIMAGE_
 	else
-		if [[ "$CMIRROR" = "os.archlinuxarm.org" ]] || [[ "$CMIRROR" = "CMIRROR.archlinuxarm.org" ]]; then
+		if [[ "$CMIRROR" = "os.archlinuxarm.org" ]] || [[ "$CMIRROR" = "mirror.archlinuxarm.org" ]]; then
 			until _FTCHSTND_;do
 				_FTCHSTND_ ||: 
 				sleep 2
@@ -30,7 +30,7 @@ _CALLSYSTEM_() {
 	fi
 }
 
-copystartbin2path() {
+_COPYSTARTBIN2PATH_() {
 	if [[ ":$PATH:" == *":$HOME/bin:"* ]] && [[ -d "$HOME"/bin ]]; then
 		BPATH="$HOME"/bin
 	else
@@ -41,17 +41,17 @@ copystartbin2path() {
 }
 
 _DETECTSYSTEM_() {
-	printdetectedsystem
+	_PRINTDETECTEDSYSTEM_
 	if [[ "$CPUABI" = "$CPUABI5" ]];then
-		armv5l
+		_ARMV5L_
 	elif [[ "$CPUABI" = "$CPUABI7" ]];then
 		_DETECTSYSTEM2_ 
 	elif [[ "$CPUABI" = "$CPUABI8" ]];then
-		aarch64
+		_AARCH64_
 	elif [[ "$CPUABI" = "$CPUABIX86" ]];then
-		i686 
+		_I686_ 
 	elif [[ "$CPUABI" = "$CPUABIX86_64" ]];then
-		x86_64
+		_X86_64_
 	else
 		_PRINTMISMATCH_ 
 	fi
@@ -107,7 +107,7 @@ _MAKEFINISHSETUP_() {
 	BINFNSTP=finishsetup.sh  
 	_CFLHDR_ root/bin/"$BINFNSTP"
 	cat >> root/bin/"$BINFNSTP" <<- EOM
-versionid="v1.6 id7127"
+versionid="v1.6 id2021"
 	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
    	locale-gen ||:
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
@@ -152,7 +152,7 @@ versionid="v1.6 id7127"
 makesetupbin() {
 	_CFLHDR_ root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id7127"
+versionid="v1.6 id2021"
 	EOM
 	echo "$PROOTSTMNT /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
 	chmod 700 root/bin/setupbin.sh
@@ -162,7 +162,7 @@ makestartbin() {
 	_CFLHDR_ "$startbin" 
 	printf "%s\\n" "${FLHDRP[@]}" >> "$startbin"
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id7127"
+versionid="v1.6 id2021"
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
 	_PRINTUSAGE_() { 
