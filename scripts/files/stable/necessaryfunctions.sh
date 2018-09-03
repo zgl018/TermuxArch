@@ -91,7 +91,7 @@ lkernid
 mainblock() { 
 	namestartarch 
 	spaceinfo
-	_PREPINSTALLDIR
+	_PREPINSTALLDIR_
 	detectsystem 
 	wakeunlock 
 	_PRINTFOOTER_
@@ -104,7 +104,7 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	_CFLHDR_ root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="v1.6 id7431"
+versionid="v1.6 id2361"
 	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
    	locale-gen ||:
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
@@ -149,7 +149,7 @@ versionid="v1.6 id7431"
 makesetupbin() {
 	_CFLHDR_ root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id7431"
+versionid="v1.6 id2361"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -158,9 +158,10 @@ versionid="v1.6 id7431"
 
 makestartbin() {
 	_CFLHDR_ "$startbin" 
+	printf "%s\\n" "${FLHDRP[@]}" >> "$startbin"
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id7431"
-	unset LD_PRELOAD
+versionid="v1.6 id2361"
+# 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
 	_PRINTUSAGE_() { 
@@ -254,7 +255,7 @@ _PREPROOTDIR() {
 	mkdir -p usr/bin
 }
 
-_PREPINSTALLDIR() {
+_PREPINSTALLDIR_() {
 	_PREPROOTDIR
 	_SETLANGUAGE_
 	addREADME

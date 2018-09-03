@@ -96,7 +96,7 @@ loadimage() {
  	spaceinfo
 	printf "\\n" 
 	wakelock
-	_PREPINSTALLDIR 
+	_PREPINSTALLDIR_ 
   	copyimage ## "$@" & spinner "Copying" "…" 
 	_PRINTMD5CHECK_
 	md5check

@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id7431"
+versionid="v1.6 id2361"
 ## INIT FUNCTIONS ##############################################################
 
 aria2cif() { 
@@ -141,6 +141,7 @@ dependbp() {
 
 depends() { # Checks for missing commands.  
 	printf "\\e[1;34mChecking prerequisites…\\n\\e[1;32m"
+	libandroidshmemif
 # 	# Checks if download manager is set. 
 	aria2cifdm 
 	axelifdm 
@@ -283,6 +284,15 @@ lftpif() {
 lftpifdm() {
 	if [[ "$dm" = lftp ]] ; then
 		lftpif 
+	fi
+}
+
+libandroidshmemif() {
+	dm=lftp
+	if [[ ! -f /data/data/com.termux/files/usr/lib/libandroid-shmem.so ]] ; then
+		aptin+="libandroid-shmem "
+		maptin+=(libandroid-shmem)
+		apton+=(libandroid-shmem)
 	fi
 }
 
@@ -558,36 +568,39 @@ _STANDARDIF_() {
 }
 
 _TRPERROR_() { # Run on script error.
-	local rv="$?"
-	printf "\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING:  Generated script signal ${rv:-unknown} near or at line number ${1:-unknown} by \`${2:-command}\`!"
+	local RV="$?"
+	printf "\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n" "TermuxArch WARNING:  Generated script signal ${RV:-unknown} near or at line number ${1:-unknown} by \`${2:-command}\`!"
 	exit 201
 }
 
 _TRPEXIT_() { # Run on exit.
-	local rv="$?"
-  	printf "\\a\\a\\a\\a"
+	local RV="$?"
+	rm -rf "$TAMPDIR"
+	sleep 0.04
 	CDIRS=( bin boot dev etc home lib mnt opt proc root run sbin srv sys tmp usr var )
-	CDIRSR="0"
- 	for i in "${CDIRS[@]}" ; do
-		if [ "$(ls -A $INSTALLDIR/$i 2>/dev/null)" ] ; then
-			CDIRSR="1"
+	CDIRSV="0"
+ 	for i in "${CDIRS[@]}" 
+	do
+		if $(ls -A $INSTALLDIR/$i 2>/dev/null)
+	then
+			CDIRSV="1"
 		fi
 	done
-	if [[ "$CDIRSR" = 0 ]] ; then
+	if "$CDIRSV" = 0 
+	then
 		rmdir $TAMPDIR
 		rmdir $INSTALLDIR
 	fi
-	sleep 0.4
-	if [[ "$rv" = 0 ]] ; then
-		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
-		printf "\\e]2; %s: %s \007" "${0##*/} $args" "DONE 🏁"
+	if "$RV" = 0
+	then
+		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁 "
+		printf "\\e]2; %s: %s \\007" "${0##*/} $args" "DONE 🏁 "
 	else
-		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s %s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "(Exit Signal $rv)" "DONE 🏁"
-		printf "\033]2; %s: %s %s \007" "${0##*/} $args" "(Exit Signal $rv)" "DONE 🏁"
+		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s %s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "(Exit Signal $RV)" "DONE 🏁 "
+		printf "\033]2; %s: %s %s \\007" "${0##*/} $args" "(Exit Signal $RV)" "DONE 🏁 "
 	fi
 	printf "\\e[?25h\\e[0m"
-	rm -rf "$TAMPDIR"
-	set +Eeuo pipefail 
+	unset set -Eeuo pipefail 
 	exit
 }
 
@@ -625,6 +638,7 @@ declare -a ADM=("aria2" "axel" "curl" "lftp" "wget")
 # exit
 declare -a ATM=("wget" "$PREFIX/applets/tar" "tar")
 declare -a args="$@"
+
 declare aptin=""	## apt string
 declare apton=""	## exception string
 declare commandif=""
@@ -644,7 +658,7 @@ declare lcp=""
 declare opt=""
 declare rootdir=""
 declare wdir="$PWD/"
-declare sti=""		## Generates pseudo random number.
+declare STI=""		## Generates pseudo random number.
 declare STIME=""	## Generates pseudo random number.
 declare tm=""		## tar manager
 trap "_TRPERROR_ $LINENO $BASH_COMMAND $?" ERR 
@@ -662,17 +676,17 @@ if [[ "$commandif" = "" ]] ; then
 fi
 ## Generates pseudo random number to create uniq strings.
 if [[ -f  /proc/sys/kernel/random/uuid ]] ; then
-	sti="$(cat /proc/sys/kernel/random/uuid)"
-	stim="${sti//-}"	
-	STIME="${stim:0:3}"	
+	STI="$(cat /proc/sys/kernel/random/uuid)"
+	STIM="${STI//-}"	
+	STIME="${STIM:0:3}"	
 else
-	sti="$(date +%s)" 
-	STIME="$(echo "${sti:7:4}"|rev)" 
+	STI="$(date +%s)" 
+	STIME="$(echo "${STI:7:4}"|rev)" 
 fi
-oned="$(date +%s)" 
-oneda="${oned: -1}" 
-STIME="$oneda$STIME"
-## Gets information with `getprop` about device.
+ONES="$(date +%s)" 
+ONESA="${ONES: -1}" 
+STIME="$ONESA$STIME"
+##  Information from `getprop` about device:
 CPUABI="$(getprop ro.product.cpu.abi)" 
 ## OPTIONS STATUS: UNDERGOING TESTING;  Image file and compound options are still under development.  USE WITH CAUTION!  IMPORTANT NOTE: CURRENTLY ONLY curl AND wget ARE THOROUGHLY TESTED.   All the download managers are NOT yet fully implemented.   
 ## GRAMMAR: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]`; all options are optional for network install.  AVAILABLE OPTIONS: `setupTermuxArch.sh [HOW] [WHAT] [WHERE]` and `setupTermuxArch.sh [~/|./|/absolute/path/]systemimage.tar.gz [WHERE]`.  

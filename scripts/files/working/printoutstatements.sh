@@ -1,24 +1,6 @@
 #!/bin/env bash
-# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺
-# Hosting https://sdrausty.github.io/TermuxArch courtesy https://pages.github.com
-# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-# https://sdrausty.github.io/TermuxArch/README has information about this project. 
 # Printout statement subroutines for `setupTermuxArch.sh`.
 ################################################################################
-
-# FLHDR[0]="#!/bin/env bash" 
-# FLHDR[1]="# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺"
-# FLHDR[2]="# Hosting sdrausty.github.io/TermuxArch courtesy https://pages.github.com." 
-# FLHDR[3]="# https://sdrausty.github.io/TermuxArch/README has info about this project."
-# FLHDR[4]="# https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help." 
-# FLHDR[5]="################################################################################"
-# FLHDR[7]="IFS=$'\\n\\t'"
-# FLHDR[8]="set -Eeuo pipefail"
-# FLHDR[9]="shopt -s nullglob globstar"
-# FLHDR[10]="versionid=\"v1.6 id9909\""
-# FLHDR[11]=" "
-# TRPERROR[0]="_TRPERROR_() {  #	Run on script error."
-FLHDR0[0]="#!/bin/env bash" 
 FLHDR0[1]="# Copyright 2017-2018 by SDRausty. All rights reserved.  🌎 🌍 🌏 🌐 🗺"
 FLHDR0[2]="# Hosting sdrausty.github.io/TermuxArch courtesy https://pages.github.com." 
 FLHDR0[3]="# https://sdrausty.github.io/TermuxArch/README has info about this project."
@@ -27,15 +9,18 @@ FLHDR1[5]="#####################################################################
 FLHDR1[7]="IFS=$'\\n\\t'"
 FLHDR1[8]="set -Eeuo pipefail"
 FLHDR1[9]="shopt -s nullglob globstar"
-FLHDR1[10]="versionid=\"v1.6 id9909\""
-FLHDR1[11]=" "
-TRPERROR[0]="_TRPERROR_() {  #	Run on script error."
-TRPERROR[1]="	local rv=\"\$?\""
-TRPERROR[2]="	printf \"\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n\" \"TermuxArch WARNING:  Generated script signal \${rv:-unknown} near or at line number \${1:-unknown} by \`\${2:-command}\`!\""
+FLHDR1[10]="unset LD_PRELOAD"
+FLHDR1[11]="versionid=\"v1.6 id9909\""
+FLHDR1[12]=" "
+FLHDRP[0]="## BEGIN #######################################################################"
+FLHDRP[1]="LD_PRELOAD=\"env /data/data/com.termux/files/usr/lib/libandroid-shmem.so\""
+TRPERROR[0]="_TRPERR_() {  #	Run on script error."
+TRPERROR[1]="	local RV=\"\$?\""
+TRPERROR[2]="	printf \"\\e[?25h\\n\\e[1;48;5;138m %s\\e[0m\\n\\n\" \"TermuxArch WARNING:  Generated script signal \${RV:-unknown} near or at line number \${1:-unknown} by \`\${2:-command}\`!\""
 TRPERROR[3]="	exit 201"
 TRPERROR[4]="}"
 TRPERROR[5]=" "
-TRPEXIT[0]="_TRPEXIT_() {  #	Run on exit."
+TRPEXIT[0]="_TRPET_() {  #	Run on exit."
 TRPEXIT[1]="	local RV=\"\$?\" "
 TRPEXIT[2]="  	printf \"\\a\\a\\a\\a\" "
 TRPEXIT[3]="	sleep 0.4 "
@@ -51,40 +36,33 @@ TRPEXIT[12]="	set +Eeuo pipefail"
 TRPEXIT[13]="	exit"
 TRPEXIT[14]="}"
 TRPEXIT[15]=" "
-TRPSIGNAL[0]="_TRPSIGNAL_() {  #	Run on signal."
+TRPSIGNAL[0]="_TRPSIG_() {  #	Run on signal."
 TRPSIGNAL[1]="	printf \"\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Signal \$? received!\\e[0m\\n\""
 TRPSIGNAL[2]="	rm -rf \"\$TAMPDIR\""
 TRPSIGNAL[3]=" 	exit 211"
 TRPSIGNAL[4]="}"
 TRPSIGNAL[5]=" "
-TRPQUIT[0]="_TRPQUIT_() {  #	Run on quit."
+TRPQUIT[0]="_TRPQ_() {  #	Run on quit."
 TRPQUIT[1]="	printf \"\\e[?25h\\e[1;7;38;5;0mTermuxArch WARNING:  Quit signal \$? received!\\e[0m\\n\""
 TRPQUIT[2]="	rm -rf \"\$TAMPDIR\""
 TRPQUIT[3]=" 	exit 221"
 TRPQUIT[4]="}"
 TRPQUIT[5]=" "
-TRAPS[0]="trap \"_TRPERROR_ \$LINENO \$BASH_COMMAND \$?\" ERR"
-# TRAPS[1]="trap \"_TRPEXIT_ \$LINENO \$BASH_COMMAND \$?\" EXIT"
-TRAPS[1]="trap _TRPEXIT_ EXIT"
-TRAPS[2]="trap _TRPSIGNAL_ HUP INT TERM"
-TRAPS[3]="trap _TRPQUIT_ QUIT"
+TRAPS[0]="trap \"_TRPERR_ \$LINENO \$BASH_COMMAND \$?\" ERR"
+TRAPS[1]="trap _TRPET_ EXIT"
+TRAPS[2]="trap _TRPSIG_ HUP INT TERM"
+TRAPS[3]="trap _TRPQ_ QUIT"
 TRAPS[4]=" "
 
 _CFLHDR_() { #	Create file headers, and interests comments.  
- 	if [[ -z "${2:-}" ]] ; then
- 			printf "%s\\n" "${FLHDR0[@]}" > "$1"
- 	else
-   		for i in {0..3} ; do
-  			if [[ $i = 0 ]] ; then
-  				printf "%s\\n" "${FLHDR0[i]}" > "$1"
-  			else
-  	 			printf "%s\\n" "${FLHDR0[i]}" >> "$1"
-  			fi
-   		done
-  		printf "%s\\n"  "${@:2}" >> "$1"
-		printf "%s\\n" "${FLHDR0[4]}" >> "$1"
- 	fi
-	printf "%s\\n" "${FLHDR1[@]}" >> "$1"
+  	if [[ -z "${2:-}" ]] ; then
+		printf "%s\\n" "${FLHDR0[@]}" > "$1"
+		printf "%s\\n" "${FLHDR1[@]}" >> "$1"
+  	else
+		printf "%s\\n" "${FLHDR0[@]}" > "$1"
+   		printf "%s\\n"  "${@:2}" >> "$1"
+		printf "%s\\n" "${FLHDR1[@]}" >> "$1"
+  	fi
 	printf "%s\\n" "${TRPERROR[@]}" >> "$1"
  	printf "%s\\n" "${TRPEXIT[@]}" >> "$1"
 	printf "%s\\n" "${TRPSIGNAL[@]}" >> "$1"
