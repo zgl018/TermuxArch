@@ -6,10 +6,10 @@
 # _STANDARD_="function name" && STANDARD="variable name" are under construction.
 ################################################################################
 IFS=$'\n\t'
-set -Eeuxo pipefail
+set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id741559643932"
+versionid="gen.v1.6 id712015305429"
 ## INIT FUNCTIONS ##############################################################
 aria2cif() { 
 	dm=aria2c
