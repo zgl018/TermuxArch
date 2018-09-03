@@ -7,14 +7,14 @@
 
 LC_TYPE=( "LANG" "LANGUAGE" "LC_ADDRESS" "LC_COLLATE" "LC_CTYPE" "LC_IDENTIFICATION" "LC_MEASUREMENT" "LC_MESSAGES" "LC_MONETARY" "LC_NAME" "LC_NUMERIC" "LC_PAPER" "LC_TELEPHONE" "LC_TIME" )
 
-_CALLSYSTEM() {
+_CALLSYSTEM_() {
 	declare COUNTER=""
 	if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
-		getimage
+		_GETIMAGE_
 	else
-		if [[ "$mirror" = "os.archlinuxarm.org" ]] || [[ "$mirror" = "mirror.archlinuxarm.org" ]]; then
-			until ftchstnd;do
-				ftchstnd ||: 
+		if [[ "$CMIRROR" = "os.archlinuxarm.org" ]] || [[ "$CMIRROR" = "CMIRROR.archlinuxarm.org" ]]; then
+			until _FTCHSTND_;do
+				_FTCHSTND_ ||: 
 				sleep 2
 				printf "\\n"
 				COUNTER=$((COUNTER + 1))
@@ -24,7 +24,7 @@ _CALLSYSTEM() {
 				fi
 			done
 		else
-			ftchit
+			_FTCHIT_
 		fi
 	fi
 }
@@ -96,15 +96,15 @@ mainblock() {
 	wakeunlock 
 	_PRINTFOOTER_
 	"$INSTALLDIR/$startbin" ||:
-	printstartbinusage
+	_PRINT_STARTBIN_USAGE_
 	_PRINTFOOTER2_
 }
 
 makefinishsetup() {
 	binfnstp=finishsetup.sh  
-	_CFLHDR root/bin/"$binfnstp"
+	_CFLHDR_ root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="v1.6 id1294"
+versionid="v1.6 id5835"
 	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
    	locale-gen ||:
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
@@ -147,9 +147,9 @@ versionid="v1.6 id1294"
 }
 
 makesetupbin() {
-	_CFLHDR root/bin/setupbin.sh 
+	_CFLHDR_ root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id1294"
+versionid="v1.6 id5835"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -157,9 +157,9 @@ versionid="v1.6 id1294"
 }
 
 makestartbin() {
-	_CFLHDR "$startbin" 
+	_CFLHDR_ "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id1294"
+versionid="v1.6 id5835"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -225,7 +225,7 @@ versionid="v1.6 id1294"
 
 makesystem() {
 	wakelock
-	_CALLSYSTEM
+	_CALLSYSTEM_
 	_PRINTMD5CHECK_
 	md5check
 	_PRINTCU_ 
@@ -310,10 +310,10 @@ preproot() {
 
 runfinishsetup() {
 	printf "\\e[0m"
-	if [[ "$fstnd" ]]; then
-		nmir="$(echo "$nmirror" |awk -F'/' '{print $3}')"
+	if [[ "$FSTND" ]]; then
+		NMIR="$(echo "$NLCMIRROR" |awk -F'/' '{print $3}')"
 		sed -e '/http\:\/\/mir/ s/^#*/# /' -i "$INSTALLDIR"/etc/pacman.d/mirrorlist
-		sed -e "/$nmir/ s/^# *//" -i "$INSTALLDIR"/etc/pacman.d/mirrorlist
+		sed -e "/$NMIR/ s/^# *//" -i "$INSTALLDIR"/etc/pacman.d/mirrorlist
 	else
 	if [[ "$ed" = "" ]];then
 		editors 
