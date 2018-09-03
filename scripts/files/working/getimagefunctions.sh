@@ -17,10 +17,10 @@ _FTCHIT_() {
 		axel http://"$CMIRROR$path$file".md5 
 		axel http://"$CMIRROR$path$file"
 	elif [[ "$dm" = wget ]];then 
-		wget "$dmverbose" -N --show-progress http://"$CMIRROR$path$file".md5 
-		wget "$dmverbose" -c --show-progress http://"$CMIRROR$path$file" 
+		wget "$DMVERBOSE" -N --show-progress http://"$CMIRROR$path$file".md5 
+		wget "$DMVERBOSE" -c --show-progress http://"$CMIRROR$path$file" 
 	else
-		curl "$dmverbose" -C - --fail --retry 4 -OL http://"$CMIRROR$path$file".md5 -O http://"$CMIRROR$path$file" 
+		curl "$DMVERBOSE" -C - --fail --retry 4 -OL http://"$CMIRROR$path$file".md5 -O http://"$CMIRROR$path$file" 
 	fi
 }
 
@@ -33,21 +33,21 @@ _FTCHSTND_() {
 		NLCMIRROR="$(grep Redir "$TAMPDIR/global2localmirror" | awk {'print $8'})" 
 		_PRINTDONE_ 
 		_PRINTDOWNLOADINGFTCH_ 
-		aria2c http://"$CMIRROR$path$file".md5 
-		aria2c -c -m 4 http://"$CMIRROR$path$file"
+		aria2c http://"$NLCMIRROR$path$file".md5 
+		aria2c -c -m 4 http://"$NLCMIRROR$path$file"
 	elif [[ "$dm" = wget ]];then 
 		wget -v -O/dev/null "$CMIRROR" 2>"$TAMPDIR/global2localmirror"
 		NLCMIRROR="$(grep Location "$TAMPDIR/global2localmirror" | awk {'print $2'})" 
 		_PRINTDONE_ 
 		_PRINTDOWNLOADINGFTCH_ 
-		wget "$dmverbose" -N --show-progress "$NLCMIRROR$path$file".md5 
-		wget "$dmverbose" -c --show-progress "$NLCMIRROR$path$file" 
+		wget "$DMVERBOSE" -N --show-progress "$NLCMIRROR$path$file".md5 
+		wget "$DMVERBOSE" -c --show-progress "$NLCMIRROR$path$file" 
 	else
 		curl -v "$CMIRROR" 2>"$TAMPDIR/global2localmirror"
 		NLCMIRROR="$(grep Location "$TAMPDIR/global2localmirror" | awk {'print $3'})" 
 		_PRINTDONE_ 
 		_PRINTDOWNLOADINGFTCH_ 
-		curl "$dmverbose" -C - --fail --retry 4 -OL "$NLCMIRROR$path$file".md5 -O "$NLCMIRROR$path$file"
+		curl "$DMVERBOSE" -C - --fail --retry 4 -OL "$NLCMIRROR$path$file".md5 -O "$NLCMIRROR$path$file"
 	fi
 }
 
@@ -75,7 +75,7 @@ _GETIMAGE_() {
 		rm md5sums.txt
 		axel http://"$CMIRROR$path$file"
 	elif [[ "$dm" = wget ]];then 
-		wget "$dmverbose" -N --show-progress http://"$CMIRROR$path"md5sums.txt
+		wget "$DMVERBOSE" -N --show-progress http://"$CMIRROR$path"md5sums.txt
 		if [[ "$CPUABI" = "$CPUABIX86" ]];then
 			file="$(grep i686 md5sums.txt | awk {'print $2'})"
 		else
@@ -84,9 +84,9 @@ _GETIMAGE_() {
 		sed '2q;d' md5sums.txt > "$file".md5
 		rm md5sums.txt
 		_PRINTDOWNLOADINGX86TWO_ 
-		wget "$dmverbose" -c --show-progress http://"$CMIRROR$path$file" 
+		wget "$DMVERBOSE" -c --show-progress http://"$CMIRROR$path$file" 
 	else
-		curl "$dmverbose" --fail --retry 4 -OL http://"$CMIRROR$path"md5sums.txt
+		curl "$DMVERBOSE" --fail --retry 4 -OL http://"$CMIRROR$path"md5sums.txt
 		if [[ "$CPUABI" = "$CPUABIX86" ]];then
 			file="$(grep i686 md5sums.txt | awk {'print $2'})"
 		else
@@ -95,7 +95,7 @@ _GETIMAGE_() {
 		sed '2q;d' md5sums.txt > "$file".md5
 		rm md5sums.txt
 		_PRINTDOWNLOADINGX86TWO_ 
-		curl "$dmverbose" -C - --fail --retry 4 -OL http://"$CMIRROR$path$file" 
+		curl "$DMVERBOSE" -C - --fail --retry 4 -OL http://"$CMIRROR$path$file" 
 	fi
 }
 

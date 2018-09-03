@@ -12,7 +12,7 @@ CMIRROR="http://os.archlinuxarm.org/"
 # dm=lftp 	# Works wants improvement 
 # dm=curl	# Works 
 # dm=wget	# Works 
-# dmverbose="-v" # Uncomment for verbose download manager output with curl and wget;  for verbose output throughout runtime, change this setting setting in `setupTermuxArch.sh` also.  
+# DMVERBOSE="-v" # Uncomment for verbose download manager output with curl and wget;  for verbose output throughout runtime, change this setting setting in `setupTermuxArch.sh` also.  
 koe=1
 
 aarch64() {
