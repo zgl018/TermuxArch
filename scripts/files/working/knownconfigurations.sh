@@ -60,7 +60,7 @@ _X86_64_() { # $file is read from md5sums.txt
 
 ## To regenerate the start script use \`setupTermuxArch.sh re[fresh]\`.  An example is included for convenience.  Usage: PROOTSTMNT+=\"-b host_path:guest_path \" The space before the last double quote is necessary.  Appending to the PRoot statement can be accomplished on the fly by creating a *.prs file in /var/binds.  The format is straightforward, `PROOTSTMNT+="option command "`.  The space is required before the last double quote.  `info proot` and `man proot` have more information about what can be configured in a proot init statement.  `setupTermuxArch.sh manual refresh` will refresh the installation globally.  If more suitable configurations are found, share them at https://github.com/sdrausty/TermuxArch/issues to improve TermuxArch.  
 
-_PRS_() { 
+_PR00TSTRING_() { 
 PROOTSTMNT="exec proot "
 if [[ -z "${KID:-}" ]] ; then
 	PROOTSTMNT+=""
@@ -85,6 +85,6 @@ if [[ -n "$(ls -A "$INSTALLDIR"/var/binds/*.prs)" ]] ; then
 fi
 PROOTSTMNT+="-b \"\$ANDROID_DATA\" -b /dev/ -b \"\$EXTERNAL_STORAGE\" -b \"\$HOME\" -b /proc/ -b /storage/ -b /sys/ -w \"\$PWD\" /usr/bin/env -i HOME=/root TERM=$TERM "
 }
-_PRS_
+_PR00TSTRING_
 
 ## EOF
