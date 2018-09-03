@@ -104,20 +104,11 @@ makefinishsetup() {
 	binfnstp=finishsetup.sh  
 	_CFLHDR_ root/bin/"$binfnstp"
 	cat >> root/bin/"$binfnstp" <<- EOM
-versionid="gen.v1.6 id712091350498"
+versionid="v1.6 id7518"
 	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
    	locale-gen ||:
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
 	EOM
-	if [[ -e "$HOME"/.bash_profile ]];then
-		grep "proxy" "$HOME"/.bash_profile | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
-	fi
-	if [[ -e "$HOME"/.bashrc ]];then
-		grep "proxy" "$HOME"/.bashrc  | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
-	fi
-	if [[ -e "$HOME"/.profile ]];then
-		grep "proxy" "$HOME"/.profile | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
-	fi
 	if [[ -z "${lcr:-}" ]] ; then
 	 	if [[ "$CPUABI" = "$CPUABI5" ]];then
 	 		printf "pacman -Rc linux-armv5 linux-firmware --noconfirm --color=always 2>/dev/null ||:\\n" >> root/bin/"$binfnstp"
@@ -139,17 +130,26 @@ versionid="gen.v1.6 id712091350498"
 	 		printf "./root/bin/pci \\n" >> root/bin/"$binfnstp"
 		fi
 	fi
+	if [[ -e "$HOME"/.bash_profile ]];then
+		grep "proxy" "$HOME"/.bash_profile | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
+	fi
+	if [[ -e "$HOME"/.bashrc ]];then
+		grep "proxy" "$HOME"/.bashrc  | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
+	fi
+	if [[ -e "$HOME"/.profile ]];then
+		grep "proxy" "$HOME"/.profile | grep "export" >> root/bin/"$binfnstp" 2>/dev/null ||:
+	fi
 	cat >> root/bin/"$binfnstp" <<- EOM
 	printf "\\n\\e[1;34m%s  \\e[0m" "🕛 > 🕤 Arch Linux in Termux is installed and configured 📲 " 
 	printf "\\e]2;%s\\007" " 🕛 > 🕤 Arch Linux in Termux is installed and configured 📲 "
 	EOM
-	chmod 770 root/bin/"$binfnstp" 
+	chmod 700 root/bin/"$binfnstp" 
 }
 
 makesetupbin() {
 	_CFLHDR_ root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="gen.v1.6 id712091350498"
+versionid="v1.6 id7518"
 	unset LD_PRELOAD
 	EOM
 	echo "$prootstmnt /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
@@ -159,7 +159,7 @@ versionid="gen.v1.6 id712091350498"
 makestartbin() {
 	_CFLHDR_ "$startbin" 
 	cat >> "$startbin" <<- EOM
-versionid="gen.v1.6 id712091350498"
+versionid="v1.6 id7518"
 	unset LD_PRELOAD
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
@@ -324,6 +324,7 @@ _RUNFINISHSETUP_() {
 		"$ed" "$INSTALLDIR"/etc/pacman.d/mirrorlist
 	fi
 	printf "\\n"
+	"$INSTALLDIR"/root/bin/setupbin1.sh ||:
 	"$INSTALLDIR"/root/bin/setupbin.sh ||:
 }
 

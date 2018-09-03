@@ -58,8 +58,7 @@ addbash_profile() {
 	fi
 	PATH="\$HOME/bin:\$PATH"
 	. "\$HOME"/.bashrc
-	PS1="[\e[38;5;148m\] \u \[\e[0m\]\A\[\e[1;38;5;112m\] \W \[\e[0m\]]\\$ "
-	# PS1="[\A\[\033[0;32m\] \W \[\033[0m\]]\\$ "
+	PS1="\e[38;5;148m\]\u\[\e[1;0m\]\A\[\e[1;38;5;112m\]\W\[\e[0m\]\$ "
 	export TZ="$(getprop persist.sys.timezone)"
 	EOM
 	for i in "${!LC_TYPE[@]}"; do
@@ -132,7 +131,7 @@ addch() {
 	_CFLHDR_ root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id3839"
+versionid="v1.6 id7518"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -354,7 +353,7 @@ addkeys() {
 	_CFLHDR_ root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="v1.6 id3839"
+versionid="v1.6 id7518"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -447,7 +446,7 @@ addpc() {
 	_CFLHDR_ root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id3839"
+versionid="v1.6 id7518"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -501,7 +500,7 @@ addpci() {
 	_CFLHDR_ root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id3839"
+versionid="v1.6 id7518"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
