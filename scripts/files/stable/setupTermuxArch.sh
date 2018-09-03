@@ -9,7 +9,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id2021"
+versionid="v1.6 id0355"
 ## INIT FUNCTIONS ##############################################################
 aria2cif() { 
 	dm=aria2c
@@ -142,10 +142,11 @@ dependbp() {
 depends() { # Checks for missing commands.  
 	printf "\\e[1;34mChecking prerequisites…\\n\\e[1;32m"
 	libandroidshmemif
+	dm="wget"
 # 	# Checks if download manager is set. 
 	aria2cifdm 
 	axelifdm 
-	lftpifdm 
+# 	lftpifdm 
 	curlifdm 
 	wgetifdm 
 # 	# Checks if download manager is present. 
@@ -157,8 +158,8 @@ depends() { # Checks for missing commands.
 			wgetif 
 		elif  [[ -x "$(command -v aria2c)" ]] || [[ -x "$PREFIX"/bin/aria2c ]]; then
 			aria2cif 
-	 	elif [[ -x "$(command -v lftpget)" ]] || [[ -x "$PREFIX"/bin/lftpget ]] ; then
-			lftpif 
+# 	 	elif [[ -x "$(command -v lftpget)" ]] || [[ -x "$PREFIX"/bin/lftpget ]] ; then
+# 			lftpif 
 	 	elif [[ -x "$(command -v axel)" ]] || [[ -x "$PREFIX"/bin/axel ]] ; then
 			axelif 
 		fi
@@ -583,6 +584,9 @@ _TRPEXIT_() { # Run on exit.
 		if $(ls -A $INSTALLDIR/$i 2>/dev/null)
 	then
 			CDIRSV="1"
+		fi
+		if [[ "$CDIRSV" = 1 ]] ; then
+			break
 		fi
 	done
 	if [[ "$CDIRSV" = 0 ]] ; then

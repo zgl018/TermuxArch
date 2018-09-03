@@ -107,7 +107,7 @@ _MAKEFINISHSETUP_() {
 	BINFNSTP=finishsetup.sh  
 	_CFLHDR_ root/bin/"$BINFNSTP"
 	cat >> root/bin/"$BINFNSTP" <<- EOM
-versionid="v1.6 id2021"
+versionid="v1.6 id0355"
 	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
    	locale-gen ||:
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
@@ -149,20 +149,20 @@ versionid="v1.6 id2021"
 	chmod 700 root/bin/"$BINFNSTP" 
 }
 
-makesetupbin() {
+_MAKESETUPBIN_() {
 	_CFLHDR_ root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id2021"
+versionid="v1.6 id0355"
 	EOM
 	echo "$PROOTSTMNT /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
 	chmod 700 root/bin/setupbin.sh
 }
 
-makestartbin() {
+_MAKESTARTBIN_() {
 	_CFLHDR_ "$startbin" 
 	printf "%s\\n" "${FLHDRP[@]}" >> "$startbin"
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id2021"
+versionid="v1.6 id0355"
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
 	_PRINTUSAGE_() { 
@@ -225,30 +225,30 @@ versionid="v1.6 id2021"
 	chmod 700 "$startbin"
 }
 
-makesystem() {
+_MAKESYSTEM_() {
 	_WAKELOCK_
 	_CALLSYSTEM_
 	_PRINTMD5CHECK_
-	md5check
+	_MD5CHECK_
 	_PRINTCU_ 
 	rm -f "$INSTALLDIR"/*.tar.gz "$INSTALLDIR"/*.tar.gz.md5
 	_PRINTDONE_ 
 	_PRINTCONFIGUP_ 
-	touchupsys 
+	_TOUCHUPSYS_ 
 }
 
-md5check() {
+_MD5CHECK_() {
 	if "$PREFIX"/bin/applets/md5sum -c "$file".md5 1>/dev/null ; then
 		_PRINTMD5SUCCESS_
 		printf "\\e[0;32m"
-		preproot ## & spinner "Unpacking" "$file…" 
+		_PREPROOT_ ## & spinner "Unpacking" "$file…" 
 	else
 		rm -f "$INSTALLDIR"/*.tar.gz "$INSTALLDIR"/*.tar.gz.md5
 		_PRINTMD5ERROR_
 	fi
 }
 
-_PREPROOTDIR() {
+_PREPROOTDIR_() {
 	cd "$INSTALLDIR"
 	mkdir -p etc 
 	mkdir -p var/binds 
@@ -257,7 +257,7 @@ _PREPROOTDIR() {
 }
 
 _PREPINSTALLDIR_() {
-	_PREPROOTDIR
+	_PREPROOTDIR_
 	_SETLANGUAGE_
 	addREADME
 	addae
@@ -292,11 +292,11 @@ _PREPINSTALLDIR_() {
 	addwe  
 	addv 
 	_MAKEFINISHSETUP_
-	makesetupbin 
-	makestartbin 
+	_MAKESETUPBIN_ 
+	_MAKESTARTBIN_ 
 }
 
-preproot() {
+_PREPROOT_() {
 	if [[ "$(ls -al "$INSTALLDIR"/*z | awk '{ print $5 }')" -gt 557799 ]] ; then
 		if [[ "$CPUABI" = "$CPUABIX86" ]] || [[ "$CPUABI" = "$CPUABIX86_64" ]];then
 	 		proot --link2symlink -0 bsdtar -xpf "$file" --strip-components 1  
@@ -378,7 +378,7 @@ _SETLOCALE_() { # This function uses device system settings to set locale.  To g
 	sed -i "/\\#$ULANGUAGE.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" etc/locale.gen 
 }
 
-touchupsys() {
+_TOUCHUPSYS_() {
 	addmotd
 	_SETLOCALE_
 	_RUNFINISHSETUP_

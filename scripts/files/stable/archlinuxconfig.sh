@@ -132,7 +132,7 @@ addch() {
 	_CFLHDR_ root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id2021"
+versionid="v1.6 id0355"
 
 	_TRPET_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -155,8 +155,16 @@ versionid="v1.6 id2021"
 
 	printf "\\\\n\\\\e[1;32m==> \\\\e[1;37m%s \\\\e[1;32m%s %s %s\\\e[0m%s\\\\b…\\\\n\\\\n" "Running" "TermuxArch \$(basename "\$0")" "\$args" "\$versionid"  
 
-	touch "\$HOME"/.hushlogin "\$HOME"/.hushlogout
-	ls "\$HOME"/.hushlogin "\$HOME"/.hushlogout
+	if [[ -f "\$HOME"/.hushlogin ]] && [[ -f "\$HOME"/.hushlogout ]] ; then
+		rm "\$HOME"/.hushlogin "\$HOME"/.hushlogout
+		ls "\$HOME"/.hushlogin "\$HOME"/.hushlogout
+	elif [[ -f "\$HOME"/.hushlogin ]] || [[ -f "\$HOME"/.hushlogout ]] ; then
+		touch "\$HOME"/.hushlogin "\$HOME"/.hushlogout
+		ls "\$HOME"/.hushlogin "\$HOME"/.hushlogout
+	else
+		touch "\$HOME"/.hushlogin "\$HOME"/.hushlogout
+		ls "\$HOME"/.hushlogin "\$HOME"/.hushlogout
+	fi
 	EOM
 	chmod 700 root/bin/ch 
 }
@@ -340,7 +348,7 @@ addkeys() {
 	_CFLHDR_ root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="v1.6 id2021"
+versionid="v1.6 id0355"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -433,7 +441,7 @@ addpc() {
 	_CFLHDR_ root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id2021"
+versionid="v1.6 id0355"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -487,7 +495,7 @@ addpci() {
 	_CFLHDR_ root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id2021"
+versionid="v1.6 id0355"
 
 	_TRPEXIT_() { # on exit
 		printf "\\e[?25h\\e[0m"
