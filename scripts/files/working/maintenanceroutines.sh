@@ -100,12 +100,12 @@ loadimage() {
 	_PREPINSTALLDIR_ 
   	copyimage ## "$@" & spinner "Copying" "…" 
 	_PRINTMD5CHECK_
-	md5check
+	_MD5CHECK_
 	_PRINTCU_ 
 	rm -f "$INSTALLDIR"/*.tar.gz "$INSTALLDIR"/*.tar.gz.md5
 	_PRINTDONE_ 
 	_PRINTCONFIGUP_ 
-	touchupsys 
+	_TOUCHUPSYS_ 
 	printf "\\n" 
 	_WAKEUNLOCK_ 
 	_PRINTFOOTER_
@@ -157,8 +157,8 @@ refreshsys() { # Refreshes
 	addwe  
 	addv 
 	_MAKEFINISHSETUP_
-	makesetupbin 
-	makestartbin 
+	_MAKESETUPBIN_ 
+	_MAKESTARTBIN_ 
 	_SETLOCALE_
 	printf "\\n" 
 	_WAKELOCK_
