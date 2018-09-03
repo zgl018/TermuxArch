@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id5835"
+versionid="v1.6 id3839"
 ## INIT FUNCTIONS ##############################################################
 
 aria2cif() { 
@@ -297,7 +297,7 @@ loadconf() {
 
 manual() {
 	printf '\033]2; `bash setupTermuxArch.sh manual` 📲 \007'
-	editors
+	_EDITORS_
 	if [[ -f "${wdir}setupTermuxArchConfigs.sh" ]] ; then
 		"$ed" "${wdir}setupTermuxArchConfigs.sh"
 		. "${wdir}setupTermuxArchConfigs.sh"
@@ -649,9 +649,8 @@ declare STIME=""	## Generates pseudo random number.
 declare tm=""		## tar manager
 trap "_TRPERROR_ $LINENO $BASH_COMMAND $?" ERR 
 trap _TRPEXIT_ EXIT
-# trap "_TRPEXIT_ $LINENO $BASH_COMMAND $?" EXIT
-trap "_TRPSIGNAL_ $LINENO $BASH_COMMAND $?" HUP INT TERM 
-trap "_TRPQUIT_ $LINENO $BASH_COMMAND $?" QUIT 
+trap _TRPSIGNAL_ HUP INT TERM 
+trap _TRPQUIT_ QUIT 
 if [[ -z "${TAMPDIR:-}" ]] ; then
 	TAMPDIR=""
 fi
