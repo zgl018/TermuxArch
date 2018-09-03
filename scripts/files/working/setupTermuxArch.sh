@@ -9,7 +9,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id410912344843"
+versionid="gen.v1.6 id104254458857"
 ## INIT FUNCTIONS ##############################################################
 aria2cif() { 
 	dm=aria2c
@@ -145,7 +145,7 @@ depends() { # Checks for missing commands.
 # 	# Checks if download manager is set. 
 	aria2cifdm 
 	axelifdm 
-	lftpifdm 
+# 	lftpifdm 
 	curlifdm 
 	wgetifdm 
 # 	# Checks if download manager is present. 
