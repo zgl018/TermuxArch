@@ -9,7 +9,7 @@ IFS=$'\n\t'
 set -Eeuxo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id605910462706"
+versionid="gen.v1.6 id741559643932"
 ## INIT FUNCTIONS ##############################################################
 aria2cif() { 
 	dm=aria2c
@@ -584,6 +584,9 @@ _TRPEXIT_() { # Run on exit.
 		if $(ls -A $INSTALLDIR/$i 2>/dev/null)
 	then
 			CDIRSV="1"
+		fi
+		if [[ "$CDIRSV" = 1 ]] ; then
+			break
 		fi
 	done
 	if [[ "$CDIRSV" = 0 ]] ; then
