@@ -8,7 +8,7 @@ IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="v1.6 id7431"
+versionid="gen.v1.6 id712091350498"
 ## INIT FUNCTIONS ##############################################################
 
 aria2cif() { 
@@ -564,8 +564,9 @@ _TRPERROR_() { # Run on script error.
 }
 
 _TRPEXIT_() { # Run on exit.
-	local rv="$?"
+	local RV="$?"
   	printf "\\a\\a\\a\\a"
+	rm -rf "$TAMPDIR"
 	CDIRS=( bin boot dev etc home lib mnt opt proc root run sbin srv sys tmp usr var )
 	CDIRSR="0"
  	for i in "${CDIRS[@]}" ; do
@@ -578,15 +579,14 @@ _TRPEXIT_() { # Run on exit.
 		rmdir $INSTALLDIR
 	fi
 	sleep 0.4
-	if [[ "$rv" = 0 ]] ; then
-		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁"
-		printf "\\e]2; %s: %s \007" "${0##*/} $args" "DONE 🏁"
+	if [[ "$RV" = 0 ]] ; then
+		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "DONE 🏁 "
+		printf "\\e]2; %s: %s \007" "${0##*/} $args" "DONE 🏁 "
 	else
-		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s %s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "(Exit Signal $rv)" "DONE 🏁"
-		printf "\033]2; %s: %s %s \007" "${0##*/} $args" "(Exit Signal $rv)" "DONE 🏁"
+		printf "\\a\\e[0;32m%s %s \\a\\e[0m$versionid\\e[1;34m: \\a\\e[1;32m%s %s\\e[0m\\n\\n\\a\\e[0m" "${0##*/}" "$args" "(Exit Signal $rv)" "DONE 🏁 "
+		printf "\033]2; %s: %s %s \007" "${0##*/} $args" "(Exit Signal $RV)" "DONE 🏁 "
 	fi
 	printf "\\e[?25h\\e[0m"
-	rm -rf "$TAMPDIR"
 	set +Eeuo pipefail 
 	exit
 }
