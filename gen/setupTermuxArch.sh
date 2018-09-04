@@ -3,13 +3,13 @@
 # Hosted sdrausty.github.io/TermuxArch courtesy https://pages.github.com
 # https://sdrausty.github.io/TermuxArch/README has info about this project. 
 # https://sdrausty.github.io/TermuxArch/CONTRIBUTORS Thank you for your help.  
-# _STANDARD_="function name" && STANDARD="variable name" are under construction.
+# STANDARD_="function name" && STANDARD="variable name" are under construction.
 ################################################################################
 IFS=$'\n\t'
 set -Eeuo pipefail
 shopt -s nullglob globstar
 unset LD_PRELOAD
-versionid="gen.v1.6 id285810340650"
+versionid="gen.v1.6 id208993410209"
 ## INIT FUNCTIONS ##############################################################
 aria2cif() { 
 	dm=aria2c
