@@ -13,5 +13,19 @@ This repository uses submodules.  To get all the pieces of this repository run [
 * Comments are welcome at https://github.com/sdrausty/TermuxArch/issues ✍ 
 * Pull requests are welcome at https://github.com/sdrausty/TermuxArch/pulls ✍ 
 
-Thank you for making this project work better and please contribute 🔆  [Contributors](CONTRIBUTORS.md) and [Notice to Contributors](NOTICE.md) have more information about this project.
+Thank you for making this project work better and please contribute 🔆  [Contributors](CONTRIBUTORS.md) and [Notice to Contributors](NOTICE.md) have more information about this project.
 
+由于脚本设置的问题大陆地区用的镜像是台湾的只有几十K/s的速度
+所以需要更改系统镜像源
+先使用
+pkg install vim
+安装完成后运行
+bash setupTermuxArch.sh manual
+按i开始编辑
+切换几个镜像源地址为清华tuna地址
+mirrors.tuna.tsinghua.edu.cn/archlinuxarm/
+其他不用改
+最左边右滑长按keyboard调出键盘，按esc
+再输入
+:wq!
+然后脚本就会自动安装，等待即可
