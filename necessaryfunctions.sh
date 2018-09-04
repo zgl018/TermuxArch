@@ -107,7 +107,7 @@ _MAKEFINISHSETUP_() {
 	BINFNSTP=finishsetup.sh  
 	_CFLHDR_ root/bin/"$BINFNSTP"
 	cat >> root/bin/"$BINFNSTP" <<- EOM
-versionid="v1.6 id0355"
+versionid="v1.6 id4682"
 	printf "\\n\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\e[1;32m%s\\e[0;32m%s\\n\\n\\e[1;32m%s\\e[0;32m" "To generate locales in a preferred language, you can use " "Settings > Language & Keyboard > Language " "in Android.  Then run " "${0##*/} r " "for a quick system refresh." "==> "
    	locale-gen ||:
 	printf "\\n\\e[1;34m:: \\e[1;37mRemoving redundant packages for Termux PRoot installation…\\n"
@@ -152,7 +152,7 @@ versionid="v1.6 id0355"
 _MAKESETUPBIN_() {
 	_CFLHDR_ root/bin/setupbin.sh 
 	cat >> root/bin/setupbin.sh <<- EOM
-versionid="v1.6 id0355"
+versionid="v1.6 id4682"
 	EOM
 	echo "$PROOTSTMNT /root/bin/finishsetup.sh ||:" >> root/bin/setupbin.sh 
 	chmod 700 root/bin/setupbin.sh
@@ -162,7 +162,7 @@ _MAKESTARTBIN_() {
 	_CFLHDR_ "$startbin" 
 	printf "%s\\n" "${FLHDRP[@]}" >> "$startbin"
 	cat >> "$startbin" <<- EOM
-versionid="v1.6 id0355"
+versionid="v1.6 id4682"
 	declare -g ar2ar="\${@:2}"
 	declare -g ar3ar="\${@:3}"
 	_PRINTUSAGE_() { 

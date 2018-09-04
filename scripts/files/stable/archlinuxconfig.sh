@@ -132,7 +132,7 @@ addch() {
 	_CFLHDR_ root/bin/ch "# Creates .hushlogin and .hushlogout file"
 	cat >> root/bin/ch <<- EOM
 	declare -a args
-versionid="v1.6 id0355"
+versionid="v1.6 id4682"
 
 	_TRPET_() { # on exit
 		printf "\\e[?25h\\e[0m"
@@ -157,7 +157,6 @@ versionid="v1.6 id0355"
 
 	if [[ -f "\$HOME"/.hushlogin ]] && [[ -f "\$HOME"/.hushlogout ]] ; then
 		rm "\$HOME"/.hushlogin "\$HOME"/.hushlogout
-		ls "\$HOME"/.hushlogin "\$HOME"/.hushlogout
 	elif [[ -f "\$HOME"/.hushlogin ]] || [[ -f "\$HOME"/.hushlogout ]] ; then
 		touch "\$HOME"/.hushlogin "\$HOME"/.hushlogout
 		ls "\$HOME"/.hushlogin "\$HOME"/.hushlogout
@@ -348,27 +347,12 @@ addkeys() {
 	_CFLHDR_ root/bin/keys 
 	cat >> root/bin/keys <<- EOM
 	declare -a keyrings
-versionid="v1.6 id0355"
+versionid="v1.6 id4682"
 
-	_TRPEXIT_() { # on exit
+	_TRPET_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	_PRINTTAIL_ "\$keyrings[@]"  
-#  	 	echo "[ \$0 done (\$?) ]" 
-	}
-	
-	_TRPERROR_() { # on script signal
-		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING." 
-	 	set +Eeuo pipefail 
-	 	echo "\$?" 
-	 	exit "\$?" 
-	}
-	
-	_TRPSIGNAL_() { # on signal
-		printf "\\n\\e[?25h\\e[0m%s\\n" "TermuxArch \$(basename "\$0") WARNING.  Signal caught!"
-		set +Eeuo pipefail 
-	 	echo "\$?" 
-	 	exit "\$?" 
 	}
 	
 	genen() { # This for loop generates entropy on device for \$t seconds.
@@ -391,9 +375,7 @@ versionid="v1.6 id0355"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"': DONE 📱 \007'
 	}
 
-	trap _TRPERROR_ ERR
-	trap _TRPEXIT_ EXIT
-	trap _TRPSIGNAL_ INT TERM 
+	trap _TRPET_ EXIT
 	## keys begin ##################################################################
 
 	if [[ -z "\${1:-}" ]];then
@@ -441,27 +423,12 @@ addpc() {
 	_CFLHDR_ root/bin/pc "# Pacman install packages wrapper without system update."
 	cat >> root/bin/pc  <<- EOM
 	declare -g args="\$@"
-versionid="v1.6 id0355"
+versionid="v1.6 id4682"
 
-	_TRPEXIT_() { # on exit
+	_TRPET_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	_PRINTTAIL_ "\$args"  
-#  	 	echo "[ \$0 done (\$?) ]" 
-	}
-	
-	_TRPERROR_() { # on script signal
-		printf "\\n\\e[?25h\\e[0mTermuxArch pc WARNING.  \\n"
-	 	set +Eeuo pipefail 
-	 	echo "\$?" 
-	 	exit "\$?" 
-	}
-	
-	_TRPSIGNAL_() { # on signal
-		printf "\\n\\e[?25h\\e[0mTermuxArch pc WARNING.  Signal caught!\\n"
-		set +Eeuo pipefail 
-	 	echo "\$?" 
-	 	exit "\$?" 
 	}
 	
 	_PRINTTAIL_() {
@@ -469,9 +436,7 @@ versionid="v1.6 id0355"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"' 📱 \007'
 	}
 
-	trap _TRPERROR_ ERR
-	trap _TRPEXIT_ EXIT
-	trap _TRPSIGNAL_ INT TERM 
+	trap _TRPET_ EXIT
 	## pc begin ####################################################################
 
 	printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"' 📲 \007'
@@ -495,26 +460,12 @@ addpci() {
 	_CFLHDR_ root/bin/pci "# Pacman install packages wrapper with system update."
 	cat >> root/bin/pci  <<- EOM
 	declare args="\$@"
-versionid="v1.6 id0355"
+versionid="v1.6 id4682"
 
-	_TRPEXIT_() { # on exit
+	_TRPET_() { # on exit
 		printf "\\e[?25h\\e[0m"
 		set +Eeuo pipefail 
 	 	_PRINTTAIL_ "\$args"  
-	}
-	
-	_TRPERROR_() { # on script signal
-		printf "\\n\\e[?25h\\e[0mTermuxArch pci WARNING.  \\n"
-	 	set +Eeuo pipefail 
-	 	printf "[ \$(basename "\$0") done ("\$?") ]\n" 
-	 	exit \$? 
-	}
-	
-	_TRPSIGNAL_() { # on signal
-		printf "\\n\\e[?25h\\e[0mTermuxArch pci WARNING.  Signal caught!\\n"
-		set +Eeuo pipefail 
-	 	printf "[ \$(basename "\$0") done ("\$?") ]\n" 
-	 	exit \$? 
 	}
 	
 	_PRINTTAIL_() { 
@@ -522,10 +473,7 @@ versionid="v1.6 id0355"
 		printf '\033]2;  🔑🗝 TermuxArch '"\$(basename "\$0") \$args"' 📱 \007'
 	}
 
-	trap _TRPEXIT_ EXIT
-	trap _TRPERROR_ ERR
-	trap _TRPERROR_ QUIT
-	trap _TRPSIGNAL_ INT TERM 
+	trap _TRPET_ EXIT
 	## pci begin ###################################################################
 
 	printf "\\\\n\\\\e[1;32m==> \\\\e[1;37m%s \\\\e[1;32m%s %s %s \\\e[0m%s…\\\\n\\\\n" "Running" "TermuxArch \$(basename "\$0")" "\$args" "\$versionid"  
